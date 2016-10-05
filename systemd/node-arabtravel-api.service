@@ -1,0 +1,14 @@
+[Service]
+ExecStart=/usr/bin/node /arabtravel/core/master.js
+WorkingDirectory=/arabtravel
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=node-arabtravel-api
+Environment=NODE_ENV=production
+Environment=PID_FILE=/var/run/node-arabtravel-api.pid
+Environment=WORKER_ENGINE=api
+Environment=WORKER_COUNT=2
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,13 @@
+{
+	"manifest_version": 2,
+	"name": "Arabtravel",
+	"version": "0.0.3",
+	"default_locale": "en",
+	"icons": [{
+		"src": "favicon.png",
+		"sizes": "152x152"
+	}],
+	"background": {
+		"persistent": false
+	}
+}

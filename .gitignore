@@ -1,0 +1,6 @@
+*.sublime-workspace
+typings/**
+node_modules
+**/*npm-debug.log.*
+admin/app/**/*.js
+admin/app/**/*.js.map

@@ -1,0 +1,22 @@
+<div class="uk-navbar admin-navbar">
+	<div class="uk-container uk-container-center">
+		<a class="uk-navbar-brand" routerLink="/" routerLinkActive="active">Arabtravel</a>
+		<ul class="uk-navbar-nav">
+			<li><a routerLink="/orders" routerLinkActive="active">Orders</a></li>
+			<li><a routerLink="/users" routerLinkActive="active">Users</a></li>
+			<li><a routerLink="/trips" routerLinkActive="active">Trips</a></li>
+			<li><a routerLink="/packages" routerLinkActive="active">Packages</a></li>
+			<li><a routerLink="/hotels" routerLinkActive="active">Hotels</a></li>
+			<li><a routerLink="/system" routerLinkActive="active">System</a></li>
+		</ul>
+		<div class="uk-navbar-flip">
+			<ul class="uk-navbar-nav">
+				<li><a routerLink="/self" routerLinkActive="active"><i class="uk-icon-user"></i>&nbsp;Administrator</a></li>
+				<li><a href="/auth/logout"><i class="uk-icon-power-off"></i></a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="uk-container uk-container-center uk-margin">
+	<router-outlet></router-outlet>
+</div>
