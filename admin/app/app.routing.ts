@@ -1,23 +1,23 @@
 import { ModuleWithProviders }  from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 
-import { HotelListComponent } from './components/hotel/hotel-list.component'
-import { HotelItemComponent } from './components/hotel/hotel-item.component'
+import { HotelListComponent } from './component/hotel/hotel-list.component'
+import { HotelItemComponent } from './component/hotel/hotel-item.component'
 
-import { OrderListComponent } from './components/order/order-list.component'
-import { OrderItemComponent } from './components/order/order-item.component'
+import { OrderListComponent } from './component/order/order-list.component'
+import { OrderItemComponent } from './component/order/order-item.component'
 
-import { PackageListComponent } from './components/package/package-list.component'
-import { PackageItemComponent } from './components/package/package-item.component'
+import { PackageListComponent } from './component/package/package-list.component'
+import { PackageItemComponent } from './component/package/package-item.component'
 
-import { TripListComponent } from './components/trip/trip-list.component'
-import { TripItemComponent } from './components/trip/trip-item.component'
+import { TripListComponent } from './component/trip/trip-list.component'
+import { TripItemComponent } from './component/trip/trip-item.component'
 
-import { UserListComponent } from './components/user/user-list.component'
-import { UserItemComponent } from './components/user/user-item.component'
+import { UserListComponent } from './component/user/user-list.component'
+import { UserItemComponent } from './component/user/user-item.component'
 
-import { SelfComponent } from './components/self/self.component'
-import { SystemComponent } from './components/system/system.component'
+import { SelfComponent } from './component/self/self.component'
+import { SystemComponent } from './component/system/system.component'
 
 const appRoutes: Routes = [
 	{

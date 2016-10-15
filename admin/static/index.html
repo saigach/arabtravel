@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" itemscope itemtype="http://schema.org/Webpage">
 <head>
 	<base href="/">
 	<meta charset="UTF-8">
@@ -14,7 +14,7 @@
 	<meta name="format-detection" content="telephone=no">
 	<meta name="mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-title" content="Arabtravel admin panel">
+	<meta name="apple-mobile-web-app-title" content="Arabtravel">
 
 	<link rel="manifest" href="/manifest.json">
 	<meta name="rating" content="general">
@@ -25,7 +25,14 @@
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" type="image/png">
 	<link rel="apple-touch-startup-image" sizes="180x180" href="/apple-touch-icon.png" type="image/png">
 
-	<title>Arabtravel | Admin panel</title>
+	<title>Arabtravel</title>
+	<meta name="title" content="Arabtravel">
+	<meta name="application-name" content="Arabtravel">
+
+	<meta name="url" content="https://admin.arabtravel.jo">
+
+	<!-- Loader -->
+	<link rel="stylesheet" href="/css/loader.min.css" type="text/css">
 
 	<!-- Polyfills -->
 	<script src="/node_modules/core-js/client/shim.min.js" type="text/javascript"></script>
@@ -41,9 +48,6 @@
 	<script src="/js/uikit.min.js" type="text/javascript"></script>
 
 	<!-- UIKIT COMPONENTS -->
-	<link rel="stylesheet" href="/css/components/autocomplete.almost-flat.min.css" type="text/css">
-	<script src="/js/components/autocomplete.min.js" type="text/javascript"></script>
-
 	<link rel="stylesheet" href="/css/components/datepicker.almost-flat.min.css" type="text/css">
 	<script src="/js/components/datepicker.min.js" type="text/javascript"></script>
 	<script src="/js/components/timepicker.min.js" type="text/javascript"></script>
@@ -55,7 +59,6 @@
 	<link rel="stylesheet" href="/css/components/upload.almost-flat.min.css" type="text/css">
 	<script src="/js/components/form-password.min.js" type="text/javascript"></script>
 	<script src="/js/components/form-select.min.js" type="text/javascript"></script>
-	<script src="/js/components/upload.min.js" type="text/javascript"></script>
 
 	<script src="/js/components/grid.min.js" type="text/javascript"></script>
 
@@ -67,6 +70,8 @@
 	<script type="text/javascript">System.import('app').catch(function(e){console.error(e)})</script>
 </head>
 <body>
-	<app>Loading...</app>
+	<app>
+		<div class='uil-cube-css'><div></div><div></div><div></div><div></div></div>
+	</app>
 </body>
 </html>

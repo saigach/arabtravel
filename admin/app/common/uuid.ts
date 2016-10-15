@@ -1,25 +1,25 @@
 /*!
- * UUIDv1
+ * UUIDv1 generation
  * Copyright(c) 2016 Wisdman <wisdman@ajaw.it>
  */
 
-let byteToHex: any[] = []
+let byteToHex:string[] = []
 
-for (var i = 0; i < 256; i++)
+for (let i:number = 0; i < 256; i++)
 	byteToHex[i] = (i + 0x100).toString(16).substr(1)
 
-let lastNSecs = 0
-let lastMSecs = 0
-let r = Math.random() * 0x100000000
-let clockseq = ( ( r >>> 16 ) << 8 | ( r >>> 24 ) ) & 0x3fff
+let lastNSecs:number = 0
+let lastMSecs:number = 0
+let r:number = Math.random() * 0x100000000
+let clockseq:number = ( ( r >>> 16 ) << 8 | ( r >>> 24 ) ) & 0x3fff
 
 export class UUID {
 	private static generate(): string {
-		let uuid: any[] = []
+		let uuid:number[] = []
 
-		let msecs = new Date().getTime()
-		let nsecs = lastNSecs + 1
-		let dt = (msecs - lastMSecs) + (nsecs - lastNSecs)/10000
+		let msecs:number = new Date().getTime()
+		let nsecs:number = lastNSecs + 1
+		let dt:number = (msecs - lastMSecs) + (nsecs - lastNSecs)/10000
 
 		if (dt < 0 )
 			clockseq = clockseq + 1 & 0x3fff
@@ -32,10 +32,10 @@ export class UUID {
 
 		msecs += 12219292800000
 
-		let i = 0
+		let i:number = 0
 
 		// time_low
-		let t = ((msecs & 0xfffffff) * 10000 + nsecs) % 0x100000000
+		let t:number = ((msecs & 0xfffffff) * 10000 + nsecs) % 0x100000000
 		uuid[i++] = t >>> 24 & 0xff
 		uuid[i++] = t >>> 16 & 0xff
 		uuid[i++] = t >>> 8 & 0xff
@@ -56,8 +56,8 @@ export class UUID {
 		// clock_seq_low
 		uuid[i++] = clockseq & 0xff
 
-		let rnds = new Array(16)
-		for (let i = 0, r: any; i < 7; i++) {
+		let rnds:number[] = new Array(16)
+		for (let i:number = 0, r: any; i < 7; i++) {
 			if ((i & 0x03) === 0)
 				r = Math.random() * 0x100000000
 			rnds[i] = r >>> ((i & 0x03) << 3) & 0xff
@@ -65,7 +65,7 @@ export class UUID {
 
 		// node
 		uuid[i] = rnds[0] | 0x01
-		for (let n = 1; n < 6; n++)
+		for (let n:number = 1; n < 6; n++)
 			uuid[i + n] = rnds[n]
 
 		i = 0
@@ -79,13 +79,22 @@ export class UUID {
 				byteToHex[uuid[i++]] + byteToHex[uuid[i++]]
 	}
 
+	private static valid(value: string = null) {
+		return !!value && /^[a-f0-9]{8}-[a-f0-9]{4}-1[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12}$/i.test(value)
+	}
+
 	private _uuid: string = '';
 
-	get uuid() {
+	public toString(): string {
 		return this._uuid
 	}
 
 	constructor(value: string = null) {
-		this._uuid = (value && /^[a-f0-9]{8}-[a-f0-9]{4}-1[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12}$/i.test(value))?value:UUID.generate()
+		if (!value)
+			this._uuid = UUID.generate()
+		else if (!UUID.valid(value))
+			throw new TypeError(`'Value isn't correct UUIDv1`)
+		else
+			this._uuid = value
 	}
 }

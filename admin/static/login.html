@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" itemscope itemtype="http://schema.org/Webpage">
 <head>
-	<meta charset="UTF-8">
+	<meta charset="utf-8">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<meta http-equiv="cleartype" content="on">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,7 +13,7 @@
 	<meta name="format-detection" content="telephone=no">
 	<meta name="mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-title" content="Arabtravel admin panel">
+	<meta name="apple-mobile-web-app-title" content="Arabtravel">
 
 	<link rel="manifest" href="/manifest.json">
 	<meta name="rating" content="general">
@@ -24,15 +24,31 @@
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" type="image/png">
 	<link rel="apple-touch-startup-image" sizes="180x180" href="/apple-touch-icon.png" type="image/png">
 
-	<title>Arabtravel | Admin panel | Login</title>
+	<title>Arabtravel</title>
+	<meta name="title" content="Arabtravel">
+	<meta name="application-name" content="Arabtravel">
+
+	<meta name="url" content="https://admin.arabtravel.jo">
+
+	<style type="text/css">
+		body,body *{display:block;margin:0;padding:0;border:0 none;overflow:hidden}body,html{width:auto;min-width:100vw;height:auto;min-height:100vh;background:#f5f5f5}body,button{position:relative}body{font:0/1 Arial,sans-serif}.notify,form{position:absolute}button svg,form{width:200px;margin:auto;top:0;left:0;right:0;bottom:0;height:300px}input,p{font-size:11px;color:#111}.logo{box-sizing:border-box;margin-top:11px;width:100%;height:auto;border-radius:5px 5px 0 0;background:#0be;padding:10px}.logo img{width:100%;height:auto}input{box-sizing:border-box;width:100%;height:40px;padding:0 20px;border-right:1px solid #e1e1e1;border-left:1px solid #e1e1e1;font-size:16px;line-height:40px;background:#fff}input+input{border-top:1px solid #e1e1e1}button{width:100%;height:60px;background:#0be;-webkit-transition:background-color .1s linear;transition:background-color .1s linear;border-radius:0 0 5px 5px;cursor:pointer}button:hover{background-color:#039}button svg{position:absolute;width:24px;height:24px}.notify{display:inline-block;font-size:16px;left:50%;right:auto;bottom:auto;top:-50px;height:54px;line-height:54px;padding:0 15px;background:#fff1f0;color:#d85030;border:1px solid #d85030;border:1px solid rgba(216,80,48,.3);border-radius:5px;opacity:0;z-index:999;-webkit-transform:translate(-50%,0);-ms-transform:translate(-50%,0);transform:translate(-50%,0);-webkit-transition:top .5s,opacity .5s;transition:top .5s,opacity .5s}.notify.show{top:20px;opacity:1}
+	</style>
 </head>
 <body>
-	<form method="POST" action="/auth/login">
-		<label for="login">Login</label>
-		<input id="login" type="text" name="login">
-		<label for="password">Password</label>
-		<input type="password" name="password">
-		<input type="submit" value="Login">
+	<form id="login" autocomplete="on">
+		<p>Arabtravel admin panel v0.0.4</p>
+		<div class="logo"><img src="/logo.png"></div>
+		<input type="email" name="email" placeholder="Email" required autofocus>
+		<input type="password" name="password" placeholder="Password" required>
+		<button type="submit">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+				<path fill="#FFFFFF" d="M8 9v-4l8 7-8 7v-4h-8v-6h8zm2-7v2h12v16h-12v2h14v-20h-14z"></path>
+			</svg>
+		</button>
 	</form>
+	<div id="notify" class="notify"></div>
+	<script type="text/javascript">
+		var notify=function(){var b=document.getElementById('notify');return b?function(a){b.innerText=a;b.classList.add('show');setTimeout(function(){return b.classList.remove('show')},3E3)}:function(a){return console.log(a)}}(),loginForm=document.getElementById('login');if(!loginForm)throw Error('Login form not found');loginForm.addEventListener('submit',function(b){b.preventDefault();var a=new XMLHttpRequest;a.open('POST','/auth/login',!0);a.addEventListener('error',function(a){return console.log(a)});a.addEventListener('load',function(){if(200!==a.status)return notify('Incorrect email or password');window.location='/'});a.send(JSON.stringify({email:loginForm.elements.email.value,password:loginForm.elements.password.value}))});
+	</script>
 </body>
 </html>

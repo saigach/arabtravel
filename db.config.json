@@ -1,0 +1,8 @@
+{
+	"host": "localhost",
+	"port": 5432,
+	"dbname": "arabtravel",
+	"user": "arabtravel",
+	"password": "qHEQW3cTsC9nF24Ug8ScP2VNGsBBKZju",
+	"timeout": 60
+}

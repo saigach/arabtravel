@@ -7,7 +7,7 @@ StandardError=syslog
 SyslogIdentifier=node-arabtravel-backend
 Environment=NODE_ENV=production
 Environment=PID_FILE=/var/run/node-arabtravel-backend.pid
-Environment=WORKER_ENGINE=worker
+Environment=WORKER_ENGINE=backend
 Environment=WORKER_COUNT=3
 
 [Install]
