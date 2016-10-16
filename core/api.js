@@ -40,7 +40,7 @@ const worker = http.createServer( (request, response) => {
 
 	let host = request.headers.host
 	let ip = request.headers['x-real-ip'] || request.connection.remoteAddress || null
-	let url = url.parse(request.url, false, false)
+	let requestUrl = url.parse(request.url, false, false)
 
 	let sessionId = request.headers['cookie'] &&
 					request.headers['cookie'].match(/session_id\s*=\s*([a-f0-9]{8}-[a-f0-9]{4}-1[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/i)
@@ -57,10 +57,10 @@ const worker = http.createServer( (request, response) => {
 					data: { error: 'Unauthorized' }
 				})
 
-			let requestPath = url.pathname
-									.split(/\/+/)
-									.filter(value => !!value)
-									.map(value => value.toLowerCase())
+			let requestPath = requestUrl.pathname
+										.split(/\/+/)
+										.filter(value => !!value)
+										.map(value => value.toLowerCase())
 
 			let apiEngine = requestPath.shift()
 			if(!apiEngine && !APIEngine[apiEngine] && !APIEngine[apiEngine].api)
@@ -117,7 +117,7 @@ const worker = http.createServer( (request, response) => {
 				}
 
 			if (APIEngine[requestData.engine].api instanceof Function)
-				return APIEngine[requestData.engine].api()
+				return APIEngine[requestData.engine].api(requestData)
 
 			return {
 				code: 200,
@@ -134,7 +134,7 @@ const worker = http.createServer( (request, response) => {
 			})
 		}).catch( errorData => {
 			if (errorData instanceof Error)
-				console.error(error)
+				console.error(errorData)
 
 			return {
 				code: errorData.code || 500,

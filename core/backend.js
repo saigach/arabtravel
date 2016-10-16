@@ -32,7 +32,7 @@ const worker = http.createServer( (request, response) => {
 
 	let host = request.headers.host
 	let ip = request.headers['x-real-ip'] || request.connection.remoteAddress || null
-	let url = url.parse(request.url, true, false)
+	let requestUrl = url.parse(request.url, true, false)
 
 	let sessionId = request.headers['cookie'] &&
 					request.headers['cookie'].match(/session_id\s*=\s*([a-f0-9]{8}-[a-f0-9]{4}-1[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/i)
@@ -54,8 +54,8 @@ const worker = http.createServer( (request, response) => {
 
 			resolve({
 				method: request.method.toUpperCase(),
-				path: url.pathname.split(/\/+/).filter(value => !!value).map(value => value.toLowerCase()),
-				query: url.query,
+				path: requestUrl.pathname.split(/\/+/).filter(value => !!value).map(value => value.toLowerCase()),
+				query: requestUrl.query,
 				body: body
 			})
 		}).then( requestData =>
@@ -97,7 +97,7 @@ const worker = http.createServer( (request, response) => {
 			})
 		}).catch( errorData => {
 			if (errorData instanceof Error)
-				console.error(error)
+				console.error(errorData)
 
 			return {
 				code: errorData.code || 500,

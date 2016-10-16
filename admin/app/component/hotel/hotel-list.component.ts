@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 
 import { APIService } from '../../service/api.service'
+import { UUID } from '../../common/uuid'
 
 import { Hotel } from '../../model/hotel'
 
@@ -20,13 +21,8 @@ export class HotelListComponent implements OnInit {
 
 	constructor(private router: Router, private apiService: APIService) {}
 
-	getHotels(): void {
-		// this.apiService.getList(apiPath).then(hotels => {
-		// 	this.hotels = hotels.reduce( (prev: Hotel[], value: any ) => {
-		// 		prev.push(new Hotel(value))
-		// 		return prev
-		// 	}, [])
-		// })
+	private getHotels(): Promise<Hotel[]> {
+		return this.apiService.get<Hotel>(Hotel).then( (response: Hotel[]) => this.hotels = response)
 	}
 
 	ngOnInit(): void {
@@ -35,7 +31,6 @@ export class HotelListComponent implements OnInit {
 
 	add(): void {
 		let hotel = new Hotel()
-
 	}
 
 	edit(hotel: Hotel): void {
