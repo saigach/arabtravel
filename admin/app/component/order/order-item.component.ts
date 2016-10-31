@@ -50,7 +50,7 @@ export class OrderItemComponent implements OnInit {
 			return
 		this.submitted = true
 
-		this.apiService.update<Human>(Human, this.item).then((response: Human) => this.back())
+		this.apiService.update<Order>(Order, this.item).then((response: Order) => this.back())
 	}
 }
 

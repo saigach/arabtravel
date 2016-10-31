@@ -43,7 +43,6 @@ CREATE TABLE users (
 	CONSTRAINT users_password_check CHECK(password ~ '^[0-9a-f]+$')
 ) WITH (OIDS = FALSE);
 CREATE INDEX users_enable_idx ON users USING btree (enable);
-CREATE INDEX users_ts_idx ON users USING btree (ts);
 CREATE UNIQUE INDEX users_email_unique_idx ON users USING btree (email);
 
 -- Add global application administrator
@@ -106,16 +105,32 @@ CREATE TYPE models AS ENUM ('hotel', 'human', 'order', 'package', 'trip');
 
 -- Objects data store
 CREATE TABLE objects (
-	model models NOT NULL,
 	id uuid NOT NULL DEFAULT uuid_generate_v1(),
+	model models NOT NULL,
 	enable boolean NOT NULL DEFAULT TRUE,
 	owner uuid DEFAULT NULL,
 	title text NOT NULL DEFAULT ''::text,
 	data json NOT NULL DEFAULT '{}'::json,
 	CONSTRAINT objects_pkey PRIMARY KEY (id),
-	CONSTRAINT objects_model_check CHECK (model ~ '^[a-z0-9\-]+$'),
 	CONSTRAINT objects_owner_fkey FOREIGN KEY (owner) REFERENCES users (id) ON UPDATE CASCADE ON DELETE SET NULL
 ) WITH (OIDS = FALSE);
 CREATE INDEX objects_model_idx ON objects USING btree (model);
 CREATE INDEX objects_enable_idx ON objects USING btree (enable);
 CREATE INDEX objects_owner_idx ON objects USING btree (owner);
+
+-- Static data storage
+CREATE TABLE static (
+	id uuid NOT NULL DEFAULT uuid_generate_v1(),
+	enable boolean NOT NULL DEFAULT TRUE,
+	owner uuid DEFAULT NULL,
+	url varchar(80) NOT NULL,
+	title text NOT NULL DEFAULT ''::text,
+	description text NOT NULL DEFAULT ''::text,
+	content text NOT NULL DEFAULT ''::text,
+	image varchar(128) DEFAULT NULL,
+	CONSTRAINT static_pkey PRIMARY KEY (id),
+	CONSTRAINT static_owner_fkey FOREIGN KEY (owner) REFERENCES users (id) ON UPDATE CASCADE ON DELETE SET NULL
+) WITH (OIDS = FALSE);
+CREATE INDEX static_enable_idx ON static USING btree (enable);
+CREATE INDEX static_owner_idx ON static USING btree (owner);
+CREATE UNIQUE INDEX static_url_unique_idx ON static USING btree (url);
