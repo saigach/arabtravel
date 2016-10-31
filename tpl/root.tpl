@@ -53,8 +53,40 @@
 	<meta name="twitter:description" content="{{=it.description || 'Arabtravel default description'}}">
 	<meta name="twitter:image" content="https://{{=it.host}}{{=it.image || '/og.png'}}">
 	<meta name="twitter:image:alt" content="{{=it.description || ''}}">
+
+	<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400" rel="stylesheet">
+    <link rel="stylesheet" href="fonts/arabtravel-icons/css/arabtravel-icons.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic&subset=latin,cyrillic" type="text/css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/css/styles.css" type="text/css">
 </head>
 <body>
 	{{=it.main || ''}}
+
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+	<script src="js/bootstrap.min.js"></script>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="js/bootstrap-select/css/bootstrap-select.css">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="js/bootstrap-select/js/bootstrap-select.min.js"></script>
+
+	<!-- (Optional) Latest compiled and minified JavaScript translation files -->
+	<script src="/js/bootstrap-select/js/i18n/defaults-en_US.min.js"></script>
+
+	<!--link rel="stylesheet" href="/js/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css"-->
+
+	<script src="/js/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+
+	<script src="/js/moment-with-locales.js"></script>
+
+	<script src="/js/bootstrap-datetimepicker.min.js"></script>
+
+	<script src="/js/skrollr/skrollr.min.js"></script>
+
+	<script src="/js/main.js"></script>
+
+	<script src="/js/app-init.js"></script>
 </body>
 </html>
