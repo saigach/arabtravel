@@ -5,11 +5,20 @@
 
 'use strict'
 
+const fs = require('fs')
+const path = require('path')
+
 const Client = require('pg-native')
 
+const dbConfig = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), 'db.config.json'), 'utf8'))
+const connectionString = `host=${dbConfig.host} port=${dbConfig.port} dbname=${dbConfig.dbname} user=${dbConfig.user} password=${dbConfig.password} connect_timeout=${dbConfig.timeout}`
+
+const shrinkTimeout = 600
+
+const DEBUG = !!process.env.WORKER_DEBUG
+
 module.exports = class DB {
-	constructor(connectionString = '', shrinkTimeout = 600) {
-		this.connectionString = connectionString
+	constructor() {
 		this.pool = []
 
 		// Shrink pool size
@@ -25,11 +34,14 @@ module.exports = class DB {
 		while (this.pool.length > max) {
 			let client = this.pool.pop()
 			if (client)
-				client.end( error => console.error(error) )
+				client.end( error => error && console.error(error) )
 		}
 	}
 
 	query(SQL) {
+
+		if (DEBUG)
+			console.log(SQL)
 
 		if (typeof SQL !== 'string')
 			throw new TypeError('SQL query must be a string')
@@ -44,7 +56,7 @@ module.exports = class DB {
 			if (client.pq.connected)
 				return resolve(client)
 
-			client.connect(this.connectionString, error => {
+			client.connect(connectionString, error => {
 				if (error)
 					return reject(error)
 				resolve(client)

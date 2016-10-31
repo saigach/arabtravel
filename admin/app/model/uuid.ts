@@ -1,8 +1,3 @@
-/*!
- * UUIDv1 generation
- * Copyright(c) 2016 Wisdman <wisdman@ajaw.it>
- */
-
 let byteToHex:string[] = []
 
 for (let i:number = 0; i < 256; i++)
@@ -85,16 +80,16 @@ export class UUID {
 
 	private _uuid: string = '';
 
-	public toString(): string {
-		return this._uuid
-	}
-
 	constructor(value: string = null) {
 		if (!value)
 			this._uuid = UUID.generate()
 		else if (!UUID.valid(value))
 			throw new TypeError(`'Value isn't correct UUIDv1`)
 		else
-			this._uuid = value
+			this._uuid = value.toLowerCase()
+	}
+
+	toString(): string {
+		return this._uuid
 	}
 }

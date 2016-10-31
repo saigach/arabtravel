@@ -1,37 +1,58 @@
 import { ModuleWithProviders }  from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 
-import { HotelListComponent } from './component/hotel/hotel-list.component'
-import { HotelItemComponent } from './component/hotel/hotel-item.component'
+import { StaticListComponent } from './component/static/static-list.component'
+import { StaticItemComponent } from './component/static/static-item.component'
 
-import { OrderListComponent } from './component/order/order-list.component'
-import { OrderItemComponent } from './component/order/order-item.component'
+import { NewsListComponent } from './component/news/news-list.component'
+import { NewsItemComponent } from './component/news/news-item.component'
 
-import { PackageListComponent } from './component/package/package-list.component'
-import { PackageItemComponent } from './component/package/package-item.component'
-
-import { TripListComponent } from './component/trip/trip-list.component'
-import { TripItemComponent } from './component/trip/trip-item.component'
+import { ProjectListComponent } from './component/project/project-list.component'
+import { ProjectItemComponent } from './component/project/project-item.component'
 
 import { UserListComponent } from './component/user/user-list.component'
 import { UserItemComponent } from './component/user/user-item.component'
 
-import { SelfComponent } from './component/self/self.component'
-import { SystemComponent } from './component/system/system.component'
+import { VolunteerListComponent } from './component/volunteer/volunteer-list.component'
+import { VolunteerItemComponent } from './component/volunteer/volunteer-item.component'
+
+import { MessageComponent } from './component/message/message.component'
+
+import { MainComponent } from './component/main/main.component'
 
 const appRoutes: Routes = [
 	{
 		path: '',
-		redirectTo: '/orders',
+		redirectTo: '/main',
 		pathMatch: 'full'
 	},
 	{
-		path: 'orders',
-		component: OrderListComponent
+		path: 'main',
+		component: MainComponent
 	},
 	{
-		path: 'orders/:id',
-		component: OrderItemComponent
+		path: 'news',
+		component: NewsListComponent
+	},
+	{
+		path: 'news/:id',
+		component: NewsItemComponent
+	},
+	{
+		path: 'static',
+		component: StaticListComponent
+	},
+	{
+		path: 'static/:id',
+		component: StaticItemComponent
+	},
+	{
+		path: 'projects',
+		component: ProjectListComponent
+	},
+	{
+		path: 'projects/:id',
+		component: ProjectItemComponent
 	},
 	{
 		path: 'users',
@@ -42,36 +63,16 @@ const appRoutes: Routes = [
 		component: UserItemComponent
 	},
 	{
-		path: 'trips',
-		component: TripListComponent
+		path: 'volunteers',
+		component: VolunteerListComponent
 	},
 	{
-		path: 'trips/:id',
-		component: TripItemComponent
+		path: 'volunteers/:id',
+		component: VolunteerItemComponent
 	},
 	{
-		path: 'packages',
-		component: PackageListComponent
-	},
-	{
-		path: 'packages/:id',
-		component: PackageItemComponent
-	},
-	{
-		path: 'hotels',
-		component: HotelListComponent
-	},
-	{
-		path: 'hotels/:id',
-		component: HotelItemComponent
-	},
-	{
-		path: 'system',
-		component: SystemComponent
-	},
-	{
-		path: 'self',
-		component: SelfComponent
+		path: 'messages',
+		component: MessageComponent
 	}
 ];
 

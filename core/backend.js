@@ -6,116 +6,102 @@
 'use strict'
 process.env.TZ = 'UTC'
 
-const DEFAULT_SESSION_DURATION = 86400
-
-const http = require('http')
-const url = require('url')
-
 const fs = require('fs')
 const path = require('path')
 
-// Read DB config
-const dbConfig = JSON.parse(
-	fs.readFileSync(
-		path.resolve(process.cwd(), 'db.config.json'),
-		'utf8'
-	)
+const http = require('http')
+const url = require('url')
+const doT = require('dot')
+
+const DB = new (require('./db.js'))()
+const Session = require('./session.js')
+
+const Template = {}
+const templateDirectory = path.resolve(process.cwd(), 'tpl/')
+const reloadTemplate = (filename) => {
+	if (!filename)
+		return
+	let match = filename.match(/([\w\-]+)\.tpl$/i)
+	let name = match[1].toLowerCase()
+	if (name) {
+		fs.readFile(path.resolve(templateDirectory, filename), 'utf8', (error, data) => {
+			if (error)
+				return console.error(error)
+			let tpl = data
+						.replace(/\s*(?:\r|\n)\s*/g, '')
+						.replace(/<\!\-\-.*?\-\->/g, '')
+			Template[name] = doT.template(tpl)
+		})
+	}
+}
+fs.readdir(templateDirectory, (error, files) =>
+	error && console.error(error) || files.forEach(filename => reloadTemplate(filename))
 )
+fs.watch(templateDirectory, (eventType, filename) => reloadTemplate(filename))
 
-// Data base engine
-const DB = require('./db.js')
-const db = new DB(`host=${dbConfig.host} port=${dbConfig.port} dbname=${dbConfig.dbname} user=${dbConfig.user} password=${dbConfig.password} connect_timeout=${dbConfig.timeout}`)
+const engineDirectory = path.resolve(process.cwd(), 'core/engine/')
+const Engine = fs.readdirSync(engineDirectory).reduce( (prev, file) => {
+	let match = file.match(/([\w\-]+)\.js$/i)
+	let name = match[1].toLowerCase()
+	if (name)
+		prev[name] = new ( require(path.resolve(engineDirectory, file)) )(DB, Template)
+	return prev
+}, {})
 
+const Static = new ( require('./static.js'))(DB, Template)
+
+const getDuration = diff => diff[0] * 1e9 + diff[1]
 const worker = http.createServer( (request, response) => {
 	let time = process.hrtime()
-	const getDuration = () => ( diff => (diff[0] * 1e9 + diff[1]) )( process.hrtime(time) )
-
-	let host = request.headers.host
-	let ip = request.headers['x-real-ip'] || request.connection.remoteAddress || null
-	let requestUrl = url.parse(request.url, true, false)
-
-	let sessionId = request.headers['cookie'] &&
-					request.headers['cookie'].match(/session_id\s*=\s*([a-f0-9]{8}-[a-f0-9]{4}-1[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/i)
-	sessionId = sessionId && sessionId[1] || null
-
 	let body = ''
 	request.on('data', chunk => body += String(chunk) )
 	request.on('end', () =>
-		new Promise( (resolve, reject) => {
+		new Session(request, body, !request.headers['x-session-enable']).get.then(session => {
 
-			try {
-				body = body && JSON.parse(body) || {}
-			} catch (error) {
-				return reject({
-					code: 400,
-					data: 'Request body parse error'
-				})
+			let backendEngine = session.request.path.shift() || 'index'
+
+			let requestData = {
+				request: session.request,
+				session: session.data,
+				user: session.user
 			}
 
-			resolve({
-				method: request.method.toUpperCase(),
-				path: requestUrl.pathname.split(/\/+/).filter(value => !!value).map(value => value.toLowerCase()),
-				query: requestUrl.query,
-				body: body
-			})
-		}).then( requestData =>
-			db.query(`SELECT sessions.data AS session, users.id AS userid, users.roles AS roles, users.data AS data FROM sessions INNER JOIN users ON sessions.userid = users.id WHERE users.enable AND sessions.id = '${sessionId}' LIMIT 1`).then( rows => {
-
-				if (rows.length !== 1){
-					requestData.session = {}
-					requestData.user = null
-					sessionId = null
-					return requestData
+			return (Engine[backendEngine] ?
+				Engine[backendEngine].engine(requestData) :
+				Static.engine(backendEngine, requestData)
+			).then(response => {
+				if (response.data) {
+					response.data.host = session.host
+					response.data = Template['root'](response.data)
 				}
-
-				requestData.session = rows[0].session
-				requestData.user = {
-					id: rows[0].userid,
-					roles: rows[0].roles,
-					data: rows[0].data
-				}
-
-				return requestData
+				return session.set(response)
 			})
-		).then( requestData => {
 
-			// TO DO template engine
-			return {
-				code: 200,
-				data: 'TO DO: fix template engine'
-			}
+		}).then(session => {
 
-		}).then( responseData => {
-			if (!sessionId)
-				return responseData
+			if (session.response.type)
+				response.setHeader('Content-Type', session.response.type)
 
-			let json = JSON.stringify(typeof responseData.session === 'object' && responseData.session || {})
-			return db.query(`UPDATE sessions SET data = '${json}', ip = ` + (ip?`'${ip}'`:'NULL') + ` WHERE id = '${sessionId}' RETURNING id, timezone('UTC', NOW() + (COALESCE((SELECT value->>0 FROM config WHERE key = 'sessionDuration' LIMIT 1)::integer,${DEFAULT_SESSION_DURATION})::text||' seconds')::interval) AS expires`).then(rows => {
-				responseData.sessionId = rows[0].id
-				responseData.expires = new Date(rows[0].expires).toUTCString()
-				return responseData
-			})
+			if (session.response.location)
+				response.setHeader('Location', session.response.location)
+
+			if (session.id && session.expires)
+				response.setHeader('Set-Cookie', `session_id=${session.id}; Domain=${session.host}; Path=/; Expires=${session.expires}`)
+			else if (session.id === null)
+				response.setHeader('Set-Cookie', `session_id=deleted; Domain=${session.host}; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT`)
+
+			response.writeHead(session.response.code || 200, { 'X-Engine-Time': getDuration(process.hrtime(time)) })
+			response.end(session.response.data || undefined)
+
 		}).catch( errorData => {
-			if (errorData instanceof Error)
-				console.error(errorData)
-
-			return {
-				code: errorData.code || 500,
-				data: errorData.data || 'Internal service engine error'
-			}
-		}).then( responseData => {
-
-			if (responseData.sessionId && responseData.expires)
-				response.setHeader('Set-Cookie', `session_id=${responseData.sessionId}; Domain=${host}; Path=/; Expires=${responseData.expires}`)
-			else if (responseData.sessionId === null)
-				response.setHeader('Set-Cookie', `session_id=deleted; Domain=${host}; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT`)
-
-			response.writeHead(responseData.code || 200, {
+			let code = errorData.code || `${Number(new Date())}-${Math.floor(Math.random() * 10001)}`
+			console.error(`Error [${code}]: ${errorData}`)
+			response.writeHead(500, {
 				'Content-Type': 'text/html; charset=utf-8',
-				'X-Page-Generation-Time': getDuration()
+				'X-Engine-Time': getDuration(process.hrtime(time)),
+				'X-Engine-Error': code
 			})
-			response.end(responseData.data || undefined)
-
+			response.end('Internal service engine error')
 		})
 	)
 })
@@ -125,4 +111,7 @@ worker.on('clientError', (error, socket) => {
 	socket.end('HTTP/1.1 400 Bad Request\r\n\r\n')
 })
 
-worker.listen(8080, '::')
+const servicePort = Number.parseInt(process.argv[2])
+worker.listen(servicePort, '::')
+console.log(`Worker listening [::]:${servicePort}`)
+

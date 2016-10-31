@@ -1,25 +1,24 @@
-import { Model } from '../common/model'
+
+import { Model } from './model'
 
 export class Package extends Model {
-	public static __api: string = 'package'
+	static __api: string = 'objects/package'
 
-	name: string
-	description: string
+	description: string = ''
 
 	constructor(value: any = {}) {
 		super(value)
-		this.parse(value)
+
+		this.description = String(value.description || '')
 	}
 
-	parse({ name = '', description = '', email = null } = {}): Error | void {
-		this.name = String(name)
-		this.description = String(description)
-	}
-
-	toJSON(): {} {
-		return Object.assign(super.toJSON(), {
-			name: this.name,
-			description: this.description
+	toObject(): {} {
+		return Object.assign(super.toObject(), {
+			description: this.description || ''
 		})
+	}
+
+	toString(): string {
+		return JSON.stringify(this.toObject())
 	}
 }

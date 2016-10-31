@@ -6,15 +6,19 @@
 		"sourceMap": true,
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
-		"removeComments": false,
+		"removeComments": true,
 		"noImplicitAny": true,
 		"suppressImplicitAnyIndexErrors": true
 	},
 	"exclude": [
+		"admin/static",
 		"core",
-        "node_modules",
-        "admin/static",
+		"node_modules",
+		"sql",
+		"static",
+		"systemd",
+		"tpl",
 		"typings/main",
-    	"typings/main.d.ts"
-    ]
+		"typings/main.d.ts"
+	]
 }

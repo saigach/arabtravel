@@ -1,1 +1,79 @@
-<h3>Users List</h3>
+<div class="uk-grid">
+	<div class="uk-width-3-4 uk-margin-bottom">
+		<h2>User <span *ngIf="item">&laquo;{{ item.title }}&raquo;</span></h2>
+	</div>
+	<div class="uk-width-1-4 uk-margin-bottom">
+		<button class="uk-button uk-button-primary uk-align-right" (click)="back()"><i class="uk-icon-arrow-left"></i>&emsp;Back</button>
+	</div>
+	<form class="uk-width-1-1 uk-form uk-form-stacked" (ngSubmit)="submit()">
+		<div class="uk-grid">
+			<div class="uk-width-1-1">
+				<label class="uk-button admin-button" [class.uk-active]="item.enable">
+					<span>Enable</span>
+					<input  class="uk-hidden" type="checkbox" name="enable" [(ngModel)]="item.enable">
+				</label>
+				<button class="uk-button" (click)="showPasswordDialog($event)">Change password</button>
+			</div>
+			<div class="uk-width-7-10">
+				<div class="uk-width-1-1 uk-margin-top">
+					<label class="uk-form-label uk-width-1-1">E-mail</label>
+					<div class="uk-form-controls">
+						<input class="uk-width-1-1" type="email" placeholder="E-mail" name="email" [(ngModel)]="item.email">
+					</div>
+				</div>
+				<div class="uk-width-1-1 uk-margin-top">
+					<label class="uk-form-label uk-width-1-1">Title</label>
+					<div class="uk-form-controls">
+						<input class="uk-width-1-1" type="text" placeholder="User name" name="title" [(ngModel)]="item.title">
+					</div>
+				</div>
+				<div class="uk-width-1-1 uk-margin-top">
+					<label class="uk-form-label uk-width-1-1">Description</label>
+					<div class="uk-form-controls">
+						<input class="uk-width-1-1" type="text" placeholder="User description" name="description" [(ngModel)]="item.description">
+					</div>
+				</div>
+			</div>
+			<div class="uk-width-3-10 uk-margin-top">
+				<label class="uk-form-label uk-width-1-1">Avatar</label>
+				<div class="uk-form-file">
+					<img class="uk-thumbnail admin-cursor-pointer" [src]="image">
+					<input type="file" accept="image/*" (change)="setImage($event.target)">
+				</div>
+			</div>
+			<div class="uk-width-1-1 uk-margin-top">
+				<button type="submit" class="uk-button uk-button-success uk-align-right" [disabled]="!valid"><i class="uk-icon-floppy-o"></i>&emsp;Submit</button>
+			</div>
+			<!-- <div class="uk-width-1-1 uk-margin-top">
+				<p>Form value: {{ item | json }}</p>
+			</div> -->
+		</div>
+	</form>
+</div>
+
+<div #passwordDialog class="uk-modal">
+	<div class="uk-modal-dialog">
+		<a class="uk-modal-close uk-close uk-margin-small-top"></a>
+		<div class="uk-modal-header">
+			<h3>Set new password</h3>
+		</div>
+		<div class="uk-grid uk-form">
+			<div class="uk-width-1-4">
+				<label class="uk-form-label">Password</label>
+			</div>
+			<div class="uk-width-3-4 uk-form-controls uk-form-password">
+				<input type="password" [(ngModel)]="password1">
+			</div>
+			<div class="uk-width-1-4 uk-margin-top">
+				<label class="uk-form-label">Confirm password</label>
+			</div>
+			<div class="uk-width-3-4 uk-margin-top uk-form-controls uk-form-password">
+				<input type="password" [(ngModel)]="password2">
+			</div>
+		</div>
+		<div class="uk-modal-footer uk-clearfix">
+			<button class="uk-button uk-align-right uk-modal-close">Cancel</button>
+			<button class="uk-button uk-button-primary uk-align-right" [disabled]="!validPassword" (click)="setPassword(); $event.stopPropagation()">Submit</button>
+		</div>
+	</div>
+</div>

@@ -8,7 +8,7 @@ SyslogIdentifier=node-arabtravel-backend
 Environment=NODE_ENV=production
 Environment=PID_FILE=/var/run/node-arabtravel-backend.pid
 Environment=WORKER_ENGINE=backend
-Environment=WORKER_COUNT=3
+Environment=WORKER_PORT=8102
 
 [Install]
 WantedBy=multi-user.target

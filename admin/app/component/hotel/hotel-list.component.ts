@@ -2,46 +2,45 @@ import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 
 import { APIService } from '../../service/api.service'
-import { UUID } from '../../common/uuid'
 
 import { Hotel } from '../../model/hotel'
 
-const apiPath:string = 'hotel'
-
 @Component({
 	moduleId: module.id,
-	selector: 'hotel-list',
+	selector: 'trip-list',
 	templateUrl: '/app/component/hotel/hotel-list.component.html'
 })
 export class HotelListComponent implements OnInit {
 
-	hotels: Hotel[] = []
-
-	filter: string = ''
+	items: Hotel[] = []
 
 	constructor(private router: Router, private apiService: APIService) {}
 
-	private getHotels(): Promise<Hotel[]> {
-		return this.apiService.get<Hotel>(Hotel).then( (response: Hotel[]) => this.hotels = response)
-	}
-
 	ngOnInit(): void {
-		this.getHotels()
+		this.apiService.get<Hotel>(Hotel).then( (response: Hotel[]) => this.items = response)
 	}
 
 	add(): void {
-		let hotel = new Hotel()
+		this.router.navigate(['/hotels', 'new'])
 	}
 
-	edit(hotel: Hotel): void {
-
+	select(item: Hotel): void {
+		this.router.navigate(['/hotels', item.id.toString()])
 	}
 
-	delete(hotel: Hotel): void {
-
+	enable(item: Hotel): void {
+		this.apiService.command<Hotel>(Hotel, item, 'enable')
+				.then((response: any) => item.enable = response.enable)
 	}
 
-	save(hotel: Hotel): void {
-
+	delete(item: Hotel): void {
+		UIkit.modal.confirm(`Hotel &laquo;${item.title}&raquo; can be deleted.<br>Are you sure?`, () =>
+			this.apiService.delete<Hotel>(Hotel, item).then(() =>
+				this.items = this.items.filter(value => value !== item)
+			)
+		)
 	}
 }
+
+
+

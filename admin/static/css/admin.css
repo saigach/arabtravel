@@ -1,7 +1,79 @@
 .admin-navbar {
+	background: #284666;
+	border-radius: 0;
+}
 
+.admin-navbar-logo {
+	height: 30px;
+}
+
+.admin-navbar-logo path {
+	fill: #fff;
+}
+
+.admin-navbar-nav>li>a {
+	color: #fff;
+	text-shadow: none;
+	cursor: pointer;
+}
+
+.admin-navbar-nav>li.uk-open>a, .admin-navbar-nav>li:hover>a, .admin-navbar-nav>li>a:focus {
+	color: #fff;
+	background-color: #284666;
+}
+
+.uk-button.admin-button.uk-active,
+.uk-button.admin-button:active,
+.uk-button.admin-button.uk-active:hover {
+	background-color: #72ae41;
+	color: #fff;
+	text-shadow: none;
 }
 
 .admin-cursor-pointer {
 	cursor: pointer;
 }
+
+.admin-li-line:hover {
+	background: #fafafa;
+}
+
+
+
+
+/*
+
+.admin-navbar {
+	background: #00a8e6;
+}
+
+.admin-navbar-logo {
+	height: 30px;
+}
+
+.admin-navbar-nav>li>a {
+	color: #fff;
+	text-shadow: none;
+	cursor: pointer;
+}
+
+.admin-navbar-nav>li.uk-open>a, .admin-navbar-nav>li:hover>a, .admin-navbar-nav>li>a:focus {
+	color: #fff;
+	background-color: #35b3ee;
+}
+
+.admin-button-group .uk-button.uk-active,
+.admin-button-group .uk-button:active,
+.admin-button-group .uk-button.uk-active:hover {
+	background-color: #72ae41;
+	color: #fff;
+	text-shadow: none;
+}
+
+
+
+.admin-cursor-pointer {
+	cursor: pointer;
+}
+
+*/

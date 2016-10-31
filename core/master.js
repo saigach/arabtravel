@@ -10,11 +10,19 @@ const cluster = require('cluster')
 const fs = require('fs')
 const os = require('os')
 
-if (!process.env.WORKER_ENGINE)
-	throw new Error(`WORKER_ENGINE enveroment variable isn't set`)
+if (!process.env.WORKER_ENGINE) {
+	console.error(`ERROR: WORKER_ENGINE enveroment variable isn't set`)
+	process.exit(1)
+}
+
+if (!process.env.WORKER_PORT) {
+	console.error(`ERROR: WORKER_PORT enveroment variable isn't set`)
+	process.exit(1)
+}
 
 cluster.setupMaster({
 	exec: `./core/${process.env.WORKER_ENGINE}.js`,
+	args: [process.env.WORKER_PORT],
 	silent: true
 })
 

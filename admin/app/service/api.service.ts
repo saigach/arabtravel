@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core'
 import { Http, Headers, Response, RequestOptions } from '@angular/http'
 import 'rxjs/add/operator/toPromise'
 
-import { Model } from '../common/model'
-import { UUID } from '../common/uuid'
+import { Model } from '../model/model'
+import { UUID } from '../model/uuid'
 
 @Injectable()
 export class APIService {
-	private static apiRoot = '/api/object/'
+	private static apiRoot = '/api'
 
 	private static options = new RequestOptions({
 		headers: new Headers({
@@ -16,16 +16,27 @@ export class APIService {
 	})
 
 	private static handleError (error: any) {
-		let msg = error.message || error.status && `${error.status} - ${error.statusText}` || 'Server error'
-		console.error(msg)
-		return Promise.reject(new Error(msg))
+
+		if (error instanceof Error) {
+			console.error(error)
+			return Promise.reject(new Error('API service internal error'))
+		}
+
+		let message = error.status && (
+						error.status === 403 && 'Действие запрещено политикой приложения' ||
+						error.json instanceof Function && error.json().error ||
+						error.text instanceof Function && error.text() ||
+						`${error.status} - ${error.statusText}`
+					  ) || `Unknown API service error: ${error}`
+
+		console.error(message)
+		return Promise.reject(new Error(message))
 	}
 
 	private static getAPIurl(api:string = '', item: UUID | Model | string = null): string {
-		let id = item instanceof Model && item.__id.toString() ||
+		let id = item instanceof Model && item.id.toString() ||
 				 item instanceof UUID && item.toString() ||
-				 item && new UUID(String(item)).toString() ||
-				 ''
+				 item && String(item).trim() || ''
 		return `${APIService.apiRoot}/${api}/${id}`.replace(/\/\//,'/')
 	}
 
@@ -68,7 +79,20 @@ export class APIService {
 						.toPromise()
 						.then(response => response.json() || null)
 						.then(value => value && value || Promise.reject({ message: 'Response is empty' }) )
-						.then(value => (value.sucess !== 'deleted' || value.__id !== item.__id.toString()) && Promise.reject(value) || void 0)
+						.then(value => (value.sucess !== 'deleted' || value.id !== item.id.toString()) && Promise.reject(value) || void 0)
+						.catch(APIService.handleError)
+	}
+
+	command<T extends Model>( model: { new(value: any): T, __api: string },
+							 item: Model,
+							 command: string,
+							 data: any = null
+						) : Promise<any> {
+		let api = APIService.getAPIurl(model.__api, item) + `/${command}`
+		return this.http.post(api, data && JSON.stringify(data) || item.toString(), APIService.options)
+						.toPromise()
+						.then(response => response.json() || null)
+						.then(value => value && value || Promise.reject({ message: 'Response is empty' }) )
 						.catch(APIService.handleError)
 	}
 }

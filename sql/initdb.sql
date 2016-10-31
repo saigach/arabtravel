@@ -9,8 +9,8 @@ SET search_path = public, pg_catalog;
 SET default_tablespace = '';
 SET default_with_oids = false;
 
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
-CREATE EXTENSION IF NOT EXISTS "pgcrypto" WITH SCHEMA public;
+-- CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
+-- CREATE EXTENSION IF NOT EXISTS "pgcrypto" WITH SCHEMA public;
 
 CREATE TABLE config (
 	key varchar(128) NOT NULL,
@@ -20,76 +20,67 @@ CREATE TABLE config (
 ) WITH (OIDS = FALSE);
 CREATE INDEX config_value_idx ON config USING gin (value);
 
--- Add main config
+-- Add config
 INSERT INTO config (key, value) VALUES(
 	'sessionDuration',
 	'300000'::jsonb
 );
 
 -- Roles
-CREATE TYPE roles AS ENUM ('admin', 'hotel', 'client');
+CREATE TYPE roles AS ENUM ('admin', 'user', 'hotel');
 
 -- User data storage
 CREATE TABLE users (
 	id uuid NOT NULL DEFAULT uuid_generate_v1(),
 	enable boolean NOT NULL DEFAULT TRUE,
 	email character varying(256) NOT NULL,
-	password char(128) NOT NULL,
-	otpsecret bigint DEFAULT NULL,
-	oauth json NOT NULL DEFAULT '{}'::json,
-	roles roles[] NOT NULL DEFAULT '{}'::roles[],
+	password char(128) DEFAULT NULL,
+	roles roles[] NOT NULL DEFAULT '{user}'::roles[],
+	title text NOT NULL DEFAULT ''::text,
 	data json NOT NULL DEFAULT '{}'::json,
 	CONSTRAINT users_pkey PRIMARY KEY (id),
 	CONSTRAINT users_email_check CHECK (email ~ '^[a-z0-9_\.%+-]+@[a-z0-9_\.-]+?[a-z0-9]$'),
 	CONSTRAINT users_password_check CHECK(password ~ '^[0-9a-f]+$')
 ) WITH (OIDS = FALSE);
 CREATE INDEX users_enable_idx ON users USING btree (enable);
+CREATE INDEX users_ts_idx ON users USING btree (ts);
 CREATE UNIQUE INDEX users_email_unique_idx ON users USING btree (email);
 
 -- Add global application administrator
-INSERT INTO users (id, enable, email, password) VALUES (
+INSERT INTO users (id, enable, email, password, roles, title) VALUES (
 	'00000000-0000-1000-0000-000000000000',
 	TRUE,
-	'admin@arabtravel',
-	encode(digest('password', 'sha512'), 'hex')
+	'admin@arabtravel.jo',
+	encode(digest('password', 'sha512'), 'hex'),
+	'{admin}'::roles[],
+	'Administrator'
 );
 
--- Prevent delete administrator
-CREATE FUNCTION users_prevent_delete_admin() RETURNS trigger LANGUAGE plpgsql AS $$
+-- Prevent corrupt global admin user
+CREATE FUNCTION users_prevent_corrupt_admin() RETURNS trigger LANGUAGE plpgsql AS $$
 BEGIN
-	IF (OLD.id = '00000000-0000-1000-0000-000000000000') THEN
-		RAISE EXCEPTION 'This user is locked by application policy';
+	IF (TG_OP = 'DELETE' AND OLD.id <> '00000000-0000-1000-0000-000000000000') THEN
+		RETURN OLD;
+	ELSIF (OLD.id <> '00000000-0000-1000-0000-000000000000') THEN
+		RETURN NEW;
+	ELSIF (OLD.id = '00000000-0000-1000-0000-000000000000' AND NEW.id = '00000000-0000-1000-0000-000000000000' AND NEW.roles @> '{admin}'::roles[] AND NEW.enable) THEN
+		RETURN NEW;
 	END IF;
-	RETURN OLD;
+	RAISE EXCEPTION 'APPLICATION_POLICY';
 END;
 $$;
-CREATE TRIGGER users_prevent_delete_admin_trigger BEFORE DELETE ON users
-				FOR EACH ROW EXECUTE PROCEDURE users_prevent_delete_admin();
-
--- Prevent change id of administrator
-CREATE FUNCTION users_prevent_update_admin_id() RETURNS trigger LANGUAGE plpgsql AS $$
-BEGIN
-	IF (OLD.id = '00000000-0000-1000-0000-000000000000' AND
-		NEW.id <> '00000000-0000-1000-0000-000000000000' ) THEN
-			RAISE EXCEPTION 'Prevent change id for this user by application policy';
-	END IF;
-	RETURN NEW;
-END;
-$$;
-CREATE TRIGGER users_prevent_update_admin_id_trigger BEFORE UPDATE ON users
-				FOR EACH ROW EXECUTE PROCEDURE users_prevent_update_admin_id();
+CREATE TRIGGER users_prevent_corrupt_admin_trigger BEFORE UPDATE OR DELETE ON users FOR EACH ROW EXECUTE PROCEDURE users_prevent_corrupt_admin();
 
 -- Session data storage
 CREATE TABLE sessions (
-	id uuid NOT NULL DEFAULT uuid_generate_v1(),
-	userid uuid NOT NULL,
+	id uuid NOT NULL DEFAULT uuid_generate_v4(),
+	owner uuid DEFAULT NULL,
 	ts timestamp without time zone NOT NULL DEFAULT timezone('UTC', now()),
 	data json NOT NULL DEFAULT '{}'::json,
-	ip inet,
 	CONSTRAINT sessions_pkey PRIMARY KEY (id),
-	CONSTRAINT sessions_user_fkey FOREIGN KEY (userid) REFERENCES users (id) ON UPDATE CASCADE ON DELETE CASCADE
+	CONSTRAINT sessions_owner_fkey FOREIGN KEY (owner) REFERENCES users (id) ON UPDATE CASCADE ON DELETE CASCADE
 ) WITH (OIDS = FALSE);
-CREATE INDEX sessions_userid_idx ON sessions USING btree (userid);
+CREATE INDEX sessions_owner_idx ON sessions USING btree (owner);
 CREATE INDEX sessions_ts_idx ON sessions USING btree (ts);
 
 -- Set session ts
@@ -99,8 +90,7 @@ BEGIN
 	RETURN NEW;
 END;
 $$;
-CREATE TRIGGER sessions_update_ts_trigger BEFORE INSERT OR UPDATE ON sessions
-				FOR EACH ROW EXECUTE PROCEDURE sessions_update_ts();
+CREATE TRIGGER sessions_update_ts_trigger BEFORE INSERT OR UPDATE ON sessions FOR EACH ROW EXECUTE PROCEDURE sessions_update_ts();
 
 -- Clear old sessions
 CREATE FUNCTION sessions_delete_old_rows() RETURNS trigger LANGUAGE plpgsql AS $$
@@ -109,18 +99,23 @@ BEGIN
 	RETURN NULL;
 END;
 $$;
-CREATE TRIGGER sessions_delete_old_rows_trigger AFTER INSERT ON sessions
-				FOR EACH STATEMENT EXECUTE PROCEDURE sessions_delete_old_rows();
+CREATE TRIGGER sessions_delete_old_rows_trigger AFTER INSERT OR UPDATE ON sessions FOR EACH STATEMENT EXECUTE PROCEDURE sessions_delete_old_rows();
+
+-- Models
+CREATE TYPE models AS ENUM ('hotel', 'human', 'order', 'package', 'trip');
 
 -- Objects data store
 CREATE TABLE objects (
+	model models NOT NULL,
 	id uuid NOT NULL DEFAULT uuid_generate_v1(),
-	model varchar(128) NOT NULL,
-	owner uuid DEFAULT NULL,
 	enable boolean NOT NULL DEFAULT TRUE,
-	deleted boolean NOT NULL DEFAULT FALSE,
+	owner uuid DEFAULT NULL,
+	title text NOT NULL DEFAULT ''::text,
 	data json NOT NULL DEFAULT '{}'::json,
 	CONSTRAINT objects_pkey PRIMARY KEY (id),
 	CONSTRAINT objects_model_check CHECK (model ~ '^[a-z0-9\-]+$'),
-	CONSTRAINT objects_user_fkey FOREIGN KEY (owner) REFERENCES users (id) ON UPDATE CASCADE ON DELETE SET NULL
+	CONSTRAINT objects_owner_fkey FOREIGN KEY (owner) REFERENCES users (id) ON UPDATE CASCADE ON DELETE SET NULL
 ) WITH (OIDS = FALSE);
+CREATE INDEX objects_model_idx ON objects USING btree (model);
+CREATE INDEX objects_enable_idx ON objects USING btree (enable);
+CREATE INDEX objects_owner_idx ON objects USING btree (owner);
