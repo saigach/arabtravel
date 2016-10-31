@@ -10,7 +10,7 @@ import { Package } from '../../model/package'
 	selector: 'trip-list',
 	templateUrl: '/app/component/package/package-list.component.html'
 })
-export class OrderListComponent implements OnInit {
+export class PackageListComponent implements OnInit {
 
 	items: Package[] = []
 

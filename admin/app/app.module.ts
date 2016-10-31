@@ -11,26 +11,23 @@ import { routing } from './app.routing'
 
 import { AppComponent } from './component/app.component'
 
-import { FroalaEditorDirective, FroalaViewDirective } from './directive/froala.directives'
+import { HotelListComponent } from './component/hotel/hotel-list.component'
+import { HotelItemComponent } from './component/hotel/hotel-item.component'
 
-import { StaticListComponent } from './component/static/static-list.component'
-import { StaticItemComponent } from './component/static/static-item.component'
+import { HumanListComponent } from './component/human/human-list.component'
+import { HumanItemComponent } from './component/human/human-item.component'
 
-import { NewsListComponent } from './component/news/news-list.component'
-import { NewsItemComponent } from './component/news/news-item.component'
+import { OrderListComponent } from './component/order/order-list.component'
+import { OrderItemComponent } from './component/order/order-item.component'
 
-import { ProjectListComponent } from './component/project/project-list.component'
-import { ProjectItemComponent } from './component/project/project-item.component'
+import { PackageListComponent } from './component/package/package-list.component'
+import { PackageItemComponent } from './component/package/package-item.component'
+
+import { TripListComponent } from './component/trip/trip-list.component'
+import { TripItemComponent } from './component/trip/trip-item.component'
 
 import { UserListComponent } from './component/user/user-list.component'
 import { UserItemComponent } from './component/user/user-item.component'
-
-import { VolunteerListComponent } from './component/volunteer/volunteer-list.component'
-import { VolunteerItemComponent } from './component/volunteer/volunteer-item.component'
-
-import { MessageComponent } from './component/message/message.component'
-
-import { MainComponent } from './component/main/main.component'
 
 @NgModule({
 	imports: [
@@ -42,20 +39,18 @@ import { MainComponent } from './component/main/main.component'
 	],
 	declarations: [
 		AppComponent,
-		FroalaEditorDirective,
-		FroalaViewDirective,
-		StaticListComponent,
-		StaticItemComponent,
-		NewsListComponent,
-		NewsItemComponent,
-		ProjectListComponent,
-		ProjectItemComponent,
+		HotelListComponent,
+		HotelItemComponent,
+		HumanListComponent,
+		HumanItemComponent,
+		OrderListComponent,
+		OrderItemComponent,
+		PackageListComponent,
+		PackageItemComponent,
+		TripListComponent,
+		TripItemComponent,
 		UserListComponent,
-		UserItemComponent,
-		VolunteerListComponent,
-		VolunteerItemComponent,
-		MessageComponent,
-		MainComponent
+		UserItemComponent
 	],
 	providers: [
 		APIService,

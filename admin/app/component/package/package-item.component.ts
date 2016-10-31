@@ -12,7 +12,7 @@ import { Package } from '../../model/package'
 	selector: 'project-item',
 	templateUrl: '/app/component/package/package-item.component.html'
 })
-export class OrderItemComponent implements OnInit {
+export class PackageItemComponent implements OnInit {
 
 	item: Package = new Package()
 

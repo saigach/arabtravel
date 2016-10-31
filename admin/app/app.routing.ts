@@ -1,58 +1,69 @@
 import { ModuleWithProviders }  from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 
-import { StaticListComponent } from './component/static/static-list.component'
-import { StaticItemComponent } from './component/static/static-item.component'
+import { HotelListComponent } from './component/hotel/hotel-list.component'
+import { HotelItemComponent } from './component/hotel/hotel-item.component'
 
-import { NewsListComponent } from './component/news/news-list.component'
-import { NewsItemComponent } from './component/news/news-item.component'
+import { HumanListComponent } from './component/human/human-list.component'
+import { HumanItemComponent } from './component/human/human-item.component'
 
-import { ProjectListComponent } from './component/project/project-list.component'
-import { ProjectItemComponent } from './component/project/project-item.component'
+import { OrderListComponent } from './component/order/order-list.component'
+import { OrderItemComponent } from './component/order/order-item.component'
+
+import { PackageListComponent } from './component/package/package-list.component'
+import { PackageItemComponent } from './component/package/package-item.component'
+
+import { TripListComponent } from './component/trip/trip-list.component'
+import { TripItemComponent } from './component/trip/trip-item.component'
 
 import { UserListComponent } from './component/user/user-list.component'
 import { UserItemComponent } from './component/user/user-item.component'
 
-import { VolunteerListComponent } from './component/volunteer/volunteer-list.component'
-import { VolunteerItemComponent } from './component/volunteer/volunteer-item.component'
-
-import { MessageComponent } from './component/message/message.component'
-
-import { MainComponent } from './component/main/main.component'
-
 const appRoutes: Routes = [
 	{
 		path: '',
-		redirectTo: '/main',
+		redirectTo: '/order',
 		pathMatch: 'full'
 	},
 	{
-		path: 'main',
-		component: MainComponent
+		path: 'hotels',
+		component: HotelListComponent
 	},
 	{
-		path: 'news',
-		component: NewsListComponent
+		path: 'hotels/:id',
+		component: HotelItemComponent
 	},
 	{
-		path: 'news/:id',
-		component: NewsItemComponent
+		path: 'people',
+		component: HumanListComponent
 	},
 	{
-		path: 'static',
-		component: StaticListComponent
+		path: 'people/:id',
+		component: HumanItemComponent
 	},
 	{
-		path: 'static/:id',
-		component: StaticItemComponent
+		path: 'orders',
+		component: OrderListComponent
 	},
 	{
-		path: 'projects',
-		component: ProjectListComponent
+		path: 'orders/:id',
+		component: OrderItemComponent
 	},
 	{
-		path: 'projects/:id',
-		component: ProjectItemComponent
+		path: 'packages',
+		component: PackageListComponent
+	},
+	{
+		path: 'packages/:id',
+		component: PackageItemComponent
+	},
+	{
+		path: 'trips',
+		component: TripListComponent
+	},
+	{
+		path: 'trips/:id',
+		component: TripItemComponent
 	},
 	{
 		path: 'users',
@@ -61,18 +72,6 @@ const appRoutes: Routes = [
 	{
 		path: 'users/:id',
 		component: UserItemComponent
-	},
-	{
-		path: 'volunteers',
-		component: VolunteerListComponent
-	},
-	{
-		path: 'volunteers/:id',
-		component: VolunteerItemComponent
-	},
-	{
-		path: 'messages',
-		component: MessageComponent
 	}
 ];
 

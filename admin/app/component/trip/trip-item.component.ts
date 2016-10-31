@@ -12,7 +12,7 @@ import { Trip } from '../../model/trip'
 	selector: 'project-item',
 	templateUrl: '/app/component/trip/trip-item.component.html'
 })
-export class OrderItemComponent implements OnInit {
+export class TripItemComponent implements OnInit {
 
 	item: Trip = new Trip()
 

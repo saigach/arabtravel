@@ -10,7 +10,7 @@ import { Trip } from '../../model/trip'
 	selector: 'trip-list',
 	templateUrl: '/app/component/trip/trip-list.component.html'
 })
-export class OrderListComponent implements OnInit {
+export class TripListComponent implements OnInit {
 
 	items: Trip[] = []
 
