@@ -2,14 +2,17 @@ import './rxjs-extensions'
 
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
-import { FormsModule, ReactiveFormsModule }    from '@angular/forms'
-import { HttpModule }    from '@angular/http'
+import { FormsModule } from '@angular/forms'
+import { HttpModule } from '@angular/http'
 
 import { APIService } from './service/api.service'
 import { FileService } from './service/file.service'
 import { routing } from './app.routing'
 
 import { AppComponent } from './component/app.component'
+
+import { ListFilterPipe } from './pipe/list-filter.pipe'
+import { ListOrderBy } from './pipe/list-orderby.pipe'
 
 import { HotelListComponent } from './component/hotel/hotel-list.component'
 import { HotelItemComponent } from './component/hotel/hotel-item.component'
@@ -33,22 +36,30 @@ import { UserItemComponent } from './component/user/user-item.component'
 	imports: [
 		BrowserModule,
 		FormsModule,
-		ReactiveFormsModule,
 		HttpModule,
 		routing
 	],
 	declarations: [
 		AppComponent,
+
+		ListFilterPipe,,
+		ListOrderBy,
+
 		HotelListComponent,
 		HotelItemComponent,
+
 		HumanListComponent,
 		HumanItemComponent,
+
 		OrderListComponent,
 		OrderItemComponent,
+
 		PackageListComponent,
 		PackageItemComponent,
+
 		TripListComponent,
 		TripItemComponent,
+
 		UserListComponent,
 		UserItemComponent
 	],
