@@ -58,11 +58,205 @@
     <link rel="stylesheet" href="fonts/arabtravel-icons/css/arabtravel-icons.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic&subset=latin,cyrillic" type="text/css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/js/owl.carousel/assets/owl.carousel.css">
 	<link rel="stylesheet" href="/css/styles.css" type="text/css">
 </head>
 <body>
+<div id="wrap">
+    <header class="main-header">
+        <div class="container">
+            <div class="row top-line">
+                <div class="col-md-6 top-contacts">
+                    <div class="top-contacts_elem top-contacts_phone"><i class="demo-icon ico_phone"></i>(123) 456 78 99 </div>
+                    <div class="top-contacts_elem top-contacts_email"><a href="mailto:ask@arabtravel.jo"><i class="demo-icon ico_mail"></i>ask@arabtravel.jo</a></div>
+                </div>
+                <div class="col-md-4 col-md-push-2">
+                    <div class="pull-left">
+                        <a href="" class="btn btn-default btn-ghost btn-ui btn-account">
+                            <i class="demo-icon ico_user"></i> Му account
+                        </a>
+                    </div>
+                    <div class="pull-right">
+                        <div class="dropdown pull-right">
+                            <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                USD
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dLabel">
+                                <li><a href="">USD</a></li>
+                                <li><a href="">JOD</a></li>
+                            </ul>
+                        </div>
+                        <div class="dropdown pull-right">
+                            <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                EN
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dLabel">
+                                <li><a href="">EN</a></li>
+                                <li><a href="">AR</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row nav-line clearfix">
+                <div class="col-md-8 logo-container">
+                    <div class="logo-subtitle-container">
+                        <div class="subtitle">Ferry booking agency</div>
+                        <div class="logo">
+                            <a class="logo-link" href="/"><img src="img/logo.png" alt=""></a>
+                        </div>
+                    </div>
+                    <div class="subtitle2">Your road between Jordan, Egypt and Saudi Arabia</div>
+
+                </div>
+
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                </button>
+                <ul class="nav navbar-nav navbar-right header-navbar">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Passenger Info<strong class="caret"></strong></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="#">Fleet Time Table</a>
+                            </li>
+                            <li>
+                                <a href="#">Travel Guides for Passengers</a>
+                            </li>
+                            <li>
+                                <a href="#">Travel Guides for Vehicles</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Contact Us<strong class="caret"></strong></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="#">Jordan</a>
+                            </li>
+                            <li>
+                                <a href="#">Egypt</a>
+                            </li>
+                            <li>
+                                <a href="#">Iraq</a>
+                            </li>
+                            <li class="divider">
+                            </li>
+                            <li>
+                                <a href="#">Agents</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </header>
+
 	{{=it.main || ''}}
 
+	</div><!-- /.wrap -->
+	<footer class="main-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    ferry booking agency
+                    <img alt="Bootstrap Image Preview" src="img/logo-footer.png" style="width: 100%" /> Your road between Jordan Egypt and Saudi Arabia
+
+                    <div class="top-contacts">
+                        <div class="top-contacts_elem top-contacts_phone"><i class="demo-icon ico_phone"></i>(123) 456 78 99 </div>
+                        <div class="top-contacts_elem top-contacts_email"><a href="mailto:ask@arabtravel.jo"><i class="demo-icon ico_mail"></i>ask@arabtravel.jo</a></div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+
+                    <form role="form" class="contact-form dark-form">
+                        <p class="footer-title">Ask us a question</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="exampleInputEmail1" />
+                                    <label for="exampleInputEmail1">
+                                        Name
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="email" class="form-control" id="exampleInputPassword1" />
+                                    <label for="exampleInput">
+                                        Email
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <textarea name="" class="form-control" id="" cols="30" rows="3"></textarea>
+                                    <label for="exampleInput">
+                                        Message
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <button type="submit" class="btn btn-default">
+                            Submit
+                        </button>
+                    </form>
+                </div>
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="footer-title">Passenger Info</p>
+                            <ul class="footer-menu">
+                                <li>
+                                    <a href="#">Fleet Time Table</a>
+                                </li>
+                                <li>
+                                    <a href="#">Travel Guides for Passengers</a>
+                                </li>
+                                <li>
+                                    <a href="#">Travel Guides for Vehicles</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="footer-title">Contact us</p>
+                            <ul class="footer-menu">
+                                <li>
+                                    <a href="#">Jordan</a>
+                                </li>
+                                <li>
+                                    <a href="#">Egypt</a>
+                                </li>
+                                <li>
+                                    <a href="#">Iraq</a>
+                                </li>
+                                <li class="divider">
+                                </li>
+                                <li>
+                                    <a href="#">Agents</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row bottom-line">
+                <div class="col-md-12">
+                    <div class="copyright">
+                        © Arab Travel, 2016
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+	
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
 	<script src="js/bootstrap.min.js"></script>
@@ -82,9 +276,9 @@
 	<script src="/js/moment-with-locales.js"></script>
 
 	<script src="/js/bootstrap-datetimepicker.min.js"></script>
-
-	<script src="/js/skrollr/skrollr.min.js"></script>
-
+	
+	<script src="/js/owl.carousel/owl.carousel.min.js"></script>
+	
 	<script src="/js/main.js"></script>
 
 	<script src="/js/app-init.js"></script>

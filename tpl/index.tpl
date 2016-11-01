@@ -1,94 +1,3 @@
-    <header class="main-header">
-        <div class="container">
-            <div class="row top-line">
-                <div class="col-md-6 top-contacts">
-                    <div class="top-contacts_elem top-contacts_phone"><i class="demo-icon ico_phone"></i>(123) 456 78 99 </div>
-                    <div class="top-contacts_elem top-contacts_email"><a href="mailto:ask@arabtravel.jo"><i class="demo-icon ico_mail"></i>ask@arabtravel.jo</a></div>
-                </div>
-                <div class="col-md-4 col-md-push-2">
-                    <div class="pull-left">
-                        <a href="" class="btn btn-default btn-ghost btn-ui btn-account">
-                            <i class="demo-icon ico_user"></i> Му account
-                        </a>
-                    </div>
-                    <div class="pull-right">
-                        <div class="dropdown pull-right">
-                            <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                USD
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dLabel">
-                                <li><a href="">USD</a></li>
-                                <li><a href="">JOD</a></li>
-                            </ul>
-                        </div>
-                        <div class="dropdown pull-right">
-                            <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                EN
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dLabel">
-                                <li><a href="">EN</a></li>
-                                <li><a href="">AR</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row nav-line clearfix">
-                <div class="col-md-8 logo-container">
-                    <div class="logo-subtitle-container">
-                        <div class="subtitle">Ferry booking agency</div>
-                        <div class="logo">
-                            <a class="logo-link" href="/"><img src="img/logo.png" alt=""></a>
-                        </div>
-                    </div>
-                    <div class="subtitle2">Your road between Jordan, Egypt and Saudi Arabia</div>
-
-                </div>
-
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-                </button>
-                <ul class="nav navbar-nav navbar-right header-navbar">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Passenger Info<strong class="caret"></strong></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="#">Fleet Time Table</a>
-                            </li>
-                            <li>
-                                <a href="#">Travel Guides for Passengers</a>
-                            </li>
-                            <li>
-                                <a href="#">Travel Guides for Vehicles</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Contact Us<strong class="caret"></strong></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="#">Jordan</a>
-                            </li>
-                            <li>
-                                <a href="#">Egypt</a>
-                            </li>
-                            <li>
-                                <a href="#">Iraq</a>
-                            </li>
-                            <li class="divider">
-                            </li>
-                            <li>
-                                <a href="#">Agents</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-
-            </div>
-        </div>
-    </header>
 
     <div class="form-area">
 
@@ -419,7 +328,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h2>Why to Book Online</h2>
+                    <h2 class="h1 text-center">Why to Book Online</h2>
                 </div>
             </div>
             <div class="row">
@@ -427,7 +336,7 @@
                     <div class="large-icon ico_click">
 
                     </div>
-                    <h3>Easy</h3>
+                    <h3 class="text-center">Easy</h3>
                     <p>
                         Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
                     </p>
@@ -436,7 +345,7 @@
                     <div class="large-icon ico_time">
 
                     </div>
-                    <h3>Fast</h3>
+                    <h3 class="text-center">Fast</h3>
                     <p>
                         Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
                     </p>
@@ -444,40 +353,40 @@
                 <div class="col-md-4">
                     <div class="large-icon ico_key">
                     </div>
-                    <h3>Secure</h3>
+                    <h3 class="text-center">Secure</h3>
                     <p>
                         Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
                     </p>
                 </div>
             </div>
             <section class="how-we-work">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h2>How we work</h2>
-                    </div>
-                </div>
-                <div class="row hww-graphics">
-                    <div class="hww-graphics_bar">
-                        <div class="hww-graphics_progress skrollable skrollable-between" data--400-bottom-top="width:0%" data-300-top-top="width:100%"></div>
-                    </div>
-                    <div class="col-md-3 hww-graphics_item">
-                        <div class="hww-graphics_icon ico_pen"></div>
-                        <p>Fill the form above and check your price and options</p>
-                    </div>
-                    <div class="col-md-3 hww-graphics_item">
-                        <div class="hww-graphics_icon ico_card-usd"></div>
-                        <p>Enter your personal information and reserve a ticket</p>
-                    </div>
-                    <div class="col-md-3 hww-graphics_item">
-                        <div class="hww-graphics_icon ico_attachment"></div>
-                        <p>Get your ticket on the next day by email and in your personal account on the site</p>
-                    </div>
-                    <div class="col-md-3 hww-graphics_item">
-                        <div class="hww-graphics_icon ico_doc"></div>
-                        <p>Print it and use it! (most our tickets are open-date for 3 months)</p>
-                    </div>
-                </div>
-            </section>
+				<div class="row">
+					<div class="col-md-12">
+						<h2 class="h1 text-center">How we work</h2>
+					</div>
+				</div>
+				<div class="row hww-graphics" id="hww-graphics">
+					<div class="hww-graphics_bar">
+						<div id="hww-graphics_progress" class="hww-graphics_progress skrollable skrollable-between" data--400-bottom-top="width:0%" data-300-top-top="width:100%"></div>
+					</div>
+					<div class="col-md-3 hww-graphics_item">
+						<div class="hww-graphics_icon ico_pen"></div>
+						<p>Fill the form above and check your price and options</p>
+					</div>
+					<div class="col-md-3 hww-graphics_item">
+						<div class="hww-graphics_icon ico_card-usd"></div>
+						<p>Enter your personal information and reserve a ticket</p>
+					</div>    
+					<div class="col-md-3 hww-graphics_item">
+						<div class="hww-graphics_icon ico_attachment"></div>
+						<p>Get your ticket on the next day by email and in your personal account on the site</p>
+					</div>
+					<div class="col-md-3 hww-graphics_item">
+						<div class="hww-graphics_icon ico_doc"></div>
+						<p>Print it and use it! (most our tickets are open-date for 3 months)</p>
+					</div>
+				</div>
+			</section>
         </div>
 
         <div class="section-full-width section-partners">
@@ -593,105 +502,6 @@
                                 </div>
                             </a>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="main-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3">
-                    ferry booking agency
-                    <img alt="Bootstrap Image Preview" src="img/logo-footer.png" style="width: 100%" /> Your road between Jordan Egypt and Saudi Arabia
-
-                    <div class="top-contacts">
-                        <div class="top-contacts_elem top-contacts_phone"><i class="demo-icon ico_phone"></i>(123) 456 78 99 </div>
-                        <div class="top-contacts_elem top-contacts_email"><a href="mailto:ask@arabtravel.jo"><i class="demo-icon ico_mail"></i>ask@arabtravel.jo</a></div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-
-                    <form role="form" class="contact-form dark-form">
-                        <p class="footer-title">Ask us a question</p>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="exampleInputEmail1" />
-                                    <label for="exampleInputEmail1">
-                                        Name
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="email" class="form-control" id="exampleInputPassword1" />
-                                    <label for="exampleInput">
-                                        Email
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <textarea name="" class="form-control" id="" cols="30" rows="3"></textarea>
-                                    <label for="exampleInput">
-                                        Message
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <button type="submit" class="btn btn-default">
-                            Submit
-                        </button>
-                    </form>
-                </div>
-                <div class="col-md-3">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p class="footer-title">Passenger Info</p>
-                            <ul class="footer-menu">
-                                <li>
-                                    <a href="#">Fleet Time Table</a>
-                                </li>
-                                <li>
-                                    <a href="#">Travel Guides for Passengers</a>
-                                </li>
-                                <li>
-                                    <a href="#">Travel Guides for Vehicles</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-md-6">
-                            <p class="footer-title">Contact us</p>
-                            <ul class="footer-menu">
-                                <li>
-                                    <a href="#">Jordan</a>
-                                </li>
-                                <li>
-                                    <a href="#">Egypt</a>
-                                </li>
-                                <li>
-                                    <a href="#">Iraq</a>
-                                </li>
-                                <li class="divider">
-                                </li>
-                                <li>
-                                    <a href="#">Agents</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row bottom-line">
-                <div class="col-md-12">
-                    <div class="copyright">
-                        © Arab Travel, 2016
                     </div>
                 </div>
             </div>
