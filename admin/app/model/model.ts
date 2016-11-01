@@ -12,15 +12,9 @@ export class Model {
 	title: string = ''
 
 	constructor(value: any = {}) {
-		Object.assign(this, value)
-		this.id = value.__id instanceof UUID && value.__id || new UUID(value.__id || null)
-		this.enable = value.__enable === undefined ? true : !!value.__enable
-
-		if (value.owner && value.owner.id)
-			this.owner = new User(value.owner)
-		else
-			this.owner = null
-
+		this.id = value.id instanceof UUID && value.id || new UUID(value.id || null)
+		this.enable = value.enable === undefined ? true : !!value.enable
+		this.owner = null
 		this.title = String(value.title || '')
 	}
 
@@ -29,7 +23,7 @@ export class Model {
 			id: this.id.toString(),
 			enable: this.enable,
 			owner: this.owner && this.owner.id.toString() || null,
-			title: this.title,
+			title: this.title
 		}
 	}
 

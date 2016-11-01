@@ -8,7 +8,9 @@
 const escapeStr = str => "'" + String(str).replace(/\\/g, "\\\\").replace(/'/g, "\\'") + "'"
 
 module.exports = class APIUser {
-	constructor(DB) { this.DB = DB }
+	constructor(DB) {
+		this.DB = DB
+	}
 
 	api(requestData) {
 		let method = requestData.request.method
@@ -24,6 +26,9 @@ module.exports = class APIUser {
 				data: { error: 'User ID is not valid UUIDv1'}
 			})
 
+		if (data && data.id)
+			delete data.id
+
 		switch (method) {
 			case 'GET':
 
@@ -34,7 +39,7 @@ module.exports = class APIUser {
 							users.enable,
 							users.title,
 							users.email,
-							users.roles
+							array_to_json(users.roles) AS roles
 						FROM users
 					`).then(rows => ({
 						code: 200,
@@ -43,7 +48,8 @@ module.exports = class APIUser {
 
 				return this.DB.query(`
 						SELECT
-							users.*
+							users.*,
+							array_to_json(users.roles) AS roles
 						FROM users
 						WHERE users.id = '${id}'
 				`).then(rows => {
@@ -53,7 +59,7 @@ module.exports = class APIUser {
 							data: { error: `User "${id}"" not found`}
 						}
 
-					let item = rows[0]
+					let item = Object.assign(rows[0].data || {}, rows[0], { data: null })
 					if (item.password)
 						delete item.password
 
@@ -150,7 +156,7 @@ module.exports = class APIUser {
 						}
 						title = escapeStr(title)
 
-						let data = escapeStr(JSON.stringify(data || {}))
+						data = escapeStr(JSON.stringify(data || {}))
 
 						return this.DB.query(`
 							INSERT INTO users (
@@ -163,9 +169,11 @@ module.exports = class APIUser {
 								roles = ${roles},
 								title = ${title},
 								data = ${data}
-							RETURNING *
+							RETURNING
+								*,
+								array_to_json(roles) AS roles
 						`).then( rows => {
-							let item = rows[0]
+							let item = Object.assign(rows[0].data || {}, rows[0], { data: null })
 							if (item.password)
 								delete item.password
 
@@ -183,7 +191,7 @@ module.exports = class APIUser {
 						data: { error: 'ID is not set' }
 					})
 				return this.DB.query(`
-					DELETE FROM volunteers
+					DELETE FROM users
 					WHERE id='${id}'
 				`).then(rows => ({
 					code: 200,

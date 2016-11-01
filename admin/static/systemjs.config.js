@@ -33,5 +33,5 @@
 				defaultExtension: 'js'
 			}
 		}
-	});
-})(this);
+	})
+})(this)

@@ -38,6 +38,10 @@
 	background: #fafafa;
 }
 
+.admin-list-icons i + i {
+	margin-left: 5px;
+}
+
 
 
 

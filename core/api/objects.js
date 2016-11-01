@@ -10,18 +10,34 @@ const translite = require('../translite.js')
 const escapeStr = str => "'" + String(str).replace(/\\/g, "\\\\").replace(/'/g, "\\'") + "'"
 
 module.exports = class APIProject {
-	constructor(DB) { this.DB = DB }
+	constructor(DB) {
+		this.DB = DB
+		this.DB.query(`SELECT unnest(enum_range(NULL::models)) AS model`).then(rows =>
+			this.models = rows.reduce( (prev, value) => prev.concat(value.model), [] )
+		)
+	}
 
 	api(requestData) {
 		let method = requestData.request.method
-		let data = requestData.request.body || undefined
-		let id = requestData.request.path.shift() || data && data.__id || null
 
+		let model = requestData.request.path.shift()
+		if (!model || !this.models.includes(model))
+			return Promise.resolve({
+				code: 400,
+				data: { error: 'Wrong model name'}
+			})
+
+		let data = requestData.request.body || undefined
+
+		let id = requestData.request.path.shift() || data && data.__id || null
 		if (id && !/^[a-f0-9]{8}-[a-f0-9]{4}-1[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12}$/i.test(id))
 			return Promise.resolve({
 				code: 400,
 				data: { error: 'ID is not valid UUIDv1'}
 			})
+
+		if (data && data.id)
+			delete data.id
 
 		switch (method) {
 			case 'GET':
@@ -35,6 +51,7 @@ module.exports = class APIProject {
 							json_build_object('id',users.id, 'title',users.title) AS owner
 						FROM objects
 						LEFT JOIN users ON objects.owner = users.id
+						WHERE model = '${model}'
 					`).then(rows => ({
 						code: 200,
 						data: rows
@@ -46,7 +63,10 @@ module.exports = class APIProject {
 						json_build_object('id',users.id, 'title',users.title) AS owner
 					FROM objects
 					LEFT JOIN users ON objects.owner = users.id
-					WHERE objects.id = '${id}'
+					WHERE
+						model = '${model}'
+						AND
+						objects.id = '${id}'
 				`).then(rows => {
 					if (rows.length !== 1)
 						return {
@@ -55,7 +75,7 @@ module.exports = class APIProject {
 						}
 					return {
 						code: 200,
-						data: rows[0]
+						data: Object.assign(item.rows[0] || {}, rows[0], { data: null })
 					}
 				})
 
@@ -81,7 +101,10 @@ module.exports = class APIProject {
 						return this.DB.query(`
 							UPDATE objects
 							SET enable = NOT enable
-							WHERE id = ${id}
+							WHERE
+								model = '${model}'
+								AND
+								id = ${id}
 							RETURNING enable
 						`).then( rows => ({
 							code: 200,
@@ -108,9 +131,9 @@ module.exports = class APIProject {
 
 						return this.DB.query(`
 							INSERT INTO objects (
-								id,    enable,    owner,    title,    data
+								model,      id,    enable,    owner,    title,    data
 							) VALUES (
-								${id}, ${enable}, ${owner}, ${title}, ${data}
+								'${model}', ${id}, ${enable}, ${owner}, ${title}, ${data}
 							) ON CONFLICT (id) DO UPDATE SET
 								enable = ${enable},
 								owner = ${owner},
@@ -125,7 +148,7 @@ module.exports = class APIProject {
 								) AS owner
 						`).then( rows => ({
 							code: 200,
-							data: rows[0]
+							data: Object.assign(item.rows[0] || {}, rows[0], { data: null })
 						}) )
 				}
 
@@ -137,7 +160,10 @@ module.exports = class APIProject {
 					})
 				return this.DB.query(`
 					DELETE FROM objects
-					WHERE id='${id}'
+					WHERE
+						model = '${model}'
+						AND
+						id='${id}'
 				`).then(rows => ({
 					code: 200,
 					data: { sucess: 'deleted', id: id }

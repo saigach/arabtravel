@@ -3,7 +3,7 @@ import { Router } from '@angular/router'
 
 import { APIService } from '../service/api.service'
 
-import { User, UserRoles } from '../model/user'
+import { User } from '../model/user'
 
 @Component({
 	selector: 'app',
@@ -21,6 +21,7 @@ export class AppComponent {
 		this.apiService.get<User>(User, 'self')
 			.then((response: User) => this.self = response)
 			.catch(error => this.self = null)
+			.then(() => console.log(this.self))
 
 	}
 

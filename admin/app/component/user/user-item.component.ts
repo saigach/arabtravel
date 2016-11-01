@@ -14,6 +14,8 @@ import { User, UserRoles } from '../../model/user'
 })
 export class UserItemComponent implements OnInit {
 
+	userRoles = UserRoles
+
 	item: User = new User()
 
 	submitted: boolean = false
@@ -50,6 +52,17 @@ export class UserItemComponent implements OnInit {
 
 	back(): void {
 		this.location.back()
+	}
+
+	isRole(role): boolean {
+		return !!this.item.roles.find(value => value.id === role.id)
+	}
+
+	toggleRole(role): void {
+		if (this.isRole(role))
+			this.item.roles = this.item.roles.filter(value => value.id !== role.id)
+		else
+			this.item.roles.push(role)
 	}
 
 	setImage(fileSelector: HTMLInputElement): void {

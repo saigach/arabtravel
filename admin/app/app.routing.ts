@@ -22,7 +22,7 @@ import { UserItemComponent } from './component/user/user-item.component'
 const appRoutes: Routes = [
 	{
 		path: '',
-		redirectTo: '/order',
+		redirectTo: '/users',
 		pathMatch: 'full'
 	},
 	{

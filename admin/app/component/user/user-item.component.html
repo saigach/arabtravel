@@ -12,7 +12,10 @@
 					<span>Enable</span>
 					<input  class="uk-hidden" type="checkbox" name="enable" [(ngModel)]="item.enable">
 				</label>
-				<button class="uk-button" (click)="showPasswordDialog($event)">Change password</button>
+				<div class="uk-button-group uk-margin-left">
+					<button *ngFor="let role of userRoles" class="uk-button admin-button" [class.uk-active]="isRole(role)" (click)="toggleRole(role); $event.preventDefault()">{{ role.title }}</button>
+				</div>
+				<button class="uk-button uk-margin-large-left" (click)="showPasswordDialog($event)">Change password</button>
 			</div>
 			<div class="uk-width-7-10">
 				<div class="uk-width-1-1 uk-margin-top">

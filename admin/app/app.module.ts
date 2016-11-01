@@ -4,15 +4,15 @@ import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { FormsModule } from '@angular/forms'
 import { HttpModule } from '@angular/http'
+import { routing } from './app.routing'
 
 import { APIService } from './service/api.service'
 import { FileService } from './service/file.service'
-import { routing } from './app.routing'
-
-import { AppComponent } from './component/app.component'
 
 import { ListFilterPipe } from './pipe/list-filter.pipe'
 import { ListOrderBy } from './pipe/list-orderby.pipe'
+
+import { AppComponent } from './component/app.component'
 
 import { HotelListComponent } from './component/hotel/hotel-list.component'
 import { HotelItemComponent } from './component/hotel/hotel-item.component'
@@ -42,7 +42,7 @@ import { UserItemComponent } from './component/user/user-item.component'
 	declarations: [
 		AppComponent,
 
-		ListFilterPipe,,
+		ListFilterPipe,
 		ListOrderBy,
 
 		HotelListComponent,
