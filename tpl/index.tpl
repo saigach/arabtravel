@@ -451,33 +451,33 @@
                 </div>
             </div>
             <section class="how-we-work">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h2>How we work</h2>
-                    </div>
-                </div>
-                <div class="row hww-graphics">
-                    <div class="hww-graphics_bar">
-                        <div class="hww-graphics_progress skrollable skrollable-between" data--400-bottom-top="width:0%" data-300-top-top="width:100%"></div>
-                    </div>
-                    <div class="col-md-3 hww-graphics_item">
-                        <div class="hww-graphics_icon ico_pen"></div>
-                        <p>Fill the form above and check your price and options</p>
-                    </div>
-                    <div class="col-md-3 hww-graphics_item">
-                        <div class="hww-graphics_icon ico_card-usd"></div>
-                        <p>Enter your personal information and reserve a ticket</p>
-                    </div>
-                    <div class="col-md-3 hww-graphics_item">
-                        <div class="hww-graphics_icon ico_attachment"></div>
-                        <p>Get your ticket on the next day by email and in your personal account on the site</p>
-                    </div>
-                    <div class="col-md-3 hww-graphics_item">
-                        <div class="hww-graphics_icon ico_doc"></div>
-                        <p>Print it and use it! (most our tickets are open-date for 3 months)</p>
-                    </div>
-                </div>
-            </section>
+				<div class="row">
+					<div class="col-md-12">
+						<h2 class="h1 text-center">How we work</h2>
+					</div>
+				</div>
+				<div class="row hww-graphics" id="hww-graphics">
+					<div class="hww-graphics_bar">
+						<div id="hww-graphics_progress" class="hww-graphics_progress skrollable skrollable-between" data--400-bottom-top="width:0%" data-300-top-top="width:100%"></div>
+					</div>
+					<div class="col-md-3 hww-graphics_item">
+						<div class="hww-graphics_icon ico_pen"></div>
+						<p>Fill the form above and check your price and options</p>
+					</div>
+					<div class="col-md-3 hww-graphics_item">
+						<div class="hww-graphics_icon ico_card-usd"></div>
+						<p>Enter your personal information and reserve a ticket</p>
+					</div>    
+					<div class="col-md-3 hww-graphics_item">
+						<div class="hww-graphics_icon ico_attachment"></div>
+						<p>Get your ticket on the next day by email and in your personal account on the site</p>
+					</div>
+					<div class="col-md-3 hww-graphics_item">
+						<div class="hww-graphics_icon ico_doc"></div>
+						<p>Print it and use it! (most our tickets are open-date for 3 months)</p>
+					</div>
+				</div>
+			</section>
         </div>
 
         <div class="section-full-width section-partners">

@@ -58,6 +58,7 @@
     <link rel="stylesheet" href="fonts/arabtravel-icons/css/arabtravel-icons.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic&subset=latin,cyrillic" type="text/css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/js/owl.carousel/assets/owl.carousel.css">
 	<link rel="stylesheet" href="/css/styles.css" type="text/css">
 </head>
 <body>
@@ -82,9 +83,9 @@
 	<script src="/js/moment-with-locales.js"></script>
 
 	<script src="/js/bootstrap-datetimepicker.min.js"></script>
-
-	<script src="/js/skrollr/skrollr.min.js"></script>
-
+	
+	<script src="/js/owl.carousel/owl.carousel.min.js"></script>
+	
 	<script src="/js/main.js"></script>
 
 	<script src="/js/app-init.js"></script>
