@@ -1,0 +1,54 @@
+<div class="uk-grid">
+	<div class="uk-width-3-4 uk-margin-bottom">
+		<h2>Static page <span *ngIf="item">&laquo;{{ item.title }}&raquo;</span></h2>
+	</div>
+	<div class="uk-width-1-4 uk-margin-bottom">
+		<button class="uk-button uk-button-primary uk-align-right" (click)="back()"><i class="uk-icon-arrow-left"></i>&emsp;Back</button>
+	</div>
+	<form class="uk-width-1-1 uk-form uk-form-stacked" (ngSubmit)="submit()">
+		<div class="uk-grid">
+			<div class="uk-width-1-1">
+				<label class="uk-button admin-button" [class.uk-active]="item.enable">
+					<span>Enable</span>
+					<input  class="uk-hidden" type="checkbox" name="enable" [(ngModel)]="item.enable">
+				</label>
+			</div>
+			<div class="uk-width-7-10 uk-margin-top">
+				<div class="uk-width-1-1">
+					<label class="uk-form-label uk-width-1-1">URL</label>
+					<div class="uk-form-controls">
+						<input class="uk-width-1-1" type="text" placeholder="URL" name="url" [(ngModel)]="item.url">
+					</div>
+				</div>
+				<div class="uk-width-1-1 uk-margin-top">
+					<label class="uk-form-label uk-width-1-1">Title</label>
+					<div class="uk-form-controls">
+						<input class="uk-width-1-1" type="text" placeholder="Page title" name="title" [(ngModel)]="item.title">
+					</div>
+				</div>
+				<div class="uk-width-1-1 uk-margin-top">
+					<label class="uk-form-label uk-width-1-1">Description</label>
+					<div class="uk-form-controls">
+						<input class="uk-width-1-1" type="text" placeholder="Page description" name="description" [(ngModel)]="item.description">
+					</div>
+				</div>
+			</div>
+			<div class="uk-width-3-10 uk-margin-top">
+				<label class="uk-form-label uk-width-1-1">OG Image</label>
+				<div class="uk-form-file">
+					<img class="uk-thumbnail admin-cursor-pointer" [src]="image">
+					<input type="file" accept="image/*" (change)="setImage($event.target)">
+				</div>
+			</div>
+			<div class="uk-width-1-1 uk-margin-top">
+				<label class="uk-form-label uk-width-1-1">Content</label>
+				<div class="uk-form-controls">
+					<div [froalaEditor]="contentEditorOptions" [(froalaModel)]="item.content"></div>
+				</div>
+			</div>
+			<div class="uk-width-1-1 uk-margin-top">
+				<button type="submit" class="uk-button uk-button-success uk-align-right" [disabled]="!valid"><i class="uk-icon-floppy-o"></i>&emsp;Submit</button>
+			</div>
+		</div>
+	</form>
+</div>

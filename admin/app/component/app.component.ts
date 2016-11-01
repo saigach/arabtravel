@@ -21,8 +21,6 @@ export class AppComponent {
 		this.apiService.get<User>(User, 'self')
 			.then((response: User) => this.self = response)
 			.catch(error => this.self = null)
-			.then(() => console.log(this.self))
-
 	}
 
 	select(): void {

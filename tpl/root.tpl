@@ -256,7 +256,7 @@
             </div>
         </div>
     </footer>
-	
+
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
 	<script src="js/bootstrap.min.js"></script>
@@ -276,9 +276,9 @@
 	<script src="/js/moment-with-locales.js"></script>
 
 	<script src="/js/bootstrap-datetimepicker.min.js"></script>
-	
+
 	<script src="/js/owl.carousel/owl.carousel.min.js"></script>
-	
+
 	<script src="/js/main.js"></script>
 
 	<script src="/js/app-init.js"></script>

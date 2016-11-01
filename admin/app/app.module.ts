@@ -12,6 +12,8 @@ import { FileService } from './service/file.service'
 import { ListFilterPipe } from './pipe/list-filter.pipe'
 import { ListOrderBy } from './pipe/list-orderby.pipe'
 
+import { FroalaEditorDirective, FroalaViewDirective } from './directive/froala.directives'
+
 import { AppComponent } from './component/app.component'
 
 import { HotelListComponent } from './component/hotel/hotel-list.component'
@@ -32,6 +34,9 @@ import { TripItemComponent } from './component/trip/trip-item.component'
 import { UserListComponent } from './component/user/user-list.component'
 import { UserItemComponent } from './component/user/user-item.component'
 
+import { StaticListComponent } from './component/static/static-list.component'
+import { StaticItemComponent } from './component/static/static-item.component'
+
 @NgModule({
 	imports: [
 		BrowserModule,
@@ -44,6 +49,9 @@ import { UserItemComponent } from './component/user/user-item.component'
 
 		ListFilterPipe,
 		ListOrderBy,
+
+		FroalaEditorDirective,
+		FroalaViewDirective,
 
 		HotelListComponent,
 		HotelItemComponent,
@@ -61,7 +69,10 @@ import { UserItemComponent } from './component/user/user-item.component'
 		TripItemComponent,
 
 		UserListComponent,
-		UserItemComponent
+		UserItemComponent,
+
+		StaticListComponent,
+		StaticItemComponent
 	],
 	providers: [
 		APIService,

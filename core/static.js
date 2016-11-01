@@ -59,6 +59,7 @@ module.exports = class StaticEngine {
 					url: item.url || null,
 					title: item.title,
 					description: item.description,
+					image: item.image,
 					main: this.template['static'](item)
 				}
 			}

@@ -13,7 +13,6 @@ export class User extends Model {
 	roles: { id: string, title: string, icon: string }[] = []
 
 	description: string = ''
-
 	image: string = ''
 
 	constructor(value: any = {}) {

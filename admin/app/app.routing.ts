@@ -19,10 +19,13 @@ import { TripItemComponent } from './component/trip/trip-item.component'
 import { UserListComponent } from './component/user/user-list.component'
 import { UserItemComponent } from './component/user/user-item.component'
 
+import { StaticListComponent } from './component/static/static-list.component'
+import { StaticItemComponent } from './component/static/static-item.component'
+
 const appRoutes: Routes = [
 	{
 		path: '',
-		redirectTo: '/users',
+		redirectTo: '/orders',
 		pathMatch: 'full'
 	},
 	{
@@ -72,6 +75,14 @@ const appRoutes: Routes = [
 	{
 		path: 'users/:id',
 		component: UserItemComponent
+	},
+	{
+		path: 'static',
+		component: StaticListComponent
+	},
+	{
+		path: 'static/:id',
+		component: StaticItemComponent
 	}
 ];
 
