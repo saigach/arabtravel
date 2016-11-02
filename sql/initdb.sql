@@ -73,7 +73,7 @@ CREATE TRIGGER users_prevent_corrupt_admin_trigger BEFORE UPDATE OR DELETE ON us
 -- Session data storage
 CREATE TABLE sessions (
 	id uuid NOT NULL DEFAULT uuid_generate_v4(),
-	owner uuid DEFAULT NULL,
+	owner uuid NOT NULL,
 	ts timestamp without time zone NOT NULL DEFAULT timezone('UTC', now()),
 	data json NOT NULL DEFAULT '{}'::json,
 	CONSTRAINT sessions_pkey PRIMARY KEY (id),

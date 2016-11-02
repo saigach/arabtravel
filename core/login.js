@@ -47,7 +47,7 @@ const worker = http.createServer( (request, response) => {
 				case 'logout':
 					return session.set({
 						code: 303,
-						session: null,
+						user: null,
 						location: '/'
 					})
 				default:

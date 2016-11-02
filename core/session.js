@@ -6,22 +6,23 @@
 'use strict'
 const DEFAULT_SESSION_DURATION = 86400
 
+const RETURNING = `
+	RETURNING
+		id,
+		timezone('UTC', NOW() + (COALESCE((SELECT value->>0 FROM config WHERE key = 'sessionDuration' LIMIT 1)::integer,${DEFAULT_SESSION_DURATION})::text||' seconds')::interval) AS expires,
+		data
+`
+
 const url = require('url')
 const querystring = require('querystring')
 
 const DB = new (require('./db.js'))()
 
 module.exports = class Session {
-	static getSQLSession(sessionId) {
-		if (sessionId)
-			return DB.query(`SELECT sessions.id AS id, sessions.data AS data, users.id AS owner, users.roles AS roles FROM sessions LEFT JOIN users ON sessions.owner = users.id WHERE sessions.id = '${sessionId}' AND sessions.ts > timezone('UTC', NOW() - (COALESCE((SELECT value->>0 FROM config WHERE key = 'sessionDuration' LIMIT 1)::integer,86400)::text||' seconds')::interval) LIMIT 1`)
-			.then(rows => rows.length !== 1 && DB.query(`INSERT INTO sessions(id) VALUES(DEFAULT) RETURNING id, data, null AS owner`) || rows).then(rows => rows[0])
-		return DB.query(`INSERT INTO sessions(id) VALUES(DEFAULT) RETURNING id, data, null AS owner`).then(rows => rows[0])
-	}
-
-	constructor(request, body = null, empty = false) {
+	constructor(request, body = null) {
 		let sessionId = request.headers['cookie'] &&
 						request.headers['cookie'].match(/session_id\s*=\s*([0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})/i)
+		sessionId =  sessionId && sessionId[1] || null
 
 		this.host = request.headers['host'] || 'localhost'
 		this.ip = request.headers['x-real-ip'] || request.connection.remoteAddress || null
@@ -44,21 +45,28 @@ module.exports = class Session {
 			}
 		}
 
-		this.empty = !!empty
-
-		if (this.empty) {
-			this.id = null
-			this.data = {}
-			this.user = null
-			this.get = Promise.resolve(this)
-		} else
-			this.get = Session.getSQLSession(sessionId && sessionId[1] || null)
-				.then(session => {
-					this.id = session.id
-					this.data = session.data
-					this.user = session.owner && { id: session.owner, roles: session.roles } || null
-					return this
-				})
+		this.get = (
+			sessionId ? DB.query(`
+				SELECT
+					sessions.id AS id,
+					sessions.data AS data,
+					users.id AS owner,
+					users.roles AS roles
+				FROM sessions
+				LEFT JOIN users ON sessions.owner = users.id
+				WHERE
+					sessions.id = '${sessionId}'
+					AND
+					sessions.ts > timezone('UTC', NOW() - (COALESCE((SELECT value->>0 FROM config WHERE key = 'sessionDuration' LIMIT 1)::integer,86400)::text||' seconds')::interval)
+					LIMIT 1
+			`).then(rows => rows.length && rows[0] || { id: null, data: {}, owner: null })
+			: Promise.resolve({ id: null, data: {}, owner: null })
+		).then(session => {
+			this.id = session.id
+			this.data = session.data
+			this.user = session.owner && { id: session.owner, roles: session.roles } || null
+			return this
+		})
 	}
 
 	set(response) {
@@ -80,24 +88,53 @@ module.exports = class Session {
 			}
 		}
 
-		if (response.session === null)
-			return DB.query(`DELETE FROM sessions WHERE id = '${this.id}'`).then(rows => {
+		if (response.user === null)
+			this.user = null
+
+		if (!this.user || !this.user.id) {
+
+			if (!this.id)
+				return Promise.resolve(this)
+
+			return DB.query(`
+				DELETE FROM sessions
+				WHERE id = '${this.id}'
+			`).then(rows => {
 				this.id = null
 				this.expires = null
 				this.data = null
 				return this
 			})
+		}
 
-		if (this.empty)
-			return Promise.resolve(this)
+		let id = this.id && `'${this.id}'` || null
+		let owner = `'${this.user.id}'`
+		let data = "'" +
+				   JSON.stringify(typeof response.session === 'object' && response.session || this.data)
+				   .replace(/\\/g, "\\\\")
+				   .replace(/'/g, "\\'")
+				   + "'"
 
-		let json = JSON.stringify(typeof response.session === 'object' && response.session || this.data)
-		return DB.query(`UPDATE sessions SET data = '${json}'` + (this.user && this.user.id && `, owner='${this.user.id}'` || '') + ` WHERE id = '${this.id}' RETURNING id, timezone('UTC', NOW() + (COALESCE((SELECT value->>0 FROM config WHERE key = 'sessionDuration' LIMIT 1)::integer,${DEFAULT_SESSION_DURATION})::text||' seconds')::interval) AS expires, data`).then(rows => {
-				this.id = rows[0].id
-				this.expires = new Date(rows[0].expires).toUTCString()
-				this.data = rows[0].data
-				return this
-			})
+		return (
+			this.id ? DB.query(`
+				UPDATE sessions SET
+					owner = ${owner},
+					data = ${data}
+				WHERE
+					id = '${this.id}'
+				${RETURNING}
+			`) : DB.query(`
+				INSERT INTO sessions ( owner,    data    )
+							  VALUES ( ${owner}, ${data} )
+				${RETURNING}
+			`)
+		).then(rows => rows.length && rows[0] || { id: null, expires: null, data: {} })
+		.then( session => {
+			this.id = session.id
+			this.expires = session.expires && new Date(session.expires).toUTCString() || null
+			this.data = session.data
+			return this
+		})
 	}
 }
 
