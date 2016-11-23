@@ -9,7 +9,7 @@ import { Order } from '../../model/order'
 
 @Component({
 	moduleId: module.id,
-	selector: 'project-item',
+	selector: 'order-item',
 	templateUrl: '/app/component/order/order-item.component.html'
 })
 export class OrderItemComponent implements OnInit {

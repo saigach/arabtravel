@@ -75,7 +75,7 @@ module.exports = class APIProject {
 						}
 					return {
 						code: 200,
-						data: Object.assign(item.rows[0] || {}, rows[0], { data: null })
+						data: Object.assign(rows[0], rows[0].data, { data: null })
 					}
 				})
 
@@ -127,7 +127,7 @@ module.exports = class APIProject {
 						}
 						title = escapeStr(title)
 
-						let data = escapeStr(JSON.stringify(data || {}))
+					 	data = escapeStr(JSON.stringify(data || {}))
 
 						return this.DB.query(`
 							INSERT INTO objects (
@@ -148,7 +148,7 @@ module.exports = class APIProject {
 								) AS owner
 						`).then( rows => ({
 							code: 200,
-							data: Object.assign(item.rows[0] || {}, rows[0], { data: null })
+							data: Object.assign(rows[0], rows[0].data, { data: null })
 						}) )
 				}
 

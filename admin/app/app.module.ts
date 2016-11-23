@@ -25,9 +25,6 @@ import { HumanItemComponent } from './component/human/human-item.component'
 import { OrderListComponent } from './component/order/order-list.component'
 import { OrderItemComponent } from './component/order/order-item.component'
 
-import { PackageListComponent } from './component/package/package-list.component'
-import { PackageItemComponent } from './component/package/package-item.component'
-
 import { TripListComponent } from './component/trip/trip-list.component'
 import { TripItemComponent } from './component/trip/trip-item.component'
 
@@ -36,6 +33,8 @@ import { UserItemComponent } from './component/user/user-item.component'
 
 import { StaticListComponent } from './component/static/static-list.component'
 import { StaticItemComponent } from './component/static/static-item.component'
+
+import { PriceListComponent } from './component/price/price-list.component'
 
 @NgModule({
 	imports: [
@@ -53,6 +52,8 @@ import { StaticItemComponent } from './component/static/static-item.component'
 		FroalaEditorDirective,
 		FroalaViewDirective,
 
+		PriceListComponent,
+
 		HotelListComponent,
 		HotelItemComponent,
 
@@ -61,9 +62,6 @@ import { StaticItemComponent } from './component/static/static-item.component'
 
 		OrderListComponent,
 		OrderItemComponent,
-
-		PackageListComponent,
-		PackageItemComponent,
 
 		TripListComponent,
 		TripItemComponent,

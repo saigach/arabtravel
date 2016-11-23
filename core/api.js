@@ -81,6 +81,8 @@ const worker = http.createServer( (request, response) => {
 				return
 			}
 
+			console.dir(errorData)
+
 			console.error(`Error [${code}]: ${errorData}`)
 			response.writeHead(500, {
 				'Content-Type': 'text/html; charset=utf-8',

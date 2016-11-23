@@ -1,9 +1,11 @@
 
 import { Model } from './model'
+import { User } from './user'
 
 export class Human extends Model {
 	static __api: string = 'objects/human'
 
+	owner: User = null
 	description: string = ''
 
 	constructor(value: any = {}) {
@@ -14,6 +16,7 @@ export class Human extends Model {
 
 	toObject(): {} {
 		return Object.assign(super.toObject(), {
+			owner: this.owner && this.owner.id.toString() || null,
 			description: this.description || ''
 		})
 	}

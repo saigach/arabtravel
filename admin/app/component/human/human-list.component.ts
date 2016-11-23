@@ -7,7 +7,7 @@ import { Human } from '../../model/human'
 
 @Component({
 	moduleId: module.id,
-	selector: 'trip-list',
+	selector: 'human-list',
 	templateUrl: '/app/component/human/human-list.component.html'
 })
 export class HumanListComponent implements OnInit {

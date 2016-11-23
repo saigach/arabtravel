@@ -7,7 +7,7 @@ import { Hotel } from '../../model/hotel'
 
 @Component({
 	moduleId: module.id,
-	selector: 'trip-list',
+	selector: 'hotel-list',
 	templateUrl: '/app/component/hotel/hotel-list.component.html'
 })
 export class HotelListComponent implements OnInit {

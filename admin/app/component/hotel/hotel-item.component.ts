@@ -9,7 +9,7 @@ import { Hotel } from '../../model/hotel'
 
 @Component({
 	moduleId: module.id,
-	selector: 'project-item',
+	selector: 'hotel-item',
 	templateUrl: '/app/component/hotel/hotel-item.component.html'
 })
 export class HotelItemComponent implements OnInit {

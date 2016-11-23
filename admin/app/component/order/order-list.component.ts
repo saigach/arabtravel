@@ -7,7 +7,7 @@ import { Order } from '../../model/order'
 
 @Component({
 	moduleId: module.id,
-	selector: 'trip-list',
+	selector: 'order-list',
 	templateUrl: '/app/component/order/order-list.component.html'
 })
 export class OrderListComponent implements OnInit {

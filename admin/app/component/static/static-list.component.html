@@ -15,7 +15,6 @@
 					<th></th>
 					<th>URL</th>
 					<th>Title</th>
-					<th>Owner</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -28,7 +27,6 @@
 					<td>{{ item.ts | date:'dd.MM.yyyy HH:mm' }}</td>
 					<td>/{{ item.url }}</td>
 					<td>{{ item.title }}</td>
-					<td>{{ item.owner && item.owner.title }}</td>
 					<td (click)="delete(item); $event.stopPropagation()"><i class="uk-icon-trash-o"></i></td>
 				</tr>
 			</tbody>

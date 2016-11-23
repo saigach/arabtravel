@@ -5,12 +5,12 @@
 	<div class="uk-width-1-4 uk-margin-bottom">
 		<button class="uk-button uk-button-primary uk-align-right" (click)="back()"><i class="uk-icon-arrow-left"></i>&emsp;Back</button>
 	</div>
-	<form class="uk-width-1-1 uk-form uk-form-stacked" (ngSubmit)="submit()">
+	<div class="uk-width-1-1 uk-form uk-form-stacked">
 		<div class="uk-grid">
 			<div class="uk-width-1-1">
 				<label class="uk-button admin-button" [class.uk-active]="item.enable">
 					<span>Enable</span>
-					<input  class="uk-hidden" type="checkbox" name="enable" [(ngModel)]="item.enable">
+					<input  class="uk-hidden" type="checkbox" [(ngModel)]="item.enable">
 				</label>
 				<div class="uk-button-group uk-margin-left">
 					<button *ngFor="let role of userRoles" class="uk-button admin-button" [class.uk-active]="isRole(role)" (click)="toggleRole(role); $event.preventDefault()">{{ role.title }}</button>
@@ -21,19 +21,19 @@
 				<div class="uk-width-1-1 uk-margin-top">
 					<label class="uk-form-label uk-width-1-1">E-mail</label>
 					<div class="uk-form-controls">
-						<input class="uk-width-1-1" type="email" placeholder="E-mail" name="email" [(ngModel)]="item.email">
+						<input class="uk-width-1-1" type="email" placeholder="E-mail" [(ngModel)]="item.email">
 					</div>
 				</div>
 				<div class="uk-width-1-1 uk-margin-top">
 					<label class="uk-form-label uk-width-1-1">Title</label>
 					<div class="uk-form-controls">
-						<input class="uk-width-1-1" type="text" placeholder="User name" name="title" [(ngModel)]="item.title">
+						<input class="uk-width-1-1" type="text" placeholder="User name" [(ngModel)]="item.title">
 					</div>
 				</div>
 				<div class="uk-width-1-1 uk-margin-top">
 					<label class="uk-form-label uk-width-1-1">Description</label>
 					<div class="uk-form-controls">
-						<input class="uk-width-1-1" type="text" placeholder="User description" name="description" [(ngModel)]="item.description">
+						<input class="uk-width-1-1" type="text" placeholder="User description" [(ngModel)]="item.description">
 					</div>
 				</div>
 			</div>
@@ -45,13 +45,13 @@
 				</div>
 			</div>
 			<div class="uk-width-1-1 uk-margin-top">
-				<button type="submit" class="uk-button uk-button-success uk-align-right" [disabled]="!valid"><i class="uk-icon-floppy-o"></i>&emsp;Submit</button>
+				<button type="submit" class="uk-button uk-button-success uk-align-right" [disabled]="!valid" (click)="submit()"><i class="uk-icon-floppy-o"></i>&emsp;Submit</button>
 			</div>
 			<!-- <div class="uk-width-1-1 uk-margin-top">
 				<p>Form value: {{ item | json }}</p>
 			</div> -->
 		</div>
-	</form>
+	</div>
 </div>
 
 <div #passwordDialog class="uk-modal">

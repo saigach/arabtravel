@@ -9,7 +9,7 @@ import { Human } from '../../model/human'
 
 @Component({
 	moduleId: module.id,
-	selector: 'project-item',
+	selector: 'human-item',
 	templateUrl: '/app/component/human/human-item.component.html'
 })
 export class HumanItemComponent implements OnInit {

@@ -10,9 +10,6 @@ import { HumanItemComponent } from './component/human/human-item.component'
 import { OrderListComponent } from './component/order/order-list.component'
 import { OrderItemComponent } from './component/order/order-item.component'
 
-import { PackageListComponent } from './component/package/package-list.component'
-import { PackageItemComponent } from './component/package/package-item.component'
-
 import { TripListComponent } from './component/trip/trip-list.component'
 import { TripItemComponent } from './component/trip/trip-item.component'
 
@@ -51,14 +48,6 @@ const appRoutes: Routes = [
 	{
 		path: 'orders/:id',
 		component: OrderItemComponent
-	},
-	{
-		path: 'packages',
-		component: PackageListComponent
-	},
-	{
-		path: 'packages/:id',
-		component: PackageItemComponent
 	},
 	{
 		path: 'trips',

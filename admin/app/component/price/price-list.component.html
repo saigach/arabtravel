@@ -1,0 +1,120 @@
+<div class="uk-width-1-1 uk-form uk-form-stacked uk-grid">
+	<label class="uk-width-8-10 uk-form-label">Price list</label>
+	<div class="uk-width-2-10 uk-text-right">
+		<a class="admin-cursor-pointer" (click)="add(); $event.stopPropagation()">
+			<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
+			<u>Add price</u>
+		</a>
+	</div>
+	<div class="uk-width-1-1 uk-margin-top">
+		<table class="uk-table uk-table-hover uk-table-condensed">
+			<thead>
+				<tr>
+					<th></th>
+					<th>Title</th>
+					<th>Start date</th>
+					<th>End date</th>
+					<th colspan="2"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let item of __items">
+					<td class="uk-form" (click)="enable(item); $event.stopPropagation()">
+						<i class="uk-icon-square-o" [class.uk-hidden]="item.enable"></i>
+						<i class="uk-icon-check-square-o" [class.uk-hidden]="!item.enable"></i>
+					</td>
+					<td>{{ item.title }}</td>
+					<td>{{ item.startDate | date: 'dd.MM.yyyy' }}</td>
+					<td>{{ item.endDate | date: 'dd.MM.yyyy' }}</td>
+					<td (click)="edit(item); $event.stopPropagation()"><i class="uk-icon-pencil admin-cursor-pointer"></i></td>
+					<td (click)="delete(item); $event.stopPropagation()"><i class="uk-icon-trash-o admin-cursor-pointer"></i></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div #priceEditor class="uk-modal">
+    <div class="uk-modal-dialog">
+    	<a class="uk-modal-close uk-close uk-margin-small-top"></a>
+    	<div class="uk-modal-header">
+    		<h3>Price <span>&laquo;{{ item.title }}&raquo;</span></h3>
+    	</div>
+		<div class="uk-form uk-form-stacked uk-grid">
+			<div class="uk-width-1-5">
+				<label class="uk-button admin-button" [class.uk-active]="item.enable">
+					<span>Enable</span>
+					<input class="uk-hidden" type="checkbox" [(ngModel)]="item.enable">
+				</label>
+			</div>
+			<div class="uk-width-4-5">
+				<label>From:</label>
+				<input #startDate class="uk-form-width-small uk-margin-right" type="text" data-uk-datepicker="{format:'DD.MM.YYYY'}" [value]="item.startDate | date: 'dd.MM.yyyy'">
+				<label>To:</label>
+				<input #endDate class="uk-form-width-small uk-margin-right" type="text" data-uk-datepicker="{format:'DD.MM.YYYY'}" [value]="item.endDate | date: 'dd.MM.yyyy'">
+			</div>
+
+			<label class="uk-width-1-1 uk-margin-top uk-form-label">Title</label>
+			<div class="uk-width-1-1 uk-form-controls">
+				<input class="uk-width-1-1" type="text" placeholder="Trip title" [(ngModel)]="item.title">
+			</div>
+
+
+			<label class="uk-width-8-10 uk-margin-top uk-form-label">Costs by age</label>
+			<div class="uk-width-2-10 uk-margin-top uk-text-right">
+				<a class="admin-cursor-pointer" (click)="addCost(); $event.stopPropagation()">
+					<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
+					<u>Add age</u>
+				</a>
+			</div>
+			<ul class="uk-width-1-1 uk-list uk-form-controls">
+				<li *ngFor="let cost of item.costs">
+					<label class="uk-float-left uk-form-small uk-form-label uk-margin-left">Age from:</label>
+					<input class="uk-float-left uk-form-small uk-form-width-small uk-margin-left" type="number" min="0" max="99" [(ngModel)]="cost.age">
+					<label class="uk-float-left uk-form-small uk-form-label uk-margin-large-left">Cost:</label>
+					<input class="uk-float-left uk-form-small uk-form-width-small uk-margin-left" type="number" min="0.00" max="999999999.99" [(ngModel)]="cost.cost">
+				</li>
+			</ul>
+
+
+			<label class="uk-width-8-10 uk-margin-top uk-form-label">Change factors</label>
+			<div class="uk-width-2-10 uk-margin-top uk-text-right">
+				<a class="admin-cursor-pointer" (click)="addFactor(); $event.stopPropagation()">
+					<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
+					<u>Add factor</u>
+				</a>
+			</div>
+			<ul class="uk-width-1-1 uk-list uk-form-controls">
+				<li *ngFor="let factor of item.changes">
+					<label class="uk-float-left uk-form-small uk-form-label uk-margin-left">Factor:</label>
+					<input class="uk-float-left uk-form-small uk-form-width-small uk-margin-left" type="text" [(ngModel)]="factor.factor">
+					<label class="uk-float-left uk-form-small uk-form-label uk-margin-left">Percent:</label>
+					<input class="uk-float-left uk-form-small uk-form-width-small uk-margin-left" type="number" min="0.00" max="100.00" [(ngModel)]="factor.percent">
+					<label class="uk-float-left uk-form-small uk-form-label uk-margin-large-left">or Cost:</label>
+					<input class="uk-float-left uk-form-small uk-form-width-small uk-margin-left" type="number" min="0.00" max="999999999.99" [(ngModel)]="factor.cost">
+				</li>
+			</ul>
+
+			<label class="uk-width-8-10 uk-margin-top uk-form-label">Refund</label>
+			<div class="uk-width-2-10 uk-margin-top uk-text-right">
+				<a class="admin-cursor-pointer" (click)="addRefund(); $event.stopPropagation()">
+					<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
+					<u>Add refund</u>
+				</a>
+			</div>
+			<ul class="uk-width-1-1 uk-list uk-form-controls">
+				<li *ngFor="let refund of item.refund">
+					<label class="uk-float-left uk-form-small uk-form-label uk-margin-left">Interval (days):</label>
+					<input class="uk-float-left uk-form-small uk-form-width-small uk-margin-left" type="text" [(ngModel)]="refund.interval">
+					<label class="uk-float-left uk-form-small uk-form-label uk-margin-left">Percent:</label>
+					<input class="uk-float-left uk-form-small uk-form-width-small uk-margin-left" type="number" min="0.00" max="100.00" [(ngModel)]="refund.percent">
+					<label class="uk-float-left uk-form-small uk-form-label uk-margin-large-left">or Cost:</label>
+					<input class="uk-float-left uk-form-small uk-form-width-small uk-margin-left" type="number" min="0.00" max="999999999.99" [(ngModel)]="refund.cost">
+				</li>
+			</ul>
+		</div>
+    	<div class="uk-modal-footer">
+    		<button class="uk-modal-close uk-button uk-button-primary uk-margin-right">OK</button>
+    	</div>
+    </div>
+</div>

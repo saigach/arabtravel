@@ -5,32 +5,69 @@
 	<div class="uk-width-1-4 uk-margin-bottom">
 		<button class="uk-button uk-button-primary uk-align-right" (click)="back()"><i class="uk-icon-arrow-left"></i>&emsp;Back</button>
 	</div>
-	<form class="uk-width-1-1 uk-form uk-form-stacked" (ngSubmit)="submit()">
-		<div class="uk-grid">
-			<div class="uk-width-1-1">
-				<label class="uk-button admin-button" [class.uk-active]="item.enable">
-					<span>Enable</span>
-					<input  class="uk-hidden" type="checkbox" name="enable" [(ngModel)]="item.enable">
-				</label>
+	<div class="uk-width-1-1 uk-form uk-form-stacked uk-grid">
+		<div class="uk-width-1-1">
+			<label class="uk-button admin-button" [class.uk-active]="item.enable">
+				<span>Enable</span>
+				<input class="uk-hidden" type="checkbox" [(ngModel)]="item.enable">
+			</label>
+			<div class="uk-button uk-margin-left uk-form-select" data-uk-form-select>
+				<span>Trip type</span>
+				<i class="uk-icon-caret-down"></i>
+				<select [(ngModel)]="item.type" (ngModelChange)="typeChange()">
+					<option *ngFor="let type of tripType" [ngValue]="type">{{ type.title }}</option>
+				</select>
 			</div>
-			<div class="uk-width-1-1 uk-margin-top">
-				<label class="uk-form-label uk-width-1-1">Title</label>
-				<div class="uk-form-controls">
-					<input class="uk-width-1-1" type="text" placeholder="Trip title" name="title" [(ngModel)]="item.title">
-				</div>
-			</div>
-			<div class="uk-width-1-1 uk-margin-top">
-				<label class="uk-form-label uk-width-1-1">Short description</label>
-				<div class="uk-form-controls">
-					<input class="uk-width-1-1" type="text" placeholder="Trip description" name="description" [(ngModel)]="item.description">
-				</div>
-			</div>
-			<div class="uk-width-1-1 uk-margin-top">
-				<button type="submit" class="uk-button uk-button-success uk-align-right" [disabled]="!valid"><i class="uk-icon-floppy-o"></i>&emsp;Submit</button>
-			</div>
-			<!-- <div class="uk-width-1-1 uk-margin-top">
-				<p>Form value: {{ item | json }}</p>
-			</div> -->
 		</div>
-	</form>
+
+		<label class="uk-width-1-1 uk-margin-top uk-form-label">Title</label>
+		<div class="uk-width-1-1 uk-form-controls">
+			<input class="uk-width-1-1" type="text" placeholder="Trip title" [(ngModel)]="item.title">
+		</div>
+
+		<label class="uk-width-1-1 uk-margin-top uk-form-label">Short description</label>
+		<div class="uk-width-1-1 uk-form-controls">
+			<input class="uk-width-1-1" type="text" placeholder="Trip description" [(ngModel)]="item.description">
+		</div>
+
+		<label class="uk-width-8-10 uk-margin-top uk-form-label">Trip points</label>
+		<div *ngIf="!item.type.maxPoints || item.points.length < item.type.maxPoints" class="uk-width-2-10 uk-margin-top uk-text-right">
+			<a class="admin-cursor-pointer" (click)="addPoint(); $event.stopPropagation()">
+				<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
+				<u>Add point</u>
+			</a>
+		</div>
+		<div class="uk-width-1-1">
+			<ul #pointsNestable class="uk-nestable" data-uk-nestable="{handleClass:'uk-nestable-handle'}">
+				<li *ngFor="let point of item.points; let i=index" class="uk-nestable-item" [attr.index]="i">
+					<div class="uk-nestable-panel">
+						<i class="uk-nestable-handle uk-icon uk-icon-bars uk-margin-small-right"></i>
+						<input class="uk-width-9-10" type="text" placeholder="Point title" [(ngModel)]="point.title">
+						<i *ngIf="item.points.length > 2" class="uk-icon uk-icon-trash-o admin-cursor-pointer" (click)="deletePoint(point); $event.stopPropagation()"></i>
+					</div>
+				</li>
+			</ul>
+		</div>
+
+		<label *ngIf="item.type.id === 'package'" class="uk-width-1-1 uk-margin-top uk-form-label">Hotels</label>
+		<ul *ngIf="item.type.id === 'package'" class="uk-width-1-1 uk-list uk-form-controls">
+			<li *ngFor="let hotel of hotels">
+				<button class="admin-cursor-pointer">
+					<i class="uk-icon-square-o"></i>
+					<i class="uk-icon-check-square-o"></i>
+				</button>
+				<span>{{ hotel.title }}</span>
+			</li>
+		</ul>
+
+		<price-list class="uk-width-1-1 uk-margin-top" [(items)]="item.prices"></price-list>
+
+		<div class="uk-width-1-1 uk-margin-top">
+			<button type="submit" class="uk-button uk-button-success uk-align-right" [disabled]="!valid" (click)="submit()"><i class="uk-icon-floppy-o"></i>&emsp;Submit</button>
+		</div>
+
+		<!-- <div class="uk-width-1-1 uk-margin-top">
+			<p>Form value: {{ item | json }}</p>
+		</div> -->
+	</div>
 </div>
