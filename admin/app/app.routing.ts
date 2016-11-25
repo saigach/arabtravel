@@ -19,6 +19,8 @@ import { UserItemComponent } from './component/user/user-item.component'
 import { StaticListComponent } from './component/static/static-list.component'
 import { StaticItemComponent } from './component/static/static-item.component'
 
+import { PointListComponent } from './component/point/point-list.component'
+
 const appRoutes: Routes = [
 	{
 		path: '',
@@ -48,6 +50,10 @@ const appRoutes: Routes = [
 	{
 		path: 'orders/:id',
 		component: OrderItemComponent
+	},
+	{
+		path: 'points',
+		component: PointListComponent
 	},
 	{
 		path: 'trips',

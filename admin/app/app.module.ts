@@ -36,6 +36,8 @@ import { StaticItemComponent } from './component/static/static-item.component'
 
 import { PriceListComponent } from './component/price/price-list.component'
 
+import { PointListComponent } from './component/point/point-list.component'
+
 @NgModule({
 	imports: [
 		BrowserModule,
@@ -53,6 +55,7 @@ import { PriceListComponent } from './component/price/price-list.component'
 		FroalaViewDirective,
 
 		PriceListComponent,
+		PointListComponent,
 
 		HotelListComponent,
 		HotelItemComponent,

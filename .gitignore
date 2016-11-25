@@ -4,3 +4,7 @@ node_modules
 **/*npm-debug.log.*
 admin/app/**/*.js
 admin/app/**/*.js.map
+app/**/*.js
+app/**/*.js.map
+model/**/*.js
+model/**/*.js.map

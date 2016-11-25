@@ -1,20 +1,20 @@
 (function($){
- 
-    $.fn.extend({     
+
+    $.fn.extend({
         stickyAffix: function(options) {
             var defaultOptions = {
                 offsetTop: 0,
                 offsetBottom: 0,
                 stopOnBottom: true
             };
-            
+
             options = $.extend({}, defaultOptions, options);
-            
+
             return $(this).each(function() {
                 var obj = $( this ),
                     closestRow = obj.closest('.row');
-                var fromTop = obj.offset().top; 
-                if(options.stopOnBottom) {    
+                var fromTop = obj.offset().top;
+                if(options.stopOnBottom) {
                     stopOn = function() { return $( document ).height() - (closestRow.offset().top + closestRow.height() ) + options.offsetBottom; };
                 }
                 else stopOn = false;
@@ -24,7 +24,7 @@
                     top: fromTop + options.offsetTop,
                     bottom: stopOn
                   }
-                }).css('width', obj.parent().width()); 
+                }).css('width', obj.parent().width());
 
                 $('.collapse', obj).on('shown.bs.collapse', function (e) {
                     obj.affix('checkPosition');
@@ -36,11 +36,11 @@
             });
         }
     });
-    
+
 })(jQuery);
 
 $(document).ready(function() {
-    
+
     $("input[data-control='selectpicker']").selectpicker({
         style: 'btn-default',
         size: 4
@@ -51,18 +51,18 @@ $(document).ready(function() {
         verticalupclass: 'glyphicon glyphicon-plus',
         verticaldownclass: 'glyphicon glyphicon-minus'
     });
-    
+
     //var s = skrollr.init();
 
     $("input[data-control='datepicker']").datetimepicker({
         format: 'MM/DD/YYYY'
     });
-    
-    
+
+
     $(".tour_datepicker").datetimepicker({
         inline: true
     });
-    
+
 
     $(".owl-carousel").owlCarousel({
       items:1,
@@ -72,7 +72,7 @@ $(document).ready(function() {
     });
 
     $('.sticky-widget').stickyAffix({offsetTop: 0});
-    
+
     if($('#hww-graphics').length > 0) {
         (function() {
             var $container = $('#hww-graphics');
@@ -113,5 +113,5 @@ $(document).ready(function() {
 
         })();
     }
-
 });
+

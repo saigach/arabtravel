@@ -52,6 +52,7 @@ module.exports = class APIProject {
 						FROM objects
 						LEFT JOIN users ON objects.owner = users.id
 						WHERE model = '${model}'
+						ORDER BY title
 					`).then(rows => ({
 						code: 200,
 						data: rows

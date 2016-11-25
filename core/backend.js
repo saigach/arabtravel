@@ -66,6 +66,12 @@ const worker = http.createServer( (request, response) => {
 				user: session.user
 			}
 
+			if (backendEngine === 'api' && Engine[backendEngine])
+				return Engine[backendEngine]
+						.engine(requestData)
+						.then(response => session.set(response))
+
+
 			return (Engine[backendEngine] ?
 				Engine[backendEngine].engine(requestData) :
 				Static.engine(backendEngine, requestData)

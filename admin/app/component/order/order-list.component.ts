@@ -3,7 +3,7 @@ import { Router } from '@angular/router'
 
 import { APIService } from '../../service/api.service'
 
-import { Order } from '../../model/order'
+import { Order } from '../../../../model/order'
 
 @Component({
 	moduleId: module.id,

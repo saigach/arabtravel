@@ -55,11 +55,51 @@
 	<meta name="twitter:image:alt" content="{{=it.description || ''}}">
 
 	<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400" rel="stylesheet">
-    <link rel="stylesheet" href="fonts/arabtravel-icons/css/arabtravel-icons.css">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic&subset=latin,cyrillic" type="text/css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/js/owl.carousel/assets/owl.carousel.css">
+
+	<!-- Polyfills -->
+	<script src="/node_modules/core-js/client/shim.min.js" type="text/javascript"></script>
+	<script src="/node_modules/zone.js/dist/zone.js" type="text/javascript"></script>
+	<script src="/node_modules/reflect-metadata/Reflect.js" type="text/javascript"></script>
+	<script src="/node_modules/systemjs/dist/system.src.js" type="text/javascript"></script>
+
+	<!-- jQuery -->
+	<script src="/node_modules/jquery/dist/jquery.min.js" type="text/javascript"></script>
+
+	<!-- Font Awesome CSS -->
+	<link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css" type="text/css">
+
+	<!-- Icons -->
+	<link rel="stylesheet" href="fonts/arabtravel-icons/css/arabtravel-icons.css">
+
+	<!-- Bootstrap -->
+	<script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+	<!-- bootstrap-select -->
+	<link rel="stylesheet" href="/node_modules/bootstrap-select/dist/css/bootstrap-select.css">
+	<script src="/node_modules/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+	<script src="/node_modules/bootstrap-select/dist/js/i18n/defaults-en_US.min.js"></script>
+
+	<!-- bootstrap-touchspin -->
+	<link rel="stylesheet" href="/node_modules/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css">
+	<script src="/node_modules/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js"></script>
+
+	<!-- moment -->
+	<script src="/node_modules/moment/moment.js"></script>
+	<script src="/node_modules/moment/locale/ar.js"></script>
+
+	<!-- bootstrap-datetimepicker -->
+	<script src="/node_modules/bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js"></script>
+
+	<!-- owl.carousel -->
+	<link rel="stylesheet" href="/node_modules/owl.carousel/dist/assets/owl.carousel.css">
+	<script src="/node_modules/owl.carousel/dist/owl.carousel.min.js"></script>
+
 	<link rel="stylesheet" href="/css/styles.css" type="text/css">
+	<script src="/js/main.js"></script>
+
+	<!-- SystemJS -->
+	<script src="/systemjs.config.js" type="text/javascript"></script>
+	<script type="text/javascript">System.import('app').catch(function(err){ throw err })</script>
 </head>
 <body>
 <div id="wrap">
@@ -256,31 +296,5 @@
             </div>
         </div>
     </footer>
-
-	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-
-	<script src="js/bootstrap.min.js"></script>
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="js/bootstrap-select/css/bootstrap-select.css">
-
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="js/bootstrap-select/js/bootstrap-select.min.js"></script>
-
-	<!-- (Optional) Latest compiled and minified JavaScript translation files -->
-	<script src="/js/bootstrap-select/js/i18n/defaults-en_US.min.js"></script>
-
-	<!--link rel="stylesheet" href="/js/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css"-->
-
-	<script src="/js/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
-
-	<script src="/js/moment-with-locales.js"></script>
-
-	<script src="/js/bootstrap-datetimepicker.min.js"></script>
-
-	<script src="/js/owl.carousel/owl.carousel.min.js"></script>
-
-	<script src="/js/main.js"></script>
-
-	<script src="/js/app-init.js"></script>
 </body>
 </html>

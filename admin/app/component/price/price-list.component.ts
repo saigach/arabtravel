@@ -4,7 +4,7 @@ import { Location } from '@angular/common'
 
 import { APIService } from '../../service/api.service'
 
-import { Price } from '../../model/price'
+import { Price } from '../../../../model/price'
 
 const str2Date = str => {
 	let [dd, mm, yyyy] = str.split(/[^0-9]+/)

@@ -5,7 +5,7 @@ import { Location } from '@angular/common'
 import { APIService } from '../../service/api.service'
 import { FileService } from '../../service/file.service'
 
-import { User, UserRoles } from '../../model/user'
+import { User, UserRoles } from '../../../../model/user'
 
 @Component({
 	moduleId: module.id,

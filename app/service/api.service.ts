@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core'
 import { Http, Headers, Response, RequestOptions } from '@angular/http'
 import 'rxjs/add/operator/toPromise'
 
-import { Model } from '../../../model/model'
-import { UUID } from '../../../model/uuid'
+import { Model } from '../../model/model'
+import { UUID } from '../../model/uuid'
 
 @Injectable()
 export class APIService {
@@ -55,44 +55,6 @@ export class APIService {
 								return value.map( (value:any) => new model(value))
 							return new model(value)
 						})
-						.catch(APIService.handleError)
-	}
-
-	update<T extends Model>( model: { new(value: any): T, __api: string },
-							 item: Model
-						) : Promise<T | Error> {
-		let api = APIService.getAPIurl(model.__api, item)
-		return this.http.post(api, item.toString(), APIService.options)
-						.toPromise()
-						.then(response => response.json() || null)
-						.then(value => value && value || Promise.reject({ message: 'Response is empty' }) )
-						.then(value => new model(value))
-						.catch(APIService.handleError)
-
-	}
-
-	delete<T extends Model>( model: { new(value: any): T, __api: string },
-							 item: Model
-						) : Promise<void | Error> {
-		let api = APIService.getAPIurl(model.__api, item)
-		return this.http.delete(api, APIService.options)
-						.toPromise()
-						.then(response => response.json() || null)
-						.then(value => value && value || Promise.reject({ message: 'Response is empty' }) )
-						.then(value => (value.sucess !== 'deleted' || value.id !== item.id.toString()) && Promise.reject(value) || void 0)
-						.catch(APIService.handleError)
-	}
-
-	command<T extends Model>( model: { new(value: any): T, __api: string },
-							 item: Model,
-							 command: string,
-							 data: any = null
-						) : Promise<any> {
-		let api = APIService.getAPIurl(model.__api, item) + `/${command}`
-		return this.http.post(api, data && JSON.stringify(data) || item.toString(), APIService.options)
-						.toPromise()
-						.then(response => response.json() || null)
-						.then(value => value && value || Promise.reject({ message: 'Response is empty' }) )
 						.catch(APIService.handleError)
 	}
 }

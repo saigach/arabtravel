@@ -1,5 +1,5 @@
 /**
- * System configuration for Arabtravel admin panel
+ * System configuration for Arabtravel
  */
 (function (global) {
 	System.config({

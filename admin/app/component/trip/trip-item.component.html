@@ -39,11 +39,13 @@
 		</div>
 		<div class="uk-width-1-1">
 			<ul #pointsNestable class="uk-nestable" data-uk-nestable="{handleClass:'uk-nestable-handle'}">
-				<li *ngFor="let point of item.points; let i=index" class="uk-nestable-item" [attr.index]="i">
+				<li *ngFor="let itemPoint of item.points; let i=index;" class="uk-nestable-item" [attr.index]="i">
 					<div class="uk-nestable-panel">
 						<i class="uk-nestable-handle uk-icon uk-icon-bars uk-margin-small-right"></i>
-						<input class="uk-width-9-10" type="text" placeholder="Point title" [(ngModel)]="point.title">
-						<i *ngIf="item.points.length > 2" class="uk-icon uk-icon-trash-o admin-cursor-pointer" (click)="deletePoint(point); $event.stopPropagation()"></i>
+						<select class="uk-form-width-large" [ngModel]="itemPoint" (ngModelChange)="poitnChange(itemPoint, $event)">
+							<option *ngFor="let poitn of points | listOrderBy : ['title']" [ngValue]="poitn">{{ poitn.title }}</option>
+						</select>
+						<i *ngIf="item.points.length > 2" class="uk-icon uk-icon-trash-o uk-margin-left admin-cursor-pointer" (click)="deletePoint(itemPoint); $event.stopPropagation()"></i>
 					</div>
 				</li>
 			</ul>

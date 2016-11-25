@@ -5,9 +5,9 @@ import { Location } from '@angular/common'
 import { APIService } from '../../service/api.service'
 import { FileService } from '../../service/file.service'
 
-import { Trip, TripType } from '../../model/trip'
-import { Point } from '../../model/point'
-import { Hotel } from '../../model/hotel'
+import { Trip, TripType } from '../../../../model/trip'
+import { Point } from '../../../../model/point'
+import { Hotel } from '../../../../model/hotel'
 
 @Component({
 	moduleId: module.id,
@@ -17,11 +17,12 @@ import { Hotel } from '../../model/hotel'
 export class TripItemComponent implements OnInit {
 
 	hotels: Hotel[] = []
+	points: Point[] = []
 
 	tripType = TripType
 
 	item: Trip = new Trip({
-		points: [new Point(), new Point()]
+		points: [this.points[0] || new Point(), this.points[0] || new Point()]
 	})
 
 	@ViewChild('pointsNestable') pointsNestableRef: ElementRef
@@ -30,9 +31,8 @@ export class TripItemComponent implements OnInit {
 
 	get valid(): boolean {
 		return  this.item.title.trim().length > 0 &&
-				this.item.points.length > 1 &&
-				this.item.points[0].title.trim().length > 0 &&
-				this.item.points[1].title.trim().length > 0 &&
+				this.item.points[0] && this.item.points[0].title.trim().length > 0 &&
+				this.item.points[1] && this.item.points[1].title.trim().length > 0 &&
 				this.item.prices.length > 0
 	}
 
@@ -43,16 +43,27 @@ export class TripItemComponent implements OnInit {
 				) {}
 
 	ngOnInit(): void {
-		this.apiService.get<Hotel>(Hotel).then( (response: Hotel[]) => this.hotels = response)
-
 		let id: string = this.route.snapshot.params['id'] || null
 		if (!id)
 			return
 
-		if (id.toLowerCase() !== 'new')
-			this.apiService.get<Trip>(Trip, id)
-				.then((response: Trip) => this.item = response)
-				.catch(error => this.item = null)
+		Promise.all([
+			this.apiService.get<Hotel>(Hotel),
+			this.apiService.get<Point>(Point)
+		]).then( (response: any[]) => {
+			this.hotels = response[0]
+			this.points = response[1]
+
+			if (id.toLowerCase() !== 'new')
+				this.apiService.get<Trip>(Trip, id)
+					.then((response: Trip) => {
+						this.item = response
+						this.item.points = this.item.points.map(
+							point => this.points.find( value => value.id.toString() === point.id.toString() )
+						)
+					})
+					.catch(error => this.item = null)
+		})
 
 		$(this.pointsNestableRef.nativeElement).on('change.uk.nestable', (event, sortable, dragged, action) => {
 			if (action !== 'moved')
@@ -70,11 +81,17 @@ export class TripItemComponent implements OnInit {
 	}
 
 	addPoint(): void {
-		this.item.points.push(new Point())
+		this.item.points.push(this.points[0])
 	}
 
 	deletePoint(point: Point): void {
 		this.item.points = this.item.points.filter(value => value !== point)
+	}
+
+	poitnChange(point: Point, newPoint: Point): void {
+		let index = this.item.points.indexOf(point);
+		if (index !== -1)
+			this.item.points[index] = newPoint
 	}
 
 	typeChange(): void {

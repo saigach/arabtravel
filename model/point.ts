@@ -2,10 +2,12 @@
 import { Model } from './model'
 
 export class Point extends Model {
-	static __api: string = ''
+	static __api: string = 'objects/point'
 
 	latitude: number = 0
 	longitude: number = 0
+
+	edited: boolean = false
 
 	constructor(value: any = {}) {
 		super(value)

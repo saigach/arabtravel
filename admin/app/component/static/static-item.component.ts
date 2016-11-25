@@ -7,7 +7,7 @@ import editorOptions from '../../editor.options'
 import { APIService } from '../../service/api.service'
 import { FileService } from '../../service/file.service'
 
-import { Static } from '../../model/static'
+import { Static } from '../../../../model/static'
 
 @Component({
 	moduleId: module.id,

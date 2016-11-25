@@ -5,7 +5,7 @@ import { Location } from '@angular/common'
 import { APIService } from '../../service/api.service'
 import { FileService } from '../../service/file.service'
 
-import { Order } from '../../model/order'
+import { Order } from '../../../../model/order'
 
 @Component({
 	moduleId: module.id,

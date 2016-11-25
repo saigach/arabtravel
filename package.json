@@ -32,11 +32,18 @@
 		"dot": "*",
 
 		"blueimp-canvas-to-blob": "*",
-		"jquery": "*",
+		"jquery": "^2.2.4",
 		"pica": "*",
 		"font-awesome": "*",
 		"froala-editor": "*",
-		"uikit": "*"
+		"uikit": "*",
+
+		"bootstrap": "^3.3.7",
+		"bootstrap-select": "*",
+		"bootstrap-touchspin": "*",
+		"moment": "*",
+		"bootstrap-datetimepicker": "*",
+		"owl.carousel": "*"
 	},
 	"devDependencies": {
 		"typescript": "*",

@@ -1,9 +1,9 @@
 <div class="uk-grid">
 	<div class="uk-width-1-1 uk-margin-bottom">
-		<h3>Trips list</h3>
+		<h3>Points list</h3>
 	</div>
 	<div class="uk-width-1-4">
-		<button class="uk-button uk-button-primary uk-width-1-1" type="button" (click)="add()">Add trip</button>
+		<button class="uk-button uk-button-primary uk-width-1-1" type="button" (click)="add()">Add point</button>
 	</div>
 	<div class="uk-form uk-width-3-4">
 		<input #filterInput (keyup)="0" class="uk-width-1-1" type="text" placeholder="Search...">
@@ -14,17 +14,19 @@
 				<tr>
 					<th></th>
 					<th>Title</th>
+					<th>Coords</th>
 					<th></th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr *ngFor="let item of items | listFilter : filterInput.value : ['title'] | listOrderBy : ['title']" (click)="select(item)" class="admin-cursor-pointer">
-					<td class="uk-form" (click)="enable(item); $event.stopPropagation()">
+				<tr *ngFor="let item of items">
+					<td class="uk-width-1-10 uk-form" (click)="enable(item); $event.stopPropagation()">
 						<i class="uk-icon-square-o" [class.uk-hidden]="item.enable"></i>
 						<i class="uk-icon-check-square-o" [class.uk-hidden]="!item.enable"></i>
 					</td>
-					<td>{{ item.title }}</td>
-					<td (click)="delete(item); $event.stopPropagation()"><i class="uk-icon-trash-o"></i></td>
+					<td class="uk-width-6-10"><input class="uk-width-1-1" type="text" placeholder="Point title" [(ngModel)]="item.title" (change)="update(item)"></td>
+					<td class="uk-width-2-10">[{{ item.latitude }}, {{ item.longitude }}]</td>
+					<td class="uk-width-1-10" (click)="delete(item); $event.stopPropagation()"><i class="uk-icon-trash-o"></i></td>
 				</tr>
 			</tbody>
 		</table>

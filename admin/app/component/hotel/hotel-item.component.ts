@@ -5,7 +5,7 @@ import { Location } from '@angular/common'
 import { APIService } from '../../service/api.service'
 import { FileService } from '../../service/file.service'
 
-import { Hotel } from '../../model/hotel'
+import { Hotel } from '../../../../model/hotel'
 
 @Component({
 	moduleId: module.id,

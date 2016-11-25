@@ -3,7 +3,7 @@ import { Router } from '@angular/router'
 
 import { APIService } from '../../service/api.service'
 
-import { Hotel } from '../../model/hotel'
+import { Hotel } from '../../../../model/hotel'
 
 @Component({
 	moduleId: module.id,

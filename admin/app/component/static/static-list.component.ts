@@ -3,7 +3,7 @@ import { Router } from '@angular/router'
 
 import { APIService } from '../../service/api.service'
 
-import { Static } from '../../model/static'
+import { Static } from '../../../../model/static'
 
 @Component({
 	moduleId: module.id,
