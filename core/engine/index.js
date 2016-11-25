@@ -10,23 +10,12 @@ module.exports = class IndexEngine {
 	}
 
 	engine(requestData) {
-		return Promise.all([
-			this.DB.query(`
-				SELECT *
-				FROM objects
-				WHERE model = 'trip'
-			`)
-		]).then(response => {
-			let data = {
-				trips: response[0]
-			}
-
-			return {
-				code: 200,
-				data: {
-					title: 'Arabtravel Index',
-					main: this.template['index'](data)
-				}
+		return Promise.resolve({
+			code: 200,
+			data: {
+				angular: true,
+				title: 'Arabtravel Index',
+				main: this.template['index']({})
 			}
 		})
 	}

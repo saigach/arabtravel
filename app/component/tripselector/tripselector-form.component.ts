@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { Router } from '@angular/router'
 
 import { APIService } from '../../service/api.service'
 
@@ -15,7 +16,7 @@ export class TripSelectorFormComponent implements OnInit {
 
 	submitted: boolean = false
 
-	constructor(private apiService: APIService) {}
+	constructor(private router: Router, private apiService: APIService) {}
 
 	ngOnInit(): void {
 		this.apiService.get<Trip>(Trip).then( (response: Trip[]) => this.items = response)

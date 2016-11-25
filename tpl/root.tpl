@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" itemscope itemtype="http://schema.org/Webpage">
 <head>
+	<base href="/">
+
 	<meta charset="utf-8">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<meta http-equiv="cleartype" content="on">
@@ -94,12 +96,15 @@
 	<link rel="stylesheet" href="/node_modules/owl.carousel/dist/assets/owl.carousel.css">
 	<script src="/node_modules/owl.carousel/dist/owl.carousel.min.js"></script>
 
+	<link rel="stylesheet" href="/css/loader.min.css" type="text/css">
 	<link rel="stylesheet" href="/css/styles.css" type="text/css">
 	<script src="/js/main.js"></script>
 
 	<!-- SystemJS -->
-	<script src="/systemjs.config.js" type="text/javascript"></script>
-	<script type="text/javascript">System.import('app').catch(function(err){ throw err })</script>
+	{{? it.angular }}
+		<script src="/systemjs.config.js" type="text/javascript"></script>
+		<script type="text/javascript">System.import('app').catch(function(err){ throw err })</script>
+	{{?}}
 </head>
 <body>
 <div id="wrap">

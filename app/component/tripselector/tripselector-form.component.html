@@ -1,0 +1,297 @@
+<div class="main-search-form">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-12">
+
+                    <div class="main-search-form_form">
+
+                        <div class="tabbable">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="#main-search-form_panel_one-way" data-toggle="tab">One Way</a>
+                                </li>
+                                <li>
+                                    <a href="#main-search-form_panel_round-trip" data-toggle="tab">Round Trip</a>
+                                </li>
+                                <li>
+                                    <a href="#main-search-form_panel_tourist-package" data-toggle="tab">Tourist Package</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content inverted-form">
+                                <div class="tab-pane active" id="main-search-form_panel_one-way">
+                                    <form class="main-search-form_form_form">
+                                        <div class="row">
+
+                                            <div class="col-md-3">
+                                                <label for="rf">Route</label>
+                                                <select name="" id="rf" data-control="selectpicker" class="selectpicker form-control fit-width">
+													<!--{@=trips
+														<option value="{{$.A.uuid}}">{{$.A.title}}</option>
+
+													@}-->
+                                                </select>
+
+                                            </div>
+
+                                            <div class="col-md-2 form-group">
+                                                <label for="rf">Date of departure</label>
+                                                <div class='input-group date'>
+                                                    <input type="text" class="form-control" data-control="datepicker">
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="row">
+
+                                                    <div class="col-md-4 form-group">
+                                                        <label for="rf">Adults</label>
+                                                        <input type="text" class="form-control" data-control="spinner-vertical" />
+                                                    </div>
+
+                                                    <div class="col-md-4 form-group">
+                                                        <label for="rf">2-6 yr</label>
+                                                        <input type="text" class="form-control" data-control="spinner-vertical" />
+                                                    </div>
+
+                                                    <div class="col-md-4 form-group">
+                                                        <label for="rf">&lt;2 yr</label>
+                                                        <input type="text" class="form-control" data-control="spinner-vertical" />
+                                                    </div>
+
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="col-md-3">
+
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                       <label>Vehicle</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="">
+                                                           <div class="styled-checkbox">
+                                                                <input class="checkbox" type="checkbox" id="ch1"><label for="ch1">Yes</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <select name="" id="rf"  class="selectpicker form-control fit-width">
+                                                            <option value="">Car</option>
+                                                            <option value="">Truck</option>
+                                                            <option value="">Motorcycle</option>
+                                                        </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="text-center submit-btn-container">
+
+                                            <input type="submit" class="btn btn-danger" value="CHECK AVALIABILITY">
+
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="tab-pane" id="main-search-form_panel_round-trip">
+                                    <form class="main-search-form_form_form">
+                                        <div class="row">
+
+                                            <div class="col-md-4">
+                                                <label for="rf">Route from</label>
+                                                <select name="" id="rf" data-control="selectpicker" class="selectpicker form-control fit-width">
+                                                    <option value="">Aqaba</option>
+                                                    <option value="">Taba</option>
+                                                    <option value="">Sharm El-Sheikh</option>
+                                                </select>
+
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <label for="rf">Route to</label>
+                                                <select name="" id="rt" data-control="selectpicker" class="form-control fit-width">
+                                                    <option value="">Aqaba</option>
+                                                    <option value="">Taba</option>
+                                                    <option value="">Sharm El-Sheikh</option>
+                                                </select>
+
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="row">
+
+                                                    <div class="col-md-4 form-group">
+                                                        <label for="rf">Adults</label>
+                                                        <input type="text" class="form-control" data-control="spinner-vertical" />
+                                                    </div>
+
+                                                    <div class="col-md-4 form-group">
+                                                        <label for="rf">2-6 yr</label>
+                                                        <input type="text" class="form-control" data-control="spinner-vertical" />
+                                                    </div>
+
+                                                    <div class="col-md-4 form-group">
+                                                        <label for="rf">&lt;2 yr</label>
+                                                        <input type="text" class="form-control" data-control="spinner-vertical" />
+                                                    </div>
+
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+
+                                            <div class="col-md-4 form-group">
+                                                <label for="rf">Date of departure</label>
+                                                <div class='input-group date'>
+                                                    <input type="text" class="form-control" data-control="datepicker">
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-md-4 form-group">
+                                                <label for="rf">Date of return</label>
+                                                <div class='input-group date'>
+                                                    <input type="text" class="form-control" data-control="datepicker">
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                       <label>Vehicle</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="">
+                                                           <div class="styled-checkbox">
+                                                                <input class="checkbox" type="checkbox" id="ch2"><label for="ch2">Yes</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <select name="" id="rf" class="selectpicker form-control fit-width">
+                                                    <option value="">Car</option>
+                                                    <option value="">Truck</option>
+                                                    <option value="">Motorcycle</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="text-center submit-btn-container">
+
+                                            <input type="submit" class="btn btn-danger" value="CHECK AVALIABILITY">
+
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="tab-pane" id="main-search-form_panel_tourist-package">
+                                    <form class="main-search-form_form_form">
+                                        <div class="row">
+
+                                            <div class="col-md-4">
+                                                <label for="rf">Route from</label>
+                                                <select name="" id="rf" data-control="selectpicker" class="selectpicker form-control fit-width">
+                                                    <option value="">Aqaba</option>
+                                                    <option value="">Taba</option>
+                                                    <option value="">Sharm El-Sheikh</option>
+                                                </select>
+
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <label for="rf">Route to</label>
+                                                <select name="" id="rt" data-control="selectpicker" class="selectpicker form-control fit-width">
+                                                    <option value="">Aqaba</option>
+                                                    <option value="">Taba</option>
+                                                    <option value="">Sharm El-Sheikh</option>
+                                                </select>
+
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="row">
+
+                                                    <div class="col-md-4 form-group">
+                                                        <label for="rf">Adults</label>
+                                                        <input type="text" class="form-control" data-control="spinner-vertical" />
+                                                    </div>
+
+                                                    <div class="col-md-4 form-group">
+                                                        <label for="rf">2-6 yr</label>
+                                                        <input type="text" class="form-control" data-control="spinner-vertical" />
+                                                    </div>
+
+                                                    <div class="col-md-4 form-group">
+                                                        <label for="rf">&lt;2 yr</label>
+                                                        <input type="text" class="form-control" data-control="spinner-vertical" />
+                                                    </div>
+
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+
+                                            <div class="col-md-4 form-group">
+                                                <label for="rf">Date of departure</label>
+                                                <div class='input-group date'>
+                                                    <input type="text" class="form-control" data-control="datepicker">
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
+                                                </div>
+
+                                            </div>
+
+
+                                            <div class="col-md-4">
+                                                <div class="col-md-6">
+                                                    <label>&nbsp;</label>
+                                                    <div class="">
+                                                       <div class="styled-checkbox">
+                                                            <input class="checkbox" type="checkbox" id="ch3"><label for="ch3">Any date</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="text-center submit-btn-container">
+
+                                            <input type="submit" class="btn btn-danger" value="CHECK AVALIABILITY">
+
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
