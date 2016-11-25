@@ -71,18 +71,19 @@
 	<link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css" type="text/css">
 
 	<!-- Icons -->
-	<link rel="stylesheet" href="fonts/arabtravel-icons/css/arabtravel-icons.css">
+	<link rel="stylesheet" href="/fonts/arabtravel-icons/css/arabtravel-icons.css" type="text/css">
 
 	<!-- Bootstrap -->
+	<link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css" type="text/css">
 	<script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 
 	<!-- bootstrap-select -->
-	<link rel="stylesheet" href="/node_modules/bootstrap-select/dist/css/bootstrap-select.css">
+	<link rel="stylesheet" href="/node_modules/bootstrap-select/dist/css/bootstrap-select.css" type="text/css">
 	<script src="/node_modules/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
 	<script src="/node_modules/bootstrap-select/dist/js/i18n/defaults-en_US.min.js"></script>
 
 	<!-- bootstrap-touchspin -->
-	<link rel="stylesheet" href="/node_modules/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css">
+	<link rel="stylesheet" href="/node_modules/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css" type="text/css">
 	<script src="/node_modules/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js"></script>
 
 	<!-- moment -->
