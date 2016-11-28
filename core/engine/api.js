@@ -9,27 +9,47 @@ module.exports = class APIEngine {
 	}
 
 	engine(requestData) {
+		let method = requestData.request.method
+		let command = requestData.request.path.shift()
 
-		console.dir(requestData)
+		switch(command) {
+			case 'objects':
+				if (method !== 'GET')
+					return Promise.resolve({
+						code: 400,
+						data: { error: 'Method is not allowed'}
+					})
 
-		return Promise.all([
-			this.DB.query(`
-				SELECT *
-				FROM objects
-				WHERE model = 'trip'
-			`)
-		]).then(response => {
-			let data = {
-				trips: response[0]
-			}
+				let model = requestData.request.path.shift()
 
-			return {
-				code: 200,
-				data: {
-					title: 'Arabtravel Index',
-					main: this.template['index'](data)
+				switch (model) {
+					case 'trip':
+						return this.DB.query(`
+							SELECT
+								objects.id,
+								objects.title,
+								objects.enable,
+								objects.data
+							FROM
+								objects
+							WHERE
+								model = 'trip' AND
+								enable
+						`).then(response => ({
+							code: 200,
+							data: response.map( value => Object.assign(value, value.data, { data: null }) )
+						}))
+					default:
+						return Promise.resolve({
+							code: 400,
+							data: { error: 'Model is not allowed'}
+						})
 				}
-			}
-		})
+			default:
+				return Promise.resolve({
+					code: 400,
+					data: { error: 'Command is not allowed'}
+				})
+		}
 	}
 }

@@ -26,10 +26,7 @@
                                             <div class="col-md-3">
                                                 <label for="rf">Route</label>
                                                 <select name="" id="rf" data-control="selectpicker" class="selectpicker form-control fit-width">
-													<!--{@=trips
-														<option value="{{$.A.uuid}}">{{$.A.title}}</option>
-
-													@}-->
+													<option *ngFor="let item of items">{{ item.title }} ({{ item.points[0] && item.points[0].title }}&rarr;{{ item.points[1] && item.points[1].title }})</option>
                                                 </select>
 
                                             </div>
@@ -294,3 +291,4 @@
             </div>
         </div>
     </div>
+    {{ items | json }}
