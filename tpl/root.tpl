@@ -165,15 +165,11 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Passenger Info<strong class="caret"></strong></a>
                         <ul class="dropdown-menu">
-                            <li>
-                                <a href="#">Fleet Time Table</a>
-                            </li>
-                            <li>
-                                <a href="#">Travel Guides for Passengers</a>
-                            </li>
-                            <li>
-                                <a href="#">Travel Guides for Vehicles</a>
-                            </li>
+                        	{{~it.static :value:index}}
+								 <li>
+                                	<a href="/{{=value.url}}">{{=value.title}}</a>
+                            	</li>
+							{{~}}
                         </ul>
                     </li>
                     <li class="dropdown">

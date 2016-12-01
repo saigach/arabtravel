@@ -48,6 +48,8 @@ const Engine = fs.readdirSync(engineDirectory).reduce( (prev, file) => {
 	return prev
 }, {})
 
+const rootEngine = new (require('./root.js'))(DB, Template)
+
 const Static = new ( require('./static.js'))(DB, Template)
 
 const getDuration = diff => diff[0] * 1e9 + diff[1]
@@ -78,7 +80,8 @@ const worker = http.createServer( (request, response) => {
 			).then(response => {
 				if (response.data) {
 					response.data.host = session.host
-					response.data = Template['root'](response.data)
+					return rootEngine.engine(requestData, response)
+					.then(response => session.set(response))
 				}
 				return session.set(response)
 			})
