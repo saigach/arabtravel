@@ -17,12 +17,12 @@ const DB = new (require('./db.js'))()
 const Session = require('./session.js')
 
 const Template = {}
-const templateDirectory = path.resolve(process.cwd(), 'tpl/')
+const templateDirectory = path.resolve(process.cwd(), 'tpl/', process.env.WORKER_LANGUAGE || '')
 const reloadTemplate = (filename) => {
 	if (!filename)
 		return
 	let match = filename.match(/([\w\-]+)\.tpl$/i)
-	let name = match[1].toLowerCase()
+	let name = match && match[1].toLowerCase() || null
 	if (name) {
 		fs.readFile(path.resolve(templateDirectory, filename), 'utf8', (error, data) => {
 			if (error)
