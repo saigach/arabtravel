@@ -39,30 +39,9 @@
 
 })(jQuery);
 
-$(document).ready(function() {
-
-    $("input[data-control='selectpicker']").selectpicker({
-        style: 'btn-default',
-        size: 4
-    });
-
-    $("input[data-control='spinner-vertical']").TouchSpin({
-        verticalbuttons: true,
-        verticalupclass: 'glyphicon glyphicon-plus',
-        verticaldownclass: 'glyphicon glyphicon-minus'
-    });
+$(document).ready(function() {	
 
     //var s = skrollr.init();
-
-    $("input[data-control='datepicker']").datetimepicker({
-        format: 'MM/DD/YYYY'
-    });
-
-
-    $(".tour_datepicker").datetimepicker({
-        inline: true
-    });
-
 
     $(".owl-carousel").owlCarousel({
       items:1,
@@ -115,3 +94,27 @@ $(document).ready(function() {
     }
 });
 
+function tripselectorFormUiInit() {
+
+    /*$("select[data-control='selectpicker']").selectpicker({
+        style: 'btn-default',
+        size: 4
+    });*/
+
+    /*$("input[data-control='spinner-vertical']").TouchSpin({
+        verticalbuttons: true,
+        verticalupclass: 'glyphicon glyphicon-plus',
+        verticaldownclass: 'glyphicon glyphicon-minus'
+    });
+	
+	    $("input[data-control='datepicker']").datetimepicker({
+        format: 'MM/DD/YYYY'
+    });
+
+    $(".tour_datepicker").datetimepicker({
+        inline: true
+    });*/
+
+    var datepicker = UIkit.datepicker($('#DP').eq(0));
+    console.log('111');
+}
