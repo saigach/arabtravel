@@ -39,7 +39,6 @@ export class TripSelectorFormComponent implements OnInit {
 			this.items = response
 			this.tripData.trip = this.items[0]
 		})
-		tripselectorFormUiInit()
 	}
 
 

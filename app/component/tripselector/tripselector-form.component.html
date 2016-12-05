@@ -7,16 +7,10 @@
                     <div class="main-search-form_form">
 
                         <div class="tabbable">
-                            <ul class="nav nav-tabs">
-                                <li class="active">
-                                    <a href="#main-search-form_panel_one-way" data-toggle="tab">One Way</a>
-                                </li>
-                                <li>
-                                    <a href="#main-search-form_panel_round-trip" data-toggle="tab">Round Trip</a>
-                                </li>
-                                <li>
-                                    <a href="#main-search-form_panel_tourist-package" data-toggle="tab">Tourist Package</a>
-                                </li>
+                            <ul class="uk-tab" data-uk-tab>
+                                <li class="uk-active"><a href="#main-search-form_panel_one-way">One Way</a></li>
+                                <li><a href="#main-search-form_panel_round-trip">Round Trip</a></li>
+                                <li><a href="#main-search-form_panel_tourist-package">Tourist Package</a></li>
                             </ul>
                             <div class="tab-content inverted-form">
                                 <div class="tab-pane active" id="main-search-form_panel_one-way">
@@ -34,7 +28,7 @@
                                             <div class="col-md-2 form-group">
                                                 <label for="rf">Date of departure</label>
                                                 <div class='input-group date'>
-                                                    <input type="text" class="form-control" id="DP">
+                                                    <input type="text" name="tripDate" class="form-control" data-uk-datepicker="{format:'DD.MM.YYYY'}" [(ngModel)]="tripData.date">
                                                     <span class="input-group-addon">
                                                         <span class="glyphicon glyphicon-calendar"></span>
                                                     </span>
@@ -46,17 +40,17 @@
 
                                                     <div class="col-md-4 form-group">
                                                         <label for="rf">Adults</label>
-                                                        <input type="text" class="form-control" data-control="spinner-vertical" />
+                                                        <input type="number" name="tripAdults" min="0" class="form-control" [(ngModel)]="tripData.adults" />
                                                     </div>
 
                                                     <div class="col-md-4 form-group">
                                                         <label for="rf">2-6 yr</label>
-                                                        <input type="text" class="form-control" data-control="spinner-vertical" />
+                                                        <input type="number" name="tripKids" min="0" class="form-control" [(ngModel)]="tripData.kids" />
                                                     </div>
 
                                                     <div class="col-md-4 form-group">
                                                         <label for="rf">&lt;2 yr</label>
-                                                        <input type="text" class="form-control" data-control="spinner-vertical" />
+                                                        <input type="number" name="tripInfants" min="0" class="form-control" [(ngModel)]="tripData.infants" />
                                                     </div>
 
                                                 </div>
@@ -79,7 +73,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <select name="" id="rf"  class="selectpicker form-control fit-width">
+                                                    <select name="" id="rf"  class="form-control fit-width">
                                                             <option value="">Car</option>
                                                             <option value="">Truck</option>
                                                             <option value="">Motorcycle</option>
@@ -291,4 +285,4 @@
             </div>
         </div>
     </div>
-    {{ items | json }}
+    {{ tripData | json }}
