@@ -3,9 +3,7 @@ import { Router } from '@angular/router'
 
 import { APIService } from '../../service/api.service'
 
-import { Trip } from '../../../model/trip'
-
-declare let tripselectorFormUiInit: any
+import { Trip, TripType } from '../../../model/trip'
 
 @Component({
 	moduleId: module.id,
@@ -13,39 +11,54 @@ declare let tripselectorFormUiInit: any
 	templateUrl: '/app/component/tripselector/tripselector-form.component.html'
 })
 export class TripSelectorFormComponent implements OnInit {
+	trips: Trip[] = []
 
-	items: Trip[] = []
+	get tripsByType(): {} {
+		return TripType.reduce( (prev: {}, type:{ id: string, title: string, icon: string, maxPoints: number } ) => {
+			prev[type.id] = this.trips.filter( trip => trip.type.id === type.id )
+			return prev
+		}, {})
+	}
+
+	oneWayTrip: Trip = null
+	twoWayTrip: Trip = null
+	packageTrip: Trip = null
+
+	date: Date = new Date()
+
+	adults: number = 0
+	kinds: number = 0
+	infants: number = 0
 
 	submitted: boolean = false
-
-	tripData: {
-		trip:Trip,
-		date:string,
-		adults:number,
-		kids:number,
-		infants:number
-	} = {
-		trip:null,
-		date:"",
-		adults: 0,
-		kids: 0,
-		infants: 0
-	}
 
 	constructor(private router: Router, private apiService: APIService) {}
 
 	ngOnInit(): void {
-		this.apiService.get<Trip>(Trip).then( (response: Trip[]) =>  { 
-			this.items = response
-			this.tripData.trip = this.items[0]
+		this.apiService.get<Trip>(Trip).then( (response: Trip[]) =>  {
+			this.trips = response
+			if (this.trips.length <= 0)
+				return
+
+			this.oneWayTrip = this.trips[0]
+			this.twoWayTrip = this.trips[0]
+			this.packageTrip = this.trips[0]
 		})
 	}
 
+	submit(): void {
+		if (this.submitted)
+			return
+		this.submitted = true
 
-	tripSelectSubmit(): void {
-		localStorage.setItem("tripDataCurrent", JSON.stringify(this.tripData))
+		let trip: Trip = this.oneWayTrip
+
+		localStorage.setItem('currentOrder', JSON.stringify({
+			trip: trip.id.toString(),
+			date: this.date,
+			peopleCount: (this.adults + this.kinds + this.infants) || 1
+		}))
+
 		window.location.href = "/order"
-
 	}
 }
-

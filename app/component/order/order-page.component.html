@@ -232,14 +232,14 @@
                                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add passenger
                                 </button>
                             </div>
-                            
-                            
+
+
                             <hr>
-                            
+
                             <section class="payment-details">
-                                
+
                                 <h3>Enter your payment details</h3>
-                                
+
                                 <div class="payment-details_methods">
                                     <span class="payment-details_method">
                                            <span class="styled-radio">
@@ -256,7 +256,7 @@
                                     </span>
                                     </span>
                                 </div>
-                                
+
                                 <div class="payment-system_container">
                                     <div class="payment-system_card">
                                         <div class="form-group row">
@@ -270,7 +270,7 @@
                                                     <div class="col-md-3"><input type="text" class="form-control" id="card-number1" /></div>
                                                     <div class="col-md-3"><input type="text" class="form-control" id="card-number2" /></div>
                                                     <div class="col-md-3"><input type="text" class="form-control" id="card-number3" /></div>
-                                                    <div class="col-md-3"><input type="text" class="form-control" id="card-number4" /></div> 
+                                                    <div class="col-md-3"><input type="text" class="form-control" id="card-number4" /></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -285,13 +285,13 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            
+
                                             <div class="col-md-3">
                                                 <label for="cardholder-name">
                                                     VALID THRU
                                                 </label>
                                             </div>
-                                            
+
                                             <div class="col-md-5 valid-thru">
                                                 <div class="valid-thru_month">
                                                     <select name="" id="valid-thru_month" data-control="selectpicker" class="selectpicker form-control fit-width">
@@ -323,28 +323,28 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="col-md-4">
                                                 <label for="cvv" class="cvv-label">
                                                     CVV
                                                 </label>
                                                 <input type="text" class="form-control" id="cvv" />
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </section>
-                                    
+
                             <div class="payment-details_submit">
                                 <button type="submit" class="btn btn-danger btn-lg">
                                     Submit Payment
                                 </button>
-                                
-                                
+
+
                             </div>
-                            
+
                         </form>
                     </div>
                     <div class="col-md-3">
@@ -356,7 +356,7 @@
 
                             <div class="order-trip order-trip-outward">
                                 <i class="ico ico_boat"></i>
-                                <b>{{ item.title }} ({{ item.points[0] && item.points[0].title }}&rarr;{{ item.points[1] && item.points[1].title }})</b> valid <b>21.09.2016 - 21.12.2016</b>
+                                <b></b>
                             </div>
 
                             <div class="order-trip_details">
@@ -377,7 +377,7 @@
                                     <div class="val">$20</div>
                                 </div>
                             </div>
-                            
+
                             <div class="order-trip order-trip-outward">
                                 <i class="ico ico_boat"></i>
                                 <b>Taba, Egypt -> Aqaba, Jordan</b> valid <b>21.09.2016 - 21.12.2016</b>
@@ -420,7 +420,7 @@
                     </div>
 
 <div style="clear:both">
-            {{ item | json }}
+            {{ order | json }}
 </div>
 
                 </div>

@@ -19,7 +19,7 @@
 			</thead>
 			<tbody>
 				<tr *ngFor="let item of __items">
-					<td class="uk-form" (click)="enable(item); $event.stopPropagation()">
+					<td class="uk-form" (click)="item.enable = !item.enable; $event.stopPropagation()">
 						<i class="uk-icon-square-o" [class.uk-hidden]="item.enable"></i>
 						<i class="uk-icon-check-square-o" [class.uk-hidden]="!item.enable"></i>
 					</td>

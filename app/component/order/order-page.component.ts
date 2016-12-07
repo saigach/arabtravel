@@ -4,6 +4,7 @@ import { Router } from '@angular/router'
 import { APIService } from '../../service/api.service'
 
 import { Trip } from '../../../model/trip'
+import { Order } from '../../../model/order'
 
 @Component({
 	moduleId: module.id,
@@ -12,29 +13,39 @@ import { Trip } from '../../../model/trip'
 })
 export class OrderPageComponent implements OnInit {
 
-	item: Trip = new Trip()
+	order: Order = null
 
 	submitted: boolean = false
 
 	constructor(private router: Router, private apiService: APIService) {}
 
 	ngOnInit(): void {
-		let tripDataCurrent = localStorage.getItem("tripDataCurrent")
-		if (!tripDataCurrent) {
-			window.location.href = "/"
+
+		let currentOrder: any = localStorage.getItem('currentOrder')
+		if (!currentOrder) {
+			window.location.href = '/'
 			return
 		}
-		let tripDataCurrentObject:{
-			trip:any,
-			date:string,
-			adults:number,
-			kids:number,
-			infants:number
-		} = JSON.parse(tripDataCurrent)
-		//tripDataCurrentObject.trip = new Trip(tripDataCurrentObject.trip)
 
-		console.dir(tripDataCurrentObject)
-		this.apiService.get<Trip>(Trip,tripDataCurrentObject.trip.id._uuid).then( (response: Trip) =>  { this.item = response })
+		try {
+			currentOrder = JSON.parse(currentOrder)
+		} catch(error) {
+			window.location.href = '/'
+			return
+		}
+
+		if (!currentOrder.trip) {
+			window.location.href = '/'
+			return
+		}
+
+		this.apiService.get<Trip>(Trip,currentOrder.trip).then( (trip: Trip) =>
+			this.order = new Order({
+				trip: trip,
+				date: new Date(currentOrder.date || undefined),
+				people: Array( Number.parseInt(currentOrder.peopleCount) || 1 ).fill({})
+			})
+		)
 	}
 }
 

@@ -27,17 +27,23 @@ export class Price extends Model {
 		super(value)
 
 		this.startDate = value.startDate && newDate(value.startDate) || new Date()
+		if (this.startDate)
+			this.startDate.setHours(0,0,0,0)
+
 		this.endDate = value.endDate && newDate(value.endDate) || (() => {
 			let date = new Date()
 			date.setFullYear(1 + date.getFullYear())
 			return date
 		})()
 
-		this.costs = value.coasts instanceof Array && value.coasts.reduce(
+		if (this.endDate)
+			this.endDate.setHours(0,0,0,0)
+
+		this.costs = value.costs instanceof Array && value.costs.reduce(
 			( prev: { age: number, cost: number }[] , value:any ) =>
 				prev.concat({
 					age: Number.parseInt(value.age || 0),
-					cost: Math.max(0, Number.parseFloat(value.coast || 0))
+					cost: Math.max(0, Number.parseFloat(value.cost || 0))
 				}),
 			[]
 		) || []

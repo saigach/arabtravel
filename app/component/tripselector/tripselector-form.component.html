@@ -19,16 +19,15 @@
 
                                             <div class="col-md-3">
                                                 <label for="rf">Route</label>
-                                                <select name="" id="rf" class="form-control fit-width">
-													<option *ngFor="let item of items">{{ item.title }} ({{ item.points[0] && item.points[0].title }}&rarr;{{ item.points[1] && item.points[1].title }})</option>
+                                                <select name="onewaytrip" [(ngModel)]="oneWayTrip" id="rf" class="form-control fit-width">
+													<option *ngFor="let trip of trips" [ngValue]="trip">{{ trip.title }} ({{ trip.points[0] && trip.points[0].title }}&rarr;{{ trip.points[1] && trip.points[1].title }})</option>
                                                 </select>
-
                                             </div>
 
                                             <div class="col-md-2 form-group">
                                                 <label for="rf">Date of departure</label>
                                                 <div class='input-group date'>
-                                                    <input type="text" name="tripDate" class="form-control" data-uk-datepicker="{format:'DD.MM.YYYY'}" [(ngModel)]="tripData.date">
+                                                    <input type="text" name="tripDate" class="form-control" data-uk-datepicker="{format:'DD.MM.YYYY'}">
                                                     <span class="input-group-addon">
                                                         <span class="glyphicon glyphicon-calendar"></span>
                                                     </span>
@@ -40,17 +39,17 @@
 
                                                     <div class="col-md-4 form-group">
                                                         <label for="rf">Adults</label>
-                                                        <input type="number" name="tripAdults" min="0" class="form-control" [(ngModel)]="tripData.adults" />
+                                                        <input type="number" name="adults" min="0" class="form-control" [(ngModel)]="adults">
                                                     </div>
 
                                                     <div class="col-md-4 form-group">
                                                         <label for="rf">2-6 yr</label>
-                                                        <input type="number" name="tripKids" min="0" class="form-control" [(ngModel)]="tripData.kids" />
+                                                        <input type="number" name="kinds" min="0" class="form-control" [(ngModel)]="kinds">
                                                     </div>
 
                                                     <div class="col-md-4 form-group">
                                                         <label for="rf">&lt;2 yr</label>
-                                                        <input type="number" name="tripInfants" min="0" class="form-control" [(ngModel)]="tripData.infants" />
+                                                        <input type="number" name="infants" min="0" class="form-control" [(ngModel)]="infants">
                                                     </div>
 
                                                 </div>
@@ -84,7 +83,7 @@
 
                                         <div class="text-center submit-btn-container">
 
-                                            <input type="submit" class="btn btn-danger" (click)="tripSelectSubmit()" value="CHECK AVALIABILITY">
+                                            <input type="submit" class="btn btn-danger" (click)="submit()" value="CHECK AVALIABILITY">
 
                                         </div>
                                     </form>
@@ -285,4 +284,4 @@
             </div>
         </div>
     </div>
-    {{ tripData | json }}
+    <!-- {{ tripsByType | json }} -->
