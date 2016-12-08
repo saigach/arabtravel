@@ -3,7 +3,7 @@ import { Router } from '@angular/router'
 
 import { APIService } from '../../service/api.service'
 
-import { Trip, TripType } from '../../../model/trip'
+import { Trip } from '../../../model/trip'
 
 @Component({
 	moduleId: module.id,
@@ -12,13 +12,6 @@ import { Trip, TripType } from '../../../model/trip'
 })
 export class TripSelectorFormComponent implements OnInit {
 	trips: Trip[] = []
-
-	get tripsByType(): {} {
-		return TripType.reduce( (prev: {}, type:{ id: string, title: string, icon: string, maxPoints: number } ) => {
-			prev[type.id] = this.trips.filter( trip => trip.type.id === type.id )
-			return prev
-		}, {})
-	}
 
 	oneWayTrip: Trip = null
 	twoWayTrip: Trip = null

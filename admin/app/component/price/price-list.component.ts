@@ -83,16 +83,8 @@ export class PriceListComponent implements OnInit {
 		this.priceEditor.show()
 	}
 
-	addCost(): void {
-		this.item.costs.push({ age: 0, cost: 0 })
-	}
-
-	addFactor(): void {
-		this.item.changes.push({factor: '', percent: 0, cost: 0 })
-	}
-
 	addRefund(): void {
-		this.item.refund.push({interval: 30, percent: 0, cost: 0 })
+		this.item.refund.push({interval: 30, percent: 0})
 	}
 }
 

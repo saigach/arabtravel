@@ -5,9 +5,8 @@ import { Location } from '@angular/common'
 import { APIService } from '../../service/api.service'
 import { FileService } from '../../service/file.service'
 
-import { Trip, TripType } from '../../../../model/trip'
+import { Trip } from '../../../../model/trip'
 import { Point } from '../../../../model/point'
-import { Hotel } from '../../../../model/hotel'
 
 @Component({
 	moduleId: module.id,
@@ -16,23 +15,16 @@ import { Hotel } from '../../../../model/hotel'
 })
 export class TripItemComponent implements OnInit {
 
-	hotels: Hotel[] = []
 	points: Point[] = []
 
-	tripType = TripType
-
-	item: Trip = new Trip({
-		points: [this.points[0] || new Point(), this.points[0] || new Point()]
-	})
-
-	@ViewChild('pointsNestable') pointsNestableRef: ElementRef
+	item: Trip = new Trip()
 
 	submitted: boolean = false
 
 	get valid(): boolean {
 		return  this.item.title.trim().length > 0 &&
-				this.item.points[0] && this.item.points[0].title.trim().length > 0 &&
-				this.item.points[1] && this.item.points[1].title.trim().length > 0 &&
+				this.item.pointA &&
+				this.item.pointB &&
 				this.item.prices.length > 0
 	}
 
@@ -47,56 +39,55 @@ export class TripItemComponent implements OnInit {
 		if (!id)
 			return
 
-		Promise.all([
-			this.apiService.get<Hotel>(Hotel),
-			this.apiService.get<Point>(Point)
-		]).then( (response: any[]) => {
-			this.hotels = response[0]
-			this.points = response[1]
+		this.apiService.get<Point>(Point).then( (response: Point[]) => {
+			this.points = response
 
 			if (id.toLowerCase() !== 'new')
 				this.apiService.get<Trip>(Trip, id)
 					.then((response: Trip) => {
 						this.item = response
-						this.item.points = this.item.points.map(
-							point => this.points.find( value => value.id.toString() === point.id.toString() )
-						)
+						this.item.pointA = this.points.find(
+							value => value.id.toString() === this.item.pointA.id.toString()
+						) || this.points[0] || null
+						this.item.pointB = this.points.find(
+							value => value.id.toString() === this.item.pointB.id.toString()
+						) || this.points[0] || null
 					})
 					.catch(error => this.item = null)
 		})
 
-		$(this.pointsNestableRef.nativeElement).on('change.uk.nestable', (event, sortable, dragged, action) => {
-			if (action !== 'moved')
-				return
-			this.item.points = Array.prototype.reduce.call(
-				event.target.children,
-				(prev: Point[], node: HTMLElement) => prev.concat(this.item.points[node.getAttribute('index')] || null),
-				[]
-			)
-		})
+
+		// Promise.all([
+		// 	this.apiService.get<Hotel>(Hotel),
+		// 	this.apiService.get<Point>(Point)
+		// ]).then( (response: any[]) => {
+		// 	this.hotels = response[0]
+		// 	this.points = response[1]
+
+		// 	if (id.toLowerCase() !== 'new')
+		// 		this.apiService.get<Trip>(Trip, id)
+		// 			.then((response: Trip) => {
+		// 				this.item = response
+		// 				this.item.points = this.item.points.map(
+		// 					point => this.points.find( value => value.id.toString() === point.id.toString() )
+		// 				)
+		// 			})
+		// 			.catch(error => this.item = null)
+		// })
+
+		// $(this.pointsNestableRef.nativeElement).on('change.uk.nestable', (event, sortable, dragged, action) => {
+		// 	if (action !== 'moved')
+		// 		return
+		// 	this.item.points = Array.prototype.reduce.call(
+		// 		event.target.children,
+		// 		(prev: Point[], node: HTMLElement) => prev.concat(this.item.points[node.getAttribute('index')] || null),
+		// 		[]
+		// 	)
+		// })
 	}
 
 	back(): void {
 		this.location.back()
-	}
-
-	addPoint(): void {
-		this.item.points.push(this.points[0])
-	}
-
-	deletePoint(point: Point): void {
-		this.item.points = this.item.points.filter(value => value !== point)
-	}
-
-	poitnChange(point: Point, newPoint: Point): void {
-		let index = this.item.points.indexOf(point);
-		if (index !== -1)
-			this.item.points[index] = newPoint
-	}
-
-	typeChange(): void {
-		if (this.item.type.maxPoints)
-			this.item.points = this.item.points.slice(0, this.item.type.maxPoints)
 	}
 
 	submit(): void {

@@ -36,14 +36,6 @@ const appRoutes: Routes = [
 		component: HotelItemComponent
 	},
 	{
-		path: 'people',
-		component: HumanListComponent
-	},
-	{
-		path: 'people/:id',
-		component: HumanItemComponent
-	},
-	{
 		path: 'orders',
 		component: OrderListComponent
 	},
