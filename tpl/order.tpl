@@ -1,5 +1,5 @@
 <div class="main-content" role="content">
-    <div class="container">
+    <div class="container" id="order-form-container">
         <div class="row" style="position:relative;">
             <div class="col-md-9">
 
@@ -211,7 +211,7 @@
             </div>
             <div class="col-md-3">
 
-                <aside class="order-details widget trip-details" data-uk-sticky id="order-details">
+                <aside class="order-details widget trip-details" data-uk-sticky="{boundary: '#order-form-container'}" id="order-details">
                     <header class="widget_header">
                         Order details
                     </header>

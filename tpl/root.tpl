@@ -126,7 +126,7 @@
                 </div>
                 <div class="col-md-4 col-md-push-2">
                     <div class="pull-left">
-                        <a href="" class="btn btn-default btn-ghost btn-ui btn-account">
+                        <a href="#login-form-modal" class="btn btn-default btn-ghost btn-ui btn-account" data-uk-modal>
                             <i class="demo-icon ico_user"></i> Му account
                         </a>
                     </div>
@@ -222,7 +222,7 @@
                 </div>
                 <div class="col-md-6">
 
-                    <form role="form" class="contact-form dark-form">
+                    <form role="form" class="contact-form dark-form animated-form">
                         <p class="footer-title">Ask us a question</p>
                         <div class="row">
                             <div class="col-md-6">
@@ -306,5 +306,43 @@
             </div>
         </div>
     </footer>
+    
+    <!-- This is the modal -->
+    <div id="login-form-modal" class="uk-modal">
+        <div class="uk-modal-dialog">
+           
+            <a class="uk-modal-close uk-close"></a>
+            <div class="uk-modal-header"><span class="h3">Sign Up Form</span></div>
+            
+            <form role="form" class="login-form">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="loginForm_login">
+                                Login
+                            </label>
+                            <input type="text" class="form-control" id="loginForm_login" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="loginForm_password">
+                                Password
+                            </label>
+                            <input type="password" class="form-control" id="loginForm_password" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">
+                        Sign Up
+                    </button>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+    
 </body>
 </html>
