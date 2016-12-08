@@ -3,7 +3,7 @@ import { Router } from '@angular/router'
 
 import { APIService } from '../../service/api.service'
 
-import { Trip, TripType } from '../../../model/trip'
+import { Trip } from '../../../model/trip'
 
 @Component({
 	moduleId: module.id,
@@ -12,13 +12,6 @@ import { Trip, TripType } from '../../../model/trip'
 })
 export class TripSelectorFormComponent implements OnInit {
 	trips: Trip[] = []
-
-	get tripsByType(): {} {
-		return TripType.reduce( (prev: {}, type:{ id: string, title: string, icon: string, maxPoints: number } ) => {
-			prev[type.id] = this.trips.filter( trip => trip.type.id === type.id )
-			return prev
-		}, {})
-	}
 
 	oneWayTrip: Trip = null
 	twoWayTrip: Trip = null
@@ -31,6 +24,12 @@ export class TripSelectorFormComponent implements OnInit {
 	infants: number = 0
 
 	submitted: boolean = false
+
+	tripSelect: any = {
+		oneWayTrip: true,
+		twoWayTrip: false,
+		packageTrip: false
+	}
 
 	constructor(private router: Router, private apiService: APIService) {}
 
@@ -60,5 +59,15 @@ export class TripSelectorFormComponent implements OnInit {
 		}))
 
 		window.location.href = "/order"
+	}
+
+	toggleTripSelected(i: number): void {
+		for (var key in this.tripSelect) {
+		    if (this.tripSelect.hasOwnProperty(key)) {
+		        this.tripSelect[key] = false
+		    }
+		}
+		this.tripSelect[i] = true
+		console.log(this.tripSelect)
 	}
 }

@@ -29,7 +29,7 @@
 	<app>
 		<div class='uil-cube-css'><div></div><div></div><div></div><div></div></div>
 	</app>
-
+</div>
     <div class="main-content" role="content">
         <div class="container">
             <div class="row">
@@ -42,26 +42,28 @@
                     <div class="large-icon ico_click">
 
                     </div>
-                    <h3 class="text-center">Easy</h3>
+                    <h3 class="text-center">More Choice</h3>
                     <p>
-                        Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+                        Arab Travel features the widest selection of ferry routes giving you flexibility and choice as well as access to the best ferry deals around..
                     </p>
                 </div>
                 <div class="col-md-4">
                     <div class="large-icon ico_time">
 
                     </div>
-                    <h3 class="text-center">Fast</h3>
+                    <h3 class="text-center">Better Deals</h3>
                     <p>
-                        Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+                        You can compare all suitable ferry crossings in our quick and easy search to find the cheapest ferry fares at the time you want to travel!
+
+
                     </p>
                 </div>
                 <div class="col-md-4">
                     <div class="large-icon ico_key">
                     </div>
-                    <h3 class="text-center">Secure</h3>
+                    <h3 class="text-center">Save Money</h3>
                     <p>
-                        Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+                    Best price guaranteed, you are getting the lowest possible price at the time of booking – guaranteed.
                     </p>
                 </div>
             </div>
@@ -77,7 +79,7 @@
 					</div>
 					<div class="col-md-3 hww-graphics_item">
 						<div class="hww-graphics_icon ico_pen"></div>
-						<p>Fill the form above and check your price and options</p>
+						<p>Fill the form above and check your options and the availability</p>
 					</div>
 					<div class="col-md-3 hww-graphics_item">
 						<div class="hww-graphics_icon ico_card-usd"></div>
@@ -85,11 +87,11 @@
 					</div>
 					<div class="col-md-3 hww-graphics_item">
 						<div class="hww-graphics_icon ico_attachment"></div>
-						<p>Get your ticket on the next day by email and in your personal account on the site</p>
+						<p>Get your ticket on your email and in your personal account on the site</p>
 					</div>
 					<div class="col-md-3 hww-graphics_item">
 						<div class="hww-graphics_icon ico_doc"></div>
-						<p>Print it and use it! (most our tickets are open-date for 3 months)</p>
+						<p>Print it and use it! Our ferries tickets are open-date for 3 months to use</p>
 					</div>
 				</div>
 			</section>
