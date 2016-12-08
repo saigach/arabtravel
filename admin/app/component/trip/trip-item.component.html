@@ -11,13 +11,6 @@
 				<span>Enable</span>
 				<input class="uk-hidden" type="checkbox" [(ngModel)]="item.enable">
 			</label>
-			<div class="uk-button uk-margin-left uk-form-select" data-uk-form-select>
-				<span>Trip type</span>
-				<i class="uk-icon-caret-down"></i>
-				<select [(ngModel)]="item.type" (ngModelChange)="typeChange()">
-					<option *ngFor="let type of tripType" [ngValue]="type">{{ type.title }}</option>
-				</select>
-			</div>
 		</div>
 
 		<label class="uk-width-1-1 uk-margin-top uk-form-label">Title</label>
@@ -30,37 +23,28 @@
 			<input class="uk-width-1-1" type="text" placeholder="Trip description" [(ngModel)]="item.description">
 		</div>
 
-		<label class="uk-width-8-10 uk-margin-top uk-form-label">Trip points</label>
-		<div *ngIf="!item.type.maxPoints || item.points.length < item.type.maxPoints" class="uk-width-2-10 uk-margin-top uk-text-right">
-			<a class="admin-cursor-pointer" (click)="addPoint(); $event.stopPropagation()">
-				<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
-				<u>Add point</u>
-			</a>
+		<div class="uk-width-4-10">
+			<label class="uk-width-1-1 uk-margin-top uk-form-label">Start Point</label>
+			<div class="uk-width-1-1 uk-form-controls">
+				<select class="uk-width-1-1" [(ngModel)]="item.pointA">
+					<option *ngFor="let point of points | listOrderBy : ['title']" [ngValue]="point">{{ point.title }}</option>
+				</select>
+			</div>
 		</div>
-		<div class="uk-width-1-1">
-			<ul #pointsNestable class="uk-nestable" data-uk-nestable="{handleClass:'uk-nestable-handle'}">
-				<li *ngFor="let itemPoint of item.points; let i=index;" class="uk-nestable-item" [attr.index]="i">
-					<div class="uk-nestable-panel">
-						<i class="uk-nestable-handle uk-icon uk-icon-bars uk-margin-small-right"></i>
-						<select class="uk-form-width-large" [ngModel]="itemPoint" (ngModelChange)="poitnChange(itemPoint, $event)">
-							<option *ngFor="let poitn of points | listOrderBy : ['title']" [ngValue]="poitn">{{ poitn.title }}</option>
-						</select>
-						<i *ngIf="item.points.length > 2" class="uk-icon uk-icon-trash-o uk-margin-left admin-cursor-pointer" (click)="deletePoint(itemPoint); $event.stopPropagation()"></i>
-					</div>
-				</li>
-			</ul>
+		<div class="uk-width-2-10">
+			<label class="uk-width-1-1 uk-margin-top uk-form-label">&emsp;</label>
+			<div class="uk-width-1-1 uk-form-controls uk-text-center">
+				<i class="uk-icon-medium uk-icon-arrow-right"></i>
+			</div>
 		</div>
-
-		<label *ngIf="item.type.id === 'package'" class="uk-width-1-1 uk-margin-top uk-form-label">Hotels</label>
-		<ul *ngIf="item.type.id === 'package'" class="uk-width-1-1 uk-list uk-form-controls">
-			<li *ngFor="let hotel of hotels">
-				<button class="admin-cursor-pointer">
-					<i class="uk-icon-square-o"></i>
-					<i class="uk-icon-check-square-o"></i>
-				</button>
-				<span>{{ hotel.title }}</span>
-			</li>
-		</ul>
+		<div class="uk-width-4-10">
+			<label class="uk-width-1-1 uk-margin-top uk-form-label">End Point</label>
+			<div class="uk-width-1-1 uk-form-controls">
+				<select class="uk-width-1-1" [(ngModel)]="item.pointB">
+					<option *ngFor="let point of points | listOrderBy : ['title']" [ngValue]="point">{{ point.title }}</option>
+				</select>
+			</div>
+		</div>
 
 		<price-list class="uk-width-1-1 uk-margin-top" [(items)]="item.prices"></price-list>
 

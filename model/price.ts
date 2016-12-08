@@ -19,9 +19,13 @@ export class Price extends Model {
 	startDate: Date = new Date()
 	endDate: Date = null
 
-	costs: { age: number, cost: number }[] = []
-	changes: { factor: string, percent: number, cost: number }[]
-	refund: { interval: number, percent: number, cost: number }[]
+	adults: number = 0 // > 6
+	kids: number = 0 // 2-6
+	infants: number = 0 // < 2
+
+	egyptianMarkUp: number = 0 // margin percentage
+
+	refund: { interval: number, percent: number }[]
 
 	constructor(value: any = {}) {
 		super(value)
@@ -39,31 +43,17 @@ export class Price extends Model {
 		if (this.endDate)
 			this.endDate.setHours(0,0,0,0)
 
-		this.costs = value.costs instanceof Array && value.costs.reduce(
-			( prev: { age: number, cost: number }[] , value:any ) =>
-				prev.concat({
-					age: Number.parseInt(value.age || 0),
-					cost: Math.max(0, Number.parseFloat(value.cost || 0))
-				}),
-			[]
-		) || []
+		this.adults = Math.max(0, Number.parseFloat(value.adults || 0))
+		this.kids = Math.max(0, Number.parseFloat(value.kids || 0))
+		this.infants = Math.max(0, Number.parseFloat(value.infants || 0))
 
-		this.changes = value.changes instanceof Array && value.changes.reduce(
-			( prev: { factor: string, percent: number, cost: number }[] , value:any ) =>
-				prev.concat({
-					factor: String(value.factor || ''),
-					percent: Math.max( 0, Math.min( Number.parseFloat(value.percent || 0), 1 ) ),
-					cost: Math.max(0, Number.parseFloat(value.coast || 0))
-				}),
-			[]
-		) || []
+		this.egyptianMarkUp = Math.max( 0, Math.min( Number.parseFloat(value.egyptianMarkUp || 0), 1 ) )
 
 		this.refund = value.refund instanceof Array && value.refund.reduce(
-			( prev: { interval: number, percent: number, cost: number }[] , value:any ) =>
+			( prev: { interval: number, percent: number }[] , value:any ) =>
 				prev.concat({
 					interval: Number.parseInt(value.interval || 0),
-					percent: Math.max( 0, Math.min( Number.parseFloat(value.percent || 0), 1 ) ),
-					cost: Math.max(0, Number.parseFloat(value.coast || 0))
+					percent: Math.max( 0, Math.min( Number.parseFloat(value.percent || 0), 1 ) )
 				}),
 			[]
 		) || []
@@ -73,8 +63,10 @@ export class Price extends Model {
 		return Object.assign(super.toObject(), {
 			startDate: this.startDate,
 			endDate: this.endDate,
-			costs: this.costs,
-			changes: this.changes,
+			adults: this.adults,
+			kids: this.kids,
+			infants: this.infants,
+			egyptianMarkUp: this.egyptianMarkUp,
 			refund: this.refund
 		})
 	}

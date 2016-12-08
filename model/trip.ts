@@ -1,39 +1,35 @@
 import { UUID } from './uuid'
 import { Model } from './model'
 import { Point } from './point'
+import { Vehicle } from './vehicle'
 import { Price } from './price'
-
-import { Hotel } from './hotel'
-
-export const TripType: { id: string, title: string, icon: string, maxPoints: number }[] = [
-	{ id: 'oneway', title: 'One way trip', icon: 'uk-icon-long-arrow-right', maxPoints: 2 },
-	{ id: 'twoway', title: 'Two way trip', icon: 'uk-icon-exchange', maxPoints: 2 },
-	{ id: 'package', title: 'Package', icon: 'uk-icon-refresh', maxPoints: null },
-]
 
 export class Trip extends Model {
 	static __api: string = 'objects/trip'
 
 	description: string = ''
 
-	type: { id: string, title: string, icon: string, maxPoints: number } = TripType[0]
+	pointA: Point = null
+	pointB: Point = null
 
-	points: Point[] = []
+	vehicles: { vehicle: Vehicle, cost: 0 }[] = []
+
 	prices: Price[] = []
-	images: UUID[] = []
-
-	hotels: UUID[] = []
 
 	constructor(value: any = {}) {
 		super(value)
 
 		this.description = String(value.description || '')
 
-		this.type = value.type && TripType.find( type => type.id === value.type) || TripType[0]
+		this.pointA = value.pointA && ( value.pointA instanceof Point ? value.pointA : new Point(value.pointA) ) || null
+		this.pointB = value.pointB && ( value.pointB instanceof Point ? value.pointB : new Point(value.pointB) ) || null
 
-		this.points = value.points instanceof Array && value.points.reduce(
-			( prev: Point[] , value:any ) =>
-				prev.concat(value instanceof Point && value || value && new Point(value) || null),
+		this.vehicles = value.vehicles instanceof Array && value.vehicles.reduce(
+			( prev: { vehicle: Vehicle, cost: number}[] , value: any) =>
+				prev.concat( value && value.vehicle && {
+					vehicle: value.vehicle instanceof Vehicle && value.vehicle || new Vehicle(value.vehicle),
+					cost: Number.parseFloat(value.cost || 0) || 0
+				} || null),
 			[]
 		).filter(value => !!value) || []
 
@@ -42,28 +38,18 @@ export class Trip extends Model {
 				prev.concat(value instanceof Price && value || value && new Price(value) || null),
 			[]
 		).filter(value => !!value) || []
-
-		this.images = value.images instanceof Array && value.images.reduce(
-			( prev: UUID[] , value:any ) =>
-				prev.concat(value instanceof UUID && value || value && new UUID(value) || null),
-			[]
-		).filter(value => !!value) || []
-
-		this.hotels = value.hotels instanceof Array && value.hotels.reduce(
-			( prev: UUID[] , value:any ) =>
-				prev.concat(value instanceof UUID && value || value && new UUID(value) || null),
-			[]
-		).filter(value => !!value) || []
 	}
 
 	toObject(): {} {
 		return Object.assign(super.toObject(), {
 			description: this.description || '',
-			type: this.type.id,
-			points: this.points.reduce( (prev, value) => prev.concat(value.toObject()), []),
-			prices: this.prices.reduce( (prev, value) => prev.concat(value.toObject()), []),
-			images: this.images.reduce( (prev, value) => prev.concat(value.toString()), []),
-			hotels: this.hotels.reduce( (prev, value) => prev.concat(value.toString()), [])
+			pointA: this.pointA.toObject(),
+			pointB: this.pointB.toObject(),
+			vehicles: this.vehicles.reduce( (prev, value) => prev.concat({
+				vehicle: value.vehicle.toObject(),
+				cost: value.cost
+			}), [] ),
+			prices: this.prices.reduce( (prev, value) => prev.concat(value.toObject()), [])
 		})
 	}
 
