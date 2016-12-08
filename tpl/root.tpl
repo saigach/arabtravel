@@ -89,6 +89,7 @@
 	<script src="/node_modules/uikit/dist/js/components/form-password.min.js" type="text/javascript"></script>
 	<script src="/node_modules/uikit/dist/js/components/form-select.min.js" type="text/javascript"></script>
 	<script src="/node_modules/uikit/dist/js/core/switcher.min.js" type="text/javascript"></script>
+	<script src="/node_modules/uikit/dist/js/components/sticky.min.js" type="text/javascript"></script>
 
 	<script src="/node_modules/uikit/dist/js/components/grid.min.js" type="text/javascript"></script>
 
