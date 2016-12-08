@@ -79,23 +79,26 @@
     <!-- UiKit -->
 	<script src="/node_modules/uikit/dist/js/uikit.min.js"></script>
     <link rel="stylesheet" href="/node_modules/uikit/dist/css/uikit.min.css" type="text/css">
-    
 
-	<!-- bootstrap-select -->
-	<link rel="stylesheet" href="/node_modules/bootstrap-select/dist/css/bootstrap-select.css" type="text/css">
-	<script src="/node_modules/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
-	<script src="/node_modules/bootstrap-select/dist/js/i18n/defaults-en_US.min.js"></script>
+	<link rel="stylesheet" href="/node_modules/uikit/dist/css/components/datepicker.almost-flat.min.css" type="text/css">
+	<script src="/node_modules/uikit/dist/js/components/datepicker.min.js" type="text/javascript"></script>
+	<script src="/node_modules/uikit/dist/js/components/timepicker.min.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="/node_modules/uikit/dist/css/components/form-advanced.almost-flat.min.css" type="text/css">
+	<link rel="stylesheet" href="/node_modules/uikit/dist/css/components/form-password.almost-flat.min.css" type="text/css">
+	<link rel="stylesheet" href="/node_modules/uikit/dist/css/components/form-select.almost-flat.min.css" type="text/css">
+	<script src="/node_modules/uikit/dist/js/components/form-password.min.js" type="text/javascript"></script>
+	<script src="/node_modules/uikit/dist/js/components/form-select.min.js" type="text/javascript"></script>
+	<script src="/node_modules/uikit/dist/js/core/switcher.min.js" type="text/javascript"></script>
 
-	<!-- bootstrap-touchspin -->
-	<link rel="stylesheet" href="/node_modules/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css" type="text/css">
-	<script src="/node_modules/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js"></script>
+	<script src="/node_modules/uikit/dist/js/components/grid.min.js" type="text/javascript"></script>
+
+	<link rel="stylesheet" href="/node_modules/uikit/dist/css/components/notify.almost-flat.min.css" type="text/css">
+	<script src="/node_modules/uikit/dist/js/components/notify.min.js" type="text/javascript"></script>    
 
 	<!-- moment -->
 	<script src="/node_modules/moment/moment.js"></script>
 	<script src="/node_modules/moment/locale/ar.js"></script>
 
-	<!-- bootstrap-datetimepicker -->
-	<script src="/node_modules/bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js"></script>
 
 	<!-- owl.carousel -->
 	<link rel="stylesheet" href="/node_modules/owl.carousel/dist/assets/owl.carousel.css">
@@ -200,8 +203,7 @@
             </div>
         </div>
     </header>
-<input type="text" data-uk-datepicker="{format:'DD.MM.YYYY'}">
-<button data-uk-button>My Button</button>
+
 	{{=it.main || ''}}
 
 	</div><!-- /.wrap -->

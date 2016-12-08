@@ -25,6 +25,12 @@ export class TripSelectorFormComponent implements OnInit {
 
 	submitted: boolean = false
 
+	tripSelect: any = {
+		oneWayTrip: true,
+		twoWayTrip: false,
+		packageTrip: false
+	}
+
 	constructor(private router: Router, private apiService: APIService) {}
 
 	ngOnInit(): void {
@@ -53,5 +59,15 @@ export class TripSelectorFormComponent implements OnInit {
 		}))
 
 		window.location.href = "/order"
+	}
+
+	toggleTripSelected(i: number): void {
+		for (var key in this.tripSelect) {
+		    if (this.tripSelect.hasOwnProperty(key)) {
+		        this.tripSelect[key] = false
+		    }
+		}
+		this.tripSelect[i] = true
+		console.log(this.tripSelect)
 	}
 }
