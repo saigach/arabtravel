@@ -1,7 +1,7 @@
 import { UUID } from './uuid'
 import { Model } from './model'
 
-import { Trip } from './trip'
+import { Point } from './point'
 import { Hotel } from './hotel'
 import { Price } from './price'
 
@@ -10,7 +10,9 @@ export class Package extends Model {
 
 	description: string = ''
 
-	trips: Trip[] = []
+	pointA: Point = null
+	pointB: Point = null
+
 	hotels: Hotel[] = []
 	prices: Price[] = []
 	images: UUID[] = []
@@ -20,11 +22,8 @@ export class Package extends Model {
 
 		this.description = String(value.description || '')
 
-		this.trips = value.trips instanceof Array && value.trips.reduce(
-			( prev: Trip[] , value:any ) =>
-				prev.concat(value instanceof Trip && value || value && new Trip(value) || null),
-			[]
-		).filter(value => !!value) || []
+		this.pointA = value.pointA && ( value.pointA instanceof Point ? value.pointA : new Point(value.pointA) ) || null
+		this.pointB = value.pointB && ( value.pointB instanceof Point ? value.pointB : new Point(value.pointB) ) || null
 
 		this.hotels = value.hotels instanceof Array && value.hotels.reduce(
 			( prev: Hotel[] , value:any ) =>
@@ -48,7 +47,8 @@ export class Package extends Model {
 	toObject(): {} {
 		return Object.assign(super.toObject(), {
 			description: this.description || '',
-			trips: this.trips.reduce( (prev, value) => prev.concat(value.toObject()), []),
+			pointA: this.pointA.toObject(),
+			pointB: this.pointB.toObject(),
 			hotels: this.hotels.reduce( (prev, value) => prev.concat(value.toObject()), []),
 			prices: this.prices.reduce( (prev, value) => prev.concat(value.toObject()), []),
 			images: this.images.reduce( (prev, value) => prev.concat(value.toString()), [])

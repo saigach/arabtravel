@@ -9,19 +9,19 @@
                     <div class="row trip-select-header">
                         <div class="col-md-3">
                             <div class="styled-radio">
-                                <input class="radio" (click)="toggleTripSelected('oneWayTrip')" [checked]="tripSelect.oneWayTrip" type="radio" name="tripselector-form_check" id="tripselector-form_check-oneway">
+                                <input class="radio" type="radio" name="tripselector-form_check" id="tripselector-form_check-oneway" [checked]="type === 'oneway'" (click)="type = 'oneway'">
                                 <label for="tripselector-form_check-oneway">One way</label>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="styled-radio">
-                                <input class="radio" (click)="toggleTripSelected('twoWayTrip')" [checked]="tripSelect.twoWayTrip" type="radio" name="tripselector-form_check" id="tripselector-form_check-roundtrip">
+                                <input class="radio" type="radio" name="tripselector-form_check" id="tripselector-form_check-roundtrip" [checked]="type === 'round'" (click)="type = 'round'">
                                 <label for="tripselector-form_check-roundtrip">Round Trip</label>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="styled-radio">
-                                <input class="radio" (click)="toggleTripSelected('packageTrip')" [checked]="tripSelect.packageTrip" type="radio" name="tripselector-form_check" id="tripselector-form_check-touristpackage">
+                                <input class="radio" type="radio" name="tripselector-form_check" id="tripselector-form_check-touristpackage" [checked]="type === 'package'" (click)="type = 'package'">
                                 <label for="tripselector-form_check-touristpackage">Tourist Package</label>
                             </div>
                         </div>
@@ -32,17 +32,17 @@
 
                             <div class="col-md-4">
                                 <label for="routefrom">Route from</label>
-                                <select name="routefrom" [(ngModel)]="oneWayTrip" id="routefrom" class="form-control fit-width">
-											<option *ngFor="let trip of trips" [ngValue]="trip">{{ trip.title }}</option>
+                                <select name="routefrom" [(ngModel)]="pointA" id="routefrom" class="form-control fit-width">
+									<option *ngFor="let point of APoints" [ngValue]="point">{{ point.title }}</option>
                                 </select>
-                                <i class="fa fa-exchange tripselector-arrow" aria-hidden="true" [class.show]="tripSelect.twoWayTrip || tripSelect.packageTrip"></i>
-                                <i class="fa fa-long-arrow-right tripselector-arrow" aria-hidden="true" [class.show]="tripSelect.oneWayTrip"></i>
+                                <i class="fa fa-exchange tripselector-arrow" aria-hidden="true" [class.hide]="type !== 'round'"></i>
+                                <i class="fa fa-long-arrow-right tripselector-arrow" aria-hidden="true" [class.hide]="type === 'round'"></i>
                             </div>
 
                             <div class="col-md-4">
                                 <label for="routeto">Route to</label>
-                                <select name="routeto" [(ngModel)]="oneWayTrip" id="routeto" class="form-control fit-width">
-											<option *ngFor="let trip of trips" [ngValue]="trip">{{ trip.title }}</option>
+                                <select name="routeto" [(ngModel)]="pointB" id="routeto" class="form-control fit-width" [disabled]="!pointA">
+									<option *ngFor="let point of BPoints" [ngValue]="point">{{ point.title }}</option>
                                 </select>
 
                             </div>
@@ -84,7 +84,7 @@
 
                             </div>
 
-                            <div class="col-md-4 form-group" [class.hide]="tripSelect.oneWayTrip || tripSelect.packageTrip" [class.show]="tripSelect.twoWayTrip">
+                            <div class="col-md-4 form-group" [class.hide]="type !== 'round'">
                                 <label for="rf">Date of return</label>
                                 <div class='input-group date'>
                                     <input type="text" class="form-control" data-uk-datepicker="{format:'DD.MM.YYYY'}">
@@ -95,7 +95,7 @@
 
                             </div>
 
-                            <div class="col-md-4" [class.hide]="tripSelect.oneWayTrip || tripSelect.twoWayTrip" [class.show]="tripSelect.packageTrip">
+                            <div class="col-md-4" [class.hide]="type !== 'package'">
                                 <div class="col-md-6">
                                     <label>&nbsp;</label>
                                     <div class="">
@@ -107,9 +107,9 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4" [class.show]="tripSelect.oneWayTrip || tripSelect.twoWayTrip" [class.hide]="tripSelect.packageTrip">
+                            <div class="col-md-4" [class.hide]="type === 'package'">
                                 <label>Vehicle</label>
-                                <select name="" id="rf" class="form-control fit-width">
+                                <select name="" id="rf" class="form-control fit-width" [disabled]="!pointA || !pointB">
                                     <option value="">Car</option>
                                     <option value="">Truck</option>
                                     <option value="">Motorcycle</option>
@@ -120,8 +120,7 @@
 
                         <div class="text-center submit-btn-container">
 
-                            <input type="submit" class="btn btn-danger" (click)="submit()" value="CHECK AVALIABILITY">
-
+                            <input type="submit" class="btn btn-danger" (click)="submit()" value="CHECK AVALIABILITY" [disabled]="!valid">
                         </div>
                     </form>
 
@@ -133,4 +132,4 @@
     </div>
 </div>
 
-<!-- {{ tripsByType | json }} -->
+{{ APoints | json }}
