@@ -29,6 +29,7 @@
 		"zone.js": "^0.6.25",
 
 		"pg-native": "*",
+		"nodemailer": "*",
 		"dot": "*",
 
 		"blueimp-canvas-to-blob": "*",

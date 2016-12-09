@@ -3,9 +3,12 @@
  * Copyright(c) 2016 Wisdman <wisdman@ajaw.it>
  */
 
+const Mail = require('../mail.js')
+
 module.exports = class APIEngine {
 	constructor(DB) {
 		this.DB = DB
+		this.mail = new Mail()
 	}
 
 	engine(requestData) {
@@ -102,6 +105,15 @@ module.exports = class APIEngine {
 							data: { error: 'Model is not allowed'}
 						})
 				}
+			case 'order':
+				return this.mail
+					.sendMail('d@ajaw.it', 'Test mail', 'Test text')
+					.then(result => {
+						return {
+							code: 200,
+							date: { sucess: 'Mail sended' }
+						}
+					})
 			default:
 				return Promise.resolve({
 					code: 400,
