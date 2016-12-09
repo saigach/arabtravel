@@ -94,7 +94,7 @@
 	<script src="/node_modules/uikit/dist/js/components/grid.min.js" type="text/javascript"></script>
 
 	<link rel="stylesheet" href="/node_modules/uikit/dist/css/components/notify.almost-flat.min.css" type="text/css">
-	<script src="/node_modules/uikit/dist/js/components/notify.min.js" type="text/javascript"></script>    
+	<script src="/node_modules/uikit/dist/js/components/notify.min.js" type="text/javascript"></script>
 
 	<!-- moment -->
 	<script src="/node_modules/moment/moment.js"></script>
@@ -108,6 +108,8 @@
 	<link rel="stylesheet" href="/css/loader.min.css" type="text/css">
 	<link rel="stylesheet" href="/css/styles.css" type="text/css">
 	<script src="/js/main.js"></script>
+
+	<script src="/js/auth.js"></script>
 
 	<!-- SystemJS -->
 	{{? it.angular }}
@@ -126,8 +128,8 @@
                 </div>
                 <div class="col-md-4 col-md-push-2">
                     <div class="pull-left">
-                        <a href="#login-form-modal" class="btn btn-default btn-ghost btn-ui btn-account" data-uk-modal>
-                            <i class="demo-icon ico_user"></i> Му account
+                        <a id="currentAccountLink" href="{{=it.userEmail && '/me' || '#login-form-modal'}}" class="btn btn-default btn-ghost btn-ui btn-account" data-uk-modal>
+                            <i class="demo-icon ico_user"></i><span id="currentAccount">{{=it.userEmail || 'Sign Up'}}</span>
                         </a>
                     </div>
                     <div class="pull-right">
@@ -306,14 +308,14 @@
             </div>
         </div>
     </footer>
-    
+
     <!-- This is the modal -->
     <div id="login-form-modal" class="uk-modal">
         <div class="uk-modal-dialog">
-           
+
             <a class="uk-modal-close uk-close"></a>
             <div class="uk-modal-header"><span class="h3">Sign Up Form</span></div>
-            
+
             <form role="form" class="login-form">
                 <div class="row">
                     <div class="col-md-6">
@@ -321,7 +323,7 @@
                             <label for="loginForm_login">
                                 Login
                             </label>
-                            <input type="text" class="form-control" id="loginForm_login" />
+                            <input type="email" class="form-control" name="email" required>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -329,7 +331,7 @@
                             <label for="loginForm_password">
                                 Password
                             </label>
-                            <input type="password" class="form-control" id="loginForm_password" />
+                            <input type="password" class="form-control" name="password" required>
                         </div>
                     </div>
                 </div>
@@ -340,9 +342,9 @@
                     </button>
                 </div>
             </form>
-            
+
         </div>
     </div>
-    
+
 </body>
 </html>

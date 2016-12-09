@@ -23,7 +23,7 @@ const worker = http.createServer( (request, response) => {
 			switch (session.request.path.shift()) {
 				case 'login':
 					if (session.user)
-						return session.set({ code: 200, data: 'Success' })
+						return session.set({ code: 200, data: { email: session.user.email || null } })
 
 					if (session.request.method !== 'POST')
 						return session.set({ code: 405, data: `Method "${session.request.method}" isn't allowed` })
@@ -36,13 +36,13 @@ const worker = http.createServer( (request, response) => {
 						return session.set({ code: 400, data: 'Wrong password value' })
 					let password = String(session.request.body.password).replace(/\\/g, "\\\\").replace(/'/g, "\\'")
 
-					return DB.query(`SELECT id FROM users WHERE enable AND email='${email}' AND password = encode(digest('${password}', 'sha512'), 'hex')`).then(rows => {
+					return DB.query(`SELECT email, id FROM users WHERE enable AND email='${email}' AND password = encode(digest('${password}', 'sha512'), 'hex')`).then(rows => {
 
 						if (rows.length !== 1)
 							return session.set({ code: 403, session: null, data: 'Email or password incorrect' })
 
 						session.user = { id: rows[0].id }
-						return session.set({ code: 200, data: 'Success' })
+						return session.set({ code: 200, data: { email: rows[0].email || null } })
 					})
 				case 'logout':
 					return session.set({

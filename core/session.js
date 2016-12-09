@@ -51,7 +51,8 @@ module.exports = class Session {
 					sessions.id AS id,
 					sessions.data AS data,
 					users.id AS owner,
-					users.roles AS roles
+					users.roles AS roles,
+					users.email AS email
 				FROM sessions
 				LEFT JOIN users ON sessions.owner = users.id
 				WHERE
@@ -64,7 +65,7 @@ module.exports = class Session {
 		).then(session => {
 			this.id = session.id
 			this.data = session.data
-			this.user = session.owner && { id: session.owner, roles: session.roles } || null
+			this.user = session.owner && { id: session.owner, roles: session.roles, email: session.email } || null
 			return this
 		})
 	}

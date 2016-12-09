@@ -21,6 +21,7 @@ module.exports = class RootEngine {
 				enable
 		`).then(staticPages => {
 			responseData.data.static = staticPages
+			responseData.data.userEmail = requestData.user && requestData.user.email || null
 			responseData.data = this.template['root'](responseData.data)
 			return responseData
 		})
