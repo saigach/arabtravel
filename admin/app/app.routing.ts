@@ -20,6 +20,7 @@ import { StaticListComponent } from './component/static/static-list.component'
 import { StaticItemComponent } from './component/static/static-item.component'
 
 import { PointListComponent } from './component/point/point-list.component'
+import { VehicleListComponent } from './component/vehicle/vehicle-list.component'
 
 const appRoutes: Routes = [
 	{
@@ -46,6 +47,10 @@ const appRoutes: Routes = [
 	{
 		path: 'points',
 		component: PointListComponent
+	},
+	{
+		path: 'vehicle',
+		component: VehicleListComponent
 	},
 	{
 		path: 'trips',

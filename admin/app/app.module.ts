@@ -37,6 +37,7 @@ import { StaticItemComponent } from './component/static/static-item.component'
 import { PriceListComponent } from './component/price/price-list.component'
 
 import { PointListComponent } from './component/point/point-list.component'
+import { VehicleListComponent } from './component/vehicle/vehicle-list.component'
 
 @NgModule({
 	imports: [
@@ -56,6 +57,7 @@ import { PointListComponent } from './component/point/point-list.component'
 
 		PriceListComponent,
 		PointListComponent,
+		VehicleListComponent,
 
 		HotelListComponent,
 		HotelItemComponent,
