@@ -101,7 +101,7 @@ $$;
 CREATE TRIGGER sessions_delete_old_rows_trigger AFTER INSERT OR UPDATE ON sessions FOR EACH STATEMENT EXECUTE PROCEDURE sessions_delete_old_rows();
 
 -- Models
-CREATE TYPE models AS ENUM ('hotel', 'human', 'order', 'package', 'point', 'trip', 'vehicle');
+CREATE TYPE models AS ENUM ('hotel', 'point', 'vehicle', 'trip', 'order');
 
 -- Objects data store
 CREATE TABLE objects (

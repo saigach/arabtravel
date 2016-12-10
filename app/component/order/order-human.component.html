@@ -1,0 +1,62 @@
+<div class="passenger-info_body">
+
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="form-group">
+                <label for="exampleInputEmail1">
+                    Name
+                </label>
+                <input type="text" class="form-control" [(ngModel)]="__human.title">
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="form-group">
+                <label for="exampleInputEmail1">
+                    Nationality
+                </label>
+                <select [(ngModel)]="__human.nationality" data-control="selectpicker" class="selectpicker form-control fit-width">
+                    <option *ngFor="let item of nationality" [ngValue]="item">{{ item.title }}</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="form-group">
+                <label for="rf">Date of birth</label>
+                <div class='input-group date'>
+                    <input #dobNode type="text" class="form-control" [value]="__human.dob | date: 'dd.MM.yyyy'">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+                {{ human.getAge() }}
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="form-group">
+                <label for="exampleInputEmail1">
+                    Passport number
+                </label>
+                <input type="text" class="form-control" [(ngModel)]="__human.passport">
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="form-group">
+                <label for="exampleInputEmail1">
+                    Phone
+                </label>
+                <input type="text" class="form-control" [(ngModel)]="__human.phone">
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="form-group">
+                <label for="exampleInputEmail1">
+                    Email
+                </label>
+                <input type="email" class="form-control" [(ngModel)]="__human.email">
+            </div>
+        </div>
+    </div>
+
+</div>
+
+

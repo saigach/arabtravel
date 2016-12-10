@@ -23,8 +23,6 @@ const newDate = value => {
 export class Human extends Model {
 	static __api: string = 'objects/human'
 
-	owner: User = null
-
 	name: string = ''
 	nationality: { id: string, title: string, icon: string } = Nationality[1]
 	dob: Date = null
@@ -35,11 +33,10 @@ export class Human extends Model {
 
 	description: string = ''
 
-	get age(): number {
+	getAge(now: Date = new Date()): number {
 		if (!this.dob)
 			return null
 
-		let now = new Date()
 		now.setHours(0,0,0,0)
 
 		let ageDifMs: number = Number(now) - this.dob.getTime()
@@ -48,9 +45,6 @@ export class Human extends Model {
 
 	constructor(value: any = {}) {
 		super(value)
-
-		if (value.owner && value.owner.id)
-			this.owner = new User(value.owner)
 
 		this.name = String(value.name || '')
 
@@ -72,8 +66,6 @@ export class Human extends Model {
 
 	toObject(): {} {
 		return Object.assign(super.toObject(), {
-			owner: this.owner && this.owner.id.toString() || null,
-
 			name: this.name,
 
 			nationality: this.nationality.id,

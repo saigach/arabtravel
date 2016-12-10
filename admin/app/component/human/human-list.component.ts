@@ -17,7 +17,7 @@ export class HumanListComponent implements OnInit {
 	constructor(private router: Router, private apiService: APIService) {}
 
 	ngOnInit(): void {
-		this.apiService.get<Human>(Human).then( (response: Human[]) => this.items = response)
+		// this.apiService.get<Human>(Human).then( (response: Human[]) => this.items = response)
 	}
 
 	add(): void {

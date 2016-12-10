@@ -3,11 +3,9 @@ import { Router } from '@angular/router'
 
 import { APIService } from '../../service/api.service'
 
-import { Model } from '../../../model/model'
 import { Trip } from '../../../model/trip'
 import { Point } from '../../../model/point'
 import { Vehicle } from '../../../model/vehicle'
-import { Package } from '../../../model/package'
 
 type TripType = 'oneway' | 'round' | 'package'
 
@@ -31,10 +29,9 @@ export class TripSelectorFormComponent implements OnInit {
 	}
 
 	trips: Trip[] = []
-	packs: Package[] = []
 
-	private getTrips(pointA: Point = null, pointB: Point = null): Array<Trip | Package> {
-		return this[this.type === 'package' ? 'packs' : 'trips'].filter( (trip: Trip | Package) =>
+	private getTrips(pointA: Point = null, pointB: Point = null): Trip[] {
+		return this.trips.filter( (trip: Trip) =>
 			trip.pointA && (!pointA || trip.pointA.id.toString() === pointA.id.toString()) &&
 			trip.pointB && (!pointB || trip.pointB.id.toString() === pointB.id.toString())
 		)
@@ -63,7 +60,13 @@ export class TripSelectorFormComponent implements OnInit {
 		this.vehicle = null
 	}
 
-	private getUniquePoints(points: Point[]): Point[] {
+	private getPoints(type: 'A' | 'B', otherPoint: Point): Point[] {
+		let points = this.getTrips().reduce( (prev: Point[], trip: Trip) => {
+			if (!otherPoint || trip[type === 'A' ? 'pointB' : 'pointA'].id.toString() === otherPoint.id.toString() )
+				return prev.concat(trip[type === 'A' ? 'pointA' : 'pointB'])
+			return prev
+		}, [])
+
 		return points.reduce( (prev: Point[], currentPoint: Point) =>
 			prev.find( (point: Point) =>
 				currentPoint.id.toString() === point.id.toString()
@@ -72,23 +75,14 @@ export class TripSelectorFormComponent implements OnInit {
 		)
 	}
 
-	private getPoints(type: 'A' | 'B', otherPoint: Point): Point[] {
-		return this.getTrips().reduce( (prev: Point[], trip: Trip | Package) => {
-			if (!otherPoint || trip[type === 'A' ? 'pointB' : 'pointA'].id.toString() === otherPoint.id.toString() )
-				return prev.concat(trip[type === 'A' ? 'pointA' : 'pointB'])
-			return prev
-		}, [])
-	}
-
 	get APoints(): Point[] {
-		let APoints = this.getUniquePoints(this.getPoints('A', null))
 		switch (this.type) {
 			case 'package':
 			case 'oneway':
-				return APoints
+				return this.getPoints('A', null)
 			case 'round':
-				return APoints.filter( (pointA:Point) =>
-					this.getTrips(pointA).reduce( (prev: boolean, trip: Trip | Package) =>
+				return this.getPoints('A', null).filter( (pointA:Point) =>
+					this.getTrips(pointA).reduce( (prev: boolean, trip: Trip) =>
 						prev || this.getTrips(trip.pointB, pointA).length > 0,
 						false
 					)
@@ -102,14 +96,13 @@ export class TripSelectorFormComponent implements OnInit {
 		if (!this.pointA)
 			return []
 
-		let BPoints = this.getUniquePoints(this.getPoints('B', this.pointA))
-
 		switch (this.type) {
 			case 'package':
+				return this.getPoints('B', null)
 			case 'oneway':
-				return BPoints
+				return this.getPoints('B', this.pointA)
 			case 'round':
-				return BPoints.filter( (pointB:Point) =>
+				return this.getPoints('B', this.pointA).filter( (pointB:Point) =>
 					this.getTrips(pointB, this.pointA).length > 0
 				)
 			default:
@@ -153,7 +146,6 @@ export class TripSelectorFormComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.apiService.get<Trip>(Trip).then( ( trips:Trip[] ) => this.trips = trips )
-		this.apiService.get<Package>(Package).then( ( packs:Package[] ) => this.packs = packs )
 
 		const newDate = value => {
 			let [day, month, year] = value.split('.')

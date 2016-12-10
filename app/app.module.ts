@@ -10,6 +10,8 @@ import { APIService } from './service/api.service'
 import { AppComponent } from './component/app.component'
 
 import { TripSelectorFormComponent } from './component/tripselector/tripselector-form.component'
+import { OrderPageComponent } from './component/order/order-page.component'
+import { OrderHumanComponent } from './component/order/order-human.component'
 
 @NgModule({
 	imports: [
@@ -20,7 +22,9 @@ import { TripSelectorFormComponent } from './component/tripselector/tripselector
 	],
 	declarations: [
 		AppComponent,
-		TripSelectorFormComponent
+		TripSelectorFormComponent,
+		OrderPageComponent,
+		OrderHumanComponent
 	],
 	providers: [
 		APIService

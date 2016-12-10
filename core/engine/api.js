@@ -66,39 +66,6 @@ module.exports = class APIEngine {
 							code: 200,
 							data: Object.assign(response[0], response[0].data, { data: null })
 						}))
-					case 'package':
-						if (!id)
-							return this.DB.query(`
-								SELECT
-									objects.id,
-									objects.title,
-									objects.enable,
-									objects.data
-								FROM
-									objects
-								WHERE
-									model = 'package' AND
-									enable
-							`).then(response => ({
-								code: 200,
-								data: response.map( value => Object.assign(value, value.data, { data: null }) )
-							}))
-
-						return this.DB.query(`
-							SELECT
-								objects.id,
-								objects.title,
-								objects.enable,
-								objects.data
-							FROM objects
-							WHERE
-								model = 'package'
-								AND
-								objects.id = '${id}'
-						`).then(response => ({
-							code: 200,
-							data: Object.assign(response[0], response[0].data, { data: null })
-						}))
 					default:
 						return Promise.resolve({
 							code: 400,

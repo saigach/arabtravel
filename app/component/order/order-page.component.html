@@ -7,82 +7,24 @@
                 <a href="" class="btn btn-primary btn-ghost btn-left">New search</a>
                 <p>Some text describing important info. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud ex ercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 
-                <form action="" class="order-form" id="order-form">
+                <p> DEBUG: {{ order | json }}</p>
 
-                    <div class="passenger-info">
+                <div class="order-form" id="order-form">
+
+                    <div *ngFor="let human of order.people; let i = index;" class="passenger-info">
                         <header class="passenger-info_header">
-                            <span class="h3">Passenger 1</span>
+                            <span class="h3">Passenger {{ i + 1 }}</span>
                             <span class="styled-radio primary-contact-radio">
-                                <input name="primary_contact" class="radio" type="radio" id="pc_1" value="Passenger 1" checked><label for="pc_1">Primary contact</label>
+                                <input name="primary_contact" class="radio" type="radio" id="pc_1" value="Passenger 1"><label for="pc_1">Primary contact</label>
                             </span>
+                            <a class="passenger-info_delete" (click)="deleteHuman(human); $event.stopPropagation()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                         </header>
 
-                        <div class="passenger-info_body">
-
-                            <div class="row">
-                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">
-                                            Name
-                                        </label>
-                                        <input type="text" class="form-control" id="exampleInputEmail1" />
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">
-                                            Nationality
-                                        </label>
-                                        <select name="" id="rf" data-control="selectpicker" class="selectpicker form-control fit-width">
-                                            <option value="">Egyptian</option>
-                                            <option value="">Jordan</option>
-                                            <option value="">Saudi Arabian</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                    <div class="form-group">
-                                        <label for="rf">Date of birth</label>
-                                        <div class='input-group date'>
-                                            <input type="text" class="form-control" data-uk-datepicker="{format:'DD.MM.YYYY'}">
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">
-                                            Passport number
-                                        </label>
-                                        <input type="text" class="form-control" id="exampleInputEmail3" />
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">
-                                            Phone
-                                        </label>
-                                        <input type="text" class="form-control" id="exampleInputEmail4" />
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">
-                                            Email
-                                        </label>
-                                        <input type="text" class="form-control" id="exampleInputEmail5" />
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
+                        <order-human [(human)]="order.people[i]"></order-human>
                     </div>
 
                     <div class="text-right">
-                        <button class="btn btn-primary btn-ghost">
+                        <button class="btn btn-primary btn-ghost" (click)="addHuman(); $event.stopPropagation()">
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add passenger
                         </button>
                     </div>
@@ -207,7 +149,7 @@
 
                     </div>
 
-                </form>
+                </div>
             </div>
             <div class="col-md-3">
 
@@ -216,27 +158,29 @@
                         Order details
                     </header>
 
-                    <div class="order-trip order-trip-outward">
-                        <i class="ico ico_boat"></i>
-                        <b>Aqaba, Jordan -> Taba, Egypt</b> valid <b>21.09.2016 - 21.12.2016</b>
-                    </div>
+                    <div *ngFor="let shift of order.shifts" class="order-trip_container">
+                        <div class="order-trip order-trip-outward">
+                            <i class="ico ico_boat"></i>
+                            <b>{{ shift.trip.pointA.title }} &rarr; {{ shift.trip.pointB.title }}</b> valid <b>{{ shift.date | date: 'dd.MM.yyyy'}}</b>
+                        </div>
 
-                    <div class="order-trip_details">
-                        <div class="order-trip_detail">
-                            <div class="lbl">Adults</div>
-                            <div class="val">$30 x 2</div>
-                        </div>
-                        <div class="order-trip_detail">
-                            <div class="lbl">2-6yr</div>
-                            <div class="val">$15</div>
-                        </div>
-                        <div class="order-trip_detail">
-                            <div class="lbl">&lt;2yr</div>
-                            <div class="val">$5</div>
-                        </div>
-                        <div class="order-trip_detail">
-                            <div class="lbl">Vehicle (car)</div>
-                            <div class="val">$20</div>
+                        <div *ngIf="shift.price" class="order-trip_details">
+                            <div class="order-trip_detail">
+                                <div class="lbl">Adults</div>
+                                <div class="val">{{ shift.price.adults | currency:'USD':true:'1.2-2' }}</div>
+                            </div>
+                            <div class="order-trip_detail">
+                                <div class="lbl">2-6yr</div>
+                                <div class="val">{{ shift.price.kids | currency:'USD':true:'1.2-2'  }}</div>
+                            </div>
+                            <div class="order-trip_detail">
+                                <div class="lbl">&lt;2yr</div>
+                                <div class="val">{{ shift.price.infants | currency:'USD':true:'1.2-2' }}</div>
+                            </div>
+                           <!--  <div class="order-trip_detail">
+                                <div class="lbl">Vehicle (car)</div>
+                                <div class="val">$20</div>
+                            </div> -->
                         </div>
                     </div>
 
@@ -244,14 +188,14 @@
                     <div class="order-details_summary">
                         <div class="order-details_summary_line">
                             <div class="lbl">Tickets price</div>
-                            <div class="val">$100</div>
+                            <div class="val">{{ ticketsCost | currency:'USD':true:'1.2-2' }}</div>
                         </div>
                     </div>
 
                     <footer class="widget_footer">
                         <div class="order-details_total">
                             <div class="lbl">Total</div>
-                            <div class="val">$100</div>
+                            <div class="val">{{ totalCost | currency:'USD':true:'1.2-2' }}</div>
                         </div>
                     </footer>
                 </aside>

@@ -14,6 +14,9 @@ export class Trip extends Model {
 
 	vehicles: { vehicle: Vehicle, cost: 0 }[] = []
 
+	hotels: UUID[] = []
+	images: UUID[] = []
+
 	prices: Price[] = []
 
 	constructor(value: any = {}) {
@@ -33,11 +36,30 @@ export class Trip extends Model {
 			[]
 		).filter(value => !!value) || []
 
+		this.hotels = value.hotels instanceof Array && value.hotels.reduce(
+			( prev: UUID[] , value:any ) =>
+				prev.concat(value instanceof UUID && value || value && new UUID(value) || null),
+			[]
+		).filter(value => !!value) || []
+
+		this.images = value.images instanceof Array && value.images.reduce(
+			( prev: UUID[] , value:any ) =>
+				prev.concat(value instanceof UUID && value || value && new UUID(value) || null),
+			[]
+		).filter(value => !!value) || []
+
 		this.prices = value.prices instanceof Array && value.prices.reduce(
 			( prev: Price[] , value:any ) =>
 				prev.concat(value instanceof Price && value || value && new Price(value) || null),
 			[]
 		).filter(value => !!value) || []
+	}
+
+	getPrice(date: Date = new Date()): Price {
+		if (this.prices.length <= 0)
+			return null
+
+		return this.prices[0]
 	}
 
 	toObject(): {} {

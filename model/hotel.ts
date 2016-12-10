@@ -1,4 +1,4 @@
-
+import { UUID } from './uuid'
 import { Model } from './model'
 import { User } from './user'
 
@@ -8,17 +8,21 @@ export class Hotel extends Model {
 	owner: User = null
 	description: string = ''
 
+	images: UUID[] = []
+
 	constructor(value: any = {}) {
 		super(value)
 
-		// if (!value.owner)
-		// 	this.owner = null
-		// else {
-		// 	console.dir(value.owner)
-		// 	this.owner = value.owner instanceof User && value.owner || value.owner.id && new User(value.owner) || null
-		// }
+		if (value.owner && value.owner.id)
+			this.owner = new User(value.owner)
 
 		this.description = String(value.description || '')
+
+		this.images = value.images instanceof Array && value.images.reduce(
+			( prev: UUID[] , value:any ) =>
+				prev.concat(value instanceof UUID && value || value && new UUID(value) || null),
+			[]
+		).filter(value => !!value) || []
 	}
 
 	toObject(): {} {
