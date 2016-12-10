@@ -1,7 +1,63 @@
         <div class="main-content" role="content">
             <div class="container">
                     
-                <h1><i class="ico ico_user"></i> My orders</h1>
+                <h1><i class="ico ico_user"></i>My profile</h1>
+                
+                <h2>My info</h2> 
+                   
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="">
+                            Name
+                        </label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="">
+                            Nationality
+                        </label>
+                        <select class="form-control fit-width">
+                            <option value="">Nation 1</option>
+                            <option value="">Nation 2</option>
+                            <option value="">Nation 3</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="">
+                            Date of birth
+                        </label>
+                        <div class='input-group date'>
+                            <input type="text" class="form-control" data-uk-datepicker="{format:'DD.MM.YYYY'}">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">   
+                    <div class="col-md-4">
+                        <label for="">
+                            Passport number
+                        </label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="">
+                            Phone
+                        </label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="">
+                            Email
+                        </label>
+                        <input type="email" class="form-control">
+                    </div>
+                </div> 
+                
+                <hr>  
+                      
+                <h2>My orders</h2>
                    
                 
                 <div class="user-orders-container">
