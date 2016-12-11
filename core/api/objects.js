@@ -60,7 +60,10 @@ module.exports = class APIProject {
 
 				return this.DB.query(`
 					SELECT
-						objects.*,
+						objects.id,
+						objects.enable,
+						objects.title,
+						objects.data,
 						json_build_object('id',users.id, 'title',users.title) AS owner
 					FROM objects
 					LEFT JOIN users ON objects.owner = users.id
@@ -72,11 +75,11 @@ module.exports = class APIProject {
 					if (rows.length !== 1)
 						return {
 							code: 404,
-							data: { error: `Project "${id}"" not found`}
+							data: { error: `Object "${id}"" not found`}
 						}
 					return {
 						code: 200,
-						data: Object.assign(rows[0], rows[0].data, { data: null })
+						data: Object.assign({}, rows[0], rows[0].data, { data: null })
 					}
 				})
 

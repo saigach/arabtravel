@@ -7,7 +7,7 @@
                 <a href="/" class="btn btn-primary btn-ghost btn-left">New search</a>
                 <p>Some text describing important info. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud ex ercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 
-                <p> DEBUG: {{ order | json }}</p>
+                <!-- <p> DEBUG: {{ order | json }}</p> -->
 
                 <div class="order-form" id="order-form">
 
@@ -153,15 +153,15 @@
                         </div>
 
                         <div *ngIf="shift.price" class="order-trip_details">
-                            <div class="order-trip_detail">
+                            <div class="order-trip_detail" *ngIf="getAdultsCount(shift.date)">
                                 <div class="lbl">Adults</div>
                                 <div class="val">{{ getAdultsCount(shift.date) }}&nbsp;x&nbsp;{{ shift.price.adults | currency:'USD':true:'1.2-2' }}</div>
                             </div>
-                            <div class="order-trip_detail">
+                            <div class="order-trip_detail" *ngIf="getKidsCount(shift.date)">
                                 <div class="lbl">2-6yr</div>
                                 <div class="val">{{ getKidsCount(shift.date) }}&nbsp;x&nbsp;{{ shift.price.kids | currency:'USD':true:'1.2-2'  }}</div>
                             </div>
-                            <div class="order-trip_detail">
+                            <div class="order-trip_detail" *ngIf="getInfantsCount(shift.date)">
                                 <div class="lbl">&lt;2yr</div>
                                 <div class="val">{{ getInfantsCount(shift.date) }}&nbsp;x&nbsp;{{ shift.price.infants | currency:'USD':true:'1.2-2' }}</div>
                             </div>
