@@ -20,10 +20,11 @@ const newDate = value => {
 	return null
 }
 
+type AgeGroup = 'adults' | 'kids' | 'infants'
+
 export class Human extends Model {
 	static __api: string = 'objects/human'
 
-	name: string = ''
 	nationality: { id: string, title: string, icon: string } = Nationality[1]
 	dob: Date = null
 	passport: string = ''
@@ -37,16 +38,28 @@ export class Human extends Model {
 		if (!this.dob)
 			return null
 
-		now.setHours(0,0,0,0)
-
 		let ageDifMs: number = Number(now) - this.dob.getTime()
 		return Math.abs(new Date(ageDifMs).getUTCFullYear() - 1970)
 	}
 
+	getAgeGroup(now: Date = new Date()): AgeGroup {
+		let age = this.getAge(now)
+
+		if (age === null)
+			return null
+
+		if (age > 6)
+			return 'adults'
+
+		if (age >= 2 && age <= 6)
+			return 'kids'
+
+		if (age < 2)
+			return 'infants'
+	}
+
 	constructor(value: any = {}) {
 		super(value)
-
-		this.name = String(value.name || '')
 
 		this.nationality = value.nationality && Nationality.find(
 			nationality => nationality.id === value.nationality
@@ -66,8 +79,6 @@ export class Human extends Model {
 
 	toObject(): {} {
 		return Object.assign(super.toObject(), {
-			name: this.name,
-
 			nationality: this.nationality.id,
 
 			dob: this.dob,

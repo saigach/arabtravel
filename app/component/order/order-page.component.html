@@ -4,7 +4,7 @@
             <div class="col-md-9">
 
                 <h1>Ticket reservation</h1>
-                <a href="" class="btn btn-primary btn-ghost btn-left">New search</a>
+                <a href="/" class="btn btn-primary btn-ghost btn-left">New search</a>
                 <p>Some text describing important info. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud ex ercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 
                 <p> DEBUG: {{ order | json }}</p>
@@ -37,23 +37,27 @@
                         <h3>Enter your payment details</h3>
 
                         <div class="payment-details_methods">
-                            <span class="payment-details_method">
-                                           <span class="styled-radio">
-                                            <input name="payment-method" class="radio" type="radio" id="card" value=""><label for="card">Visa/Mastercard</label>
-                                        </span></span>
-                            <span class="payment-details_method">
-                                    <span class="styled-radio">
-                                        <input name="payment-method" class="radio" type="radio" id="bank" value=""><label for="bank">Bank transfer</label>
-                                    </span>
-                            </span>
-                            <span class="payment-details_method">
-                                    <span class="styled-radio">
-                                        <input name="payment-method" class="radio" type="radio" id="wu" value=""><label for="wu">Western Union</label>
-                                    </span>
-                            </span>
-                        </div>
+							<span class="payment-details_method">
+								<span class="styled-radio">
+									<input id="payment-type-card" name="payment-type" class="radio" type="radio" [checked]="order.paymentType === 'card'" (click)="order.paymentType = 'card'">
+									<label for="payment-type-card">Visa/Mastercard</label>
+								</span>
+							</span>
+							<span class="payment-details_method">
+								<span class="styled-radio">
+									<input id="payment-type-bank" name="payment-type" class="radio" type="radio" [checked]="order.paymentType === 'bank'" (click)="order.paymentType = 'bank'">
+									<label for="payment-type-bank">Bank transfer</label>
+								</span>
+							</span>
+							<span class="payment-details_method">
+								<span class="styled-radio">
+									<input id="payment-type-wu" name="payment-type" class="radio" type="radio" [checked]="order.paymentType === 'wu'" (click)="order.paymentType = 'wu'">
+									<label for="payment-type-wu">Western Union</label>
+								</span>
+							</span>
+						</div>
 
-                        <div class="payment-system_container">
+                        <div class="payment-system_container" id="payment-system_card" [class.hide]="order.paymentType !== 'card'">
                             <div class="payment-system_card">
                                 <div class="form-group row">
                                     <div class="col-md-3">
@@ -85,7 +89,7 @@
                                         </label>
                                     </div>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" id="cardholder-name" />
+                                        <input type="text" class="form-control" id="cardholder-name" [(ngModel)]="order.paymentCard.cardholder">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -95,35 +99,15 @@
                                             VALID THRU
                                         </label>
                                     </div>
-
                                     <div class="col-md-5 valid-thru">
                                         <div class="valid-thru_month">
-                                            <select name="" id="valid-thru_month" data-control="selectpicker" class="selectpicker form-control fit-width">
-                                                <option value="">01</option>
-                                                <option value="">02</option>
-                                                <option value="">03</option>
-                                                <option value="">04</option>
-                                                <option value="">05</option>
-                                                <option value="">06</option>
-                                                <option value="">07</option>
-                                                <option value="">08</option>
-                                                <option value="">09</option>
-                                                <option value="">10</option>
-                                                <option value="">11</option>
-                                                <option value="">12</option>
+                                            <select  id="valid-thru_month" data-control="selectpicker" class="selectpicker form-control fit-width" [(ngModel)]="order.paymentCard.validMonth">
+                                                <option *ngFor="let month of months" [ngValue]="month">{{month}}</option>
                                             </select>
-                                        </div> /
+                                       </div>
                                         <div class="valid-thru_year">
-                                            <select name="" id="valid-thru_year" data-control="selectpicker" class="selectpicker form-control fit-width">
-                                                <option value="">2016</option>
-                                                <option value="">2017</option>
-                                                <option value="">2018</option>
-                                                <option value="">2019</option>
-                                                <option value="">2020</option>
-                                                <option value="">2021</option>
-                                                <option value="">2022</option>
-                                                <option value="">2023</option>
-                                                <option value="">2024</option>
+                                            <select name="" id="valid-thru_year" data-control="selectpicker" class="selectpicker form-control fit-width" [(ngModel)]="order.paymentCard.validYear">
+                                                <option *ngFor="let year of years" [ngValue]="year">{{year}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -132,17 +116,21 @@
                                         <label for="cvv" class="cvv-label">
                                             CVV
                                         </label>
-                                        <input type="text" class="form-control" id="cvv" />
+                                        <input type="text" class="form-control" id="cvv" [(ngModel)]="order.paymentCard.cvv">
                                     </div>
 
                                 </div>
                             </div>
                         </div>
 
+                        <div class="payment-system_container" id="payment-system_card" [class.hide]="order.paymentType === 'card'">
+                            You have chosen (payment system name). We will contact you as soon as possible and inform you on next steps.
+                        </div>
+
                     </section>
 
                     <div class="payment-details_submit">
-                        <button type="submit" class="btn btn-danger btn-lg">
+                        <button type="submit" class="btn btn-danger btn-lg" (click)="submit(); $event.stopPropagation()">
                             Submit Payment
                         </button>
 
@@ -167,15 +155,15 @@
                         <div *ngIf="shift.price" class="order-trip_details">
                             <div class="order-trip_detail">
                                 <div class="lbl">Adults</div>
-                                <div class="val">{{ shift.price.adults | currency:'USD':true:'1.2-2' }}</div>
+                                <div class="val">{{ getAdultsCount(shift.date) }}&nbsp;x&nbsp;{{ shift.price.adults | currency:'USD':true:'1.2-2' }}</div>
                             </div>
                             <div class="order-trip_detail">
                                 <div class="lbl">2-6yr</div>
-                                <div class="val">{{ shift.price.kids | currency:'USD':true:'1.2-2'  }}</div>
+                                <div class="val">{{ getKidsCount(shift.date) }}&nbsp;x&nbsp;{{ shift.price.kids | currency:'USD':true:'1.2-2'  }}</div>
                             </div>
                             <div class="order-trip_detail">
                                 <div class="lbl">&lt;2yr</div>
-                                <div class="val">{{ shift.price.infants | currency:'USD':true:'1.2-2' }}</div>
+                                <div class="val">{{ getInfantsCount(shift.date) }}&nbsp;x&nbsp;{{ shift.price.infants | currency:'USD':true:'1.2-2' }}</div>
                             </div>
                            <!--  <div class="order-trip_detail">
                                 <div class="lbl">Vehicle (car)</div>

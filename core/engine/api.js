@@ -5,6 +5,8 @@
 
 const Mail = require('../mail.js')
 
+const escapeStr = str => "'" + String(str).replace(/\\/g, "\\\\").replace(/'/g, "\\'") + "'"
+
 module.exports = class APIEngine {
 	constructor(DB) {
 		this.DB = DB
@@ -73,14 +75,54 @@ module.exports = class APIEngine {
 						})
 				}
 			case 'order':
-				return this.mail
-					.sendMail('d@ajaw.it', 'Test mail', 'Test text')
-					.then(result => {
-						return {
-							code: 200,
-							date: { sucess: 'Mail sended' }
-						}
+
+				if (!requestData.user || !requestData.user.id)
+					return Promise.resolve({
+						code: 403,
+						session: null,
+						data: 'Unauthorized'
 					})
+
+				let data = requestData.request.body || undefined
+
+				if (data.id)
+					delete data.id
+
+				if (data.enable)
+					delete data.enable
+
+				if (data.owner)
+					delete data.owner
+
+				data.date = new Date()
+
+				let owner = "'" + requestData.user.id + "'"
+				let title = "'New order at " + data.date.toString() + "'"
+
+				// TODO: Check date
+
+			 	data = escapeStr(JSON.stringify(data || {}))
+
+				return this.DB.query(`
+					INSERT INTO objects (
+						model,   enable, owner,    title,    data
+					) VALUES (
+						'order', TRUE,   ${owner}, ${title}, ${data}
+					) RETURNING
+						objects.id
+				`).then( rows => ({
+					code: 200,
+					data: { id: rows[0].id }
+				}) )
+
+				// return this.mail
+				// 	.sendMail('d@ajaw.it', 'Test mail', 'Test text')
+				// 	.then(result => {
+				// 		return {
+				// 			code: 200,
+				// 			date: { sucess: 'Mail sended' }
+				// 		}
+				// 	})
 			default:
 				return Promise.resolve({
 					code: 400,

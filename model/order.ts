@@ -20,6 +20,8 @@ const newDate = value => {
 	return null
 }
 
+type PaymentType = 'card' | 'bank' | 'wu'
+
 export class Order extends Model {
 	static __api: string = 'objects/order'
 
@@ -36,6 +38,22 @@ export class Order extends Model {
 	people: Human[] = []
 
 	description: string = ''
+
+	paymentType: PaymentType = 'card'
+
+	paymentCard: {
+		number: string,
+		cardholder: string,
+		validMonth: number,
+		validYear: number,
+		cvv: string
+	} = {
+		number: '',
+		cardholder: '',
+		validMonth: 1,
+		validYear: 2016,
+		cvv: ''
+	}
 
 	constructor(value: any = {}) {
 		super(value)
@@ -73,20 +91,26 @@ export class Order extends Model {
 		).filter(value => !!value) || []
 
 		this.description = String(value.description || '')
+
+		this.paymentType = value.paymentType || 'card'
+
+		this.paymentCard = value.paymentCard || { number: '', cardholder: '', validMonth: 1, validYear: 2016, cvv: '' }
 	}
 
 	toObject(): {} {
 		return Object.assign(super.toObject(), {
 			owner: this.owner && this.owner.id.toString() || null,
-			trips: this.shifts.reduce( (prev, value) => prev.concat({
+			shifts: this.shifts.reduce( (prev, value) => prev.concat({
 				date: value.date,
-				trip: value.trip.toObject(),
-				hotel: value.hotel.toObject(),
-				price: value.price.toObject()
+				trip: value.trip && value.trip.toObject() || null,
+				hotel: value.hotel && value.hotel.toObject() || null,
+				price: value.price && value.price.toObject() || null
 			}), []),
 			date: this.date,
 			people: this.people.reduce( (prev, value) => prev.concat(value.toObject()), []),
-			description: this.description || ''
+			description: this.description || '',
+			paymentType: this.paymentType,
+			paymentCard: this.paymentCard
 		})
 	}
 

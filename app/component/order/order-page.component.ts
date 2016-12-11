@@ -8,6 +8,8 @@ import { Trip } from '../../../model/trip'
 import { Point } from '../../../model/point'
 import { Vehicle } from '../../../model/vehicle'
 import { Human } from '../../../model/human'
+import { Hotel } from '../../../model/hotel'
+import { Price } from '../../../model/price'
 
 type TripType = 'oneway' | 'round' | 'package'
 
@@ -18,19 +20,55 @@ type TripType = 'oneway' | 'round' | 'package'
 })
 export class OrderPageComponent implements OnInit {
 
+	months: number[] = [1,2,3,4,5,6,7,8,9,10]
+	years: number[] = []
+
 	order: Order = new Order()
 
+	getAdultsCount(date: Date = new Date()): number {
+		return this.order.people.reduce( (prev: number, human: Human) =>
+			human.getAgeGroup(date) === 'adults' ? ++prev : prev,
+			0
+		)
+	}
+
+	getKidsCount(date: Date = new Date()): number {
+		return this.order.people.reduce( (prev: number, human: Human) =>
+			human.getAgeGroup(date) === 'kids' ? ++prev : prev,
+			0
+		)
+	}
+
+	getInfantsCount(date: Date = new Date()): number {
+		return this.order.people.reduce( (prev: number, human: Human) =>
+			human.getAgeGroup(date) === 'infants' ? ++prev : prev,
+			0
+		)
+	}
+
 	get ticketsCost(): number {
-		return 0
+		return this.order.shifts.reduce(
+			(prev: number, shift: { date: Date, trip: Trip, hotel: Hotel, price: Price } ) => {
+				prev += this.getAdultsCount(shift.date) * shift.price.adults
+				prev += this.getKidsCount(shift.date) * shift.price.kids
+				prev += this.getInfantsCount(shift.date) * shift.price.infants
+				return prev
+			},
+			0
+		)
 	}
 
 	get totalCost(): number {
-		return 0
+		return this.ticketsCost
 	}
 
 	submitted: boolean = false
 
-	constructor(private router: Router, private apiService: APIService) {}
+	constructor(private router: Router, private apiService: APIService) {
+		let thisYear = (new Date()).getFullYear()
+		for (let i = thisYear; i <= thisYear + 10; i++)
+			this.years.push(i)
+	}
 
 	ngOnInit(): void {
 
@@ -120,6 +158,18 @@ export class OrderPageComponent implements OnInit {
 
 	deleteHuman(human: Human): void {
 		this.order.people = this.order.people.filter(value => value !== human)
+	}
+
+	submit(): void {
+		if (this.submitted)
+			return
+		this.submitted = true
+
+		this.apiService.order(this.order).then( value => {
+			UIkit.notify('Order sucess', {status  : 'success' })
+		}).catch( error => {
+			UIkit.notify('Server error', {status  : 'warning' })
+		})
 	}
 }
 
