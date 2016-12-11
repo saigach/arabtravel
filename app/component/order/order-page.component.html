@@ -4,7 +4,7 @@
             <div class="col-md-9">
 
                 <h1>Ticket reservation</h1>
-                <a href="" class="btn btn-primary btn-ghost btn-left">New search</a>
+                <a href="/" class="btn btn-primary btn-ghost btn-left">New search</a>
                 <p>Some text describing important info. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud ex ercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 
                 <p> DEBUG: {{ order | json }}</p>
@@ -53,7 +53,7 @@
                             </span>
                         </div>
 
-                        <div class="payment-system_container">
+                        <div class="payment-system_container" id="payment-system_card">
                             <div class="payment-system_card">
                                 <div class="form-group row">
                                     <div class="col-md-3">
@@ -138,6 +138,10 @@
                                 </div>
                             </div>
                         </div>
+                        
+                        <div class="payment-system_container" id="payment-system_card">
+                            You have chosen (payment system name). We will contact you as soon as possible and inform you on next steps.
+                        </div>
 
                     </section>
 
@@ -167,15 +171,15 @@
                         <div *ngIf="shift.price" class="order-trip_details">
                             <div class="order-trip_detail">
                                 <div class="lbl">Adults</div>
-                                <div class="val">{{ shift.price.adults | currency:'USD':true:'1.2-2' }}</div>
+                                <div class="val">{{ getAdultsCount(shift.date) }}&nbsp;x&nbsp;{{ shift.price.adults | currency:'USD':true:'1.2-2' }}</div>
                             </div>
                             <div class="order-trip_detail">
                                 <div class="lbl">2-6yr</div>
-                                <div class="val">{{ shift.price.kids | currency:'USD':true:'1.2-2'  }}</div>
+                                <div class="val">{{ getKidsCount(shift.date) }}&nbsp;x&nbsp;{{ shift.price.kids | currency:'USD':true:'1.2-2'  }}</div>
                             </div>
                             <div class="order-trip_detail">
                                 <div class="lbl">&lt;2yr</div>
-                                <div class="val">{{ shift.price.infants | currency:'USD':true:'1.2-2' }}</div>
+                                <div class="val">{{ getInfantsCount(shift.date) }}&nbsp;x&nbsp;{{ shift.price.infants | currency:'USD':true:'1.2-2' }}</div>
                             </div>
                            <!--  <div class="order-trip_detail">
                                 <div class="lbl">Vehicle (car)</div>
