@@ -127,7 +127,7 @@ export class OrderPageComponent implements OnInit {
 						price: tripAB.getPrice(dateAB)
 					})
 
-					if (currentOrder.type = 'round') {
+					if (currentOrder.type === 'round') {
 						let tripBA = getTrip(currentOrder.pointB, currentOrder.pointA)
 						let dateBA = newDate(currentOrder.returnDate)
 						this.order.shifts.push({
