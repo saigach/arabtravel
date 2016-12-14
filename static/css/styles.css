@@ -308,11 +308,7 @@ th {
     border: 1px solid #ddd !important;
   }
 }
-@font-face {
-  font-family: 'Glyphicons Halflings';
-  src: url(../fonts/bootstrap/glyphicons-halflings-regular.eot?1470199034);
-  src: url(../fonts/bootstrap/glyphicons-halflings-regular.eot?&1470199034#iefix) format("embedded-opentype"), url(../fonts/bootstrap/glyphicons-halflings-regular.woff2?1470199034) format("woff2"), url(../fonts/bootstrap/glyphicons-halflings-regular.woff?1470199034) format("woff"), url(../fonts/bootstrap/glyphicons-halflings-regular.ttf?1470199034) format("truetype"), url(../fonts/bootstrap/glyphicons-halflings-regular.svg?1470199034#glyphicons_halflingsregular) format("svg");
-}
+
 .glyphicon {
   position: relative;
   top: 1px;
@@ -7527,6 +7523,10 @@ a:not(.btn) {
   width: 100%;
 }
 
+.main-search-form .trip-select-header {
+	padding: 20px 30px 0 30px;
+}
+
 .main-search-form_form {
   background-color: #00b7f4;
   color: #fff;
@@ -7768,23 +7768,24 @@ a:not(.btn) {
 .contact-form {
   margin: 0 10% 20px 10%;
 }
-.contact-form .form-group {
+.animated-form .form-group {
   padding-top: 20px;
   position: relative;
 }
-.contact-form label {
+.animated-form label {
   font-size: 13px;
-  color: #f3f2ee;
   position: absolute;
   top: 30px;
   left: 10px;
   transition: 300ms;
 }
-.contact-form .form-control:focus ~ label,
-.contact-form .form-control.non-empty ~ label {
+.animated-form .form-control:focus ~ label,
+.animated-form .form-control.non-empty ~ label {
   top: 0px;
 }
-
+.dark-form label {
+  color: #f3f2ee;	
+}
 .dark-form .form-control {
   background-color: transparent;
   border: 2px solid #b4e4f4;
@@ -8254,6 +8255,9 @@ a:not(.btn) {
   padding-left: 28px;
   position: relative;
 }
+.main-search-form_form .styled-radio input[type=radio] + label:before {
+  border: 2px solid #fff !important;	
+}
 .styled-radio input[type=radio] + label:before {
   background: none;
   text-align: center;
@@ -8554,6 +8558,7 @@ input[type=text]:focus {
   padding: 30px 15px;
   border-radius: 4px;
   margin: 12px -15px;
+  color: #fff;
 }
 .payment-system_container label {
   color: #fff;
@@ -8974,4 +8979,42 @@ input[type=text]:focus {
 }
 .owl-controls .owl-next {
   right: 30px;
+}
+
+.tripselector-arrow {
+    position: absolute;
+    right: -14px;
+    font-size: 26px;
+    top: 36px;
+	display: none;
+}
+
+a.uk-close {
+	text-decoration: none;
+}
+.main-search-form_form select.form-control {
+	border: none;
+}
+select.form-control, input[type=email] {
+	border-style: solid;
+    border-width: 2px;
+    border-color: #cfcfcf;
+    border-radius: 4px;
+    background-color: white;
+}
+
+.input-group .form-control {
+	height: 35px;
+}
+
+.passenger-info_age {
+	position: absolute;
+	top: 4px;
+	right: 50px;
+	color: #333333;
+    z-index: 20;
+}
+
+.uil-cube-css {
+	position: absolute !important;
 }
