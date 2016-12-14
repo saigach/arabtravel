@@ -24,6 +24,8 @@ import { HumanItemComponent } from './component/human/human-item.component'
 
 import { OrderListComponent } from './component/order/order-list.component'
 import { OrderItemComponent } from './component/order/order-item.component'
+import { OrderHumanComponent } from './component/order/order-human.component'
+import { OrderShiftComponent } from './component/order/order-shift.component'
 
 import { TripListComponent } from './component/trip/trip-list.component'
 import { TripItemComponent } from './component/trip/trip-item.component'
@@ -67,6 +69,8 @@ import { VehicleListComponent } from './component/vehicle/vehicle-list.component
 
 		OrderListComponent,
 		OrderItemComponent,
+		OrderHumanComponent,
+		OrderShiftComponent,
 
 		TripListComponent,
 		TripItemComponent,

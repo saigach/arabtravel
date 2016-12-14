@@ -12,25 +12,159 @@
 					<span>Enable</span>
 					<input  class="uk-hidden" type="checkbox" [(ngModel)]="item.enable">
 				</label>
+				<label class="uk-button admin-button uk-margin-left" [class.uk-active]="item.successful">
+					<span>Successful</span>
+					<input  class="uk-hidden" type="checkbox" [(ngModel)]="item.successful">
+				</label>
 			</div>
-			<div class="uk-width-1-1 uk-margin-top">
-				<label class="uk-form-label uk-width-1-1">Title</label>
-				<div class="uk-form-controls">
-					<input class="uk-width-1-1" type="text" placeholder="Order title" [(ngModel)]="item.title">
+			<div class="uk-width-7-10">
+				<div class="uk-width-1-1 uk-margin-top">
+					<label class="uk-form-label uk-width-1-1">Title</label>
+					<div class="uk-form-controls">
+						<input class="uk-width-1-1" type="text" placeholder="Order title" [(ngModel)]="item.title">
+					</div>
 				</div>
 			</div>
-			<div class="uk-width-1-1 uk-margin-top">
-				<label class="uk-form-label uk-width-1-1">Short description</label>
+			<div class="uk-width-3-10 uk-margin-top">
+				<label class="uk-form-label uk-width-1-1">Date</label>
+				<div class="uk-form-controls">
+					<input class="uk-width-1-1" type="text" placeholder="Date" [value]="item.date | date: 'dd.MM.yyyy'">
+				</div>
+			</div>
+			<div class="uk-width-7-10 uk-margin-top">
+				<label class="uk-form-label uk-width-1-1">Description</label>
 				<div class="uk-form-controls">
 					<input class="uk-width-1-1" type="text" placeholder="Order description" [(ngModel)]="item.description">
 				</div>
 			</div>
+			<div class="uk-width-3-10 uk-margin-top">
+				<label class="uk-form-label uk-width-1-1">User</label>
+				<div class="uk-form-controls" *ngIf="item.owner">
+					<a [attr.href]="'/users/' + item.owner.id"  target="_blank">{{item.owner.title}}</a>
+				</div>
+			</div>
+			<div class="uk-width-2-10 uk-margin-top">
+				<label class="uk-form-label uk-width-1-1">Payment type</label>
+				<div class="uk-form-controls">
+					<select [(ngModel)]="item.paymentType">
+						<option [ngValue]="'card'">Card</option>
+						<option [ngValue]="'bank'">Bank transfer</option>
+						<option [ngValue]="'wu'">Western Union</option>
+					</select>
+				</div>
+			</div>
+			<div class="uk-width-2-10 uk-margin-top" *ngIf="item.paymentType === 'card'">
+				<label class="uk-form-label uk-width-1-1">Card number</label>
+				<div class="uk-form-controls">
+					<input class="uk-width-1-1" type="text" placeholder="Card number" [(ngModel)]="item.paymentCard.number">
+				</div>
+			</div>
+			<div class="uk-width-3-10 uk-margin-top" *ngIf="item.paymentType === 'card'">
+				<label class="uk-form-label uk-width-1-1">Cardholder</label>
+				<div class="uk-form-controls">
+					<input class="uk-width-1-1" type="text" placeholder="Cardholder" [(ngModel)]="item.paymentCard.cardholder">
+				</div>
+			</div>
+			<div class="uk-width-2-10 uk-margin-top" *ngIf="item.paymentType === 'card'">
+				<label class="uk-form-label uk-width-1-1">Month/Year</label>
+				<div class="uk-form-controls">
+					<select [(ngModel)]="item.paymentCard.validMonth">
+						<option *ngFor="let month of months" [ngValue]="month">{{month}}</option>
+					</select>
+					<select [(ngModel)]="item.paymentCard.validYear">
+						<option *ngFor="let year of years" [ngValue]="year">{{year}}</option>
+					</select>
+				</div>
+			</div>
+			<div class="uk-width-1-10 uk-margin-top" *ngIf="item.paymentType === 'card'">
+				<label class="uk-form-label uk-width-1-1">CVV</label>
+				<div class="uk-form-controls">
+					<input class="uk-width-1-1" type="number" min="100" max="999" placeholder="CVV" [(ngModel)]="item.paymentCard.cvv">
+				</div>
+			</div>
+			<div class="uk-width-1-1 uk-grid uk-margin-top">
+				<div class="uk-width-8-10">
+					<h3 class="tm-article-subtitle">Passengers</h3>
+				</div>
+				<div class="uk-width-2-10">
+					<a class="admin-cursor-pointer" (click)="addHuman(); $event.stopPropagation()">
+						<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
+						<u>Add passenger</u>
+					</a>
+				</div>
+			</div>
+			<div class="uk-width-1-1 uk-margin-top">
+				<div  *ngFor="let human of item.people; let i = index;" class="uk-panel uk-panel-box uk-width-1-1">
+					<div class="uk-panel-badge uk-badge uk-badge-danger admin-cursor-pointer" (click)="deleteHuman(human); $event.stopPropagation()"><i class="uk-icon-trash"></i></div>
+					<h3 class="uk-panel-title">Passenger {{ i + 1 }}</h3>
+					<order-human [(human)]="item.people[i]"></order-human>
+				</div>
+			</div>
+			<div class="uk-width-1-1 uk-grid uk-margin-top">
+				<div class="uk-width-8-10">
+					<h3 class="tm-article-subtitle">Shifts</h3>
+				</div>
+				<div class="uk-width-2-10">
+					<a class="admin-cursor-pointer" (click)="addShift(); $event.stopPropagation()">
+						<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
+						<u>Add shift</u>
+					</a>
+				</div>
+			</div>
+			<div class="uk-width-1-1 uk-margin-top">
+				<div  *ngFor="let shift of item.shifts; let i = index;" class="uk-panel uk-panel-box uk-width-1-1">
+					<div class="uk-panel-badge uk-badge uk-badge-danger admin-cursor-pointer" (click)="deleteShift(shift); $event.stopPropagation()"><i class="uk-icon-trash"></i></div>
+					<h3 class="uk-panel-title"><span *ngIf="shift.trip">{{ shift.trip.pointA.title }} &rarr; {{ shift.trip.pointB.title }} valid <b>{{ shift.date | date: 'dd.MM.yyyy'}}</b></span></h3>
+					<order-shift [(shift)]="item.shifts[i]"></order-shift>
+				</div>
+			</div>
+			<div class="uk-width-1-1 uk-margin-top">
+				<div class="uk-width-1-1">
+					<h3 class="tm-article-subtitle">Calculation</h3>
+				</div>
+			</div>
+			<div class="uk-width-1-1 uk-margin-top">
+				<table class="uk-table uk-table-hover uk-table-condensed">
+					<thead>
+						<tr>
+							<th>Date</th>
+							<th>A &rarr; B</th>
+							<th>Cost</th>
+							<th>Sum</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let shift of item.shifts">
+							<td>{{ shift.date | date: 'dd.MM.yyyy'}}</td>
+							<td><span *ngIf="shift.trip">{{ shift.trip.pointA.title }} &rarr; {{ shift.trip.pointB.title }}</span></td>
+							<td>
+								<div *ngIf="getAdultsCount(shift.date)" class="uk-width-1-1">
+									<span>Adults</span><span class="uk-margin-small-left">{{ getAdultsCount(shift.date) }}&nbsp;x&nbsp;{{ shift.price.adults | currency:'USD':true:'1.2-2' }}</span>
+								</div>
+								<div *ngIf="getKidsCount(shift.date)" class="uk-width-1-1">
+									<span>2-6yr</span><span class="uk-margin-small-left">{{ getKidsCount(shift.date) }}&nbsp;x&nbsp;{{ shift.price.kids | currency:'USD':true:'1.2-2' }}</span>
+								</div>
+								<div *ngIf="getInfantsCount(shift.date)" class="uk-width-1-1">
+									<span>&lt;2yr</span><span class="uk-margin-small-left">{{ getInfantsCount(shift.date) }}&nbsp;x&nbsp;{{ shift.price.infants | currency:'USD':true:'1.2-2' }}</span>
+								</div>
+							</td>
+							<td>{{ ((getAdultsCount(shift.date) * shift.price.adults) + (getKidsCount(shift.date) * shift.price.kids) + (getInfantsCount(shift.date) * shift.price.infants)) | currency:'USD':true:'1.2-2' }}</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="3" class="uk-text-right"><b>Full sum</b></td>
+							<td><b>{{totalCost | currency:'USD':true:'1.2-2' }}</b></td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
 			<div class="uk-width-1-1 uk-margin-top">
 				<button type="submit" class="uk-button uk-button-success uk-align-right" [disabled]="!valid" (click)="submit()"><i class="uk-icon-floppy-o"></i>&emsp;Submit</button>
 			</div>
-			<div class="uk-width-1-1 uk-margin-top">
+			<!-- <div class="uk-width-1-1 uk-margin-top">
 				<p>Form value: {{ item | json }}</p>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </div>

@@ -68,7 +68,7 @@ module.exports = class APIProject {
 					FROM objects
 					LEFT JOIN users ON objects.owner = users.id
 					WHERE
-						model = '${model}'
+						objects.model = '${model}'
 						AND
 						objects.id = '${id}'
 				`).then(rows => {
@@ -77,9 +77,31 @@ module.exports = class APIProject {
 							code: 404,
 							data: { error: `Object "${id}"" not found`}
 						}
+
+					let obj = {
+						id: rows[0].id,
+						enable: rows[0].enable,
+						title: rows[0].title,
+						owner: rows[0].owner
+					}
+
+					let data = rows[0].data
+
+					if (data.owner !== undefined)
+						delete data.owner
+
+					if (data.id !== undefined)
+						delete data.id
+
+					if (data.enable !== undefined)
+						delete data.enable
+
+					if (data.title !== undefined)
+						delete data.title
+
 					return {
 						code: 200,
-						data: Object.assign({}, rows[0], rows[0].data, { data: null })
+						data: Object.assign(obj, data)
 					}
 				})
 
@@ -116,6 +138,12 @@ module.exports = class APIProject {
 						}))
 					default:
 						let owner = "'" + requestData.user.id + "'"
+
+						if (data.owner !== undefined)
+							delete data.owner
+
+						if (data.id !== undefined)
+							delete data.id
 
 						let enable = true
 						if (data.enable !== undefined) {

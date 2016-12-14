@@ -10,6 +10,7 @@ import { Vehicle } from '../../../model/vehicle'
 import { Human } from '../../../model/human'
 import { Hotel } from '../../../model/hotel'
 import { Price } from '../../../model/price'
+import { Shift } from '../../../model/shift'
 
 type TripType = 'oneway' | 'round' | 'package'
 
@@ -120,22 +121,22 @@ export class OrderPageComponent implements OnInit {
 					let tripAB = getTrip(currentOrder.pointA, currentOrder.pointB)
 					let dateAB = newDate(currentOrder.departureDate)
 
-					this.order.shifts.push({
-						date: dateAB,
+					this.order.shifts.push(new Shift({
+						date: currentOrder.departureDate,
 						trip: tripAB,
 						hotel: null,
 						price: tripAB.getPrice(dateAB)
-					})
+					}))
 
 					if (currentOrder.type === 'round') {
 						let tripBA = getTrip(currentOrder.pointB, currentOrder.pointA)
 						let dateBA = newDate(currentOrder.returnDate)
-						this.order.shifts.push({
+						this.order.shifts.push(new Shift({
 							date: dateBA,
 							trip: tripBA,
 							hotel: null,
 							price: tripBA.getPrice(dateBA)
-						})
+						}))
 					}
 
 					for(let i = 0; i < currentOrder.peopleCount; i++)

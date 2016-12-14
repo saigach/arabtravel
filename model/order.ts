@@ -2,11 +2,8 @@
 import { Model } from './model'
 import { User } from './user'
 
-import { Trip } from './trip'
-import { Price } from './price'
-import { Hotel } from './hotel'
-
 import { Human } from './human'
+import { Shift } from './shift'
 
 const newDate = value => {
 	if (value instanceof Date)
@@ -28,12 +25,7 @@ export class Order extends Model {
 	owner: User = null
 	date: Date = new Date()
 
-	shifts: {
-		date: Date,
-		trip: Trip,
-		hotel: Hotel,
-		price: Price
-	}[] = []
+	shifts: Shift[] = []
 
 	people: Human[] = []
 
@@ -51,9 +43,11 @@ export class Order extends Model {
 		number: '',
 		cardholder: '',
 		validMonth: 1,
-		validYear: 2016,
+		validYear: new Date().getFullYear(),
 		cvv: ''
 	}
+
+	successful: boolean = false
 
 	constructor(value: any = {}) {
 		super(value)
@@ -64,23 +58,11 @@ export class Order extends Model {
 		this.date = value.dob && newDate(value.date) || new Date()
 
 		this.shifts = value.shifts instanceof Array && value.shifts.reduce(
-			( prev: { date: Date, trip: Trip, price: Price, hotel: Hotel }[] , value:any ) => {
-				let date: Date = newDate(value.date)
-				if (!date)
+			( prev: Shift[] , value:any ) => {
+				let shift = new Shift(value)
+				if (!shift.date || !shift.trip || !shift.price)
 					return prev
-
-				let trip: Trip = value.trip instanceof Trip && value || value.trip && new Trip(value.trip) || null
-				if (!trip)
-					return prev
-
-				let hotel: Hotel = value.hotel instanceof Trip && value || value.hotel && new Trip(value.hotel) || null
-
-				let price: Price = value.price instanceof Price && value || value.price && new Price(value.price) || null
-
-				if (!price)
-					return prev
-
-				return prev.concat({date, trip, hotel, price})
+				return prev.concat(shift)
 			}, []
 		).filter(value => !!value) || []
 
@@ -95,22 +77,20 @@ export class Order extends Model {
 		this.paymentType = value.paymentType || 'card'
 
 		this.paymentCard = value.paymentCard || { number: '', cardholder: '', validMonth: 1, validYear: 2016, cvv: '' }
+
+		this.successful = !!value.successful
 	}
 
 	toObject(): {} {
 		return Object.assign(super.toObject(), {
 			owner: this.owner && this.owner.id.toString() || null,
-			shifts: this.shifts.reduce( (prev, value) => prev.concat({
-				date: value.date,
-				trip: value.trip && value.trip.toObject() || null,
-				hotel: value.hotel && value.hotel.toObject() || null,
-				price: value.price && value.price.toObject() || null
-			}), []),
+			shifts: this.shifts.reduce( (prev, value) => prev.concat(value.toObject()), []),
 			date: this.date,
 			people: this.people.reduce( (prev, value) => prev.concat(value.toObject()), []),
 			description: this.description || '',
 			paymentType: this.paymentType,
-			paymentCard: this.paymentCard
+			paymentCard: this.paymentCard,
+			successful: this.successful
 		})
 	}
 
