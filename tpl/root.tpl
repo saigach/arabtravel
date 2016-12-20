@@ -128,7 +128,7 @@
                 </div>
                 <div class="col-md-4 col-md-push-2">
                     <div class="pull-left">
-                        <a id="currentAccountLink" href="{{=it.userEmail && '/me' || '#login-form-modal'}}" class="btn btn-default btn-ghost btn-ui btn-account" data-uk-modal>
+                        <a id="currentAccountLink" href="{{=it.userEmail && '/user' || '#login-form-modal'}}" class="btn btn-default btn-ghost btn-ui btn-account" {{? !it.userEmail }} data-uk-modal {{?}}>
                             <i class="demo-icon ico_user"></i><span id="currentAccount">{{=it.userEmail || 'Sign Up'}}</span>
                         </a>
                     </div>
