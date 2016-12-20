@@ -39,6 +39,7 @@ module.exports = class APIUser {
 							users.enable,
 							users.title,
 							users.email,
+							users.phone,
 							array_to_json(users.roles) AS roles
 						FROM users
 					`).then(rows => ({
@@ -59,7 +60,7 @@ module.exports = class APIUser {
 							data: { error: `User "${id}"" not found`}
 						}
 
-					let item = Object.assign(rows[0].data || {}, rows[0], { data: null })
+					let item = Object.assign({}, rows[0].data || {}, rows[0], { data: null })
 					if (item.password)
 						delete item.password
 
@@ -156,13 +157,20 @@ module.exports = class APIUser {
 						}
 						title = escapeStr(title)
 
+						let phone = ''
+						if (data.phone !== undefined) {
+							phone = String(data.phone).trim()
+							delete data.phone
+						}
+						phone = escapeStr(phone)
+
 						data = escapeStr(JSON.stringify(data || {}))
 
 						return this.DB.query(`
 							INSERT INTO users (
-								id,    enable,    email,    roles,    title,    data
+								id,    enable,    email,    roles,    title,    phone     data
 							) VALUES (
-								${id}, ${enable}, ${email}, ${roles}, ${title}, ${data}
+								${id}, ${enable}, ${email}, ${roles}, ${title}, ${phone}, ${data}
 							) ON CONFLICT (id) DO UPDATE SET
 								enable = ${enable},
 								email = ${email},
@@ -173,7 +181,7 @@ module.exports = class APIUser {
 								*,
 								array_to_json(roles) AS roles
 						`).then( rows => {
-							let item = Object.assign(rows[0].data || {}, rows[0], { data: null })
+							let item = Object.assign({}, rows[0].data || {}, rows[0], { data: null })
 							if (item.password)
 								delete item.password
 

@@ -4,6 +4,8 @@ import { Routes, RouterModule } from '@angular/router'
 import { TripSelectorFormComponent } from './component/tripselector/tripselector-form.component'
 import { OrderPageComponent } from './component/order/order-page.component'
 
+import { UserPageComponent } from './component/user/user-page.component'
+
 const appRoutes: Routes = [
 	{
 		path: '',
@@ -12,6 +14,10 @@ const appRoutes: Routes = [
 	{
 		path: 'order',
 		component: OrderPageComponent
+	},
+	{
+		path: 'user',
+		component: UserPageComponent
 	}
 ];
 

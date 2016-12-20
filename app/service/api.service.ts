@@ -5,6 +5,7 @@ import 'rxjs/add/operator/toPromise'
 import { Model } from '../../model/model'
 import { UUID } from '../../model/uuid'
 import { Order } from '../../model/order'
+import { User } from '../../model/user'
 
 @Injectable()
 export class APIService {
@@ -64,6 +65,15 @@ export class APIService {
 						.toPromise()
 						.then(response => response.json() || null)
 						.then(value => value && value || Promise.reject({ message: 'Response is empty' }))
+						.catch(APIService.handleError)
+	}
+
+	me(): Promise<User | Error> {
+		return this.http.get(`${APIService.apiRoot}/me`)
+						.toPromise()
+						.then(response => response.json() || null)
+						.then(value => value && value || Promise.reject({ message: 'Response is empty' }))
+						.then(value => new User(value))
 						.catch(APIService.handleError)
 	}
 }

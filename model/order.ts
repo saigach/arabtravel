@@ -49,6 +49,43 @@ export class Order extends Model {
 
 	successful: boolean = false
 
+	getAdultsCount(date: Date = new Date()): number {
+		return this.people.reduce( (prev: number, human: Human) =>
+			human.getAgeGroup(date) === 'adults' ? ++prev : prev,
+			0
+		)
+	}
+
+	getKidsCount(date: Date = new Date()): number {
+		return this.people.reduce( (prev: number, human: Human) =>
+			human.getAgeGroup(date) === 'kids' ? ++prev : prev,
+			0
+		)
+	}
+
+	getInfantsCount(date: Date = new Date()): number {
+		return this.people.reduce( (prev: number, human: Human) =>
+			human.getAgeGroup(date) === 'infants' ? ++prev : prev,
+			0
+		)
+	}
+
+	get ticketsCost(): number {
+		return this.shifts.reduce(
+			(prev: number, shift: Shift ) => {
+				prev += this.getAdultsCount(shift.date) * shift.price.adults
+				prev += this.getKidsCount(shift.date) * shift.price.kids
+				prev += this.getInfantsCount(shift.date) * shift.price.infants
+				return prev
+			},
+			0
+		)
+	}
+
+	get totalCost(): number {
+		return this.ticketsCost
+	}
+
 	constructor(value: any = {}) {
 		super(value)
 

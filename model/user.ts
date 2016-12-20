@@ -11,6 +11,7 @@ export class User extends Model {
 
 	email: string = ''
 	roles: { id: string, title: string, icon: string }[] = []
+	phone: string = ''
 
 	description: string = ''
 	image: string = ''
@@ -19,6 +20,7 @@ export class User extends Model {
 		super(value)
 
 		this.email = String(value.email || '')
+		this.phone = String(value.phone || '')
 		this.description = String(value.description || '')
 		this.image = String(value.image || '')
 
@@ -37,6 +39,7 @@ export class User extends Model {
 	toObject(): {} {
 		return Object.assign(super.toObject(), {
 			email: this.email,
+			phone: this.phone,
 			roles: this.roles.reduce( (prev, value) => prev.concat(value.id), []),
 			description: this.description || '',
 			image: this.image

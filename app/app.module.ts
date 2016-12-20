@@ -13,6 +13,8 @@ import { TripSelectorFormComponent } from './component/tripselector/tripselector
 import { OrderPageComponent } from './component/order/order-page.component'
 import { OrderHumanComponent } from './component/order/order-human.component'
 
+import { UserPageComponent } from './component/user/user-page.component'
+
 @NgModule({
 	imports: [
 		BrowserModule,
@@ -24,7 +26,8 @@ import { OrderHumanComponent } from './component/order/order-human.component'
 		AppComponent,
 		TripSelectorFormComponent,
 		OrderPageComponent,
-		OrderHumanComponent
+		OrderHumanComponent,
+		UserPageComponent
 	],
 	providers: [
 		APIService

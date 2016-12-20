@@ -3,7 +3,7 @@
  * Copyright(c) 2016 Wisdman <wisdman@ajaw.it>
  */
 
-module.exports = class OrderEngine {
+module.exports = class UserEngine {
 	constructor(DB, templat) {
 		this.DB = DB
 		this.template = templat
@@ -14,8 +14,8 @@ module.exports = class OrderEngine {
 			code: 200,
 			data: {
 				angular: true,
-				title: 'Order page',
-				main: this.template['order']({})
+				title: 'User page',
+				main: this.template['user']({})
 			}
 		})
 	}

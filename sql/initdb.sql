@@ -33,7 +33,8 @@ CREATE TYPE roles AS ENUM ('admin', 'user', 'hotel');
 CREATE TABLE users (
 	id uuid NOT NULL DEFAULT uuid_generate_v1(),
 	enable boolean NOT NULL DEFAULT TRUE,
-	email character varying(256) NOT NULL,
+	email character varying(255) NOT NULL,
+	phone character varying(255) NOT NULL DEFAULT '',
 	password char(128) DEFAULT NULL,
 	roles roles[] NOT NULL DEFAULT '{user}'::roles[],
 	title text NOT NULL DEFAULT ''::text,

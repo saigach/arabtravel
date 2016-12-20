@@ -36,22 +36,29 @@ module.exports = class APIEngine {
 
 				switch (model) {
 					case 'trip':
-						if (!id)
-							return this.DB.query(`
-								SELECT
-									objects.id,
-									objects.title,
-									objects.enable,
-									objects.data
-								FROM
-									objects
-								WHERE
-									model = 'trip' AND
-									enable
-							`).then(response => ({
-								code: 200,
-								data: response.map( value => Object.assign(value, value.data, { data: null }) )
-							}))
+						return this.DB.query(`
+							SELECT
+								objects.id,
+								objects.title,
+								objects.enable,
+								objects.data
+							FROM
+								objects
+							WHERE
+								model = 'trip' AND
+								enable
+						`).then(response => ({
+							code: 200,
+							data: response.map( value => Object.assign({}, value.data || {}, value, { data: null }) )
+						}))
+					case 'order':
+
+						if (!requestData.user || !requestData.user.id)
+							return Promise.resolve({
+								code: 403,
+								session: null,
+								data: 'Unauthorized'
+							})
 
 						return this.DB.query(`
 							SELECT
@@ -59,14 +66,17 @@ module.exports = class APIEngine {
 								objects.title,
 								objects.enable,
 								objects.data
-							FROM objects
+							FROM
+								objects
 							WHERE
-								model = 'trip'
+								model = 'order'
 								AND
-								objects.id = '${id}'
+								enable
+								AND
+								owner = '${requestData.user.id}'
 						`).then(response => ({
 							code: 200,
-							data: Object.assign(response[0], response[0].data, { data: null })
+							data: response.map( value => Object.assign({}, value.data || {}, value, { data: null }) )
 						}))
 					default:
 						return Promise.resolve({
@@ -123,6 +133,37 @@ module.exports = class APIEngine {
 				// 			date: { sucess: 'Mail sended' }
 				// 		}
 				// 	})
+			case 'me':
+				if (!requestData.user || !requestData.user.id)
+					return Promise.resolve({
+						code: 403,
+						session: null,
+						data: 'Unauthorized'
+					})
+
+				return this.DB.query(`
+					SELECT
+						users.email,
+						users.phone,
+						users.title,
+						users.data
+					FROM
+						users
+					WHERE
+						enable
+						AND
+						id = '${requestData.user.id}'
+					LIMIT 1
+				`).then(response =>
+					response.length !== 1 ? ({
+						code: 403,
+						session: null,
+						data: 'Unauthorized'
+					}) : ({
+						code: 200,
+						data: Object.assign({}, response[0].data || {}, response[0], { data: null })
+					})
+				)
 			default:
 				return Promise.resolve({
 					code: 400,

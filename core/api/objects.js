@@ -78,30 +78,9 @@ module.exports = class APIProject {
 							data: { error: `Object "${id}"" not found`}
 						}
 
-					let obj = {
-						id: rows[0].id,
-						enable: rows[0].enable,
-						title: rows[0].title,
-						owner: rows[0].owner
-					}
-
-					let data = rows[0].data
-
-					if (data.owner !== undefined)
-						delete data.owner
-
-					if (data.id !== undefined)
-						delete data.id
-
-					if (data.enable !== undefined)
-						delete data.enable
-
-					if (data.title !== undefined)
-						delete data.title
-
 					return {
 						code: 200,
-						data: Object.assign(obj, data)
+						data: Object.assign({}, rows[0].data || {}, rows[0], { data: null })
 					}
 				})
 
@@ -180,7 +159,7 @@ module.exports = class APIProject {
 								) AS owner
 						`).then( rows => ({
 							code: 200,
-							data: Object.assign(rows[0], rows[0].data, { data: null })
+							data: Object.assign({}, rows[0].data, rows[0], { data: null })
 						}) )
 				}
 
