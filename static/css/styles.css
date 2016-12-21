@@ -7784,7 +7784,7 @@ a:not(.btn) {
   top: 0px;
 }
 .dark-form label {
-  color: #f3f2ee;	
+  color: #f3f2ee;
 }
 .dark-form .form-control {
   background-color: transparent;
@@ -8256,7 +8256,7 @@ a:not(.btn) {
   position: relative;
 }
 .main-search-form_form .styled-radio input[type=radio] + label:before {
-  border: 2px solid #fff !important;	
+  border: 2px solid #fff !important;
 }
 .styled-radio input[type=radio] + label:before {
   background: none;
@@ -8860,12 +8860,42 @@ input[type=text]:focus {
 .breadcrumb {
   margin-top: -71px;
 }
+.user-order_header {
+    display: table;
+    width: 100%;
+}
+.user-order_header.user-order_top {
+    border-bottom: 3px solid #00b7f4;
+    font-family: "Ubuntu", sans-serif;
+}
+.user-order_header > div {
+    display: table-cell;
+    padding: 20px 10px;
+}
+.user-order_number {
+    width: 5%;
+}
+.user-order_date {
+    width: 10%;
+}
+.user-order_shift {
+    width: 30%;
+}
+.user-order_cost {
+    width: 15%;
+}
+.user-order_status {
+    width: 15%;
+}
+.user-order_action {}
+.user-order_toggle {}
+
 
 .user-order_table {
   width: 100%;
 }
 .user-order_table thead th {
-  border-bottom: 2px solid #d1d1d1;
+  border-bottom: 1px solid #d1d1d1;
   padding: 10px;
   font-family: "Ubuntu", sans-serif;
 }
@@ -8882,7 +8912,7 @@ input[type=text]:focus {
 }
 
 .person-detail {
-  padding: 20px 0;
+  padding: 0;
 }
 .person-detail .lbl {
   color: #898989;
