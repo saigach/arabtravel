@@ -8877,6 +8877,9 @@ input[type=text]:focus {
   border-bottom: 1px solid #d1d1d1;
   vertical-align: top;
 }
+.user-order {
+	border-bottom: 2px solid #d1d1d1;
+}
 
 .person-detail {
   padding: 20px 0;
