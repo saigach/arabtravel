@@ -1,41 +1,29 @@
 
-import { Model } from './model'
-import { User } from './user'
+import { Model, File } from './common'
 
 export class Static extends Model {
 	static __api: string = 'static'
+	static __primaryFields = Model.__primaryFields.concat(['url'])
 
-	owner: User = null
-	content: string = ''
-	url: string = ''
+	url: string
+	content: string
 
-	description: string = ''
-	image: string = ''
+	image: File
 
 	constructor(value: any = {}) {
 		super(value)
 
-		if (value.owner && value.owner.id)
-			this.owner = new User(value.owner)
-		else
-			this.owner = null
-
-		this.content = String(value.content || '')
 		this.url = String(value.url || '')
-		this.description = String(value.description || '')
-		this.image = String(value.image || '')
+		this.content = String(value.content || '')
+
+		this.image = value.image ? ( value.image instanceof File ? value.image : new File(value.image) ) : null
 	}
 
 	toObject(): {} {
 		return Object.assign(super.toObject(), {
-			content: this.content,
 			url: this.url,
-			description: this.description || '',
-			image: this.image
+			content: this.content,
+			image: this.image && this.image.toObject() || null
 		})
-	}
-
-	toString(): string {
-		return JSON.stringify(this.toObject())
 	}
 }

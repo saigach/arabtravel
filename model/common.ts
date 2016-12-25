@@ -1,3 +1,4 @@
+
 let byteToHex:string[] = []
 
 for (let i:number = 0; i < 256; i++)
@@ -78,18 +79,84 @@ export class UUID {
 		return !!value && /^[a-f0-9]{8}-[a-f0-9]{4}-1[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12}$/i.test(value)
 	}
 
-	private _uuid: string = '';
+	private _uuid: string = UUID.generate()
 
 	constructor(value: string = null) {
-		if (!value)
-			this._uuid = UUID.generate()
-		else if (!UUID.valid(value))
-			throw new TypeError(`'Value isn't correct UUIDv1`)
-		else
-			this._uuid = value.toLowerCase()
+		if (value) {
+			if (!UUID.valid(value))
+				throw new TypeError(`'Value isn't correct UUIDv1`)
+			else
+				this._uuid = value.toLowerCase()
+		}
+	}
+
+	get uuid():string {
+		return this._uuid
+	}
+
+	equal(value: UUID): boolean {
+		return this._uuid === value.uuid
+	}
+}
+
+
+export function newDate(value = null) {
+
+	let date = value ? new Date(value) : new Date()
+
+	if (Number.isNaN( date.getTime() ))
+		return null
+
+	date.setHours(0,0,0,0)
+	return date
+}
+
+export class Model {
+	static __api: string = null
+	static __primaryFields = ['id', 'enable', 'title']
+
+	id: UUID = new UUID()
+	enable: boolean
+
+	title: string
+	description: string
+
+	constructor(value: any = {}) {
+		if (value.id)
+			this.id = value.id instanceof UUID ? value.id : new UUID(value.id)
+
+		this.enable = value.enable === undefined ? true : Boolean(value.enable)
+
+		this.title = String(value.title || '')
+		this.description = String(value.description || '')
+	}
+
+	toObject(): {} {
+		return {
+			id: this.id.uuid,
+			enable: this.enable,
+			title: this.title || '',
+			description: this.description || ''
+		}
 	}
 
 	toString(): string {
-		return this._uuid
+		return JSON.stringify(this.toObject())
+	}
+}
+
+export class File extends Model {
+	src: string
+
+	constructor(value: any = {}) {
+		super(value)
+
+		this.src = String(value.src || '')
+	}
+
+	toObject(): {} {
+		return Object.assign({}, super.toObject(), {
+			src: this.src
+		})
 	}
 }

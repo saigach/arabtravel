@@ -1,0 +1,27 @@
+<div class="uk-grid">
+	<div class="uk-width-1-1 uk-margin-bottom">
+		<h2>Common settings</h2>
+	</div>
+	<div class="uk-width-1-1 uk-form uk-form-stacked">
+		<div class="uk-grid">
+			<div class="uk-width-1-1 uk-margin-top">
+				<label class="uk-form-label uk-width-1-1">Exchange rate</label>
+				<div class="uk-form-controls">
+					<input class="uk-width-1-1" type="number" [(ngModel)]="item.exchangeRate" (change)="update('exchangeRate')">
+				</div>
+			</div>
+			<div class="uk-width-1-1 uk-margin-top">
+				<label class="uk-form-label uk-width-1-1">Processing fee</label>
+				<div class="uk-form-controls">
+					<input class="uk-width-1-1" type="number" [(ngModel)]="item.processingFee" (change)="update('processingFee')">
+				</div>
+			</div>
+			<div class="uk-width-1-1 uk-margin-top">
+				<label class="uk-form-label uk-width-1-1">User session duration</label>
+				<div class="uk-form-controls">
+					<input class="uk-width-1-1" type="number" [(ngModel)]="item.sessionDuration" (change)="update('sessionDuration')">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

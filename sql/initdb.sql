@@ -102,7 +102,7 @@ $$;
 CREATE TRIGGER sessions_delete_old_rows_trigger AFTER INSERT OR UPDATE ON sessions FOR EACH STATEMENT EXECUTE PROCEDURE sessions_delete_old_rows();
 
 -- Models
-CREATE TYPE models AS ENUM ('hotel', 'point', 'vehicle', 'trip', 'order');
+CREATE TYPE models AS ENUM ('hotel', 'human', 'order', 'point', 'trip', 'vehicle');
 
 -- Objects data store
 CREATE TABLE objects (
@@ -123,15 +123,12 @@ CREATE INDEX objects_owner_idx ON objects USING btree (owner);
 CREATE TABLE static (
 	id uuid NOT NULL DEFAULT uuid_generate_v1(),
 	enable boolean NOT NULL DEFAULT TRUE,
-	owner uuid DEFAULT NULL,
 	url varchar(80) NOT NULL,
 	title text NOT NULL DEFAULT ''::text,
 	description text NOT NULL DEFAULT ''::text,
 	content text NOT NULL DEFAULT ''::text,
 	image varchar(128) DEFAULT NULL,
-	CONSTRAINT static_pkey PRIMARY KEY (id),
-	CONSTRAINT static_owner_fkey FOREIGN KEY (owner) REFERENCES users (id) ON UPDATE CASCADE ON DELETE SET NULL
+	CONSTRAINT static_pkey PRIMARY KEY (id)
 ) WITH (OIDS = FALSE);
 CREATE INDEX static_enable_idx ON static USING btree (enable);
-CREATE INDEX static_owner_idx ON static USING btree (owner);
 CREATE UNIQUE INDEX static_url_unique_idx ON static USING btree (url);

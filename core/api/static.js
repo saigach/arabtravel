@@ -1,5 +1,5 @@
 /*!
- * API News engine
+ * API Static engine
  * Copyright(c) 2016 Wisdman <wisdman@ajaw.it>
  */
 
@@ -88,8 +88,6 @@ module.exports = class APIStatic {
 							data: rows[0]
 						}))
 					default:
-						let owner = "'" + requestData.user.id + "'"
-
 						let enable = true
 						if (data.enable !== undefined)
 							enable = !!data.enable
@@ -122,12 +120,11 @@ module.exports = class APIStatic {
 
 						return this.DB.query(`
 							INSERT INTO static (
-								id,    enable,    owner,    title,    description,    content,    image,    url
+								id,    enable,    title,    description,    content,    image,    url
 							) VALUES (
-								${id}, ${enable}, ${owner}, ${title}, ${description}, ${content}, ${image}, ${url}
+								${id}, ${enable}, ${title}, ${description}, ${content}, ${image}, ${url}
 							) ON CONFLICT (id) DO UPDATE SET
 								enable = ${enable},
-								owner = ${owner},
 								title = ${title},
 								description = ${description},
 								content = ${content},

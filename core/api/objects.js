@@ -1,5 +1,5 @@
 /*!
- * API Projects engine
+ * API Objrcts engine
  * Copyright(c) 2016 Wisdman <wisdman@ajaw.it>
  */
 
@@ -116,8 +116,6 @@ module.exports = class APIProject {
 							data: rows[0]
 						}))
 					default:
-						let owner = "'" + requestData.user.id + "'"
-
 						if (data.owner !== undefined)
 							delete data.owner
 
@@ -142,12 +140,11 @@ module.exports = class APIProject {
 
 						return this.DB.query(`
 							INSERT INTO objects (
-								model,      id,    enable,    owner,    title,    data
+								model,      id,    enable,    title,    data
 							) VALUES (
-								'${model}', ${id}, ${enable}, ${owner}, ${title}, ${data}
+								'${model}', ${id}, ${enable}, ${title}, ${data}
 							) ON CONFLICT (id) DO UPDATE SET
 								enable = ${enable},
-								owner = ${owner},
 								title = ${title},
 								data = ${data}
 							RETURNING
@@ -159,7 +156,7 @@ module.exports = class APIProject {
 								) AS owner
 						`).then( rows => ({
 							code: 200,
-							data: Object.assign({}, rows[0].data, rows[0], { data: null })
+							data: Object.assign({}, rows[0].data || {}, rows[0], { data: null })
 						}) )
 				}
 

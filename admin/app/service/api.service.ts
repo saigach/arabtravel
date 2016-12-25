@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core'
 import { Http, Headers, Response, RequestOptions } from '@angular/http'
 import 'rxjs/add/operator/toPromise'
 
-import { Model } from '../../../model/model'
-import { UUID } from '../../../model/uuid'
+import { UUID, Model } from '../../../model/common'
 
 @Injectable()
 export class APIService {
@@ -34,8 +33,8 @@ export class APIService {
 	}
 
 	private static getAPIurl(api:string = '', item: UUID | Model | string = null): string {
-		let id = item instanceof Model && item.id.toString() ||
-				 item instanceof UUID && item.toString() ||
+		let id = item instanceof Model && item.id.uuid ||
+				 item instanceof UUID && item.uuid ||
 				 item && String(item).trim() || ''
 		return `${APIService.apiRoot}/${api}/${id}`.replace(/\/\//,'/')
 	}
@@ -93,6 +92,22 @@ export class APIService {
 						.toPromise()
 						.then(response => response.json() || null)
 						.then(value => value && value || Promise.reject({ message: 'Response is empty' }) )
+						.catch(APIService.handleError)
+	}
+
+	config(data:{} = null): Promise<any> {
+		let api =  APIService.getAPIurl('config')
+		if (!data)
+			return this.http.get(api)
+							.toPromise()
+							.then(response => response.json() || null)
+							.then(value => value && value || {} )
+							.catch(APIService.handleError)
+
+		return this.http.post(api, data && JSON.stringify(data), APIService.options)
+						.toPromise()
+						.then(response => response.json() || null)
+						.then(value => value && value || {} )
 						.catch(APIService.handleError)
 	}
 }

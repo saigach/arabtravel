@@ -33,16 +33,16 @@
 
         <div class="user-orders-container">
 
-            <div class="user-order" *ngFor="let order of orders" >
+            <div class="user-order" *ngFor="let order of orders;let i = index;" >
 
                 <div class="user-order_header uk-clearfix">
-                    <h2 class="h3 user-order_number">#1
+                    <h2 class="h3 user-order_number">#{{i+1}}
 
-                        <button class="uk-button uk-float-right" data-uk-toggle="{target:'#order123', animation:'uk-animation-slide-top'}">View</button>
+                        <button class="uk-button uk-float-right" [attr.data-uk-toggle]="'{target:\'#order' + i + '\', animation:\'uk-animation-slide-top\'}'">View</button>
                     </h2>
 
                 </div>
-            <div class="user-order_content uk-hidden" id="order123">
+            <div class="user-order_content uk-hidden" id="order{{i}}">
 
                 <table class="user-order_table">
                     <thead>

@@ -176,6 +176,7 @@ module.exports = class APIUser {
 								email = ${email},
 								roles = ${roles},
 								title = ${title},
+								phone = ${phone},
 								data = ${data}
 							RETURNING
 								*,

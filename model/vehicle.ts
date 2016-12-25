@@ -1,22 +1,12 @@
 
-import { Model } from './model'
+import { Model } from './common'
 
 export class Vehicle extends Model {
-	static __api: string = 'objects/vehicle'
+	static __api: string = 'object/vehicle'
 
 	edited: boolean = false
 
 	constructor(value: any = {}) {
 		super(value)
-	}
-
-	toObject(): {} {
-		return Object.assign(super.toObject(), {
-
-		})
-	}
-
-	toString(): string {
-		return JSON.stringify(this.toObject())
 	}
 }
