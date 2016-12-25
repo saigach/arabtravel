@@ -18,7 +18,7 @@
                 </label>
                 <input type="email" class="form-control" [(ngModel)]="user.email">
             </div>
-           <div class="col-md-4">
+            <div class="col-md-4">
                 <label for="">
                     Phone
                 </label>
@@ -33,73 +33,80 @@
 
         <div class="user-orders-container">
 
-            <div class="user-order" *ngFor="let order of orders;let i = index;" >
-
-                <div class="user-order_header uk-clearfix">
-                    <h2 class="h3 user-order_number">#{{i+1}}
-
-                        <button class="uk-button uk-float-right" [attr.data-uk-toggle]="'{target:\'#order' + i + '\', animation:\'uk-animation-slide-top\'}'">View</button>
-                    </h2>
+            <div class="user-order_header user-order_top">
+                <div class="user-order_number">Order</div>
+                <div class="user-order_date">Date</div>
+                <div class="user-order_shift">Route
+                </div>
+                <div class="user-order_cost">Price</div>
+                <div class="user-order_status">Status</div>
+                <div class="user-order_action">
 
                 </div>
-            <div class="user-order_content uk-hidden" id="order{{i}}">
+                <div class="user-order_toggle">
+                </div>
+            </div>
 
-                <table class="user-order_table">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Shifts</th>
-                            <th>Passengers</th>
-                            <th>Coast</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{{ order.date | date: 'dd.MM.yyyy'}}</td>
-                            <td>
-                            	<div *ngFor="let shift of order.shifts">
-									<b>{{ shift.trip.pointA.title }} &rarr; {{ shift.trip.pointB.title }}</b> valid <b>{{ shift.date | date: 'dd.MM.yyyy'}}</b>
-                            	</div>
-                            </td>
-                            <td>
-                            	<div *ngFor="let human of order.people">{{ human.title }}</div>
-                            </td>
-                            <td><span class="ticket-price">{{ order.totalCost | currency:'USD':true:'1.2-2' }}</span></td>
-                            <td></td>
-                            <td>
-                                <a href="" class="btn btn-danger btn-ghost ticket-cancel" data-toggle="modal" data-target="#ticket_cancel_modal">
-                                    <i class="glyphicon glyphicon-remove"></i> Cancel
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
+            <div class="user-order" *ngFor="let order of orders;let i = index;">
 
-                </table>
-               <!--  <table class="user-order_total">
-                                    <tbody>
-                                        <tr>
-                                            <th>Tickets price</th>
-                                            <td>$100</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Processing fee</th>
-                                            <td>$3</td>
-                                        </tr>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Total</th>
-                                            <td>$103</td>
-                                        </tr>
-                                    </tfoot>
+                <div class="user-order_header">
+                    <div class="h4 user-order_number">#{{i+1}}</div>
+                    <div class="user-order_date">{{ order.date | date: 'dd.MM.yyyy'}}</div>
+                    <div class="user-order_shift">
+                        <div *ngFor="let shift of order.shifts">
+                            <b>{{ shift.trip.pointA.title }} &rarr; {{ shift.trip.pointB.title }}</b> valid <b>{{ shift.date | date: 'dd.MM.yyyy'}}</b>
+                        </div>
+                    </div>
+                    <div class="h4 user-order_cost">{{ order.totalCost | currency:'USD':true:'1.2-2' }}</div>
+                    <div class="user-order_status"></div>
+                    <div class="user-order_action">
+                        <a href="" class="btn btn-danger btn-ghost ticket-cancel" data-toggle="modal" data-target="#ticket_cancel_modal">
+                            <i class="glyphicon glyphicon-remove"></i> Cancel
+                        </a>
+                    </div>
+                    <div class="user-order_toggle">
+                        <button class="btn btn-primary btn-ghost" [attr.data-uk-toggle]="'{target:\'#order' + i + '\', animation:\'uk-animation-slide-top\'}'">View</button>
+                    </div>
+                </div>
+                <div class="user-order_content uk-hidden" id="order{{i}}">
 
-                                </table> -->
+                    <table class="user-order_table">
+                        <thead>
+                            <tr>
+                                <th>Ticket ID</th>
+                                <th>Passenger name</th>
+                                <th>Passenger info</th>
+                                <th>Price</th>
+                                <th>Print</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let human of order.people">
+                                <td>745634</td>
+                                <td>
+                                    <div>
+                                        <span class="person-name">{{ human.title }}</span> <span class="label label-warning">Primary contact</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="person-detail">
+                                        <div class="detail-line"><span class="lbl">Nationality:</span> <span class="val">Russian</span></div>
+                                        <div class="detail-line"><span class="lbl">Date of Birth:</span> <span class="val">Russian</span></div>
+                                        <div class="detail-line"><span class="lbl">Passport #:</span> <span class="val">858678646</span></div>
+                                        <div class="detail-line"><span class="lbl">Phone:</span> <span class="val">+7 (904) 878-98-12</span></div>
+                                        <div class="detail-line"><span class="lbl">Email:</span> <span class="val"><a href="mailto:vassily.pupkin@gmail.com">vassily.pupkin@gmail.com</a></span></div>
+                                    </div>
+                                </td>
+                                <td><span class="ticket-price">$30</span></td>
+                                <td><a href="">Print ticket</a></td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
             </div>
 
         </div>
-
-    </div>
-
-</div>
