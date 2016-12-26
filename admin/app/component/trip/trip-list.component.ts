@@ -25,7 +25,7 @@ export class TripListComponent implements OnInit {
 	}
 
 	select(item: Trip): void {
-		this.router.navigate(['/trips', item.id.toString()])
+		this.router.navigate(['/trips', item.id.uuid])
 	}
 
 	enable(item: Trip): void {

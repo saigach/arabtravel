@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, Output, Input, EventEmitter }
 
 import { APIService } from '../../service/api.service'
 
-import { Shift } from '../../../../model/shift'
+import { Shift } from '../../../../model/order'
 import { Point } from '../../../../model/point'
 
 @Component({

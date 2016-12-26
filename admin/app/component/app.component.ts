@@ -24,6 +24,6 @@ export class AppComponent {
 	}
 
 	select(): void {
-		this.router.navigate(['/users', this.self.id.toString()])
+		this.router.navigate(['/users', this.self.id.uuid])
 	}
 }

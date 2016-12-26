@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core'
 import { Http, Headers, Response, RequestOptions } from '@angular/http'
 import 'rxjs/add/operator/toPromise'
 
-import { Model } from '../../model/model'
-import { UUID } from '../../model/uuid'
+import { UUID, Model } from '../../model/common'
 import { Order } from '../../model/order'
 import { User } from '../../model/user'
 

@@ -7,6 +7,7 @@ import editorOptions from '../../editor.options'
 import { APIService } from '../../service/api.service'
 import { FileService } from '../../service/file.service'
 
+import { File } from '../../../../model/common'
 import { Static } from '../../../../model/static'
 
 @Component({
@@ -24,12 +25,10 @@ export class StaticItemComponent implements OnInit {
 
 	submitted: boolean = false
 
-	get image(): string {
-		return this.item.image || '/placeholder_200x100.svg'
-	}
-
 	get valid(): boolean {
-		return this.item.title.length > 0 && this.item.url.length > 0 && /[a-z0-9\-]+/.test(this.item.url)
+		return this.item.title.length > 0
+			&& this.item.url.length > 0
+			&& /[a-z0-9\-]+/.test(this.item.url)
 	}
 
 	constructor(private route: ActivatedRoute,
@@ -57,7 +56,8 @@ export class StaticItemComponent implements OnInit {
 
 	setImage(fileSelector: HTMLInputElement): void {
 		if (fileSelector.files.length) {
-			this.fileService.uploadImage(fileSelector.files[0]).then(response => this.item.image = response.link || '')
+			this.fileService.uploadImage(fileSelector.files[0])
+							.then(response => this.item.image = response.link && new File(response) || null)
 			fileSelector.value = null
 		}
 	}

@@ -25,7 +25,7 @@ export class OrderListComponent implements OnInit {
 	}
 
 	select(item: Order): void {
-		this.router.navigate(['/orders', item.id.toString()])
+		this.router.navigate(['/orders', item.id.uuid])
 	}
 
 	enable(item: Order): void {

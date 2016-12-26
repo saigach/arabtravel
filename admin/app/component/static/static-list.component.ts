@@ -25,7 +25,7 @@ export class StaticListComponent implements OnInit {
 	}
 
 	select(item: Static): void {
-		this.router.navigate(['/static', item.id.toString()])
+		this.router.navigate(['/static', item.id.uuid])
 	}
 
 	enable(item: Static): void {

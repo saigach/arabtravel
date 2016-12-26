@@ -5,7 +5,8 @@ import { Location } from '@angular/common'
 import { APIService } from '../../service/api.service'
 import { FileService } from '../../service/file.service'
 
-import { User, UserRoles } from '../../../../model/user'
+import { File } from '../../../../model/common'
+import { User, Role } from '../../../../model/user'
 
 @Component({
 	moduleId: module.id,
@@ -14,15 +15,11 @@ import { User, UserRoles } from '../../../../model/user'
 })
 export class UserItemComponent implements OnInit {
 
-	userRoles = UserRoles
+	Roles = Role.List
 
 	item: User = new User()
 
 	submitted: boolean = false
-
-	get image(): string {
-		return this.item.image || '/placeholder_200x100.svg'
-	}
 
 	get valid(): boolean {
 		return this.item.title.length > 0 && this.item.email.length > 0
@@ -54,11 +51,11 @@ export class UserItemComponent implements OnInit {
 		this.location.back()
 	}
 
-	isRole(role): boolean {
+	isRole(role: Role): boolean {
 		return !!this.item.roles.find(value => value.id === role.id)
 	}
 
-	toggleRole(role): void {
+	toggleRole(role: Role): void {
 		if (this.isRole(role))
 			this.item.roles = this.item.roles.filter(value => value.id !== role.id)
 		else
@@ -67,7 +64,8 @@ export class UserItemComponent implements OnInit {
 
 	setImage(fileSelector: HTMLInputElement): void {
 		if (fileSelector.files.length) {
-			this.fileService.uploadImage(fileSelector.files[0]).then(response => this.item.image = response.link || '')
+			this.fileService.uploadImage(fileSelector.files[0])
+							.then(response => this.item.image = response.link && new File(response) || null)
 			fileSelector.value = null
 		}
 	}
@@ -83,7 +81,7 @@ export class UserItemComponent implements OnInit {
 	}
 
 	get validPassword(): boolean {
-		return this.password1 === this.password2 && this.password1.length > 7
+		return this.password1 === this.password2 && this.password1.length >= 7
 	}
 
 	setPassword(): void {

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, Output, Input, EventEmitter } from '@angular/core'
 
+import { str2Date } from '../../../../model/common'
 import { Human, Nationality } from '../../../../model/human'
 
 @Component({
@@ -9,20 +10,20 @@ import { Human, Nationality } from '../../../../model/human'
 })
 export class OrderHumanComponent implements OnInit {
 
-	nationality = Nationality
+	nationalityList = Nationality.List
 
-	__human: Human = new Human()
+	item: Human = new Human()
 
 	@Output() humanChange = new EventEmitter()
 
 	@Input()
 	get human() {
-		return this.__human
+		return this.item
 	}
 
 	set human(value: Human) {
-		this.__human = value
-		this.humanChange.emit(this.__human)
+		this.item = value
+		this.humanChange.emit(this.item)
 	}
 
 	@ViewChild('dobNode') dobRef: ElementRef
@@ -31,23 +32,13 @@ export class OrderHumanComponent implements OnInit {
 	constructor() {}
 
 	ngOnInit(): void {
-		const newDate = value => {
-			let [day, month, year] = value.split('.')
-			let date = new Date(year, month, day)
-
-			if ( !Number.isNaN( date.getTime() ) )
-				return date
-
-			return null
-		}
-
 		this.dobDatepicker = UIkit.datepicker(this.dobRef.nativeElement, {
 			weekstart: 1,
 			format:'DD.MM.YYYY'
 		})
 
 		this.dobDatepicker.on('hide.uk.datepicker', event =>
-			this.human.dob = newDate(event.target.value)
+			this.item.dob = str2Date(event.target.value)
 		)
 	}
 }

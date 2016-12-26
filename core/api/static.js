@@ -31,10 +31,8 @@ module.exports = class APIStatic {
 							static.id,
 							static.enable,
 							static.title,
-							static.url,
-							json_build_object('id',users.id, 'title',users.title) AS owner
+							static.url
 						FROM static
-						LEFT JOIN users ON static.owner = users.id
 					`).then(rows => ({
 						code: 200,
 						data: rows
@@ -42,10 +40,8 @@ module.exports = class APIStatic {
 
 				return this.DB.query(`
 						SELECT
-							static.*,
-							json_build_object('id',users.id, 'title',users.title) AS owner
+							static.*
 						FROM static
-						LEFT JOIN users ON static.owner = users.id
 						WHERE static.id = '${id}'
 				`).then(rows => {
 					if (rows.length !== 1)
@@ -108,10 +104,10 @@ module.exports = class APIStatic {
 							content = String(data.content)
 						content = escapeStr(content)
 
-						let image = ''
+						let image = null
 						if (data.image !== undefined)
-							image = String(data.image).trim()
-						image = escapeStr(image)
+							image = data.image
+						image = escapeStr(JSON.stringify(image))
 
 						let url = ''
 						if (data.url !== undefined)
@@ -131,12 +127,7 @@ module.exports = class APIStatic {
 								image = ${image},
 								url = ${url}
 							RETURNING
-								static.*,
-								(
-									SELECT json_build_object('id',id, 'title',title)
-									FROM users
-									WHERE static.owner = users.id
-								) AS owner
+								static.*
 						`).then( rows => ({
 							code: 200,
 							data: rows[0]

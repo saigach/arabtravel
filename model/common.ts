@@ -111,6 +111,14 @@ export function newDate(value = null) {
 	return date
 }
 
+export function str2Date(value = null) {
+	if (!value)
+		return newDate()
+
+	let [day, month, year] = value.split('.')
+	return newDate(new Date(year, month, day))
+}
+
 export class Model {
 	static __api: string = null
 	static __primaryFields = ['id', 'enable', 'title']
@@ -135,8 +143,8 @@ export class Model {
 		return {
 			id: this.id.uuid,
 			enable: this.enable,
-			title: this.title || '',
-			description: this.description || ''
+			title: this.title,
+			description: this.description
 		}
 	}
 
@@ -145,18 +153,23 @@ export class Model {
 	}
 }
 
-export class File extends Model {
-	src: string
+export class File {
+
+	enable: boolean
+	title: string
+	link: string
 
 	constructor(value: any = {}) {
-		super(value)
-
-		this.src = String(value.src || '')
+		this.enable = value.enable === undefined ? true : Boolean(value.enable)
+		this.title = String(value.title || '')
+		this.link = String(value.link || '')
 	}
 
 	toObject(): {} {
-		return Object.assign({}, super.toObject(), {
-			src: this.src
-		})
+		return {
+			enable: this.enable,
+			title: this.title,
+			link: this.link
+		}
 	}
 }

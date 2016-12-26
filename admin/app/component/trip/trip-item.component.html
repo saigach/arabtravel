@@ -11,6 +11,10 @@
 				<span>Enable</span>
 				<input class="uk-hidden" type="checkbox" [(ngModel)]="item.enable">
 			</label>
+			<label class="uk-button admin-button uk-margin-left" [class.uk-active]="item.package">
+				<span>Package</span>
+				<input class="uk-hidden" type="checkbox" [(ngModel)]="item.package">
+			</label>
 		</div>
 
 		<label class="uk-width-1-1 uk-margin-top uk-form-label">Title</label>
@@ -46,14 +50,78 @@
 			</div>
 		</div>
 
-		<price-list class="uk-width-1-1 uk-margin-top" [(items)]="item.prices"></price-list>
+		<div class="uk-width-1-1 uk-form-controls uk-margin-top" [class.uk-hidden]="!item.package">
+			<h3 class="tm-article-subtitle">Package description</h3>
+			<div class="uk-form-controls">
+				<div [froalaEditor]="contentEditorOptions" [(froalaModel)]="item.content"></div>
+			</div>
+		</div>
+
+		<div class="uk-width-1-1 uk-grid uk-margin-top" [class.uk-hidden]="!item.package">
+			<div class="uk-width-8-10">
+				<h3 class="tm-article-subtitle">Hotels</h3>
+			</div>
+			<div class="uk-width-2-10">
+				<a class="uk-align-right admin-cursor-pointer" (click)="addHotel(); $event.stopPropagation()">
+					<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
+					<u>Add hotel</u>
+				</a>
+			</div>
+		</div>
+		<div class="uk-width-1-1 uk-margin-top" [class.uk-hidden]="!item.package">
+			<div  *ngFor="let hotel of item.hotels; let i = index;" class="uk-panel uk-panel-box uk-width-1-1">
+				<div class="uk-panel-badge uk-badge uk-badge-danger admin-cursor-pointer" (click)="deleteHotel(hotel); $event.stopPropagation()"><i class="uk-icon-trash"></i></div>
+				<div class="uk-panel-title uk-form-controls">
+					<select class="uk-width-4-5" [(ngModel)]="item.hotels[i]">
+						<option *ngFor="let hotelItem of hotels | listOrderBy : ['title']" [ngValue]="hotelItem">{{ hotelItem.title }}</option>
+					</select>
+				</div>
+			</div>
+		</div>
+
+		<div class="uk-width-1-1 uk-margin-top" [class.uk-hidden]="!item.package">
+			<h3 class="tm-article-subtitle">Images</h3>
+			<ul class="uk-thumbnav uk-grid-width-1-5">
+				<li *ngFor="let image of item.images">
+					<figure class="uk-overlay uk-overlay-hover">
+						<img [src]="image.link">
+						<figcaption class="uk-overlay-panel uk-flex uk-flex-center uk-flex-middle uk-text-center">
+							<button class="uk-button uk-button-mini" (click)="deleteImage(image); $event.stopPropagation()"><i class="uk-icon uk-icon-remove"></i></button>
+						</figcaption>
+					</figure>
+				</li>
+				<li class="uk-form-file">
+					<img class="uk-thumbnail admin-cursor-pointer" src="/placeholder_200x100.svg">
+					<input type="file" accept="image/*" (change)="addImage($event.target)">
+				</li>
+			</ul>
+		</div>
+
+		<div class="uk-width-1-1 uk-grid uk-margin-top">
+			<div class="uk-width-8-10">
+				<h3 class="tm-article-subtitle">Prices</h3>
+			</div>
+			<div class="uk-width-2-10">
+				<a class="uk-align-right admin-cursor-pointer" (click)="addPrice(); $event.stopPropagation()">
+					<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
+					<u>Add price</u>
+				</a>
+			</div>
+		</div>
+		<div class="uk-width-1-1 uk-margin-top">
+			<div  *ngFor="let price of item.prices; let i = index;" class="uk-panel uk-panel-box uk-width-1-1">
+				<div class="uk-panel-badge uk-badge uk-badge-danger admin-cursor-pointer" (click)="deletePrice(price); $event.stopPropagation()"><i class="uk-icon-trash"></i></div>
+				<h3 class="uk-panel-title">Price from {{ price.startDate | date: 'dd.MM.yyyy' }} to {{ price.endDate | date: 'dd.MM.yyyy' }}</h3>
+				<trip-price [(price)]="item.prices[i]"></trip-price>
+			</div>
+		</div>
 
 		<div class="uk-width-1-1 uk-margin-top">
 			<button type="submit" class="uk-button uk-button-success uk-align-right" [disabled]="!valid" (click)="submit()"><i class="uk-icon-floppy-o"></i>&emsp;Submit</button>
 		</div>
 
 		<!-- <div class="uk-width-1-1 uk-margin-top">
-			<p>Form value: {{ item | json }}</p>
+			<p>DEBUG: {{ item | json }}</p>
 		</div> -->
 	</div>
 </div>

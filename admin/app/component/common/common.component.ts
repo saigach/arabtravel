@@ -6,15 +6,16 @@ import { APIService } from '../../service/api.service'
 const defaultConfig = {
 	exchangeRate: 1,
 	processingFee: 10,
-	sessionDuration: 300000
+	sessionDuration: 300000,
+	egyptianMarkUp: 0
 }
 
 @Component({
 	moduleId: module.id,
 	selector: 'common-item',
-	templateUrl: '/app/component/common/common-item.component.html'
+	templateUrl: '/app/component/common/common.component.html'
 })
-export class HotelItemComponent implements OnInit {
+export class CommonComponent implements OnInit {
 
 	item: {} = {}
 
@@ -28,7 +29,10 @@ export class HotelItemComponent implements OnInit {
 	}
 
 	update(key: string): void {
+		if (!(key in this.item))
+			return
 
+		this.apiService.config({ [key]: this.item[key] }).then((response: {}) => this.item = Object.assign({}, this.item, response))
 	}
 }
 

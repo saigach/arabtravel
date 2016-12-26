@@ -7,7 +7,7 @@
 
 const translite = require('../translite.js')
 
-const escapeStr = str => "'" + String(str).replace(/\\/g, "\\\\").replace(/'/g, "\\'") + "'"
+const escapeStr = str => "'" + String(str).replace(/'/g, "\\'") + "'"
 
 module.exports = class APIProject {
 	constructor(DB) {

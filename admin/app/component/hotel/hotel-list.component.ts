@@ -25,7 +25,7 @@ export class HotelListComponent implements OnInit {
 	}
 
 	select(item: Hotel): void {
-		this.router.navigate(['/hotels', item.id.toString()])
+		this.router.navigate(['/hotels', item.id.uuid])
 	}
 
 	enable(item: Hotel): void {

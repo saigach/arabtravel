@@ -5,17 +5,20 @@ import { Vehicle } from './vehicle'
 import { Hotel } from './hotel'
 import { AgeGroup } from './human'
 
-class VehicleCost {
+export class VehicleCost {
+	enable: boolean
 	vehicle: Vehicle
 	cost: number
 
 	constructor(value: any = {}) {
+		this.enable = value.enable === undefined ? true : Boolean(value.enable)
 		this.vehicle = value.vehicle ? ( value.vehicle instanceof Vehicle ? value.vehicle : new Vehicle(value.vehicle) ) : null
 		this.cost = Math.max( 0, Number.parseFloat(value.cost || 0) || 0 )
 	}
 
 	toObject(): {} {
 		return {
+			enable: this.enable,
 			vehicle: this.vehicle.toObject(),
 			cost: this.cost
 		}
@@ -62,17 +65,21 @@ export class Refund {
 	}
 }
 
-export class Price extends Model {
+export class Price {
+
+	enable: boolean
 
 	startDate: Date
 	endDate: Date
 
 	costs: Cost[] = AgeGroup.List.reduce( (prev: Cost[], ageGroup: AgeGroup) => prev.concat(new Cost(ageGroup)), [] )
 
+	vehicles: VehicleCost[] = []
+
 	refunds: Refund[]
 
 	constructor(value: any = {}) {
-		super(value)
+		this.enable = value.enable === undefined ? true : Boolean(value.enable)
 
 		this.startDate = newDate(value.startDate || null)
 		this.endDate = value.endDate && newDate(value.endDate) || (() => {
@@ -91,6 +98,13 @@ export class Price extends Model {
 				costItem.cost = Math.max( 0, Number.parseFloat(costData.cost || 0) || 0 )
 			} )
 
+		this.vehicles = value.vehicles instanceof Array ?
+			value.vehicles.reduce(
+				( prev: VehicleCost[] , value: any) =>
+					value ? prev.concat( new VehicleCost(value)) : prev,
+				[]
+			) : []
+
 		this.refunds = value.refund instanceof Array ?
 			value.refund.reduce(
 				( prev: Refund[] , value:any ) => prev.concat(new Refund(value)),
@@ -99,17 +113,19 @@ export class Price extends Model {
 	}
 
 	toObject(): {} {
-		return Object.assign(super.toObject(), {
+		return {
+			enable: this.enable,
 			startDate: this.startDate,
 			endDate: this.endDate,
 			costs: this.costs.reduce( (prev: {}[], value: Cost) => prev.concat(value.toObject()), []),
+			vehicles: this.vehicles.reduce( (prev: {}[], value: VehicleCost) => prev.concat(value.toObject()), []),
 			refunds: this.refunds.reduce( (prev: {}[], value: Refund) => prev.concat(value.toObject()), [])
-		})
+		}
 	}
 }
 
 export class Trip extends Model {
-	static __api: string = 'object/trip'
+	static __api: string = 'objects/trip'
 	static __primaryFields = Model.__primaryFields.concat(['package', 'pointA', 'pointB'])
 
 	package: boolean
@@ -119,8 +135,6 @@ export class Trip extends Model {
 	pointA: Point
 	pointB: Point
 
-	vehicles: VehicleCost[] = []
-
 	hotels: Hotel[] = []
 	images: File[] = []
 
@@ -129,19 +143,12 @@ export class Trip extends Model {
 	constructor(value: any = {}) {
 		super(value)
 
-		this.package = value.package === undefined ? true : Boolean(value.package)
+		this.package = !!value.package
 
 		this.content = String(value.content || '')
 
 		this.pointA = value.pointA ? ( value.pointA instanceof Point ? value.pointA : new Point(value.pointA) ) : null
 		this.pointB = value.pointB ? ( value.pointB instanceof Point ? value.pointB : new Point(value.pointB) ) : null
-
-		this.vehicles = value.vehicles instanceof Array ?
-			value.vehicles.reduce(
-				( prev: VehicleCost[] , value: any) =>
-					value ? prev.concat( new VehicleCost(value)) : prev,
-				[]
-			) : []
 
 		this.hotels = value.hotels instanceof Array ?
 			value.hotels.reduce(
@@ -178,7 +185,6 @@ export class Trip extends Model {
 			content: this.content,
 			pointA: this.pointA.toObject(),
 			pointB: this.pointB.toObject(),
-			vehicles: this.vehicles.reduce( (prev: {}[], value: VehicleCost) => prev.concat(value.toObject()), []),
 			hotels: this.hotels.reduce( (prev: {}[], value: Hotel) => prev.concat(value.toObject()), []),
 			prices: this.prices.reduce( (prev: {}[], value: Price) => prev.concat(value.toObject()), []),
 			images: this.images.reduce( (prev: {}[], value: File) => prev.concat(value.toObject()), [])

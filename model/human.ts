@@ -1,5 +1,4 @@
 import { newDate, Model, File } from './common'
-import { User } from './user'
 
 export class Nationality {
 	static List:Nationality[] = [
@@ -236,11 +235,6 @@ export class AgeGroup {
 }
 
 export class Human extends Model {
-	static __api: string = 'object/human'
-	static __primaryFields = Model.__primaryFields.concat(['owner', 'nationality', 'dob', 'email', 'phone'])
-
-	owner: User = null
-
 	nationality: Nationality
 	dob: Date
 
@@ -249,7 +243,7 @@ export class Human extends Model {
 
 	passport: string
 
-	files: File[]
+	tickets: File[]
 
 	getAge(now: Date = newDate()): number {
 		if (!this.dob)
@@ -286,9 +280,6 @@ export class Human extends Model {
 	constructor(value: any = {}) {
 		super(value)
 
-		if (value.owner && value.owner.id)
-			this.owner = new User(value.owner)
-
 		this.nationality = Nationality.getNationality(value.nationality || null)
 
 		this.dob = value.dob ? newDate(value.dob) : null
@@ -298,8 +289,8 @@ export class Human extends Model {
 
 		this.passport = String(value.passport || '')
 
-		this.files = value.files instanceof Array ?
-			value.files.reduce(
+		this.tickets = value.tickets instanceof Array ?
+			value.tickets.reduce(
 				( prev: File[] , value:any ) =>
 					value ? prev.concat(value instanceof File ? value : new File(value)) : prev,
 				[]
@@ -308,13 +299,12 @@ export class Human extends Model {
 
 	toObject(): {} {
 		return Object.assign({}, super.toObject(), {
-			owner: this.owner && this.owner.id.uuid || null,
 			nationality: this.nationality.id,
 			dob: this.dob,
 			phone: this.phone,
 			email: this.email,
 			passport: this.passport,
-			files: this.files.reduce( (prev: {}[], value: File) => prev.concat(value.toObject()), [])
+			tickets: this.tickets.reduce( (prev: {}[], value: File) => prev.concat(value.toObject()), [])
 		})
 	}
 }

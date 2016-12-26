@@ -13,7 +13,7 @@
 					<input  class="uk-hidden" type="checkbox" [(ngModel)]="item.enable">
 				</label>
 				<div class="uk-button-group uk-margin-left">
-					<button *ngFor="let role of userRoles" class="uk-button admin-button" [class.uk-active]="isRole(role)" (click)="toggleRole(role); $event.preventDefault()">{{ role.title }}</button>
+					<button *ngFor="let role of Roles" class="uk-button admin-button" [class.uk-active]="isRole(role)" (click)="toggleRole(role); $event.preventDefault()">{{ role.title }}</button>
 				</div>
 				<button class="uk-button uk-margin-large-left" (click)="showPasswordDialog($event)">Change password</button>
 			</div>
@@ -38,9 +38,9 @@
 				</div>
 			</div>
 			<div class="uk-width-3-10 uk-margin-top">
-				<label class="uk-form-label uk-width-1-1">Avatar</label>
+				<label class="uk-form-label uk-width-1-1">Avatar<i class="uk-icon-times uk-align-right admin-cursor-pointer" (click)="item.image = null"></i></label>
 				<div class="uk-form-file">
-					<img class="uk-thumbnail admin-cursor-pointer" [src]="image">
+					<img class="uk-thumbnail admin-cursor-pointer" [src]="item.image && item.image.link || '/placeholder_200x100.svg'">
 					<input type="file" accept="image/*" (change)="setImage($event.target)">
 				</div>
 			</div>
@@ -48,7 +48,7 @@
 				<button type="submit" class="uk-button uk-button-success uk-align-right" [disabled]="!valid" (click)="submit()"><i class="uk-icon-floppy-o"></i>&emsp;Submit</button>
 			</div>
 			<!-- <div class="uk-width-1-1 uk-margin-top">
-				<p>Form value: {{ item | json }}</p>
+				<p>DEBUG: {{ item | json }}</p>
 			</div> -->
 		</div>
 	</div>

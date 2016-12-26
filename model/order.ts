@@ -5,7 +5,7 @@ import { Trip, Price } from './trip'
 import { Human } from './human'
 import { Hotel, Room } from './hotel'
 
-class Shift {
+export class Shift {
 
 	date: Date
 	trip: Trip
@@ -22,23 +22,6 @@ class Shift {
 			date: this.date,
 			trip: this.trip && this.trip.toObject() || null,
 			price: this.price && this.price.toObject() || null
-		}
-	}
-}
-
-class HotelData {
-	hotel: Hotel
-	room: Room
-
-	constructor(value: any = {}) {
-		this.hotel = value.hotel ? (value.hotel instanceof Hotel ? value.hotel : new Hotel(value.hotel) ) : null
-		this.room = value.room ? (value.room instanceof Room ? value.room : new Room(value.room) ) : null
-	}
-
-	toObject(): {} {
-		return {
-			hotel: this.hotel && this.hotel.toObject() || null,
-			room: this.room && this.room.toObject() || null
 		}
 	}
 }
@@ -90,7 +73,7 @@ export class OrderStatus {
 	}
 }
 
-class Card {
+export class Card {
 	number: string
 	cardholder: string
 	validMonth: number
@@ -123,8 +106,10 @@ class Card {
 }
 
 export class Order extends Model {
-	static __api: string = 'object/order'
+	static __api: string = 'objects/order'
 	static __primaryFields = Model.__primaryFields.concat(['owner', 'date', 'status'])
+
+	package: boolean
 
 	owner: User = null
 
@@ -133,18 +118,18 @@ export class Order extends Model {
 	shifts: Shift[]
 	people: Human[]
 
-	hotel: HotelData
+	hotel: Hotel
+	room: Room
 
 	paymentType: PaymentType
-
 	card: Card
 
 	status: OrderStatus
 
-	tickets: File[]
-
 	constructor(value: any = {}) {
 		super(value)
+
+		this.package = !!value.package
 
 		if (value.owner && value.owner.id)
 			this.owner = new User(value.owner)
@@ -168,24 +153,19 @@ export class Order extends Model {
 				[]
 			) : []
 
-		this.hotel = value.hotel ? new HotelData(value.hotel) : null
+		this.hotel = value.hotel ? (value.hotel instanceof Hotel ? value.hotel : new Hotel(value.hotel) ) : null
+		this.room = value.room ? (value.room instanceof Room ? value.room : new Room(value.room) ) : null
 
 		this.paymentType = PaymentType.getPaymentType(value.paymentType || null)
 
 		this.card = new Card(value.card || {})
 
 		this.status = OrderStatus.getOrderStatus(value.status || null)
-
-		this.tickets = value.tickets instanceof Array ?
-			value.tickets.reduce(
-				( prev: File[] , value:any ) =>
-					value ? prev.concat(value instanceof File ? value : new File(value)) : prev,
-				[]
-			) : []
 	}
 
 	toObject(): {} {
 		return Object.assign({}, super.toObject(), {
+			package: this.package,
 			owner: this.owner && this.owner.id.uuid || null,
 			date: this.date,
 			shifts: this.shifts.reduce( (prev: {}[], value: Shift) => prev.concat(value.toObject()), []),
@@ -193,8 +173,7 @@ export class Order extends Model {
 			hotel: this.hotel && this.hotel.toObject() || null,
 			paymentType: this.paymentType.id,
 			card: this.card.toObject(),
-			status: this.status.id,
-			tickets: this.tickets.reduce( (prev: {}[], value: File) => prev.concat(value.toObject()), [])
+			status: this.status.id
 		})
 	}
 

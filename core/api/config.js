@@ -5,7 +5,7 @@
 
 'use strict'
 
-const escapeStr = str => "'" + String(str).replace(/\\/g, "\\\\").replace(/'/g, "\\'") + "'"
+const escapeStr = str => "'" + String(str).replace(/'/g, "\\'") + "'"
 
 module.exports = class APIStatic {
 	constructor(DB) {
@@ -40,22 +40,22 @@ module.exports = class APIStatic {
 
 				let keys = Object.keys(data).filter( key => /^[A-Za-z][0-9A-Za-z]*$/.test(key))
 
-				Promise.all( keys.reduce( (prev, key) => {
+				return Promise.all( keys.reduce( (prev, key) => {
 					let value = escapeStr(JSON.stringify(data[key]))
-					prev.concat(this.DB.query(`
+					return prev.concat(this.DB.query(`
 						INSERT INTO config (
 							key,      value
 						) VALUES (
 							'${key}', ${value}
-						) ON CONFLICT (id) DO UPDATE SET
+						) ON CONFLICT (key) DO UPDATE SET
 							value = ${value}
 						RETURNING
 							key,
 							value
-					`))
-				}, []) ).then( rows => ({
+					`).then( rows => rows.length > 0 ? { [rows[0].key]: rows[0].value } : {} ) )
+				}, []) ).then( objs => ({
 					code: 200,
-					data: rows.reduce( (prev, row) => Object.assign(prev, { [row.key]: row.value } ), {} )
+					data: Object.assign.apply(undefined, objs)
 				}) )
 		}
 	}

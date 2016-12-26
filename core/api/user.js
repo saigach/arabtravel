@@ -168,7 +168,7 @@ module.exports = class APIUser {
 
 						return this.DB.query(`
 							INSERT INTO users (
-								id,    enable,    email,    roles,    title,    phone     data
+								id,    enable,    email,    roles,    title,    phone,    data
 							) VALUES (
 								${id}, ${enable}, ${email}, ${roles}, ${title}, ${phone}, ${data}
 							) ON CONFLICT (id) DO UPDATE SET

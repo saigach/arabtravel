@@ -1,0 +1,60 @@
+<div class="uk-grid">
+	<div class="uk-width-1-1 uk-form uk-form-stacked">
+		<label class="uk-button admin-button" [class.uk-active]="item.enable">
+			<span>Enable</span>
+			<input class="uk-hidden" type="checkbox" [(ngModel)]="item.enable">
+		</label>
+		<label class="uk-margin-left">From:</label>
+		<input #startDate class="uk-form-width-small uk-margin-right" type="text" [value]="item.startDate | date: 'dd.MM.yyyy'">
+		<label>To:</label>
+		<input #endDate class="uk-form-width-small uk-margin-right" type="text" [value]="item.endDate | date: 'dd.MM.yyyy'">
+	</div>
+	<div class="uk-width-1-1 uk-margin-top">
+		<h4 class="tm-article-subtitle">Costs</h4>
+	</div>
+	<div class="uk-width-1-1 uk-form uk-grid">
+		<div *ngFor="let cost of item.costs" class="uk-width-1-5">
+			<label class="uk-form-label uk-width-1-1">{{ cost.ageGroup.title }}, $</label>
+			<div class="uk-form-controls">
+				<input class="uk-width-1-1" type="number" min="0" [(ngModel)]="cost.cost">
+			</div>
+		</div>
+	</div>
+	<div class="uk-width-1-1 uk-margin-top">
+		<h4 class="tm-article-subtitle">Vehicles</h4>
+	</div>
+	<div class="uk-width-1-1 uk-form uk-grid">
+		<div *ngFor="let vehicleCost of item.vehicles" class="uk-width-1-5">
+			<label class="uk-form-label uk-width-1-1">{{ vehicleCost.vehicle.title }}, $</label>
+			<div class="uk-form-controls">
+				<input class="uk-width-1-1" type="number" min="0" [(ngModel)]="vehicleCost.cost">
+			</div>
+		</div>
+	</div>
+	<div class="uk-width-1-1 uk-grid uk-margin-top">
+		<div class="uk-width-8-10">
+			<h4 class="tm-article-subtitle">Refunds</h4>
+		</div>
+		<div class="uk-width-2-10">
+			<a class="uk-align-right admin-cursor-pointer" (click)="addRefund(); $event.stopPropagation()">
+				<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
+				<u>Add refund</u>
+			</a>
+		</div>
+	</div>
+	<div class="uk-width-1-1">
+		<ul class="uk-list uk-list-space">
+			<li *ngFor="let refund of item.refunds" class="uk-form uk-form-stacked">
+				<label>Months:</label>
+				<input class="uk-form-width-small uk-margin-right" type="number" min="0" [(ngModel)]="refund.months">
+				<label>Days:</label>
+				<input class="uk-form-width-small uk-margin-right" type="number" min="0" [(ngModel)]="refund.days">
+				<label>Percent:</label>
+				<input class="uk-form-width-small uk-margin-right" type="number" min="0" [(ngModel)]="refund.percent">
+				<label>Sum:</label>
+				<input class="uk-form-width-small uk-margin-right" type="number" min="0" [(ngModel)]="refund.sum">
+				<i class="uk-icon-trash admin-cursor-pointer" (click)="deleteRefund(refund); $event.stopPropagation()"></i>
+			</li>
+		</ul>
+	</div>
+</div>

@@ -2,7 +2,7 @@
 import { Model } from './common'
 
 export class Vehicle extends Model {
-	static __api: string = 'object/vehicle'
+	static __api: string = 'objects/vehicle'
 
 	edited: boolean = false
 

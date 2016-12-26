@@ -12,10 +12,17 @@
 					<span>Enable</span>
 					<input  class="uk-hidden" type="checkbox" [(ngModel)]="item.enable">
 				</label>
-				<label class="uk-button admin-button uk-margin-left" [class.uk-active]="item.successful">
-					<span>Successful</span>
-					<input  class="uk-hidden" type="checkbox" [(ngModel)]="item.successful">
+				<label class="uk-button admin-button uk-margin-left" [class.uk-active]="item.package">
+					<span>Package</span>
+					<input class="uk-hidden" type="checkbox" [(ngModel)]="item.package">
 				</label>
+				<div class="uk-button uk-margin-left uk-form-select" data-uk-form-select>
+					<span>Status</span>
+					<i class="uk-icon-caret-down"></i>
+					<select name="type" [(ngModel)]="item.status">
+						<option *ngFor="let statusItem of statusList" [ngValue]="statusItem">{{ statusItem.title }}</option>
+					</select>
+				</div>
 			</div>
 			<div class="uk-width-7-10">
 				<div class="uk-width-1-1 uk-margin-top">
@@ -26,10 +33,8 @@
 				</div>
 			</div>
 			<div class="uk-width-3-10 uk-margin-top">
-				<label class="uk-form-label uk-width-1-1">Date</label>
-				<div class="uk-form-controls">
-					<input class="uk-width-1-1" type="text" placeholder="Date" [value]="item.date | date: 'dd.MM.yyyy'">
-				</div>
+				<label class="uk-form-label uk-width-1-1">Date, time</label>
+				<div class="uk-form-controls">{{item.date | date: 'dd.MM.yyyy HH:mm:ss' }}</div>
 			</div>
 			<div class="uk-width-7-10 uk-margin-top">
 				<label class="uk-form-label uk-width-1-1">Description</label>
@@ -43,51 +48,60 @@
 					<a [attr.href]="'/users/' + item.owner.id"  target="_blank">{{item.owner.title}}</a>
 				</div>
 			</div>
-			<div class="uk-width-2-10 uk-margin-top">
-				<label class="uk-form-label uk-width-1-1">Payment type</label>
-				<div class="uk-form-controls">
-					<select [(ngModel)]="item.paymentType">
-						<option [ngValue]="'card'">Card</option>
-						<option [ngValue]="'bank'">Bank transfer</option>
-						<option [ngValue]="'wu'">Western Union</option>
-					</select>
+
+			<div class="uk-width-1-1 uk-grid uk-margin-top">
+				<div class="uk-width-1-10">
+					<h3 class="tm-article-subtitle">Payment</h3>
+				</div>
+				<div class="uk-width-9-10">
+					<div class="uk-button uk-margin-left uk-form-select" data-uk-form-select>
+						<span>Type</span>
+						<i class="uk-icon-caret-down"></i>
+						<select name="type" [(ngModel)]="item.paymentType">
+							<option *ngFor="let paymentTypeItem of paymentTypeList" [ngValue]="paymentTypeItem">{{ paymentTypeItem.title }}</option>
+						</select>
+					</div>
 				</div>
 			</div>
-			<div class="uk-width-2-10 uk-margin-top" *ngIf="item.paymentType === 'card'">
-				<label class="uk-form-label uk-width-1-1">Card number</label>
-				<div class="uk-form-controls">
-					<input class="uk-width-1-1" type="text" placeholder="Card number" [(ngModel)]="item.paymentCard.number">
+
+			<div class="uk-width-1-1  uk-grid uk-margin-top" [class.uk-hidden]="item.paymentType.id !== 'card'">
+				<div class="uk-width-2-10">
+					<label class="uk-form-label uk-width-1-1">Card number</label>
+					<div class="uk-form-controls">
+						<input class="uk-width-1-1" type="text" placeholder="Card number" [(ngModel)]="item.card.number">
+					</div>
+				</div>
+				<div class="uk-width-3-10">
+					<label class="uk-form-label uk-width-1-1">Cardholder</label>
+					<div class="uk-form-controls">
+						<input class="uk-width-1-1" type="text" placeholder="Cardholder" [(ngModel)]="item.card.cardholder">
+					</div>
+				</div>
+				<div class="uk-width-2-10">
+					<label class="uk-form-label uk-width-1-1">Month/Year</label>
+					<div class="uk-form-controls">
+						<select [(ngModel)]="item.card.validMonth">
+							<option *ngFor="let month of months" [ngValue]="month">{{month}}</option>
+						</select>
+						<select [(ngModel)]="item.card.validYear">
+							<option *ngFor="let year of years" [ngValue]="year">{{year}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="uk-width-1-10">
+					<label class="uk-form-label uk-width-1-1">CVV</label>
+					<div class="uk-form-controls">
+						<input class="uk-width-1-1" type="number" min="100" max="999" placeholder="CVV" [(ngModel)]="item.card.cvv">
+					</div>
 				</div>
 			</div>
-			<div class="uk-width-3-10 uk-margin-top" *ngIf="item.paymentType === 'card'">
-				<label class="uk-form-label uk-width-1-1">Cardholder</label>
-				<div class="uk-form-controls">
-					<input class="uk-width-1-1" type="text" placeholder="Cardholder" [(ngModel)]="item.paymentCard.cardholder">
-				</div>
-			</div>
-			<div class="uk-width-2-10 uk-margin-top" *ngIf="item.paymentType === 'card'">
-				<label class="uk-form-label uk-width-1-1">Month/Year</label>
-				<div class="uk-form-controls">
-					<select [(ngModel)]="item.paymentCard.validMonth">
-						<option *ngFor="let month of months" [ngValue]="month">{{month}}</option>
-					</select>
-					<select [(ngModel)]="item.paymentCard.validYear">
-						<option *ngFor="let year of years" [ngValue]="year">{{year}}</option>
-					</select>
-				</div>
-			</div>
-			<div class="uk-width-1-10 uk-margin-top" *ngIf="item.paymentType === 'card'">
-				<label class="uk-form-label uk-width-1-1">CVV</label>
-				<div class="uk-form-controls">
-					<input class="uk-width-1-1" type="number" min="100" max="999" placeholder="CVV" [(ngModel)]="item.paymentCard.cvv">
-				</div>
-			</div>
+
 			<div class="uk-width-1-1 uk-grid uk-margin-top">
 				<div class="uk-width-8-10">
 					<h3 class="tm-article-subtitle">Passengers</h3>
 				</div>
 				<div class="uk-width-2-10">
-					<a class="admin-cursor-pointer" (click)="addHuman(); $event.stopPropagation()">
+					<a class="uk-align-right admin-cursor-pointer" (click)="addHuman(); $event.stopPropagation()">
 						<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
 						<u>Add passenger</u>
 					</a>
@@ -96,11 +110,50 @@
 			<div class="uk-width-1-1 uk-margin-top">
 				<div  *ngFor="let human of item.people; let i = index;" class="uk-panel uk-panel-box uk-width-1-1">
 					<div class="uk-panel-badge uk-badge uk-badge-danger admin-cursor-pointer" (click)="deleteHuman(human); $event.stopPropagation()"><i class="uk-icon-trash"></i></div>
-					<h3 class="uk-panel-title">Passenger {{ i + 1 }}</h3>
+					<h3 class="uk-panel-title">Passenger #{{ i + 1 }}</h3>
 					<order-human [(human)]="item.people[i]"></order-human>
 				</div>
 			</div>
+
+			<div class="uk-width-1-1 uk-grid uk-margin-top" [class.uk-hidden]="!item.package">
+				<div class="uk-width-1-1">
+					<h3 class="tm-article-subtitle">Hotel data</h3>
+				</div>
+				<div class="uk-width-1-2">
+					<div class="uk-button uk-margin-left uk-form-select" data-uk-form-select>
+						<span>Hotel</span>
+						<i class="uk-icon-caret-down"></i>
+						<select name="type" [(ngModel)]="item.hotel" (change)="hotelChange();">
+							<option *ngIf="item.hotel" [ngValue]="item.hotel">{{ item.hotel.title }}</option>
+							<option *ngFor="let hotelItem of hotels" [ngValue]="hotelItem">{{ hotelItem.title }}</option>
+						</select>
+					</div>
+				</div>
+				<div class="uk-width-1-2" *ngIf="item.hotel">
+					<div class="uk-button uk-margin-left uk-form-select" data-uk-form-select>
+						<span>Room</span>
+						<i class="uk-icon-caret-down"></i>
+						<select name="type" [(ngModel)]="item.room">
+							<option *ngIf="item.room" [ngValue]="item.room">{{ item.room.title }}</option>
+							<option *ngFor="let roomItem of item.hotel.rooms" [ngValue]="roomItem">{{ roomItem.title }}</option>
+						</select>
+					</div>
+				</div>
+			</div>
+
 			<div class="uk-width-1-1 uk-grid uk-margin-top">
+				<div class="uk-width-8-10">
+					<h3 class="tm-article-subtitle">Shifts</h3>
+				</div>
+				<div class="uk-width-2-10">
+					<a class="uk-align-right admin-cursor-pointer" (click)="addShift(); $event.stopPropagation()">
+						<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
+						<u>Add shift</u>
+					</a>
+				</div>
+			</div>
+
+			<!-- <div class="uk-width-1-1 uk-grid uk-margin-top">
 				<div class="uk-width-8-10">
 					<h3 class="tm-article-subtitle">Shifts</h3>
 				</div>
@@ -158,13 +211,14 @@
 						</tr>
 					</tfoot>
 				</table>
+			</div> -->
+
+			<div class="uk-width-1-1 uk-margin-top">
+				<button type="submit" class="uk-button uk-button-success uk-align-right" (click)="submit()"><i class="uk-icon-floppy-o"></i>&emsp;Submit</button>
 			</div>
 			<div class="uk-width-1-1 uk-margin-top">
-				<button type="submit" class="uk-button uk-button-success uk-align-right" [disabled]="!valid" (click)="submit()"><i class="uk-icon-floppy-o"></i>&emsp;Submit</button>
+				<p>DEBUG: {{ item | json }}</p>
 			</div>
-			<!-- <div class="uk-width-1-1 uk-margin-top">
-				<p>Form value: {{ item | json }}</p>
-			</div> -->
 		</div>
 	</div>
 </div>

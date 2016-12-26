@@ -3,7 +3,7 @@ import { Router } from '@angular/router'
 
 import { APIService } from '../../service/api.service'
 
-import { User } from '../../../../model/user'
+import { User, Role } from '../../../../model/user'
 
 @Component({
 	moduleId: module.id,
@@ -13,7 +13,14 @@ import { User } from '../../../../model/user'
 export class UserListComponent implements OnInit {
 	items: User[] = []
 
-	constructor(private router: Router, private apiService: APIService) {}
+	getIcons(item: User){
+		return item.roles.reduce( (prev: string[], value: Role) => value.icon ? prev.concat(value.icon) : prev, [] )
+	}
+
+	constructor(
+		private router: Router,
+		private apiService: APIService
+	) {}
 
 	ngOnInit(): void {
 		this.apiService.get<User>(User).then( (response: User[]) => this.items = response)
@@ -24,7 +31,7 @@ export class UserListComponent implements OnInit {
 	}
 
 	select(item: User): void {
-		this.router.navigate(['/users', item.id.toString()])
+		this.router.navigate(['/users', item.id.uuid])
 	}
 
 	enable(item: User): void {

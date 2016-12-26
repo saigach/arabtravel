@@ -16,30 +16,28 @@ import { FroalaEditorDirective, FroalaViewDirective } from './directive/froala.d
 
 import { AppComponent } from './component/app.component'
 
-import { HotelListComponent } from './component/hotel/hotel-list.component'
-import { HotelItemComponent } from './component/hotel/hotel-item.component'
-
-import { HumanListComponent } from './component/human/human-list.component'
-import { HumanItemComponent } from './component/human/human-item.component'
+import { CommonComponent } from './component/common/common.component'
 
 import { OrderListComponent } from './component/order/order-list.component'
 import { OrderItemComponent } from './component/order/order-item.component'
 import { OrderHumanComponent } from './component/order/order-human.component'
 import { OrderShiftComponent } from './component/order/order-shift.component'
 
-import { TripListComponent } from './component/trip/trip-list.component'
-import { TripItemComponent } from './component/trip/trip-item.component'
-
 import { UserListComponent } from './component/user/user-list.component'
 import { UserItemComponent } from './component/user/user-item.component'
 
-import { StaticListComponent } from './component/static/static-list.component'
-import { StaticItemComponent } from './component/static/static-item.component'
-
-import { PriceListComponent } from './component/price/price-list.component'
-
 import { PointListComponent } from './component/point/point-list.component'
 import { VehicleListComponent } from './component/vehicle/vehicle-list.component'
+
+import { HotelListComponent } from './component/hotel/hotel-list.component'
+import { HotelItemComponent } from './component/hotel/hotel-item.component'
+
+import { TripListComponent } from './component/trip/trip-list.component'
+import { TripItemComponent } from './component/trip/trip-item.component'
+import { TripPriceComponent } from './component/trip/trip-price.component'
+
+import { StaticListComponent } from './component/static/static-list.component'
+import { StaticItemComponent } from './component/static/static-item.component'
 
 @NgModule({
 	imports: [
@@ -57,26 +55,25 @@ import { VehicleListComponent } from './component/vehicle/vehicle-list.component
 		FroalaEditorDirective,
 		FroalaViewDirective,
 
-		PriceListComponent,
-		PointListComponent,
-		VehicleListComponent,
-
-		HotelListComponent,
-		HotelItemComponent,
-
-		HumanListComponent,
-		HumanItemComponent,
+		CommonComponent,
 
 		OrderListComponent,
 		OrderItemComponent,
 		OrderHumanComponent,
 		OrderShiftComponent,
 
-		TripListComponent,
-		TripItemComponent,
-
 		UserListComponent,
 		UserItemComponent,
+
+		PointListComponent,
+		VehicleListComponent,
+
+		HotelListComponent,
+		HotelItemComponent,
+
+		TripListComponent,
+		TripItemComponent,
+		TripPriceComponent,
 
 		StaticListComponent,
 		StaticItemComponent

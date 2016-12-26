@@ -1,11 +1,11 @@
 <div class="uk-grid">
-	<div class="uk-width-1-1 uk-margin-bottom">
+	<div class="uk-width-3-4 uk-margin-bottom">
 		<h3>Users list</h3>
 	</div>
 	<div class="uk-width-1-4">
 		<button class="uk-button uk-button-primary uk-width-1-1" type="button" (click)="add()">Add user</button>
 	</div>
-	<div class="uk-form uk-width-3-4">
+	<div class="uk-form uk-width-1-1">
 		<input #filterInput (keyup)="0" class="uk-width-1-1" type="text" placeholder="Search...">
 	</div>
 	<div class="uk-width-1-1 uk-margin-top">
@@ -15,20 +15,22 @@
 					<th></th>
 					<th>Title</th>
 					<th>E-mail</th>
+					<th>Phone</th>
 					<th>Roles</th>
 					<th></th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr *ngFor="let item of items | listFilter : filterInput.value : ['title', 'email'] | listOrderBy : ['title']" (click)="select(item)" class="admin-cursor-pointer">
+				<tr *ngFor="let item of items | listFilter : filterInput.value : ['title', 'email', 'phone'] | listOrderBy : ['title']" (click)="select(item)" class="admin-cursor-pointer">
 					<td class="uk-form" (click)="enable(item); $event.stopPropagation()">
 						<i class="uk-icon-square-o" [class.uk-hidden]="item.enable"></i>
 						<i class="uk-icon-check-square-o" [class.uk-hidden]="!item.enable"></i>
 					</td>
 					<td>{{ item.title }}</td>
 					<td>{{ item.email }}</td>
+					<td>{{ item.phone }}</td>
 					<td class="admin-list-icons">
-						<i *ngFor="let icon of item.icons" [class]="icon"></i>
+						<i *ngFor="let icon of getIcons(item)" [class]="icon"></i>
 					</td>
 					<td (click)="delete(item); $event.stopPropagation()"><i class="uk-icon-trash-o"></i></td>
 				</tr>

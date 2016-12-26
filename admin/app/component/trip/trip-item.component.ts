@@ -2,11 +2,15 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { Location } from '@angular/common'
 
+import editorOptions from '../../editor.options'
+
 import { APIService } from '../../service/api.service'
 import { FileService } from '../../service/file.service'
 
-import { Trip } from '../../../../model/trip'
+import { File } from '../../../../model/common'
+import { Trip, Price } from '../../../../model/trip'
 import { Point } from '../../../../model/point'
+import { Hotel } from '../../../../model/hotel'
 
 @Component({
 	moduleId: module.id,
@@ -15,7 +19,12 @@ import { Point } from '../../../../model/point'
 })
 export class TripItemComponent implements OnInit {
 
+	contentEditorOptions = Object.assign({}, editorOptions, {
+		placeholderText: 'Package description content'
+	})
+
 	points: Point[] = []
+	hotels: Hotel[] = []
 
 	item: Trip = new Trip()
 
@@ -39,51 +48,55 @@ export class TripItemComponent implements OnInit {
 		if (!id)
 			return
 
-		this.apiService.get<Point>(Point).then( (response: Point[]) => {
-			this.points = response
-
+		Promise.all([
+			this.apiService.get<Point>(Point).then( (response: Point[]) => this.points = response ),
+			this.apiService.get<Hotel>(Hotel).then( (response: Hotel[]) => this.hotels = response )
+		]).then( () => {
 			if (id.toLowerCase() !== 'new')
 				this.apiService.get<Trip>(Trip, id)
 					.then((response: Trip) => {
 						this.item = response
-						this.item.pointA = this.points.find(
-							value => value.id.toString() === this.item.pointA.id.toString()
-						) || this.points[0] || null
-						this.item.pointB = this.points.find(
-							value => value.id.toString() === this.item.pointB.id.toString()
-						) || this.points[0] || null
+						this.item.pointA = this.item.pointA
+										&& this.points.find(value => value.id.uuid === this.item.pointA.id.uuid)
+										|| null
+						this.item.pointB = this.item.pointB
+										&& this.points.find(value => value.id.uuid === this.item.pointB.id.uuid)
+										|| null
+
+						this.hotels = this.hotels.map(
+							(hotel: Hotel) => this.hotels.find( value => value.id.uuid === hotel.id.uuid ) || null
+						).filter( value => !!value )
 					})
 					.catch(error => this.item = null)
 		})
+	}
 
+	addHotel(): void {
+		this.item.hotels.push(new Hotel())
+	}
 
-		// Promise.all([
-		// 	this.apiService.get<Hotel>(Hotel),
-		// 	this.apiService.get<Point>(Point)
-		// ]).then( (response: any[]) => {
-		// 	this.hotels = response[0]
-		// 	this.points = response[1]
+	deleteHotel(hotel: Hotel): void {
+		this.item.hotels = this.item.hotels.filter(value => value !== hotel)
+	}
 
-		// 	if (id.toLowerCase() !== 'new')
-		// 		this.apiService.get<Trip>(Trip, id)
-		// 			.then((response: Trip) => {
-		// 				this.item = response
-		// 				this.item.points = this.item.points.map(
-		// 					point => this.points.find( value => value.id.toString() === point.id.toString() )
-		// 				)
-		// 			})
-		// 			.catch(error => this.item = null)
-		// })
+	addPrice(): void {
+		this.item.prices.push(new Price())
+	}
 
-		// $(this.pointsNestableRef.nativeElement).on('change.uk.nestable', (event, sortable, dragged, action) => {
-		// 	if (action !== 'moved')
-		// 		return
-		// 	this.item.points = Array.prototype.reduce.call(
-		// 		event.target.children,
-		// 		(prev: Point[], node: HTMLElement) => prev.concat(this.item.points[node.getAttribute('index')] || null),
-		// 		[]
-		// 	)
-		// })
+	deletePrice(price: Price): void {
+		this.item.prices = this.item.prices.filter(value => value !== price)
+	}
+
+	addImage(fileSelector: HTMLInputElement): void {
+		if (fileSelector.files.length) {
+			this.fileService.uploadImage(fileSelector.files[0])
+							.then(response => response.link && this.item.images.push(new File(response)))
+			fileSelector.value = null
+		}
+	}
+
+	deleteImage(image: File): void {
+		this.item.images = this.item.images.filter( value => value !== image)
 	}
 
 	back(): void {

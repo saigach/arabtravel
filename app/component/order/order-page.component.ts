@@ -3,14 +3,12 @@ import { Router } from '@angular/router'
 
 import { APIService } from '../../service/api.service'
 
-import { Order } from '../../../model/order'
-import { Trip } from '../../../model/trip'
+import { Order, Shift } from '../../../model/order'
+import { Trip, Price } from '../../../model/trip'
 import { Point } from '../../../model/point'
 import { Vehicle } from '../../../model/vehicle'
 import { Human } from '../../../model/human'
 import { Hotel } from '../../../model/hotel'
-import { Price } from '../../../model/price'
-import { Shift } from '../../../model/shift'
 
 type TripType = 'oneway' | 'round' | 'package'
 
@@ -26,42 +24,42 @@ export class OrderPageComponent implements OnInit {
 
 	order: Order = new Order()
 
-	getAdultsCount(date: Date = new Date()): number {
-		return this.order.people.reduce( (prev: number, human: Human) =>
-			human.getAgeGroup(date) === 'adults' ? ++prev : prev,
-			0
-		)
-	}
+	// getAdultsCount(date: Date = new Date()): number {
+	// 	return this.order.people.reduce( (prev: number, human: Human) =>
+	// 		human.getAgeGroup(date) === 'adults' ? ++prev : prev,
+	// 		0
+	// 	)
+	// }
 
-	getKidsCount(date: Date = new Date()): number {
-		return this.order.people.reduce( (prev: number, human: Human) =>
-			human.getAgeGroup(date) === 'kids' ? ++prev : prev,
-			0
-		)
-	}
+	// getKidsCount(date: Date = new Date()): number {
+	// 	return this.order.people.reduce( (prev: number, human: Human) =>
+	// 		human.getAgeGroup(date) === 'kids' ? ++prev : prev,
+	// 		0
+	// 	)
+	// }
 
-	getInfantsCount(date: Date = new Date()): number {
-		return this.order.people.reduce( (prev: number, human: Human) =>
-			human.getAgeGroup(date) === 'infants' ? ++prev : prev,
-			0
-		)
-	}
+	// getInfantsCount(date: Date = new Date()): number {
+	// 	return this.order.people.reduce( (prev: number, human: Human) =>
+	// 		human.getAgeGroup(date) === 'infants' ? ++prev : prev,
+	// 		0
+	// 	)
+	// }
 
-	get ticketsCost(): number {
-		return this.order.shifts.reduce(
-			(prev: number, shift: { date: Date, trip: Trip, hotel: Hotel, price: Price } ) => {
-				prev += this.getAdultsCount(shift.date) * shift.price.adults
-				prev += this.getKidsCount(shift.date) * shift.price.kids
-				prev += this.getInfantsCount(shift.date) * shift.price.infants
-				return prev
-			},
-			0
-		)
-	}
+	// get ticketsCost(): number {
+	// 	return this.order.shifts.reduce(
+	// 		(prev: number, shift: { date: Date, trip: Trip, hotel: Hotel, price: Price } ) => {
+	// 			prev += this.getAdultsCount(shift.date) * shift.price.adults
+	// 			prev += this.getKidsCount(shift.date) * shift.price.kids
+	// 			prev += this.getInfantsCount(shift.date) * shift.price.infants
+	// 			return prev
+	// 		},
+	// 		0
+	// 	)
+	// }
 
-	get totalCost(): number {
-		return this.ticketsCost
-	}
+	// get totalCost(): number {
+	// 	return this.ticketsCost
+	// }
 
 	submitted: boolean = false
 

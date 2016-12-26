@@ -1,73 +1,32 @@
 import { newDate, Model, File } from './common'
 import { User } from './user'
 
-class Price {
+export class Room {
 
-	startDate: Date
-	endDate: Date
-
+	title: string
+	size: number
 	cost: number
+	content: string
 
 	constructor(value: any = {}) {
-
-		this.startDate = newDate(value.startDate || null)
-		this.endDate = value.endDate && newDate(value.endDate) || (() => {
-			let date = newDate(this.startDate)
-			date.setFullYear(1 + date.getFullYear())
-			return date
-		})()
-
+		this.title = String(value.title || '')
+		this.size = Math.max( 1, Number.parseInt(value.size || 0) || 0 )
 		this.cost = Math.max( 0, Number.parseFloat(value.cost || 0) || 0 )
+		this.content = String(value.content || '')
 	}
 
 	toObject(): {} {
 		return {
-			startDate: this.startDate,
-			endDate: this.endDate,
-			cost: this.cost
+			title: this.title,
+			size: this.size,
+			cost: this.cost,
+			content: this.content
 		}
 	}
 }
 
-export class Room extends Model {
-
-	title: string
-	content: string
-
-	images: File[]
-	prices: Price[]
-
-	constructor(value: any = {}) {
-		super(value)
-
-		this.content = String(value.content || '')
-
-		this.images = value.images instanceof Array ?
-			value.images.reduce(
-				( prev: File[] , value:any ) =>
-					value ? prev.concat(value instanceof File ? value : new File(value)) : prev,
-				[]
-			) : []
-
-		this.prices = value.prices instanceof Array ?
-			value.prices.reduce(
-				( prev: Price[] , value:any ) =>
-					value ? prev.concat(value instanceof Price ? value : new Price(value)) : prev,
-				[]
-			) : []
-	}
-
-	toObject(): {} {
-		return Object.assign({}, super.toObject(), {
-			content: this.content,
-			images: this.images.reduce( (prev: {}[], value: File) => prev.concat(value.toObject()), []),
-			prices: this.prices.reduce( (prev: {}[], value: Price) => prev.concat(value.toObject()), [])
-		})
-	}
-}
-
 export class Hotel extends Model {
-	static __api: string = 'object/hotel'
+	static __api: string = 'objects/hotel'
 	static __primaryFields = Model.__primaryFields.concat(['owner'])
 
 	owner: User = null

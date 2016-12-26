@@ -78,7 +78,7 @@ export class APIService {
 						.toPromise()
 						.then(response => response.json() || null)
 						.then(value => value && value || Promise.reject({ message: 'Response is empty' }) )
-						.then(value => (value.sucess !== 'deleted' || value.id !== item.id.toString()) && Promise.reject(value) || void 0)
+						.then(value => (value.sucess !== 'deleted' || value.id !== item.id.uuid) && Promise.reject(value) || void 0)
 						.catch(APIService.handleError)
 	}
 

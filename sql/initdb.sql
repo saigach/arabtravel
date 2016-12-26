@@ -127,7 +127,7 @@ CREATE TABLE static (
 	title text NOT NULL DEFAULT ''::text,
 	description text NOT NULL DEFAULT ''::text,
 	content text NOT NULL DEFAULT ''::text,
-	image varchar(128) DEFAULT NULL,
+	image json NOT NULL DEFAULT 'null'::json,
 	CONSTRAINT static_pkey PRIMARY KEY (id)
 ) WITH (OIDS = FALSE);
 CREATE INDEX static_enable_idx ON static USING btree (enable);

@@ -26,10 +26,77 @@
 				</div>
 			</div>
 			<div class="uk-width-1-1 uk-margin-top">
+				<label class="uk-form-label uk-width-1-1">Hotel page content</label>
+				<div class="uk-form-controls">
+					<div [froalaEditor]="contentEditorOptions" [(froalaModel)]="item.content"></div>
+				</div>
+			</div>
+			<div class="uk-width-1-1 uk-grid uk-margin-top">
+				<div class="uk-width-8-10">
+					<h3 class="tm-article-subtitle">Rooms</h3>
+				</div>
+				<div class="uk-width-2-10">
+					<a class="uk-align-right admin-cursor-pointer" (click)="addRoom(); $event.stopPropagation()">
+						<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
+						<u>Add room</u>
+					</a>
+				</div>
+			</div>
+			<div class="uk-width-1-1 uk-margin-top">
+				<div  *ngFor="let room of item.rooms;" class="uk-panel uk-panel-box uk-width-1-1">
+					<div class="uk-panel-badge uk-badge uk-badge-danger admin-cursor-pointer" (click)="deleteRoom(room); $event.stopPropagation()"><i class="uk-icon-trash"></i></div>
+					<h3 class="uk-panel-title">Room &laquo;{{ room.title }}&raquo;</h3>
+					<div class="uk-grid">
+						<div class="uk-width-1-3">
+							<label class="uk-form-label uk-width-1-1">Title</label>
+							<div class="uk-form-controls">
+								<input class="uk-width-1-1" type="text" [(ngModel)]="room.title">
+							</div>
+						</div>
+						<div class="uk-width-1-3">
+							<label class="uk-form-label uk-width-1-1">Size</label>
+							<div class="uk-form-controls">
+								<input class="uk-width-1-1" type="number" min="1" [(ngModel)]="room.size">
+							</div>
+						</div>
+						<div class="uk-width-1-3">
+							<label class="uk-form-label uk-width-1-1">Cost</label>
+							<div class="uk-form-controls">
+								<input class="uk-width-1-1" type="number" min="0" [(ngModel)]="room.cost">
+							</div>
+						</div>
+						<div class="uk-width-1-1 uk-margin-top">
+							<label class="uk-form-label uk-width-1-1">Room description</label>
+							<div class="uk-form-controls">
+								<div [froalaEditor]="contentEditorOptions" [(froalaModel)]="room.content"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="uk-width-1-1 uk-margin-top">
+				<h3 class="tm-article-subtitle">Images</h3>
+				<ul class="uk-thumbnav uk-grid-width-1-5">
+					<li *ngFor="let image of item.images">
+						<figure class="uk-overlay uk-overlay-hover">
+							<img [src]="image.link">
+							<figcaption class="uk-overlay-panel uk-flex uk-flex-center uk-flex-middle uk-text-center">
+								<button class="uk-button uk-button-mini" (click)="deleteImage(image); $event.stopPropagation()"><i class="uk-icon uk-icon-remove"></i></button>
+							</figcaption>
+						</figure>
+					</li>
+					<li class="uk-form-file">
+						<img class="uk-thumbnail admin-cursor-pointer" src="/placeholder_200x100.svg">
+						<input type="file" accept="image/*" (change)="addImage($event.target)">
+					</li>
+				</ul>
+			</div>
+
+			<div class="uk-width-1-1 uk-margin-top">
 				<button type="submit" class="uk-button uk-button-success uk-align-right" [disabled]="!valid" (click)="submit()"><i class="uk-icon-floppy-o"></i>&emsp;Submit</button>
 			</div>
 			<!-- <div class="uk-width-1-1 uk-margin-top">
-				<p>Form value: {{ item | json }}</p>
+				<p>DEBUG: {{ item | json }}</p>
 			</div> -->
 		</div>
 	</div>

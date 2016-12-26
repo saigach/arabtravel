@@ -3,16 +3,18 @@
 		<div class="uk-width-1-1">
 			<label class="uk-form-label uk-width-1-1">Name</label>
 			<div class="uk-form-controls">
-				<input class="uk-width-1-1" type="text" [(ngModel)]="__human.title">
+				<input class="uk-width-1-1" type="text" [(ngModel)]="item.title">
 			</div>
 		</div>
 	</div>
 	<div class="uk-width-1-3">
 		<div class="uk-width-1-1">
 			<label class="uk-form-label uk-width-1-1">Nationality</label>
-			<div class="uk-form-controls">
-				<select [(ngModel)]="__human.nationality">
-					<option *ngFor="let item of nationality" [ngValue]="item">{{ item.title }}</option>
+			<div class="uk-button uk-form-select" data-uk-form-select>
+				<span>Nationality</span>
+				<i class="uk-icon-caret-down"></i>
+				<select name="type" [(ngModel)]="item.nationality">
+					<option *ngFor="let nationalityItem of nationalityList" [ngValue]="nationalityItem">{{ nationalityItem.title }}</option>
 				</select>
 			</div>
 		</div>
@@ -21,8 +23,8 @@
 		<div class="uk-width-1-1">
 			<label class="uk-form-label uk-width-1-1">Date of birth</label>
 			<div class="uk-form-controls">
-				<input #dobNode class="uk-width-1-1" type="text" [value]="__human.dob | date: 'dd.MM.yyyy'">
-				<span>{{ __human.getAge() }} years</span>
+				<input #dobNode class="uk-width-1-1" type="text" [value]="item.dob | date: 'dd.MM.yyyy'">
+				<span>{{ item.getAge() }} years</span>
 			</div>
 		</div>
 	</div>
@@ -30,7 +32,7 @@
 		<div class="uk-width-1-1">
 			<label class="uk-form-label uk-width-1-1">Passport number</label>
 			<div class="uk-form-controls">
-				<input class="uk-width-1-1" type="text" [(ngModel)]="__human.passport">
+				<input class="uk-width-1-1" type="text" [(ngModel)]="item.passport">
 			</div>
 		</div>
 	</div>
@@ -38,7 +40,7 @@
 		<div class="uk-width-1-1">
 			<label class="uk-form-label uk-width-1-1">Phone</label>
 			<div class="uk-form-controls">
-				<input class="uk-width-1-1" type="text" [(ngModel)]="__human.phone">
+				<input class="uk-width-1-1" type="text" [(ngModel)]="item.phone">
 			</div>
 		</div>
 	</div>
@@ -46,7 +48,7 @@
 		<div class="uk-width-1-1">
 			<label class="uk-form-label uk-width-1-1">Email</label>
 			<div class="uk-form-controls">
-				<input class="uk-width-1-1" type="email" [(ngModel)]="__human.email">
+				<input class="uk-width-1-1" type="email" [(ngModel)]="item.email">
 			</div>
 		</div>
 	</div>

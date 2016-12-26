@@ -33,10 +33,6 @@ export class User extends Model {
 
 	image: File
 
-	get icons(){
-		return this.roles.reduce( (prev: string[], value: Role) => value.icon ? prev.concat(value.icon) : prev, [] )
-	}
-
 	constructor(value: any = {}) {
 		super(value)
 
@@ -46,7 +42,7 @@ export class User extends Model {
 		this.roles = [ Role.List[0] ]
 
 		if (value.roles && value.roles instanceof Array)
-			this.roles.concat(value.roles.reduce(
+			this.roles = this.roles.concat(value.roles.reduce(
 				( prev: Role[] , value: string) => {
 					let role = Role.getRole(value)
 					return role ? prev.concat(role) : prev
