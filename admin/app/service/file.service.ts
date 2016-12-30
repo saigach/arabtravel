@@ -53,4 +53,23 @@ export class FileService {
 			fileReader.readAsDataURL(file)
 		})
 	}
+
+	uploadPdf(file: File = null): Promise<any> {
+		return new Promise( (resolve, reject) => {
+			if (!file)
+				return reject(new TypeError('file not set'))
+
+			let fileReader = new FileReader()
+			fileReader.addEventListener('load', () => {
+				let dataurl = fileReader.result
+				let bstr = atob(dataurl.split(',')[1])
+				let n = bstr.length
+				let u8arr = new Uint8Array(n)
+				while(n--)
+					u8arr[n] = bstr.charCodeAt(n)
+				this.upload('pdf', new Blob([u8arr], { type:'application/pdf' })).then(response => resolve(response))
+			})
+			fileReader.readAsDataURL(file)
+		})
+	}
 }

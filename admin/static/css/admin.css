@@ -46,3 +46,8 @@
 	padding-left: 6px;
 	border-left: 3px solid #1FA2D6;
 }
+
+
+.admin-hidde-cild .admin-hidden-cild {
+	display: none !important;
+}

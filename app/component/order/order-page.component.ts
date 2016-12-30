@@ -24,42 +24,42 @@ export class OrderPageComponent implements OnInit {
 
 	order: Order = new Order()
 
-	// getAdultsCount(date: Date = new Date()): number {
-	// 	return this.order.people.reduce( (prev: number, human: Human) =>
-	// 		human.getAgeGroup(date) === 'adults' ? ++prev : prev,
-	// 		0
-	// 	)
-	// }
+	getAdultsCount(date: Date = new Date()): number {
+		return this.order.people.reduce( (prev: number, human: Human) => {
+			let ageGroup = human.getAgeGroup(date)
+			return (ageGroup && ageGroup.id === 'adults') ? ++prev : prev
+		}, 0)
+	}
 
-	// getKidsCount(date: Date = new Date()): number {
-	// 	return this.order.people.reduce( (prev: number, human: Human) =>
-	// 		human.getAgeGroup(date) === 'kids' ? ++prev : prev,
-	// 		0
-	// 	)
-	// }
+	getKidsCount(date: Date = new Date()): number {
+		return this.order.people.reduce( (prev: number, human: Human) => {
+			let ageGroup = human.getAgeGroup(date)
+			return (ageGroup && ageGroup.id === 'kids') ? ++prev : prev
+		}, 0)
+	}
 
-	// getInfantsCount(date: Date = new Date()): number {
-	// 	return this.order.people.reduce( (prev: number, human: Human) =>
-	// 		human.getAgeGroup(date) === 'infants' ? ++prev : prev,
-	// 		0
-	// 	)
-	// }
+	getInfantsCount(date: Date = new Date()): number {
+		return this.order.people.reduce( (prev: number, human: Human) => {
+			let ageGroup = human.getAgeGroup(date)
+			return (ageGroup && ageGroup.id === 'infants') ? ++prev : prev
+		}, 0)
+	}
 
-	// get ticketsCost(): number {
-	// 	return this.order.shifts.reduce(
-	// 		(prev: number, shift: { date: Date, trip: Trip, hotel: Hotel, price: Price } ) => {
-	// 			prev += this.getAdultsCount(shift.date) * shift.price.adults
-	// 			prev += this.getKidsCount(shift.date) * shift.price.kids
-	// 			prev += this.getInfantsCount(shift.date) * shift.price.infants
-	// 			return prev
-	// 		},
-	// 		0
-	// 	)
-	// }
+	get ticketsCost(): number {
+		return this.order.shifts.reduce(
+			(prev: number, shift: Shift ) => {
+				prev += this.getAdultsCount(shift.date) * shift.price.getCost('adults')
+				prev += this.getKidsCount(shift.date) * shift.price.getCost('kids')
+				prev += this.getInfantsCount(shift.date) * shift.price.getCost('infants')
+				return prev
+			},
+			0
+		)
+	}
 
-	// get totalCost(): number {
-	// 	return this.ticketsCost
-	// }
+	get totalCost(): number {
+		return this.ticketsCost
+	}
 
 	submitted: boolean = false
 
@@ -103,8 +103,8 @@ export class OrderPageComponent implements OnInit {
 
 					const getTrip = (pointAId: string, pointBId: string): Trip =>
 						trips.filter( (trip: Trip) =>
-							trip.pointA.id.toString() === pointAId &&
-							trip.pointB.id.toString() === pointBId
+							trip.pointA.id.uuid === pointAId &&
+							trip.pointB.id.uuid === pointBId
 						).shift()
 
 					const newDate = value => {

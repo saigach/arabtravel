@@ -9,7 +9,7 @@ import { Human, Nationality } from '../../../model/human'
 })
 export class OrderHumanComponent implements OnInit {
 
-	nationality = Nationality
+	nationality = Nationality.List
 
 	__human: Human = new Human()
 

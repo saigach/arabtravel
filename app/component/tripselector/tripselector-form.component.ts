@@ -32,8 +32,8 @@ export class TripSelectorFormComponent implements OnInit {
 
 	private getTrips(pointA: Point = null, pointB: Point = null): Trip[] {
 		return this.trips.filter( (trip: Trip) =>
-			trip.pointA && (!pointA || trip.pointA.id.toString() === pointA.id.toString()) &&
-			trip.pointB && (!pointB || trip.pointB.id.toString() === pointB.id.toString())
+			trip.pointA && (!pointA || trip.pointA.id.uuid === pointA.id.uuid) &&
+			trip.pointB && (!pointB || trip.pointB.id.uuid === pointB.id.uuid)
 		)
 	}
 
@@ -62,14 +62,14 @@ export class TripSelectorFormComponent implements OnInit {
 
 	private getPoints(type: 'A' | 'B', otherPoint: Point): Point[] {
 		let points = this.getTrips().reduce( (prev: Point[], trip: Trip) => {
-			if (!otherPoint || trip[type === 'A' ? 'pointB' : 'pointA'].id.toString() === otherPoint.id.toString() )
+			if (!otherPoint || trip[type === 'A' ? 'pointB' : 'pointA'].id.uuid === otherPoint.id.uuid )
 				return prev.concat(trip[type === 'A' ? 'pointA' : 'pointB'])
 			return prev
 		}, [])
 
 		return points.reduce( (prev: Point[], currentPoint: Point) =>
 			prev.find( (point: Point) =>
-				currentPoint.id.toString() === point.id.toString()
+				currentPoint.id.uuid === point.id.uuid
 			) ? prev : prev.concat(currentPoint),
 			[]
 		)
@@ -188,12 +188,12 @@ export class TripSelectorFormComponent implements OnInit {
 	} {
 		return {
 			type: this.type,
-			pointA: this.pointA && this.pointA.id.toString() || null,
-			pointB: this.pointB && this.pointB.id.toString() || null,
+			pointA: this.pointA && this.pointA.id.uuid || null,
+			pointB: this.pointB && this.pointB.id.uuid || null,
 			anyDate: this.anyDate,
 			departureDate: this.departureDate,
 			returnDate: this.returnDate,
-			vehicle: this.vehicle && this.vehicle.id.toString() || null,
+			vehicle: this.vehicle && this.vehicle.id.uuid || null,
 			peopleCount: (this.adults + this.kinds + this.infants) || 1
 		}
 	}

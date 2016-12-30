@@ -65,14 +65,19 @@ export class TripItemComponent implements OnInit {
 
 						this.hotels = this.hotels.map(
 							(hotel: Hotel) => this.hotels.find( value => value.id.uuid === hotel.id.uuid ) || null
-						).filter( value => !!value )
+						).filter( (value: Hotel) => value && value.enable )
+
+						for (let i = 0; i < this.hotels.length; ++i)
+							 this.apiService.get<Hotel>(Hotel, this.hotels[i]).then(
+							 		(response: Hotel) => this.hotels[i] = response
+							 )
 					})
 					.catch(error => this.item = null)
 		})
 	}
 
 	addHotel(): void {
-		this.item.hotels.push(new Hotel())
+		this.item.hotels.push(null)
 	}
 
 	deleteHotel(hotel: Hotel): void {

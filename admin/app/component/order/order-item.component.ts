@@ -8,7 +8,6 @@ import { FileService } from '../../service/file.service'
 import { Order, Shift, OrderStatus, PaymentType } from '../../../../model/order'
 import { Human } from '../../../../model/human'
 import { Hotel } from '../../../../model/hotel'
-import { Trip } from '../../../../model/trip'
 
 @Component({
 	moduleId: module.id,
@@ -23,7 +22,6 @@ export class OrderItemComponent implements OnInit {
 	paymentTypeList = PaymentType.List
 
 	hotels: Hotel[] = []
-	trips: Trip[] = []
 
 	item: Order = new Order()
 
@@ -85,15 +83,20 @@ export class OrderItemComponent implements OnInit {
 		if (!id)
 			return
 
-		Promise.all([
-			this.apiService.get<Trip>(Trip).then( (response: Trip[]) => this.trips = response ),
-			this.apiService.get<Hotel>(Hotel).then( (response: Hotel[]) => this.hotels = response )
-		]).then( () => {
-			if (id.toLowerCase() !== 'new')
-				this.apiService.get<Order>(Order, id)
-					.then((response: Order) => this.item = response)
-					.catch(error => this.item = null)
-		})
+		if (id.toLowerCase() !== 'new')
+			this.apiService.get<Order>(Order, id)
+				.then((response: Order) => this.item = response)
+				.catch(error => this.item = null)
+
+		// Promise.all([
+		// 	this.apiService.get<Trip>(Trip).then( (response: Trip[]) => this.trips = response ),
+		// 	this.apiService.get<Hotel>(Hotel).then( (response: Hotel[]) => this.hotels = response )
+		// ]).then( () => {
+		// 	if (id.toLowerCase() !== 'new')
+		// 		this.apiService.get<Order>(Order, id)
+		// 			.then((response: Order) => this.item = response)
+		// 			.catch(error => this.item = null)
+		// })
 	}
 
 	back(): void {
@@ -128,6 +131,9 @@ export class OrderItemComponent implements OnInit {
 		this.submitted = true
 
 		this.apiService.update<Order>(Order, this.item).then((response: Order) => this.back())
+	}
+	test(): void {
+		console.log(1111)
 	}
 }
 

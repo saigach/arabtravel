@@ -4,24 +4,28 @@ import { User } from './user'
 import { Trip, Price } from './trip'
 import { Human } from './human'
 import { Hotel, Room } from './hotel'
+import { Vehicle } from './vehicle'
 
 export class Shift {
 
 	date: Date
 	trip: Trip
 	price: Price
+	vehicle: Vehicle
 
 	constructor(value: any = {}) {
 		this.date = newDate(value.date) || newDate()
 		this.trip = value.trip ? ( value.trip instanceof Trip ? value.trip : new Trip(value.trip) ) : null
 		this.price = value.price ? ( value.price instanceof Price ? value.price : new Price(value.price) ) : null
+		this.vehicle = value.vehicle ? ( value.vehicle instanceof Vehicle ? value.vehicle : new Vehicle(value.vehicle) ) : null
 	}
 
 	toObject(): {} {
 		return {
 			date: this.date,
 			trip: this.trip && this.trip.toObject() || null,
-			price: this.price && this.price.toObject() || null
+			price: this.price && this.price.toObject() || null,
+			vehicle: this.vehicle && this.vehicle.toObject() || null
 		}
 	}
 }

@@ -2,8 +2,10 @@ import { Component, OnInit, ViewChild, ElementRef, Output, Input, EventEmitter }
 
 import { APIService } from '../../service/api.service'
 
+import { str2Date } from '../../../../model/common'
 import { Shift } from '../../../../model/order'
-import { Point } from '../../../../model/point'
+import { Trip } from '../../../../model/trip'
+import { Vehicle } from '../../../../model/vehicle'
 
 @Component({
 	moduleId: module.id,
@@ -12,20 +14,21 @@ import { Point } from '../../../../model/point'
 })
 export class OrderShiftComponent implements OnInit {
 
-	points: Point[] = []
+	trips: Trip[] = []
+	vehicles: Vehicle[] = []
 
-	__shift: Shift = new Shift()
+	item: Shift = new Shift()
 
 	@Output() shiftChange = new EventEmitter()
 
 	@Input()
 	get shift() {
-		return this.__shift
+		return this.item
 	}
 
 	set shift(value: Shift) {
-		this.__shift = value
-		this.shiftChange.emit(this.__shift)
+		this.item = value
+		this.shiftChange.emit(this.item)
 	}
 
 	@ViewChild('dateNode') dateRef: ElementRef
@@ -34,38 +37,34 @@ export class OrderShiftComponent implements OnInit {
 	constructor(private apiService: APIService) {}
 
 	ngOnInit(): void {
-		this.apiService.get<Point>(Point).then( (response: Point[]) => this.points = response)
+		this.apiService.get<Trip>(Trip).then( (response: Trip[]) =>
+			this.trips = response.filter( (value:Trip) => value.enable && value.pointA && value.pointB )
+		)
 
-		const newDate = value => {
-			let [day, month, year] = value.split('.')
-			let date = new Date(year, month, day)
-
-			if ( !Number.isNaN( date.getTime() ) )
-				return date
-
-			return new Date()
-		}
+		this.apiService.get<Vehicle>(Vehicle).then( (response: Vehicle[]) =>
+			this.vehicles = response.filter( (value:Vehicle) => value.enable )
+		)
 
 		this.dateDatepicker = UIkit.datepicker(this.dateRef.nativeElement, {
 			weekstart: 1,
 			format:'DD.MM.YYYY'
 		})
 
-		this.dateDatepicker.on('hide.uk.datepicker', event =>
-			this.__shift.date = newDate(event.target.value)
-		)
+		this.dateDatepicker.on('hide.uk.datepicker', event => {
+			this.item.date = str2Date(event.target.value)
+			this.reloadPrice()
+		})
 	}
 
-	setTour(): void {
-
+	reloadPrice(): void {
+		this.item.price = this.item.trip && this.item.trip.getPrice(this.item.date) || null
 	}
 
-	setPrice(): void {
-
-	}
-
-	setHotel(): void {
-
+	changeTrip(): void {
+		this.apiService.get<Trip>(Trip, this.item.trip).then( (response: Trip) => {
+			this.item.trip = response
+			this.reloadPrice()
+		})
 	}
 }
 

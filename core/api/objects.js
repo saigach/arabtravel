@@ -5,6 +5,11 @@
 
 'use strict'
 
+const customQueryList = {
+	trip: `objects.data->'pointA' AS "pointA", objects.data->'pointB' AS "pointB"`
+}
+
+
 const translite = require('../translite.js')
 
 const escapeStr = str => "'" + String(str).replace(/'/g, "\\'") + "'"
@@ -42,13 +47,15 @@ module.exports = class APIProject {
 		switch (method) {
 			case 'GET':
 
-				if (!id)
+				if (!id) {
+					let customQuery = customQueryList[model] && `, ${customQueryList[model]}` || ''
 					return this.DB.query(`
 						SELECT
 							objects.id,
 							objects.enable,
 							objects.title,
 							json_build_object('id',users.id, 'title',users.title) AS owner
+							${customQuery}
 						FROM objects
 						LEFT JOIN users ON objects.owner = users.id
 						WHERE model = '${model}'
@@ -57,6 +64,7 @@ module.exports = class APIProject {
 						code: 200,
 						data: rows
 					}))
+				}
 
 				return this.DB.query(`
 					SELECT

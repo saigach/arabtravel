@@ -35,7 +35,7 @@ const worker = http.createServer( (request, response) => {
 
 			let extension = session.request.path.shift()
 
-			if (!['jpg'].includes(extension))
+			if (!['jpg', 'pdf'].includes(extension))
 				return session.set({ code: 405, data: { error: 'File type not allowed'} })
 
 			let fileName = `${UUID()}.${extension}`

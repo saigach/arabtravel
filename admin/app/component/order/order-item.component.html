@@ -7,7 +7,7 @@
 	</div>
 	<div class="uk-width-1-1 uk-form uk-form-stacked">
 		<div class="uk-grid">
-			<div class="uk-width-1-1">
+			<div class="uk-width-1-1 uk-form-controls">
 				<label class="uk-button admin-button" [class.uk-active]="item.enable">
 					<span>Enable</span>
 					<input  class="uk-hidden" type="checkbox" [(ngModel)]="item.enable">
@@ -16,13 +16,9 @@
 					<span>Package</span>
 					<input class="uk-hidden" type="checkbox" [(ngModel)]="item.package">
 				</label>
-				<div class="uk-button uk-margin-left uk-form-select" data-uk-form-select>
-					<span>Status</span>
-					<i class="uk-icon-caret-down"></i>
-					<select name="type" [(ngModel)]="item.status">
-						<option *ngFor="let statusItem of statusList" [ngValue]="statusItem">{{ statusItem.title }}</option>
-					</select>
-				</div>
+				<select class="uk-margin-left" name="type" [(ngModel)]="item.status">
+					<option *ngFor="let statusItem of statusList" [ngValue]="statusItem">{{ statusItem.title }}</option>
+				</select>
 			</div>
 			<div class="uk-width-7-10">
 				<div class="uk-width-1-1 uk-margin-top">
@@ -53,14 +49,10 @@
 				<div class="uk-width-1-10">
 					<h3 class="tm-article-subtitle">Payment</h3>
 				</div>
-				<div class="uk-width-9-10">
-					<div class="uk-button uk-margin-left uk-form-select" data-uk-form-select>
-						<span>Type</span>
-						<i class="uk-icon-caret-down"></i>
-						<select name="type" [(ngModel)]="item.paymentType">
-							<option *ngFor="let paymentTypeItem of paymentTypeList" [ngValue]="paymentTypeItem">{{ paymentTypeItem.title }}</option>
-						</select>
-					</div>
+				<div class="uk-width-9-10 uk-form-controls">
+					<select name="type" [(ngModel)]="item.paymentType">
+						<option *ngFor="let paymentTypeItem of paymentTypeList" [ngValue]="paymentTypeItem">{{ paymentTypeItem.title }}</option>
+					</select>
 				</div>
 			</div>
 
@@ -115,6 +107,29 @@
 				</div>
 			</div>
 
+			<div class="uk-width-1-1 uk-grid uk-margin-top">
+				<div class="uk-width-8-10">
+					<h3 class="tm-article-subtitle">Shifts</h3>
+				</div>
+				<div class="uk-width-2-10">
+					<a class="uk-align-right admin-cursor-pointer" (click)="addShift(); $event.stopPropagation()">
+						<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
+						<u>Add shift</u>
+					</a>
+				</div>
+			</div>
+			<div class="uk-width-1-1 uk-margin-top">
+				<div  *ngFor="let shift of item.shifts; let i = index;" class="uk-panel uk-panel-box uk-width-1-1">
+					<div class="uk-panel-badge uk-badge uk-badge-danger admin-cursor-pointer" (click)="deleteShift(shift); $event.stopPropagation()"><i class="uk-icon-trash"></i></div>
+					<h3 class="uk-panel-title">
+						<span>{{ shift.date | date: 'dd.MM.yyyy' }},&nbsp;</span>
+						<span *ngIf="shift.trip && shift.trip.pointA">{{ shift.trip.pointA.title }}</span>
+						<span *ngIf="shift.trip && shift.trip.pointB">&nbsp;&rarr;&nbsp;{{ shift.trip.pointB.title }}</span>
+					</h3>
+					<order-shift [(shift)]="item.shifts[i]"></order-shift>
+				</div>
+			</div>
+
 			<div class="uk-width-1-1 uk-grid uk-margin-top" [class.uk-hidden]="!item.package">
 				<div class="uk-width-1-1">
 					<h3 class="tm-article-subtitle">Hotel data</h3>
@@ -138,18 +153,6 @@
 							<option *ngFor="let roomItem of item.hotel.rooms" [ngValue]="roomItem">{{ roomItem.title }}</option>
 						</select>
 					</div>
-				</div>
-			</div>
-
-			<div class="uk-width-1-1 uk-grid uk-margin-top">
-				<div class="uk-width-8-10">
-					<h3 class="tm-article-subtitle">Shifts</h3>
-				</div>
-				<div class="uk-width-2-10">
-					<a class="uk-align-right admin-cursor-pointer" (click)="addShift(); $event.stopPropagation()">
-						<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
-						<u>Add shift</u>
-					</a>
 				</div>
 			</div>
 

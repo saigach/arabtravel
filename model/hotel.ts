@@ -1,6 +1,23 @@
 import { newDate, Model, File } from './common'
 import { User } from './user'
 
+export class Option {
+	title: string
+	cost: number
+
+	constructor(value: any = {}) {
+		this.title = String(value.title || '')
+		this.cost = Math.max( 0, Number.parseFloat(value.cost || 0) || 0 )
+	}
+
+	toObject(): {} {
+		return {
+			title: this.title,
+			cost: this.cost,
+		}
+	}
+}
+
 export class Room {
 
 	title: string
@@ -8,11 +25,19 @@ export class Room {
 	cost: number
 	content: string
 
+	options: Option[]
+
 	constructor(value: any = {}) {
 		this.title = String(value.title || '')
 		this.size = Math.max( 1, Number.parseInt(value.size || 0) || 0 )
 		this.cost = Math.max( 0, Number.parseFloat(value.cost || 0) || 0 )
-		this.content = String(value.content || '')
+		this.content = String(value.content || ''),
+		this.options = value.options instanceof Array ?
+			value.options.reduce(
+				( prev: Option[] , value:any ) =>
+					value ? prev.concat(value instanceof Option ? value : new Option(value)) : prev,
+				[]
+			) : []
 	}
 
 	toObject(): {} {
@@ -20,7 +45,8 @@ export class Room {
 			title: this.title,
 			size: this.size,
 			cost: this.cost,
-			content: this.content
+			content: this.content,
+			options: this.options.reduce( (prev: {}[], value: Option) => prev.concat(value.toObject()), [])
 		}
 	}
 }
@@ -35,6 +61,8 @@ export class Hotel extends Model {
 
 	rooms: Room[]
 	images: File[]
+
+	options: Option[]
 
 	constructor(value: any = {}) {
 		super(value)
@@ -57,6 +85,13 @@ export class Hotel extends Model {
 					value ? prev.concat(value instanceof File ? value : new File(value)) : prev,
 				[]
 			) : []
+
+		this.options = value.options instanceof Array ?
+			value.options.reduce(
+				( prev: Option[] , value:any ) =>
+					value ? prev.concat(value instanceof Option ? value : new Option(value)) : prev,
+				[]
+			) : []
 	}
 
 	toObject(): {} {
@@ -64,7 +99,8 @@ export class Hotel extends Model {
 			owner: this.owner && this.owner.id.uuid || null,
 			content: this.content,
 			rooms: this.rooms.reduce( (prev: {}[], value: Room) => prev.concat(value.toObject()), []),
-			images: this.images.reduce( (prev: {}[], value: File) => prev.concat(value.toObject()), [])
+			images: this.images.reduce( (prev: {}[], value: File) => prev.concat(value.toObject()), []),
+			options: this.options.reduce( (prev: {}[], value: Option) => prev.concat(value.toObject()), [])
 		})
 	}
 }

@@ -1,81 +1,25 @@
 <div class="uk-grid">
 	<div class="uk-width-1-6">
-		<div class="uk-width-1-1">
-			<label class="uk-form-label uk-width-1-1">Date of birth</label>
-			<div class="uk-form-controls">
-				<input #dateNode class="uk-width-1-1" type="text" [value]="__shift.date | date: 'dd.MM.yyyy'">
-			</div>
+		<label class="uk-form-label uk-width-1-1">Date</label>
+		<div class="uk-form-controls">
+			<input #dateNode class="uk-width-1-1" type="text" [value]="item.date | date: 'dd.MM.yyyy'">
 		</div>
 	</div>
 	<div class="uk-width-3-6">
-		<div class="uk-width-1-1">
-			<label class="uk-form-label uk-width-1-1">A &rarr; B</label>
-			<div class="uk-form-controls" *ngIf="__shift.trip">
-				<select [(ngModel)]="__shift.trip.pointA">
-					<option [ngValue]="__shift.trip.pointA">{{__shift.trip.pointA.title }}</option>
-					<option *ngFor="let point of points" [ngValue]="point">{{ point.title }}</option>
-				</select>
-				<select [(ngModel)]="__shift.trip.pointB">
-					<option [ngValue]="__shift.trip.pointB">{{__shift.trip.pointB.title }}</option>
-					<option *ngFor="let point of points" [ngValue]="point">{{ point.title }}</option>
-				</select>
-			</div>
-			<div class="uk-form-controls" *ngIf="!__shift.trip">
-				<a class="admin-cursor-pointer" (click)="setTour(); $event.stopPropagation()">
-					<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
-					<u>Set tour</u>
-				</a>
-			</div>
-		</div>
+		<label class="uk-form-label uk-width-1-1">Trip (A &rarr; B)</label>
+		<select [(ngModel)]="item.trip" (change)="changeTrip()">
+			<option *ngIf="item.trip" [ngValue]="item.trip">{{ item.trip.fullTitle }}</option>
+			<option *ngFor="let trip of trips" [ngValue]="trip">{{ trip.fullTitle }}</option>
+		</select>
 	</div>
 	<div class="uk-width-2-6">
-		<div class="uk-width-1-1">
-			<label class="uk-form-label uk-width-1-1">Vehicle</label>
-			<div class="uk-form-controls">
-				<select>
-					<option>none</option>
-				</select>
-			</div>
-		</div>
+		<label class="uk-form-label uk-width-1-1">Vehicle</label>
+		<select [(ngModel)]="item.vehicle">
+			<option *ngIf="item.vehicle" [ngValue]="item.vehicle">{{ item.vehicle.title }}</option>
+			<option *ngFor="let vehicle of vehicles" [ngValue]="vehicle">{{ vehicle.title }}</option>
+		</select>
 	</div>
-	<div class="uk-width-1-4 uk-margin-top" *ngIf="__shift.price">
-		<div class="uk-width-1-1">
-			<label class="uk-width-1-1 uk-form-label">Adults</label>
-			<div class="uk-width-1-1 uk-form-controls">
-				<input class="uk-width-1-1" type="number" [(ngModel)]="__shift.price.adults">
-			</div>
-		</div>
-	</div>
-	<div class="uk-width-1-4 uk-margin-top" *ngIf="__shift.price">
-		<div class="uk-width-1-1">
-			<label class="uk-width-1-1 uk-form-label">Kids</label>
-			<div class="uk-width-1-1 uk-form-controls">
-				<input class="uk-width-1-1" type="number" [(ngModel)]="__shift.price.kids">
-			</div>
-		</div>
-	</div>
-	<div class="uk-width-1-4 uk-margin-top" *ngIf="__shift.price">
-		<div class="uk-width-1-1">
-			<label class="uk-width-1-1 uk-form-label">Infants</label>
-			<div class="uk-width-1-1 uk-form-controls">
-				<input class="uk-width-1-1" type="number" [(ngModel)]="__shift.price.infants">
-			</div>
-		</div>
-	</div>
-	<div class="uk-width-1-4 uk-margin-top" *ngIf="__shift.price">
-		<div class="uk-width-1-1">
-			<label class="uk-width-1-1 uk-form-label">Egyptian mark-up</label>
-			<div class="uk-width-1-1 uk-form-controls">
-				<input class="uk-width-1-1" type="number" [(ngModel)]="__shift.price.egyptianMarkUp">
-			</div>
-		</div>
-	</div>
-	<div class="uk-width-1-1 uk-margin-top" *ngIf="!__shift.price">
-		<div class="uk-width-1-1">
-			<a class="admin-cursor-pointer" (click)="setPrice(); $event.stopPropagation()">
-				<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
-				<u>Set price</u>
-			</a>
-		</div>
+	<div class="uk-width-1-1 admin-hidde-cild" *ngIf="item.price">
+		<trip-price [(price)]="item.price"></trip-price>
 	</div>
 </div>

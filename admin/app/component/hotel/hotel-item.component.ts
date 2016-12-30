@@ -8,7 +8,7 @@ import { APIService } from '../../service/api.service'
 import { FileService } from '../../service/file.service'
 
 import { File } from '../../../../model/common'
-import { Hotel, Room } from '../../../../model/hotel'
+import { Hotel, Room, Option } from '../../../../model/hotel'
 
 @Component({
 	moduleId: module.id,
@@ -67,6 +67,20 @@ export class HotelItemComponent implements OnInit {
 
 	deleteImage(image: File): void {
 		this.item.images = this.item.images.filter( value => value !== image)
+	}
+
+	addOption(room: Room): void {
+		if (!room)
+			this.item.options.push(new Option())
+		else
+			room.options.push(new Option())
+	}
+
+	deleteOption(room: Room, option: Option) {
+		if (!room)
+			this.item.options = this.item.options.filter(value => value !== option)
+		else
+			room.options = room.options.filter(value => value !== option)
 	}
 
 	back(): void {

@@ -74,6 +74,15 @@ export class Price {
 
 	costs: Cost[] = AgeGroup.List.reduce( (prev: Cost[], ageGroup: AgeGroup) => prev.concat(new Cost(ageGroup)), [] )
 
+	getCost(arg: AgeGroup | string): number {
+		let cost = this.costs.find( (value:Cost) =>
+			arg instanceof AgeGroup ? value.ageGroup.id === arg.id : value.ageGroup.id === arg
+		)
+		if (!cost)
+			return 0
+		return cost.cost
+	}
+
 	vehicles: VehicleCost[] = []
 
 	refunds: Refund[]
@@ -139,6 +148,10 @@ export class Trip extends Model {
 	images: File[] = []
 
 	prices: Price[] = []
+
+	get fullTitle():string {
+		return `${this.title} (${this.pointA && this.pointA.title || ''} → ${this.pointB && this.pointB.title || ''})`
+	}
 
 	constructor(value: any = {}) {
 		super(value)

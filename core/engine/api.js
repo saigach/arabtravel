@@ -36,6 +36,9 @@ module.exports = class APIEngine {
 
 				switch (model) {
 					case 'trip':
+					case 'hotel':
+					case 'point':
+					case 'vehiclet':
 						return this.DB.query(`
 							SELECT
 								objects.id,
@@ -45,7 +48,7 @@ module.exports = class APIEngine {
 							FROM
 								objects
 							WHERE
-								model = 'trip' AND
+								model = ${model} AND
 								enable
 						`).then(response => ({
 							code: 200,
