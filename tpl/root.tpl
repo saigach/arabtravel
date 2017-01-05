@@ -133,22 +133,22 @@
                         </a>
                     </div>
                     <div class="pull-right">
-                        <div class="dropdown pull-right">
+                        <div class="dropdown pull-right" data-uk-dropdown="{mode:'click'}">
                             <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 USD
                                 <span class="caret"></span>
                             </button>
-                            <ul class="dropdown-menu" aria-labelledby="dLabel">
+                            <ul class="uk-dropdown dropdown-menu" aria-labelledby="dLabel">
                                 <li><a href="">USD</a></li>
                                 <li><a href="">JOD</a></li>
                             </ul>
                         </div>
-                        <div class="dropdown pull-right">
+                        <div class="dropdown pull-right" data-uk-dropdown="{mode:'click'}">
                             <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 EN
                                 <span class="caret"></span>
                             </button>
-                            <ul class="dropdown-menu" aria-labelledby="dLabel">
+                            <ul class="uk-dropdown dropdown-menu" aria-labelledby="dLabel">
                                 <li><a href="">EN</a></li>
                                 <li><a href="">AR</a></li>
                             </ul>
