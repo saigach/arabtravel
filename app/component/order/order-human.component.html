@@ -24,12 +24,6 @@
                 <label for="rf">Date of birth</label>
                 <div class='input-group date'>
                     <input #dobNode type="text" class="form-control" [value]="__human.dob | date: 'dd.MM.yyyy'">
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                    <span class="passenger-info_age">
-                        ({{ human.getAge() }} years)
-                    </span>
                 </div>
 
             </div>
@@ -61,5 +55,3 @@
     </div>
 
 </div>
-
-

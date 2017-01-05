@@ -172,9 +172,9 @@
                     <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
                 </button>
                 <ul class="nav navbar-nav navbar-right header-navbar">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Passenger Info<strong class="caret"></strong></a>
-                        <ul class="dropdown-menu">
+                    <li class="dropdown" data-uk-dropdown="{mode:'click'}">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Passenger Info<strong class="caret"></strong></a>
+                        <ul class="uk-dropdown dropdown-menu">
                         	{{~it.static :value:index}}
 								 <li>
                                 	<a href="/{{=value.url}}">{{=value.title}}</a>
@@ -182,9 +182,9 @@
 							{{~}}
                         </ul>
                     </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Contact Us<strong class="caret"></strong></a>
-                        <ul class="dropdown-menu">
+                    <li class="dropdown" data-uk-dropdown="{mode:'click'}">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Contact Us<strong class="caret"></strong></a>
+                        <ul class="uk-dropdown dropdown-menu">
                             <li>
                                 <a href="#">Jordan</a>
                             </li>

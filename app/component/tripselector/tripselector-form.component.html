@@ -77,9 +77,6 @@
                                 <label for="rf">Date of departure</label>
                                 <div class='input-group date'>
 									<input #departureDateNode name="departureDate" class="form-control" type="text"  [value]="departureDate | date: 'dd.MM.yyyy'">
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
                                 </div>
 
                             </div>
@@ -88,11 +85,7 @@
                                 <label for="rf">Date of return</label>
                                 <div class='input-group date'>
                                    <input #returnDateNode name="returnDate" class="form-control" type="text" [value]="returnDate | date: 'dd.MM.yyyy'">
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
                                 </div>
-
                             </div>
 
                             <div class="col-md-4" [class.hide]="type !== 'package'">
@@ -117,7 +110,6 @@
                         </div>
 
                         <div class="text-center submit-btn-container">
-
                             <input type="submit" class="btn btn-danger" (click)="submit()" value="CHECK AVALIABILITY" [disabled]="!valid">
                         </div>
                     </form>
@@ -129,3 +121,5 @@
 
     </div>
 </div>
+
+{{vehicleList | json}}
