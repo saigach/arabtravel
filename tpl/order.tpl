@@ -1,3 +1,3 @@
 <app>
-	<div class='uil-cube-css'><div></div><div></div><div></div><div></div></div>
+	<div class='loader-at'></div>
 </app>
