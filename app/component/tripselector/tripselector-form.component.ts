@@ -120,7 +120,7 @@ export class TripSelectorFormComponent implements OnInit {
 	returnDateDatepicker: any = null
 	returnDate: Date = new Date()
 
-	adults: number = 0
+	adults: number = 1
 	kinds: number = 0
 	infants: number = 0
 
