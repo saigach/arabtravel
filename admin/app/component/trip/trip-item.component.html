@@ -71,20 +71,21 @@
 		<div class="uk-width-1-1 uk-margin-top" [class.uk-hidden]="!item.package">
 			<div  *ngFor="let hotel of item.hotels; let i = index;" class="uk-panel uk-panel-box uk-width-1-1">
 				<div class="uk-panel-badge uk-badge uk-badge-danger admin-cursor-pointer" (click)="deleteHotel(hotel); $event.stopPropagation()"><i class="uk-icon-trash"></i></div>
-				<div class="uk-panel-title uk-grid">
-					<h3 class="uk-width-8-10"><span *ngIf="hotel">{{ hotel.title }}</span></h3>
-					<div class="uk-width-2-10">
-						<hotel-selector [(hotel)]="item.hotels[i]"></hotel-selector>
-					</div>
+				<div class="uk-panel-title">
+					<select name="type" [(ngModel)]="item.hotels[i]" (change)="hotelChange(i);">
+						<option [ngValue]="null">None</option>
+						<option *ngIf="item.hotels[i]" [ngValue]="item.hotels[i]">{{ item.hotels[i].title }} (Current)</option>
+						<option *ngFor="let hotelItem of hotels" [ngValue]="hotelItem">{{ hotelItem.title }}</option>
+					</select>
 				</div>
 				<div class="uk-grid" *ngIf="hotel !== null">
 					<div class="uk-width-1-1">
 						<h4 class="tm-article-subtitle">Rooms</h4>
 					</div>
-					<div class="uk-width-1-1 uk-margin-top">
+					<div class="uk-width-1-1 uk-margin-left">
 						<ul class="uk-width-1-1 uk-list">
 							<li *ngFor="let room of hotel.rooms | listOrderBy : ['title']">
-								<b>{{ room.title }}, {{ room.size }}bed, {{ room.cost | currency:'USD':true:'1.2-2' }}</b>
+								<b>{{ room.title }}, {{ room.size }} bed, {{ room.cost | currency:'USD':true:'1.2-2' }}</b>
 								<ul class="uk-width-1-1 uk-list" *ngIf="room.options.length > 0">
 									<li *ngFor="let option of room.options | listOrderBy : ['title']">{{ option.title }}, {{ option.cost | currency:'USD':true:'1.2-2' }}</li>
 								</ul>
@@ -94,7 +95,7 @@
 					<div class="uk-width-1-1 uk-margin-top" *ngIf="hotel.options.length > 0">
 						<h4 class="tm-article-subtitle">Options</h4>
 					</div>
-					<div class="uk-width-1-1 uk-margin-top" *ngIf="hotel.options.length > 0">
+					<div class="uk-width-1-1 uk-margin-left" *ngIf="hotel.options.length > 0">
 						<ul class="uk-width-1-1 uk-list">
 							<li *ngFor="let option of hotel.options | listOrderBy : ['title']">{{ option.title }}, {{ option.cost | currency:'USD':true:'1.2-2' }}</li>
 						</ul>

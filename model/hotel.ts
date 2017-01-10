@@ -2,16 +2,19 @@ import { newDate, Model, File } from './common'
 import { User } from './user'
 
 export class Option {
+	enable: boolean
 	title: string
 	cost: number
 
 	constructor(value: any = {}) {
+		this.enable = value.enable === undefined ? true : Boolean(value.enable)
 		this.title = String(value.title || '')
 		this.cost = Math.max( 0, Number.parseFloat(value.cost || 0) || 0 )
 	}
 
 	toObject(): {} {
 		return {
+			enable: this.enable,
 			title: this.title,
 			cost: this.cost,
 		}
@@ -22,6 +25,7 @@ export class Room {
 
 	title: string
 	size: number
+	beds: number
 	cost: number
 	content: string
 
@@ -30,6 +34,7 @@ export class Room {
 	constructor(value: any = {}) {
 		this.title = String(value.title || '')
 		this.size = Math.max( 1, Number.parseInt(value.size || 0) || 0 )
+		this.beds = Math.max( 1, Number.parseInt(value.beds || 0) || 0 )
 		this.cost = Math.max( 0, Number.parseFloat(value.cost || 0) || 0 )
 		this.content = String(value.content || ''),
 		this.options = value.options instanceof Array ?
@@ -44,6 +49,7 @@ export class Room {
 		return {
 			title: this.title,
 			size: this.size,
+			beds: this.beds,
 			cost: this.cost,
 			content: this.content,
 			options: this.options.reduce( (prev: {}[], value: Option) => prev.concat(value.toObject()), [])

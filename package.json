@@ -33,10 +33,10 @@
 
 		"blueimp-canvas-to-blob": "*",
 		"jquery": "^2.2.4",
+		"uikit": "^2.27.2",
 		"pica": "*",
 		"font-awesome": "*",
 		"froala-editor": "*",
-		"uikit": "*",
 
 		"bootstrap": "^3.3.7",
 		"bootstrap-select": "*",

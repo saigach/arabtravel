@@ -134,25 +134,21 @@
 				<div class="uk-width-1-1">
 					<h3 class="tm-article-subtitle">Hotel data</h3>
 				</div>
-				<div class="uk-width-1-2">
-					<div class="uk-button uk-margin-left uk-form-select" data-uk-form-select>
-						<span>Hotel</span>
-						<i class="uk-icon-caret-down"></i>
-						<select name="type" [(ngModel)]="item.hotel" (change)="hotelChange();">
-							<option *ngIf="item.hotel" [ngValue]="item.hotel">{{ item.hotel.title }}</option>
-							<option *ngFor="let hotelItem of hotels" [ngValue]="hotelItem">{{ hotelItem.title }}</option>
-						</select>
-					</div>
+				<div class="uk-width-1-2 uk-margin-top">
+					<b>Hotel:</b>
+					<select name="type" [(ngModel)]="item.hotel" (change)="hotelChange();">
+						<option [ngValue]="null">None</option>
+						<option *ngIf="item.hotel" [ngValue]="item.hotel">{{ item.hotel.title }} (Current)</option>
+						<option *ngFor="let hotelItem of hotels" [ngValue]="hotelItem">{{ hotelItem.title }}</option>
+					</select>
 				</div>
-				<div class="uk-width-1-2" *ngIf="item.hotel">
-					<div class="uk-button uk-margin-left uk-form-select" data-uk-form-select>
-						<span>Room</span>
-						<i class="uk-icon-caret-down"></i>
-						<select name="type" [(ngModel)]="item.room">
-							<option *ngIf="item.room" [ngValue]="item.room">{{ item.room.title }}</option>
-							<option *ngFor="let roomItem of item.hotel.rooms" [ngValue]="roomItem">{{ roomItem.title }}</option>
-						</select>
-					</div>
+				<div class="uk-width-1-2 uk-margin-top" *ngIf="item.hotel">
+					<b>Room:</b>
+					<select name="type" [(ngModel)]="item.room">
+						<option [ngValue]="null">None</option>
+						<option *ngIf="item.room" [ngValue]="item.room">{{ item.room.title }} (Current)</option>
+						<option *ngFor="let roomItem of item.hotel.rooms" [ngValue]="roomItem">{{ roomItem.title }}</option>
+					</select>
 				</div>
 			</div>
 

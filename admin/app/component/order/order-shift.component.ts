@@ -61,10 +61,13 @@ export class OrderShiftComponent implements OnInit {
 	}
 
 	changeTrip(): void {
-		this.apiService.get<Trip>(Trip, this.item.trip).then( (response: Trip) => {
-			this.item.trip = response
+		if (this.item.trip)
+			this.apiService.get<Trip>(Trip, this.item.trip).then( (response: Trip) => {
+				this.item.trip = response
+				this.reloadPrice()
+			})
+		else
 			this.reloadPrice()
-		})
 	}
 }
 

@@ -88,15 +88,7 @@ export class OrderItemComponent implements OnInit {
 				.then((response: Order) => this.item = response)
 				.catch(error => this.item = null)
 
-		// Promise.all([
-		// 	this.apiService.get<Trip>(Trip).then( (response: Trip[]) => this.trips = response ),
-		// 	this.apiService.get<Hotel>(Hotel).then( (response: Hotel[]) => this.hotels = response )
-		// ]).then( () => {
-		// 	if (id.toLowerCase() !== 'new')
-		// 		this.apiService.get<Order>(Order, id)
-		// 			.then((response: Order) => this.item = response)
-		// 			.catch(error => this.item = null)
-		// })
+		this.apiService.get<Hotel>(Hotel).then( (response: Hotel[]) => this.hotels = response )
 	}
 
 	back(): void {
@@ -112,9 +104,13 @@ export class OrderItemComponent implements OnInit {
 	}
 
 	hotelChange():void {
-		this.apiService.get<Hotel>(Hotel, this.item.hotel)
-			.then((response: Hotel) => this.item.hotel = response)
-			.catch(error => this.item.hotel = null)
+		if (this.item.hotel)
+			this.apiService.get<Hotel>(Hotel, this.item.hotel)
+				.then((response: Hotel) => {
+					this.item.hotel = response
+					this.item.room = null
+				})
+				.catch(error => this.item.hotel = null)
 	}
 
 	addShift(): void {
@@ -131,9 +127,6 @@ export class OrderItemComponent implements OnInit {
 		this.submitted = true
 
 		this.apiService.update<Order>(Order, this.item).then((response: Order) => this.back())
-	}
-	test(): void {
-		console.log(1111)
 	}
 }
 

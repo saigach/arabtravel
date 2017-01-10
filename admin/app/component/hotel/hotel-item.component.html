@@ -47,19 +47,25 @@
 					<div class="uk-panel-badge uk-badge uk-badge-danger admin-cursor-pointer" (click)="deleteRoom(room); $event.stopPropagation()"><i class="uk-icon-trash"></i></div>
 					<h3 class="uk-panel-title">Room &laquo;{{ room.title }}&raquo;</h3>
 					<div class="uk-grid">
-						<div class="uk-width-1-3">
+						<div class="uk-width-1-4">
 							<label class="uk-form-label uk-width-1-1">Title</label>
 							<div class="uk-form-controls">
 								<input class="uk-width-1-1" type="text" [(ngModel)]="room.title">
 							</div>
 						</div>
-						<div class="uk-width-1-3">
+						<div class="uk-width-1-4">
 							<label class="uk-form-label uk-width-1-1">Size</label>
 							<div class="uk-form-controls">
 								<input class="uk-width-1-1" type="number" min="1" [(ngModel)]="room.size">
 							</div>
 						</div>
-						<div class="uk-width-1-3">
+						<div class="uk-width-1-4">
+							<label class="uk-form-label uk-width-1-1">Beds</label>
+							<div class="uk-form-controls">
+								<input class="uk-width-1-1" type="number" min="1" [(ngModel)]="room.beds">
+							</div>
+						</div>
+						<div class="uk-width-1-4">
 							<label class="uk-form-label uk-width-1-1">Cost</label>
 							<div class="uk-form-controls">
 								<input class="uk-width-1-1" type="number" min="0" [(ngModel)]="room.cost">

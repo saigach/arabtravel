@@ -8,14 +8,16 @@
 	<div class="uk-width-3-6">
 		<label class="uk-form-label uk-width-1-1">Trip (A &rarr; B)</label>
 		<select [(ngModel)]="item.trip" (change)="changeTrip()">
-			<option *ngIf="item.trip" [ngValue]="item.trip">{{ item.trip.fullTitle }}</option>
+			<option [ngValue]="null">None</option>
+			<option *ngIf="item.trip" [ngValue]="item.trip">{{ item.trip.fullTitle }} (Current)</option>
 			<option *ngFor="let trip of trips" [ngValue]="trip">{{ trip.fullTitle }}</option>
 		</select>
 	</div>
 	<div class="uk-width-2-6">
 		<label class="uk-form-label uk-width-1-1">Vehicle</label>
 		<select [(ngModel)]="item.vehicle">
-			<option *ngIf="item.vehicle" [ngValue]="item.vehicle">{{ item.vehicle.title }}</option>
+			<option [ngValue]="null">None</option>
+			<option *ngIf="item.vehicle" [ngValue]="item.vehicle">{{ item.vehicle.title }} (Current)</option>
 			<option *ngFor="let vehicle of vehicles" [ngValue]="vehicle">{{ vehicle.title }}</option>
 		</select>
 	</div>

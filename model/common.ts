@@ -115,8 +115,8 @@ export function str2Date(value = null) {
 	if (!value)
 		return newDate()
 
-	let [day, month, year] = value.split('.')
-	return newDate(new Date(year, month, day))
+	let [day, month, year] = value.split('.').map( value => Number.parseInt(value) )
+	return newDate(new Date(year, month - 1, day))
 }
 
 export class Model {

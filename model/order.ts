@@ -175,6 +175,7 @@ export class Order extends Model {
 			shifts: this.shifts.reduce( (prev: {}[], value: Shift) => prev.concat(value.toObject()), []),
 			people: this.people.reduce( (prev: {}[], value: Human) => prev.concat(value.toObject()), []),
 			hotel: this.hotel && this.hotel.toObject() || null,
+			room: this.hotel && this.room && this.room.toObject() || null,
 			paymentType: this.paymentType.id,
 			card: this.card.toObject(),
 			status: this.status.id

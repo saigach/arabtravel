@@ -63,13 +63,13 @@ export class TripItemComponent implements OnInit {
 										&& this.points.find(value => value.id.uuid === this.item.pointB.id.uuid)
 										|| null
 
-						this.hotels = this.hotels.map(
+						this.item.hotels = this.item.hotels.map(
 							(hotel: Hotel) => this.hotels.find( value => value.id.uuid === hotel.id.uuid ) || null
 						).filter( (value: Hotel) => value && value.enable )
 
-						for (let i = 0; i < this.hotels.length; ++i)
-							 this.apiService.get<Hotel>(Hotel, this.hotels[i]).then(
-							 		(response: Hotel) => this.hotels[i] = response
+						for (let i = 0; i < this.item.hotels.length; ++i)
+							 this.apiService.get<Hotel>(Hotel, this.item.hotels[i]).then(
+							 		(response: Hotel) => this.item.hotels[i] = response
 							 )
 					})
 					.catch(error => this.item = null)
@@ -82,6 +82,10 @@ export class TripItemComponent implements OnInit {
 
 	deleteHotel(hotel: Hotel): void {
 		this.item.hotels = this.item.hotels.filter(value => value !== hotel)
+	}
+
+	hotelChange(i: number): void {
+		this.apiService.get<Hotel>(Hotel, this.item.hotels[i]).then( (response: Hotel) => this.item.hotels[i] = response)
 	}
 
 	addPrice(): void {
