@@ -2,6 +2,7 @@ import { newDate, Model, File } from './common'
 
 export class Nationality {
 	static List:Nationality[] = [
+		new Nationality({ id: 'jordanian', title: 'Jordanian', icon: null }),
 		new Nationality({ id: 'afghan', title: 'Afghan', icon: null }),
 		new Nationality({ id: 'albanian', title: 'Albanian', icon: null }),
 		new Nationality({ id: 'algerian', title: 'Algerian', icon: null }),
@@ -93,7 +94,6 @@ export class Nationality {
 		new Nationality({ id: 'ivorian', title: 'Ivorian', icon: null }),
 		new Nationality({ id: 'jamaican', title: 'Jamaican', icon: null }),
 		new Nationality({ id: 'japanese', title: 'Japanese', icon: null }),
-		new Nationality({ id: 'jordanian', title: 'Jordanian', icon: null }),
 		new Nationality({ id: 'kazakhstani', title: 'Kazakhstani', icon: null }),
 		new Nationality({ id: 'kenyan', title: 'Kenyan', icon: null }),
 		new Nationality({ id: 'kittian-and-nevisian', title: 'Kittian and Nevisian', icon: null }),
