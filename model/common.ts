@@ -173,3 +173,11 @@ export class File {
 		}
 	}
 }
+
+export type SearchData = {
+	pointA: string,
+	pointB: string,
+	departureDate: Date,
+	anyDate: boolean,
+	peopleCount: { ageGroup: string, count: number }[]
+}

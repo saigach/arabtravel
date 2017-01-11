@@ -6,7 +6,7 @@
 'use strict'
 
 const customQueryList = {
-	trip: `objects.data->'pointA' AS "pointA", objects.data->'pointB' AS "pointB"`
+	trip: `objects.data->'package' AS "package", objects.data->'pointA' AS "pointA", objects.data->'pointB' AS "pointB"`
 }
 
 

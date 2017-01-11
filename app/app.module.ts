@@ -11,6 +11,7 @@ import { AppComponent } from './component/app.component'
 
 import { TripSelectorFormComponent } from './component/tripselector/tripselector-form.component'
 import { OrderPageComponent } from './component/order/order-page.component'
+import { PackageListComponent } from './component/packagelist/packagelist.component'
 import { OrderHumanComponent } from './component/order/order-human.component'
 
 import { UserPageComponent } from './component/user/user-page.component'
@@ -26,6 +27,7 @@ import { UserPageComponent } from './component/user/user-page.component'
 		AppComponent,
 		TripSelectorFormComponent,
 		OrderPageComponent,
+		PackageListComponent,
 		OrderHumanComponent,
 		UserPageComponent
 	],

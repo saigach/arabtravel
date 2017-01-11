@@ -3,7 +3,7 @@ import { Router } from '@angular/router'
 
 import { APIService } from '../../service/api.service'
 
-import { str2Date } from '../../../model/common'
+import { str2Date, SearchData } from '../../../model/common'
 import { Trip, VehicleCost} from '../../../model/trip'
 import { Point } from '../../../model/point'
 import { Vehicle } from '../../../model/vehicle'
@@ -243,5 +243,19 @@ export class TripSelectorFormComponent implements OnInit {
 			window.location.href = '/order'
 			return
 		}
+
+		let searchData: SearchData = {
+			pointA: this.pointA && this.pointA.id.uuid || null,
+			pointB: this.pointB && this.pointB.id.uuid || null,
+			departureDate: this.departureDate,
+			anyDate: this.anyDate,
+			peopleCount: this.peopleCount.reduce( (prev:{ ageGroup: string, count: number }[], value: PeopleCount ) =>
+				prev.concat({ ageGroup: value.ageGroup.id, count: value.count }),
+				[]
+			)
+		}
+
+		localStorage.setItem('searchData', JSON.stringify(searchData))
+		window.location.href = '/package-list'
 	}
 }
