@@ -25,7 +25,10 @@
 	</div>
 	<div class="uk-width-1-1 uk-form uk-grid">
 		<div *ngFor="let vehicleCost of item.vehicles" class="uk-width-1-5">
-			<label class="uk-form-label uk-width-1-1">{{ vehicleCost.vehicle.title }}, $</label>
+			<label class="uk-form-label uk-width-1-1">
+				<input type="checkbox" [(ngModel)]="vehicleCost.enable">
+				<span>{{ vehicleCost.vehicle.title }}, $</span>
+			</label>
 			<div class="uk-form-controls">
 				<input class="uk-width-1-1" type="number" min="0" [(ngModel)]="vehicleCost.cost">
 			</div>

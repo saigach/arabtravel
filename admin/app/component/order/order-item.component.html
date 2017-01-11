@@ -141,6 +141,14 @@
 						<option *ngIf="item.hotel" [ngValue]="item.hotel">{{ item.hotel.title }} (Current)</option>
 						<option *ngFor="let hotelItem of hotels" [ngValue]="hotelItem">{{ hotelItem.title }}</option>
 					</select>
+					<label class="uk-form-label uk-width-1-1 uk-margin-top" *ngIf="item.hotel">Options:</label>
+					<ul class="uk-width-1-1 uk-list" *ngIf="item.hotel">
+						<li *ngFor="let option of item.hotel.options | listOrderBy : ['title']">
+							<input type="checkbox" [(ngModel)]="option.enable">
+							{{ option.title }}
+							<input type="number" min="0" [(ngModel)]="option.cost">
+						</li>
+					</ul>
 				</div>
 				<div class="uk-width-1-2 uk-margin-top" *ngIf="item.hotel">
 					<b>Room:</b>
@@ -149,75 +157,131 @@
 						<option *ngIf="item.room" [ngValue]="item.room">{{ item.room.title }} (Current)</option>
 						<option *ngFor="let roomItem of item.hotel.rooms" [ngValue]="roomItem">{{ roomItem.title }}</option>
 					</select>
-				</div>
-			</div>
-
-			<!-- <div class="uk-width-1-1 uk-grid uk-margin-top">
-				<div class="uk-width-8-10">
-					<h3 class="tm-article-subtitle">Shifts</h3>
-				</div>
-				<div class="uk-width-2-10">
-					<a class="admin-cursor-pointer" (click)="addShift(); $event.stopPropagation()">
-						<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
-						<u>Add shift</u>
-					</a>
-				</div>
-			</div>
-			<div class="uk-width-1-1 uk-margin-top">
-				<div  *ngFor="let shift of item.shifts; let i = index;" class="uk-panel uk-panel-box uk-width-1-1">
-					<div class="uk-panel-badge uk-badge uk-badge-danger admin-cursor-pointer" (click)="deleteShift(shift); $event.stopPropagation()"><i class="uk-icon-trash"></i></div>
-					<h3 class="uk-panel-title"><span *ngIf="shift.trip">{{ shift.trip.pointA.title }} &rarr; {{ shift.trip.pointB.title }} valid <b>{{ shift.date | date: 'dd.MM.yyyy'}}</b></span></h3>
-					<order-shift [(shift)]="item.shifts[i]"></order-shift>
+					<div class="uk-width-1-1 uk-margin-top" *ngIf="item.room">
+						<b>Size:</b>
+						<span>{{item.room.size}}</span>
+						<b class="uk-margin-left">Beds:</b>
+						<span>{{item.room.beds}}</span>
+						<b class="uk-margin-left">Cost:</b>
+						<input class="" type="number" min="0" [(ngModel)]="item.room.cost">
+						<label class="uk-form-label uk-width-1-1 uk-margin-top">Options:</label>
+						<ul class="uk-width-1-1 uk-list" *ngIf="item.room">
+							<li *ngFor="let option of item.room.options | listOrderBy : ['title']">
+								<input type="checkbox" [(ngModel)]="option.enable">
+								{{ option.title }}
+								<input type="number" min="0" [(ngModel)]="option.cost">
+							</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 			<div class="uk-width-1-1 uk-margin-top">
-				<div class="uk-width-1-1">
-					<h3 class="tm-article-subtitle">Calculation</h3>
+				<h3 class="tm-article-subtitle">Global paremetrs</h3>
+			</div>
+			<div class="uk-width-2-10">
+				<label class="uk-form-label uk-width-1-1">Processing fee</label>
+				<div class="uk-form-controls">
+					<input class="uk-width-1-1" type="number" min="0" [(ngModel)]="item.processingFee">
 				</div>
+			</div>
+			<div class="uk-width-2-10">
+				<label class="uk-form-label uk-width-1-1">Egyptian mark up</label>
+				<div class="uk-form-controls">
+					<input class="uk-width-1-1" type="number" min="0" [(ngModel)]="item.egyptianMarkUp">
+				</div>
+			</div>
+			<div class="uk-width-2-10">
+				<label class="uk-form-label uk-width-1-1">Exchange rate</label>
+				<div class="uk-form-controls">
+					<input class="uk-width-1-1" type="number" min="0" [(ngModel)]="item.exchangeRate">
+				</div>
+			</div>
+			<div class="uk-width-1-1 uk-margin-top">
+				<h3 class="tm-article-subtitle">Calculation</h3>
 			</div>
 			<div class="uk-width-1-1 uk-margin-top">
 				<table class="uk-table uk-table-hover uk-table-condensed">
 					<thead>
 						<tr>
-							<th>Date</th>
-							<th>A &rarr; B</th>
+							<th>#</th>
+							<th>Type</th>
+							<th>Content</th>
 							<th>Cost</th>
 							<th>Sum</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr *ngFor="let shift of item.shifts">
-							<td>{{ shift.date | date: 'dd.MM.yyyy'}}</td>
-							<td><span *ngIf="shift.trip">{{ shift.trip.pointA.title }} &rarr; {{ shift.trip.pointB.title }}</span></td>
+						<tr *ngFor="let shift of item.sortedShifts">
+							<td></td>
+							<td>Shift</td>
 							<td>
-								<div *ngIf="getAdultsCount(shift.date)" class="uk-width-1-1">
-									<span>Adults</span><span class="uk-margin-small-left">{{ getAdultsCount(shift.date) }}&nbsp;x&nbsp;{{ shift.price.adults | currency:'USD':true:'1.2-2' }}</span>
+								<span>{{ shift.date | date: 'dd.MM.yyyy'}}</span>
+								<span *ngIf="shift.trip && shift.trip.pointA">,&emsp;{{ shift.trip.pointA.title }}</span>
+								<span *ngIf="shift.trip && shift.trip.pointB">&ensp;&rarr;&ensp;{{ shift.trip.pointB.title }}</span>
+							</td>
+							<td>
+								<div *ngFor="let peopleCount of item.getPeopleCounts(shift.date)">
+									<span>{{ peopleCount.ageGroup.title }}</span>
+									<span class="uk-margin-small-left">{{ peopleCount.count }}&nbsp;x&nbsp;{{ shift.price && shift.price.getCost(peopleCount.ageGroup) || 0 }}</span>
 								</div>
-								<div *ngIf="getKidsCount(shift.date)" class="uk-width-1-1">
-									<span>2-6yr</span><span class="uk-margin-small-left">{{ getKidsCount(shift.date) }}&nbsp;x&nbsp;{{ shift.price.kids | currency:'USD':true:'1.2-2' }}</span>
-								</div>
-								<div *ngIf="getInfantsCount(shift.date)" class="uk-width-1-1">
-									<span>&lt;2yr</span><span class="uk-margin-small-left">{{ getInfantsCount(shift.date) }}&nbsp;x&nbsp;{{ shift.price.infants | currency:'USD':true:'1.2-2' }}</span>
+								<div *ngIf="shift.vehicle">
+									<span>{{ shift.vehicle.title }}</span>
+									<span class="uk-margin-small-left">1&nbsp;x&nbsp;{{ shift.price && shift.price.getVehicleCost(shift.vehicle) }}</span>
 								</div>
 							</td>
-							<td>{{ ((getAdultsCount(shift.date) * shift.price.adults) + (getKidsCount(shift.date) * shift.price.kids) + (getInfantsCount(shift.date) * shift.price.infants)) | currency:'USD':true:'1.2-2' }}</td>
+							<td>{{ item.getShiftCost(shift) }}</td>
+						</tr>
+						<tr *ngIf="item.hotel">
+							<td></td>
+							<td>Hotel</td>
+							<td>
+								<span>{{ item.hotel.title }}</span>
+								<span *ngIf="item.from">,&emsp;from: {{ item.from | date: 'dd.MM.yyyy' }}</span>
+								<span *ngIf="item.to">&nbsp;to: {{ item.to | date: 'dd.MM.yyyy' }}</span>
+								<span *ngIf="item.room">,&emsp;{{ item.room.title }}</span>
+							</td>
+							<td>
+								<div *ngIf="item.room">
+									<div>
+										<span>Room</span>
+										<span class="uk-margin-small-left">{{ item.duration }}&nbsp;x&nbsp;{{ item.room.cost }}</span>
+									</div>
+									<div *ngFor="let option of item.room.enabledOptions">
+										<span>{{ option.title }}</span>
+										<span class="uk-margin-small-left">{{ item.duration }}&nbsp;x&nbsp;{{ option.cost }}</span>
+									</div>
+								</div>
+								<div *ngFor="let option of item.hotel.enabledOptions">
+									<span>{{ option.title }}</span>
+									<span class="uk-margin-small-left">1&nbsp;x&nbsp;{{ option.cost }}</span>
+								</div>
+							</td>
+							<td>{{ item.hotelCost }}</td>
 						</tr>
 					</tbody>
 					<tfoot>
 						<tr>
-							<td colspan="3" class="uk-text-right"><b>Full sum</b></td>
-							<td><b>{{totalCost | currency:'USD':true:'1.2-2' }}</b></td>
+							<td colspan="4" class="uk-text-right"><b>Full sum:</b></td>
+							<td><b>{{ item.fullCost }}</b></td>
+						</tr>
+						<tr>
+							<td colspan="4" class="uk-text-right"><b>Processing fee:</b></td>
+							<td><b>{{ item.processingFee }}</b></td>
+						</tr>
+						<tr>
+							<td colspan="4" class="uk-text-right"><b>Total cost:</b></td>
+							<td><b>{{ item.totalCost }}</b></td>
 						</tr>
 					</tfoot>
 				</table>
-			</div> -->
+			</div>
 
 			<div class="uk-width-1-1 uk-margin-top">
 				<button type="submit" class="uk-button uk-button-success uk-align-right" (click)="submit()"><i class="uk-icon-floppy-o"></i>&emsp;Submit</button>
 			</div>
-			<div class="uk-width-1-1 uk-margin-top">
+			<!-- <div class="uk-width-1-1 uk-margin-top">
 				<p>DEBUG: {{ item | json }}</p>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </div>

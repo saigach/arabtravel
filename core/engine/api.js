@@ -48,7 +48,7 @@ module.exports = class APIEngine {
 							FROM
 								objects
 							WHERE
-								model = ${model} AND
+								model = '${model}' AND
 								enable
 						`).then(response => ({
 							code: 200,
@@ -167,6 +167,19 @@ module.exports = class APIEngine {
 						data: Object.assign({}, response[0].data || {}, response[0], { data: null })
 					})
 				)
+			case 'config':
+				return this.DB.query(`
+					SELECT
+						key,
+						value
+					FROM
+						config
+					WHERE
+						key IN ('exchangeRate', 'processingFee', 'egyptianMarkUp')
+				`).then(rows => ({
+					code: 200,
+					data: rows.reduce( (prev, row) => Object.assign(prev, { [row.key]: row.value } ), {} )
+				}))
 			default:
 				return Promise.resolve({
 					code: 400,

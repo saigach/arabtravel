@@ -7,7 +7,7 @@ export class Option {
 	cost: number
 
 	constructor(value: any = {}) {
-		this.enable = value.enable === undefined ? true : Boolean(value.enable)
+		this.enable = !!value.enable
 		this.title = String(value.title || '')
 		this.cost = Math.max( 0, Number.parseFloat(value.cost || 0) || 0 )
 	}
@@ -30,6 +30,21 @@ export class Room {
 	content: string
 
 	options: Option[]
+
+	get enabledOptions(): Option[] {
+		return this.options.filter( (value:Option) => value.enable )
+	}
+
+	get optionsCost(): number {
+		return this.options.reduce( (prev: number, option: Option) =>
+			option.enable ? prev + option.cost : prev,
+			0
+		)
+	}
+
+	get fullCost(): number {
+		return this.cost + this.optionsCost
+	}
 
 	constructor(value: any = {}) {
 		this.title = String(value.title || '')
@@ -69,6 +84,28 @@ export class Hotel extends Model {
 	images: File[]
 
 	options: Option[]
+
+	get enabledOptions(): Option[] {
+		return this.options.filter( (value:Option) => value.enable )
+	}
+
+	get optionsCost(): number {
+		return this.options.reduce( (prev: number, option: Option) =>
+			option.enable ? prev + option.cost : prev,
+			0
+		)
+	}
+
+	get roomsCost():number {
+		return this.rooms.reduce( (prev: number, room: Room) =>
+			prev + room.fullCost,
+			0
+		)
+	}
+
+	get fullCost(): number {
+		return this.roomsCost + this.optionsCost
+	}
 
 	constructor(value: any = {}) {
 		super(value)

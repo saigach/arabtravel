@@ -2,7 +2,7 @@ import { newDate, Model, File } from './common'
 import { User } from './user'
 
 import { Trip, Price } from './trip'
-import { Human } from './human'
+import { Human, AgeGroup } from './human'
 import { Hotel, Room } from './hotel'
 import { Vehicle } from './vehicle'
 
@@ -109,6 +109,9 @@ export class Card {
 	}
 }
 
+type PeopleCount = { ageGroup: AgeGroup, count: number }
+const ONE_DAY = 24*60*60*1000 // hours*minutes*seconds*milliseconds
+
 export class Order extends Model {
 	static __api: string = 'objects/order'
 	static __primaryFields = Model.__primaryFields.concat(['owner', 'date', 'status'])
@@ -129,6 +132,10 @@ export class Order extends Model {
 	card: Card
 
 	status: OrderStatus
+
+	processingFee: number
+	exchangeRate: number
+	egyptianMarkUp: number
 
 	constructor(value: any = {}) {
 		super(value)
@@ -165,6 +172,10 @@ export class Order extends Model {
 		this.card = new Card(value.card || {})
 
 		this.status = OrderStatus.getOrderStatus(value.status || null)
+
+		this.processingFee = Math.max( 0, Number.parseFloat(value.processingFee || 0) || 0 )
+		this.exchangeRate = Math.max( 0, Number.parseFloat(value.exchangeRate || 0) || 0 )
+		this.egyptianMarkUp = Math.max( 0, Number.parseFloat(value.egyptianMarkUp || 0) || 0 )
 	}
 
 	toObject(): {} {
@@ -178,45 +189,79 @@ export class Order extends Model {
 			room: this.hotel && this.room && this.room.toObject() || null,
 			paymentType: this.paymentType.id,
 			card: this.card.toObject(),
-			status: this.status.id
+			status: this.status.id,
+			processingFee: this.processingFee,
+			exchangeRate: this.exchangeRate,
+			egyptianMarkUp: this.egyptianMarkUp
 		})
 	}
 
+	get sortedShifts(): Shift[] {
+		return this.shifts.sort( (a: Shift, b: Shift) => Number(a.date) - Number(b.date) )
+	}
 
-	// getAdultsCount(date: Date = new Date()): number {
-	// 	return this.people.reduce( (prev: number, human: Human) =>
-	// 		human.getAgeGroup(date) === 'adults' ? ++prev : prev,
-	// 		0
-	// 	)
-	// }
+	get from(): Date {
+		if (this.shifts.length <= 0)
+			return null
 
-	// getKidsCount(date: Date = new Date()): number {
-	// 	return this.people.reduce( (prev: number, human: Human) =>
-	// 		human.getAgeGroup(date) === 'kids' ? ++prev : prev,
-	// 		0
-	// 	)
-	// }
+		return this.sortedShifts[0].date
+	}
 
-	// getInfantsCount(date: Date = new Date()): number {
-	// 	return this.people.reduce( (prev: number, human: Human) =>
-	// 		human.getAgeGroup(date) === 'infants' ? ++prev : prev,
-	// 		0
-	// 	)
-	// }
+	get to(): Date {
+		if (this.shifts.length <= 0)
+			return null
 
-	// get ticketsCost(): number {
-	// 	return this.shifts.reduce(
-	// 		(prev: number, shift: Shift ) => {
-	// 			prev += this.getAdultsCount(shift.date) * shift.price.adults
-	// 			prev += this.getKidsCount(shift.date) * shift.price.kids
-	// 			prev += this.getInfantsCount(shift.date) * shift.price.infants
-	// 			return prev
-	// 		},
-	// 		0
-	// 	)
-	// }
+		return this.sortedShifts[this.shifts.length - 1].date
+	}
 
-	// get totalCost(): number {
-	// 	return this.ticketsCost
-	// }
+	get duration(): number {
+		if (!this.from || !this.to)
+			return 0
+
+		return Math.round( Math.abs( ( this.to.getTime() - this.from.getTime() ) / ONE_DAY ) )
+	}
+
+	getPeopleCounts(date: Date = new Date()): PeopleCount[] {
+		return AgeGroup.List.reduce( (prev: PeopleCount[] , ageGroup: AgeGroup) =>
+			prev.concat({
+				ageGroup: ageGroup,
+				count: this.people.reduce( (prev: number, human: Human) =>
+					human.getAgeGroup(date) === ageGroup ? ++prev: prev,
+					0
+				)
+			}),
+			[]
+		).filter( (value:PeopleCount) => value.count > 0 )
+	}
+
+	getShiftCost(shift: Shift = null): number {
+		if (!shift || !shift.price)
+			return 0
+
+		let sum = this.getPeopleCounts(shift.date).reduce( (prev: number, peopleCount:PeopleCount) =>
+			prev + (shift.price.getCost(peopleCount.ageGroup) * peopleCount.count),
+			0
+		)
+
+		if (shift.vehicle)
+			sum += shift.price.getVehicleCost(shift.vehicle)
+
+		return sum
+	}
+
+	get hotelCost(): number {
+		return (this.hotel ? this.hotel.optionsCost : 0)
+				+ (this.room ? this.room.fullCost * this.duration : 0)
+	}
+
+	get fullCost(): number {
+		return this.shifts.reduce( (prev: number, shift: Shift) =>
+			prev + this.getShiftCost(shift),
+			0
+		) + this.hotelCost
+	}
+
+	get totalCost(): number {
+		return this.fullCost + this.processingFee
+	}
 }

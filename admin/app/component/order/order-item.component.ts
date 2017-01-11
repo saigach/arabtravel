@@ -31,43 +31,6 @@ export class OrderItemComponent implements OnInit {
 		return this.item.title.length > 0
 	}
 
-	// getAdultsCount(date: Date = new Date()): number {
-	// 	return this.item.people.reduce( (prev: number, human: Human) =>
-	// 		human.getAgeGroup(date) === 'adults' ? ++prev : prev,
-	// 		0
-	// 	)
-	// }
-
-	// getKidsCount(date: Date = new Date()): number {
-	// 	return this.item.people.reduce( (prev: number, human: Human) =>
-	// 		human.getAgeGroup(date) === 'kids' ? ++prev : prev,
-	// 		0
-	// 	)
-	// }
-
-	// getInfantsCount(date: Date = new Date()): number {
-	// 	return this.item.people.reduce( (prev: number, human: Human) =>
-	// 		human.getAgeGroup(date) === 'infants' ? ++prev : prev,
-	// 		0
-	// 	)
-	// }
-
-	// get ticketsCost(): number {
-	// 	return this.item.shifts.reduce(
-	// 		(prev: number, shift: Shift ) => {
-	// 			prev += this.getAdultsCount(shift.date) * shift.price.adults
-	// 			prev += this.getKidsCount(shift.date) * shift.price.kids
-	// 			prev += this.getInfantsCount(shift.date) * shift.price.infants
-	// 			return prev
-	// 		},
-	// 		0
-	// 	)
-	// }
-
-	// get totalCost(): number {
-	// 	return this.ticketsCost
-	// }
-
 	constructor(private route: ActivatedRoute,
 				private location: Location,
 				private apiService: APIService,
@@ -87,6 +50,16 @@ export class OrderItemComponent implements OnInit {
 			this.apiService.get<Order>(Order, id)
 				.then((response: Order) => this.item = response)
 				.catch(error => this.item = null)
+		else
+			this.apiService.config().then((response: {
+				processingFee: number,
+				exchangeRate: number,
+				egyptianMarkUp: number
+			}) => {
+				this.item.processingFee = response.processingFee
+				this.item.exchangeRate = response.exchangeRate
+				this.item.egyptianMarkUp = response.egyptianMarkUp
+			})
 
 		this.apiService.get<Hotel>(Hotel).then( (response: Hotel[]) => this.hotels = response )
 	}

@@ -78,12 +78,17 @@ export class Price {
 		let cost = this.costs.find( (value:Cost) =>
 			arg instanceof AgeGroup ? value.ageGroup.id === arg.id : value.ageGroup.id === arg
 		)
-		if (!cost)
-			return 0
-		return cost.cost
+		return cost && cost.cost || 0
 	}
 
 	vehicles: VehicleCost[] = []
+
+	getVehicleCost(arg: Vehicle): number {
+		let cost = this.vehicles.find( (value:VehicleCost) =>
+			value.enable && value.vehicle.id.uuid === arg.id.uuid
+		)
+		return cost && cost.cost || 0
+	}
 
 	refunds: Refund[]
 
