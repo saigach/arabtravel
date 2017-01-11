@@ -236,7 +236,17 @@ export class AgeGroup {
 
 export class Human extends Model {
 	nationality: Nationality
-	dob: Date
+
+	_dob: Date
+
+	get dob() {
+		return this._dob
+	}
+
+	set dob(value: Date) {
+		this._dob = value
+		this.defaultAgeGroup = this.ageGroup
+	}
 
 	phone: string
 	email: string
@@ -244,6 +254,8 @@ export class Human extends Model {
 	passport: string
 
 	tickets: File[]
+
+	defaultAgeGroup: AgeGroup
 
 	getAge(now: Date = newDate()): number {
 		if (!this.dob)
@@ -261,7 +273,7 @@ export class Human extends Model {
 		let age = this.getAge(now)
 
 		if (age === null)
-			return null
+			return this.defaultAgeGroup || AgeGroup.List[0]
 
 		if (age > 6)
 			return  AgeGroup.getAgeGroup('adults')
@@ -274,7 +286,7 @@ export class Human extends Model {
 	}
 
 	get ageGroup(): AgeGroup {
-		return this.getAgeGroup()
+		return this.getAgeGroup(this.dob || null)
 	}
 
 	constructor(value: any = {}) {
@@ -295,6 +307,10 @@ export class Human extends Model {
 					value ? prev.concat(value instanceof File ? value : new File(value)) : prev,
 				[]
 			) : []
+
+		this.defaultAgeGroup = value.defaultAgeGroup instanceof AgeGroup ?
+									value.defaultAgeGroup :
+									AgeGroup.getAgeGroup(value.defaultAgeGroup || null)
 	}
 
 	toObject(): {} {
@@ -304,7 +320,8 @@ export class Human extends Model {
 			phone: this.phone,
 			email: this.email,
 			passport: this.passport,
-			tickets: this.tickets.reduce( (prev: {}[], value: File) => prev.concat(value.toObject()), [])
+			tickets: this.tickets.reduce( (prev: {}[], value: File) => prev.concat(value.toObject()), []),
+			defaultAgeGroup: this.defaultAgeGroup.id
 		})
 	}
 }

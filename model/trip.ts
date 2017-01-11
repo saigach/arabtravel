@@ -194,7 +194,11 @@ export class Trip extends Model {
 		if (this.prices.length <= 0)
 			return null
 
-		return this.prices[0]
+		let currentDate = Number(date)
+		return this.prices.find( (value: Price) =>
+			Number(value.startDate) <= currentDate &&
+			Number(value.endDate) >= currentDate
+		) || null
 	}
 
 	toObject(): {} {

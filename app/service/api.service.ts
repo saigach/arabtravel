@@ -75,4 +75,13 @@ export class APIService {
 						.then(value => new User(value))
 						.catch(APIService.handleError)
 	}
+
+	config(): Promise<any> {
+		let api =  APIService.getAPIurl('config')
+		return this.http.get(api)
+						.toPromise()
+						.then(response => response.json() || null)
+						.then(value => value && value || {} )
+						.catch(APIService.handleError)
+	}
 }

@@ -3,11 +3,15 @@ import { Router } from '@angular/router'
 
 import { APIService } from '../../service/api.service'
 
-import { Trip } from '../../../model/trip'
+import { str2Date } from '../../../model/common'
+import { Trip, VehicleCost} from '../../../model/trip'
 import { Point } from '../../../model/point'
 import { Vehicle } from '../../../model/vehicle'
+import { Human, AgeGroup } from '../../../model/human'
+import { Order, Shift } from '../../../model/order'
 
 type TripType = 'oneway' | 'round' | 'package'
+type PeopleCount = { ageGroup: AgeGroup, count: number }
 
 @Component({
 	moduleId: module.id,
@@ -16,7 +20,7 @@ type TripType = 'oneway' | 'round' | 'package'
 })
 export class TripSelectorFormComponent implements OnInit {
 
-	_type: TripType = 'oneway'
+	private _type: TripType = 'oneway'
 
 	get type(): TripType {
 		return this._type
@@ -28,16 +32,18 @@ export class TripSelectorFormComponent implements OnInit {
 		this.pointB = null
 	}
 
+	points: Point[] = []
 	trips: Trip[] = []
 
-	private getTrips(pointA: Point = null, pointB: Point = null): Trip[] {
+	private getTrips(pointA: Point = null, pointB: Point = null, isPackage: boolean = false): Trip[] {
 		return this.trips.filter( (trip: Trip) =>
+			trip.package === isPackage &&
 			trip.pointA && (!pointA || trip.pointA.id.uuid === pointA.id.uuid) &&
 			trip.pointB && (!pointB || trip.pointB.id.uuid === pointB.id.uuid)
 		)
 	}
 
-	_pointA: Point = null
+	private _pointA: Point = null
 
 	get pointA(): Point {
 		return this._pointA
@@ -49,7 +55,7 @@ export class TripSelectorFormComponent implements OnInit {
 		this.vehicle = null
 	}
 
-	_pointB: Point = null
+	private _pointB: Point = null
 
 	get pointB(): Point {
 		return this._pointB
@@ -60,8 +66,8 @@ export class TripSelectorFormComponent implements OnInit {
 		this.vehicle = null
 	}
 
-	private getPoints(type: 'A' | 'B', otherPoint: Point): Point[] {
-		let points = this.getTrips().reduce( (prev: Point[], trip: Trip) => {
+	private getPoints(type: 'A' | 'B', otherPoint: Point, isPackage: boolean = false): Point[] {
+		let points = this.getTrips(null, null, isPackage).reduce( (prev: Point[], trip: Trip) => {
 			if (!otherPoint || trip[type === 'A' ? 'pointB' : 'pointA'].id.uuid === otherPoint.id.uuid )
 				return prev.concat(trip[type === 'A' ? 'pointA' : 'pointB'])
 			return prev
@@ -78,6 +84,7 @@ export class TripSelectorFormComponent implements OnInit {
 	get APoints(): Point[] {
 		switch (this.type) {
 			case 'package':
+				return this.getPoints('A', null, true)
 			case 'oneway':
 				return this.getPoints('A', null)
 			case 'round':
@@ -98,7 +105,7 @@ export class TripSelectorFormComponent implements OnInit {
 
 		switch (this.type) {
 			case 'package':
-				return this.getPoints('B', null)
+				return this.getPoints('B', null, true)
 			case 'oneway':
 				return this.getPoints('B', this.pointA)
 			case 'round':
@@ -120,14 +127,25 @@ export class TripSelectorFormComponent implements OnInit {
 	returnDateDatepicker: any = null
 	returnDate: Date = new Date()
 
-	adults: number = 1
-	kinds: number = 0
-	infants: number = 0
-
-	_vehicleList: Vehicle[] = []
+	peopleCount: PeopleCount[] = AgeGroup.List.reduce(
+		( prev:PeopleCount[], value:AgeGroup ) =>
+			prev.concat({
+				ageGroup: value,
+				count: value.id === 'adults' ? 1 : 0
+			}),
+		[]
+	)
 
 	get vehicleList(): Vehicle[] {
-		return this._vehicleList
+		let trip = this.getTrips(this.pointB, this.pointA).shift()
+
+		if (!trip)
+			return []
+
+		return trip.getPrice(this.departureDate || null).vehicles.reduce( (prev: Vehicle[], value:VehicleCost) =>
+			value.enable ? prev.concat(value.vehicle) : prev,
+			[]
+		)
 	}
 
 	vehicle: Vehicle = null
@@ -137,25 +155,30 @@ export class TripSelectorFormComponent implements OnInit {
 	get valid(): boolean {
 		return !!this.pointA
 			&& !!this.pointB
-			&& this.adults > 0
-			&& this.kinds >= 0
-			&& this.infants >= 0
+			&& this.peopleCount.reduce( (prev: boolean, value: PeopleCount) =>
+					value.ageGroup.id === 'adults' && value.count > 0 ? true : prev,
+					false
+				)
 	}
 
 	constructor(private router: Router, private apiService: APIService) {}
 
 	ngOnInit(): void {
-		this.apiService.get<Trip>(Trip).then( ( trips:Trip[] ) => this.trips = trips )
 
-		const newDate = value => {
-			let [day, month, year] = value.split('.')
-			let date = new Date(year, month, day)
-
-			if ( !Number.isNaN( date.getTime() ) )
-				return date
-
-			return null
-		}
+		Promise.all([
+			this.apiService.get<Point>(Point).then( (response: Point[]) => this.points = response ),
+			this.apiService.get<Trip>(Trip).then( (response: Trip[]) => this.trips = response ),
+		]).then( () => {
+			this.trips = this.trips.map( (trip:Trip) => {
+				trip.pointA = trip.pointA
+					&& this.points.find(value => value.id.uuid === trip.pointA.id.uuid)
+					|| null
+				trip.pointB = trip.pointB
+					&& this.points.find(value => value.id.uuid === trip.pointB.id.uuid)
+					|| null
+				return trip
+			} ).filter( (trip:Trip) => trip.pointA && trip.pointB)
+		})
 
 		this.departureDateDatepicker = UIkit.datepicker(this.departureDateRef.nativeElement, {
 			weekstart: 1,
@@ -163,7 +186,7 @@ export class TripSelectorFormComponent implements OnInit {
 		})
 
 		this.departureDateDatepicker.on('hide.uk.datepicker', event =>
-			this.departureDate = newDate(event.target.value)
+			this.departureDate = str2Date(event.target.value)
 		)
 
 		this.returnDateDatepicker = UIkit.datepicker(this.returnDateRef.nativeElement, {
@@ -172,30 +195,8 @@ export class TripSelectorFormComponent implements OnInit {
 		})
 
 		this.returnDateDatepicker.on('hide.uk.datepicker', event =>
-			this.returnDate = newDate(event.target.value)
+			this.returnDate = str2Date(event.target.value)
 		)
-	}
-
-	get currentOrder(): {
-		type: TripType,
-		pointA: string,
-		pointB: string,
-		anyDate: boolean,
-		departureDate: Date,
-		returnDate: Date,
-		vehicle: string,
-		peopleCount: number
-	} {
-		return {
-			type: this.type,
-			pointA: this.pointA && this.pointA.id.uuid || null,
-			pointB: this.pointB && this.pointB.id.uuid || null,
-			anyDate: this.anyDate,
-			departureDate: this.departureDate,
-			returnDate: this.returnDate,
-			vehicle: this.vehicle && this.vehicle.id.uuid || null,
-			peopleCount: (this.adults + this.kinds + this.infants) || 1
-		}
 	}
 
 	submit(): void {
@@ -203,7 +204,44 @@ export class TripSelectorFormComponent implements OnInit {
 			return
 		this.submitted = true
 
-		localStorage.setItem('currentOrder', JSON.stringify(this.currentOrder))
-		window.location.href = "/order"
+		if (this.type !== 'package') {
+			let order = new Order()
+			order.package = false
+
+			let AB = this.getTrips(this.pointA, this.pointB).shift()
+			if (AB) {
+				order.shifts.push(new Shift({
+					date: this.departureDate,
+					trip: AB,
+					price: AB.getPrice(this.departureDate),
+					vehicle: this.vehicle
+				}))
+			}
+
+			if (this.type === 'round') {
+				let BA = this.getTrips(this.pointB, this.pointA).shift()
+				if (BA) {
+					order.shifts.push(new Shift({
+						date: this.returnDate,
+						trip: BA,
+						price: BA.getPrice(this.returnDate),
+						vehicle: this.vehicle
+					}))
+				}
+			}
+
+			order.people = this.peopleCount.reduce(
+				(prev: Human[], value:PeopleCount) => {
+					for(let i = 0; i < value.count; i++)
+						prev.push(new Human({ defaultAgeGroup: value.ageGroup }))
+					return prev
+				},
+				[]
+			)
+
+			localStorage.setItem('currentOrder', order.toString())
+			window.location.href = '/order'
+			return
+		}
 	}
 }

@@ -7,20 +7,21 @@
                 <a href="/" class="btn btn-primary btn-ghost btn-left">New search</a>
                 <p>Some text describing important info. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud ex ercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 
-                <!-- <p> DEBUG: {{ order | json }}</p> -->
+                <!-- <p> DEBUG: {{ primaryContact | json }}</p> -->
 
                 <div class="order-form" id="order-form">
 
-                    <div *ngFor="let human of order.people; let i = index;" class="passenger-info">
+                    <div *ngFor="let human of item.people; let i = index" class="passenger-info">
                         <header class="passenger-info_header">
                             <span class="h3">Passenger {{ i + 1 }}</span>
                             <span class="styled-radio primary-contact-radio">
-                                <input name="primary_contact" class="radio" type="radio" id="pc_1" value="Passenger 1"><label for="pc_1">Primary contact</label>
+                                <input name="primaryContact" class="radio" type="radio" [attr.id]="'pc-' + i" [checked]="primaryContact === human" (click)="primaryContact = human">
+                                <label [attr.for]="'pc-' + i">Primary contact</label>
                             </span>
                             <a class="passenger-info_delete" (click)="deleteHuman(human); $event.stopPropagation()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                         </header>
 
-                        <order-human [(human)]="order.people[i]"></order-human>
+                        <order-human [(item)]="item.people[i]"></order-human>
                     </div>
 
                     <div class="text-right">
@@ -37,36 +38,24 @@
                         <h3>Enter your payment details</h3>
 
                         <div class="payment-details_methods">
-							<span class="payment-details_method">
+							<span class="payment-details_method" *ngFor="let paymentType of paymentTypes; let i = index">
 								<span class="styled-radio">
-									<input id="payment-type-card" name="payment-type" class="radio" type="radio" [checked]="order.paymentType === 'card'" (click)="order.paymentType = 'card'">
-									<label for="payment-type-card">Visa/Mastercard</label>
-								</span>
-							</span>
-							<span class="payment-details_method">
-								<span class="styled-radio">
-									<input id="payment-type-bank" name="payment-type" class="radio" type="radio" [checked]="order.paymentType === 'bank'" (click)="order.paymentType = 'bank'">
-									<label for="payment-type-bank">Bank transfer</label>
-								</span>
-							</span>
-							<span class="payment-details_method">
-								<span class="styled-radio">
-									<input id="payment-type-wu" name="payment-type" class="radio" type="radio" [checked]="order.paymentType === 'wu'" (click)="order.paymentType = 'wu'">
-									<label for="payment-type-wu">Western Union</label>
+									<input name="paymentType" class="radio" type="radio" [attr.id]="'pt-' + i" [checked]="item.paymentType === paymentType" (click)="item.paymentType = paymentType">
+									<label [attr.for]="'pt-' + i">{{ paymentType.title }}</label>
 								</span>
 							</span>
 						</div>
 
-                        <div class="payment-system_container" id="payment-system_card" [class.hide]="order.paymentType !== 'card'">
+                        <div class="payment-system_container" id="payment-system_card" [class.hide]="item.paymentType.id !== 'card'">
                             <div class="payment-system_card">
                                 <div class="form-group row">
                                     <div class="col-md-3">
                                         <label>
-                                            CARD NUMBER
+                                            CARD NUMBER <span *ngIf="item.card.type">({{item.card.type}})</span>
                                         </label>
                                     </div>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" id="card-number" [(ngModel)]="order.card.number">
+                                        <input type="text" class="form-control" id="card-number" [(ngModel)]="item.card.number">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -76,7 +65,7 @@
                                         </label>
                                     </div>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" id="cardholder-name" [(ngModel)]="order.card.cardholder">
+                                        <input type="text" class="form-control" id="cardholder-name" [(ngModel)]="item.card.cardholder">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -88,12 +77,12 @@
                                     </div>
                                     <div class="col-md-5 valid-thru">
                                         <div class="valid-thru_month">
-                                            <select  id="valid-thru_month" data-control="selectpicker" class="selectpicker form-control fit-width" [(ngModel)]="order.card.validMonth">
+                                            <select  id="valid-thru_month" data-control="selectpicker" class="selectpicker form-control fit-width" [(ngModel)]="item.card.validMonth">
                                                 <option *ngFor="let month of months" [ngValue]="month">{{month}}</option>
                                             </select>
                                        </div>
                                         <div class="valid-thru_year">
-                                            <select name="" id="valid-thru_year" data-control="selectpicker" class="selectpicker form-control fit-width" [(ngModel)]="order.card.validYear">
+                                            <select name="" id="valid-thru_year" data-control="selectpicker" class="selectpicker form-control fit-width" [(ngModel)]="item.card.validYear">
                                                 <option *ngFor="let year of years" [ngValue]="year">{{year}}</option>
                                             </select>
                                         </div>
@@ -103,14 +92,14 @@
                                         <label for="cvv" class="cvv-label">
                                             CVV
                                         </label>
-                                        <input type="text" class="form-control" id="cvv" [(ngModel)]="order.card.cvv">
+                                        <input type="text" class="form-control" id="cvv" [(ngModel)]="item.card.cvv">
                                     </div>
 
                                 </div>
                             </div>
                         </div>
 
-                        <div class="payment-system_container" id="payment-system_card" [class.hide]="order.paymentType === 'card'">
+                        <div class="payment-system_container" id="payment-system_card" [class.hide]="item.paymentType.id === 'card'">
                             You have chosen (payment system name). We will contact you as soon as possible and inform you on next steps.
                         </div>
 
@@ -133,29 +122,21 @@
                         Order details
                     </header>
 
-                    <div *ngFor="let shift of order.shifts" class="order-trip_container">
+                    <div *ngFor="let shift of item.shifts" class="order-trip_container">
                         <div class="order-trip order-trip-outward">
                             <i class="ico ico_boat"></i>
                             <b>{{ shift.trip.pointA.title }} &rarr; {{ shift.trip.pointB.title }}</b> valid <b>{{ shift.date | date: 'dd.MM.yyyy'}}</b>
                         </div>
 
                         <div *ngIf="shift.price" class="order-trip_details">
-                            <div class="order-trip_detail" *ngIf="getAdultsCount(shift.date)">
-                                <div class="lbl">Adults</div>
-                                <div class="val">{{ getAdultsCount(shift.date) }}&nbsp;x&nbsp;{{ shift.price.getCost('adults') | currency:'USD':true:'1.2-2' }}</div>
-                            </div>
-                            <div class="order-trip_detail" *ngIf="getKidsCount(shift.date)">
-                                <div class="lbl">2-6yr</div>
-                                <div class="val">{{ getKidsCount(shift.date) }}&nbsp;x&nbsp;{{ shift.price.getCost('kids') | currency:'USD':true:'1.2-2'  }}</div>
-                            </div>
-                            <div class="order-trip_detail" *ngIf="getInfantsCount(shift.date)">
-                                <div class="lbl">&lt;2yr</div>
-                                <div class="val">{{ getInfantsCount(shift.date) }}&nbsp;x&nbsp;{{ shift.price.getCost('infants') | currency:'USD':true:'1.2-2' }}</div>
-                            </div>
-                           <!--  <div class="order-trip_detail">
-                                <div class="lbl">Vehicle (car)</div>
-                                <div class="val">$20</div>
-                            </div> -->
+							<div class="order-trip_detail" *ngFor="let peopleCount of item.getPeopleCounts(shift.date)">
+								<div class="lbl">{{ peopleCount.ageGroup.title }}</div>
+								<div class="val">{{ peopleCount.count }}&nbsp;x&nbsp;{{ (shift.price && shift.price.getCost(peopleCount.ageGroup) || 0) | number:'1.2-2' }}</div>
+							</div>
+							<div class="order-trip_detail" *ngIf="shift.vehicle">
+								<div class="lbl">{{ shift.vehicle.title }}</div>
+								<div class="val">1&nbsp;x&nbsp;{{ (shift.price && shift.price.getVehicleCost(shift.vehicle)) | number:'1.2-2' }}</div>
+							</div>
                         </div>
                     </div>
 
@@ -163,14 +144,21 @@
                     <div class="order-details_summary">
                         <div class="order-details_summary_line">
                             <div class="lbl">Tickets price</div>
-                            <div class="val">{{ ticketsCost | currency:'USD':true:'1.2-2' }}</div>
+                            <div class="val">{{ item.fullCost | number:'1.2-2' }}</div>
+                        </div>
+                    </div>
+
+                    <div class="order-details_summary">
+                        <div class="order-details_summary_line">
+                            <div class="lbl">Processing fee:</div>
+                            <div class="val">{{ item.processingFee | number:'1.2-2' }}</div>
                         </div>
                     </div>
 
                     <footer class="widget_footer">
                         <div class="order-details_total">
                             <div class="lbl">Total</div>
-                            <div class="val">{{ totalCost | currency:'USD':true:'1.2-2' }}</div>
+                            <div class="val">{{ item.totalCost | number:'1.2-2' }}</div>
                         </div>
                     </footer>
                 </aside>

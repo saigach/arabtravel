@@ -61,6 +61,7 @@
 					<label class="uk-form-label uk-width-1-1">Card number</label>
 					<div class="uk-form-controls">
 						<input class="uk-width-1-1" type="text" placeholder="Card number" [(ngModel)]="item.card.number">
+						<span>({{item.card.type || ''}})</span>
 					</div>
 				</div>
 				<div class="uk-width-3-10">
@@ -179,19 +180,19 @@
 				<h3 class="tm-article-subtitle">Global paremetrs</h3>
 			</div>
 			<div class="uk-width-2-10">
-				<label class="uk-form-label uk-width-1-1">Processing fee</label>
+				<label class="uk-form-label uk-width-1-1">Processing fee, JD</label>
 				<div class="uk-form-controls">
 					<input class="uk-width-1-1" type="number" min="0" [(ngModel)]="item.processingFee">
 				</div>
 			</div>
 			<div class="uk-width-2-10">
-				<label class="uk-form-label uk-width-1-1">Egyptian mark up</label>
+				<label class="uk-form-label uk-width-1-1">Egyptian mark up, JD</label>
 				<div class="uk-form-controls">
 					<input class="uk-width-1-1" type="number" min="0" [(ngModel)]="item.egyptianMarkUp">
 				</div>
 			</div>
 			<div class="uk-width-2-10">
-				<label class="uk-form-label uk-width-1-1">Exchange rate</label>
+				<label class="uk-form-label uk-width-1-1">Exchange, $ per JD</label>
 				<div class="uk-form-controls">
 					<input class="uk-width-1-1" type="number" min="0" [(ngModel)]="item.exchangeRate">
 				</div>
@@ -206,8 +207,8 @@
 							<th>#</th>
 							<th>Type</th>
 							<th>Content</th>
-							<th>Cost</th>
-							<th>Sum</th>
+							<th>Cost, JD</th>
+							<th>Sum, JD</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -222,14 +223,14 @@
 							<td>
 								<div *ngFor="let peopleCount of item.getPeopleCounts(shift.date)">
 									<span>{{ peopleCount.ageGroup.title }}</span>
-									<span class="uk-margin-small-left">{{ peopleCount.count }}&nbsp;x&nbsp;{{ shift.price && shift.price.getCost(peopleCount.ageGroup) || 0 }}</span>
+									<span class="uk-margin-small-left">{{ peopleCount.count }}&nbsp;x&nbsp;{{ (shift.price && shift.price.getCost(peopleCount.ageGroup) || 0) | number:'1.2-2' }}</span>
 								</div>
 								<div *ngIf="shift.vehicle">
 									<span>{{ shift.vehicle.title }}</span>
-									<span class="uk-margin-small-left">1&nbsp;x&nbsp;{{ shift.price && shift.price.getVehicleCost(shift.vehicle) }}</span>
+									<span class="uk-margin-small-left">1&nbsp;x&nbsp;{{ (shift.price && shift.price.getVehicleCost(shift.vehicle)) | number:'1.2-2' }}</span>
 								</div>
 							</td>
-							<td>{{ item.getShiftCost(shift) }}</td>
+							<td>{{ item.getShiftCost(shift) | number:'1.2-2' }}</td>
 						</tr>
 						<tr *ngIf="item.hotel">
 							<td></td>
@@ -244,33 +245,37 @@
 								<div *ngIf="item.room">
 									<div>
 										<span>Room</span>
-										<span class="uk-margin-small-left">{{ item.duration }}&nbsp;x&nbsp;{{ item.room.cost }}</span>
+										<span class="uk-margin-small-left">{{ item.duration }}&nbsp;x&nbsp;{{ item.room.cost | number:'1.2-2' }}</span>
 									</div>
 									<div *ngFor="let option of item.room.enabledOptions">
 										<span>{{ option.title }}</span>
-										<span class="uk-margin-small-left">{{ item.duration }}&nbsp;x&nbsp;{{ option.cost }}</span>
+										<span class="uk-margin-small-left">{{ item.duration }}&nbsp;x&nbsp;{{ option.cost | number:'1.2-2' }}</span>
 									</div>
 								</div>
 								<div *ngFor="let option of item.hotel.enabledOptions">
 									<span>{{ option.title }}</span>
-									<span class="uk-margin-small-left">1&nbsp;x&nbsp;{{ option.cost }}</span>
+									<span class="uk-margin-small-left">1&nbsp;x&nbsp;{{ option.cost | number:'1.2-2' }}</span>
 								</div>
 							</td>
-							<td>{{ item.hotelCost }}</td>
+							<td>{{ item.hotelCost | number:'1.2-2' }}</td>
 						</tr>
 					</tbody>
 					<tfoot>
 						<tr>
-							<td colspan="4" class="uk-text-right"><b>Full sum:</b></td>
-							<td><b>{{ item.fullCost }}</b></td>
+							<td colspan="4" class="uk-text-right"><b>Full sum, JD:</b></td>
+							<td><b>{{ item.fullCost | number:'1.2-2' }}</b></td>
 						</tr>
 						<tr>
-							<td colspan="4" class="uk-text-right"><b>Processing fee:</b></td>
-							<td><b>{{ item.processingFee }}</b></td>
+							<td colspan="4" class="uk-text-right"><b>Processing fee, JD:</b></td>
+							<td><b>{{ item.processingFee | number:'1.2-2' }}</b></td>
 						</tr>
 						<tr>
-							<td colspan="4" class="uk-text-right"><b>Total cost:</b></td>
-							<td><b>{{ item.totalCost }}</b></td>
+							<td colspan="4" class="uk-text-right"><b>Total cost, JD:</b></td>
+							<td><b>{{ item.totalCost | number:'1.2-2' }}</b></td>
+						</tr>
+						<tr>
+							<td colspan="4" class="uk-text-right"><b>Total cost, $:</b></td>
+							<td><b>{{ (item.totalCost * item.exchangeRate) | number:'1.2-2' }}</b></td>
 						</tr>
 					</tfoot>
 				</table>

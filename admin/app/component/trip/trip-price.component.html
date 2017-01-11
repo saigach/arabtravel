@@ -14,7 +14,7 @@
 	</div>
 	<div class="uk-width-1-1 uk-form uk-grid">
 		<div *ngFor="let cost of item.costs" class="uk-width-1-5">
-			<label class="uk-form-label uk-width-1-1">{{ cost.ageGroup.title }}, $</label>
+			<label class="uk-form-label uk-width-1-1">{{ cost.ageGroup.title }}, JD</label>
 			<div class="uk-form-controls">
 				<input class="uk-width-1-1" type="number" min="0" [(ngModel)]="cost.cost">
 			</div>
@@ -27,7 +27,7 @@
 		<div *ngFor="let vehicleCost of item.vehicles" class="uk-width-1-5">
 			<label class="uk-form-label uk-width-1-1">
 				<input type="checkbox" [(ngModel)]="vehicleCost.enable">
-				<span>{{ vehicleCost.vehicle.title }}, $</span>
+				<span>{{ vehicleCost.vehicle.title }}, JD</span>
 			</label>
 			<div class="uk-form-controls">
 				<input class="uk-width-1-1" type="number" min="0" [(ngModel)]="vehicleCost.cost">
@@ -54,7 +54,7 @@
 				<input class="uk-form-width-small uk-margin-right" type="number" min="0" [(ngModel)]="refund.days">
 				<label>Percent:</label>
 				<input class="uk-form-width-small uk-margin-right" type="number" min="0" [(ngModel)]="refund.percent">
-				<label>Sum:</label>
+				<label>Sum, JD:</label>
 				<input class="uk-form-width-small uk-margin-right" type="number" min="0" [(ngModel)]="refund.sum">
 				<i class="uk-icon-trash admin-cursor-pointer" (click)="deleteRefund(refund); $event.stopPropagation()"></i>
 			</li>

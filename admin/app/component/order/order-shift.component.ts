@@ -4,7 +4,7 @@ import { APIService } from '../../service/api.service'
 
 import { str2Date } from '../../../../model/common'
 import { Shift } from '../../../../model/order'
-import { Trip } from '../../../../model/trip'
+import { Trip, Price } from '../../../../model/trip'
 import { Vehicle } from '../../../../model/vehicle'
 
 @Component({
@@ -57,7 +57,7 @@ export class OrderShiftComponent implements OnInit {
 	}
 
 	reloadPrice(): void {
-		this.item.price = this.item.trip && this.item.trip.getPrice(this.item.date) || null
+		this.item.price = this.item.trip && this.item.trip.getPrice(this.item.date) || new Price()
 	}
 
 	changeTrip(): void {

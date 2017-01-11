@@ -36,6 +36,34 @@ module.exports = class APIEngine {
 
 				switch (model) {
 					case 'trip':
+						if (id)
+							return this.DB.query(`
+								SELECT
+									objects.id,
+									objects.enable,
+									objects.title,
+									objects.data
+								FROM
+									objects
+								WHERE
+									objects.model = '${model}'
+									AND
+									objects.id = '${id}'
+									AND
+									enable
+							`).then(rows => {
+
+								if (rows.length !== 1)
+									return {
+										code: 404,
+										data: { error: `Object "${id}"" not found`}
+									}
+
+								return {
+									code: 200,
+									data: Object.assign({}, rows[0].data || {}, rows[0], { data: null })
+								}
+							})
 					case 'hotel':
 					case 'point':
 					case 'vehiclet':

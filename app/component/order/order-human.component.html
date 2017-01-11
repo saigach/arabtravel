@@ -6,7 +6,7 @@
                 <label for="exampleInputEmail1">
                     Name
                 </label>
-                <input type="text" class="form-control" [(ngModel)]="__human.title">
+                <input type="text" class="form-control" [(ngModel)]="item.title">
             </div>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
@@ -14,8 +14,8 @@
                 <label for="exampleInputEmail1">
                     Nationality
                 </label>
-                <select [(ngModel)]="__human.nationality" data-control="selectpicker" class="selectpicker form-control fit-width">
-                    <option *ngFor="let item of nationality" [ngValue]="item">{{ item.title }}</option>
+                <select [(ngModel)]="item.nationality" data-control="selectpicker" class="selectpicker form-control fit-width">
+                    <option *ngFor="let n of nationality" [ngValue]="n">{{ n.title }}</option>
                 </select>
             </div>
         </div>
@@ -23,9 +23,8 @@
             <div class="form-group">
                 <label for="rf">Date of birth</label>
                 <div class='input-group date'>
-                    <input #dobNode type="text" class="form-control" [value]="__human.dob | date: 'dd.MM.yyyy'">
+                    <input #dobNode type="text" class="form-control" [value]="item.dob | date: 'dd.MM.yyyy'">
                 </div>
-
             </div>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
@@ -33,7 +32,7 @@
                 <label for="exampleInputEmail1">
                     Passport number
                 </label>
-                <input type="text" class="form-control" [(ngModel)]="__human.passport">
+                <input type="text" class="form-control" [(ngModel)]="item.passport">
             </div>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
@@ -41,7 +40,7 @@
                 <label for="exampleInputEmail1">
                     Phone
                 </label>
-                <input type="text" class="form-control" [(ngModel)]="__human.phone">
+                <input type="text" class="form-control" [(ngModel)]="item.phone">
             </div>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
@@ -49,7 +48,7 @@
                 <label for="exampleInputEmail1">
                     Email
                 </label>
-                <input type="email" class="form-control" [(ngModel)]="__human.email">
+                <input type="email" class="form-control" [(ngModel)]="item.email">
             </div>
         </div>
     </div>

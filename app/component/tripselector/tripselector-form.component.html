@@ -50,19 +50,9 @@
                             <div class="col-md-4">
                                 <div class="row">
 
-                                    <div class="col-md-4 form-group">
-                                        <label for="rf">Adults</label>
-                                        <input type="number" name="adults" min="1" class="form-control" [(ngModel)]="adults">
-                                    </div>
-
-                                    <div class="col-md-4 form-group">
-                                        <label for="rf">2-6 yr</label>
-                                        <input type="number" name="kinds" min="0" class="form-control" [(ngModel)]="kinds">
-                                    </div>
-
-                                    <div class="col-md-4 form-group">
-                                        <label for="rf">&lt;2 yr</label>
-                                        <input type="number" name="infants" min="0" class="form-control" [(ngModel)]="infants">
+                                    <div class="col-md-4 form-group" *ngFor="let pc of peopleCount">
+                                        <label for="rf">{{pc.ageGroup.title}}</label>
+                                        <input type="number" min="0" class="form-control" [(ngModel)]="pc.count" [ngModelOptions]="{standalone: true}">
                                     </div>
 
                                 </div>
@@ -103,6 +93,7 @@
                             <div class="col-md-4" [class.hide]="type === 'package'">
                                 <label>Vehicle</label>
                                 <select name="vehicle" [(ngModel)]="vehicle" id="rf" class="form-control fit-width" [disabled]="!pointA || !pointB">
+                                	<option [ngValue]="null">None</option>
                                     <option *ngFor="let curVehicle of vehicleList" [ngValue]="curVehicle">{{ curVehicle.title }}</option>
                                 </select>
                             </div>
@@ -121,5 +112,3 @@
 
     </div>
 </div>
-
-{{vehicleList | json}}
