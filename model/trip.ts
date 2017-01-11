@@ -158,6 +158,20 @@ export class Trip extends Model {
 		return `${this.title} (${this.pointA && this.pointA.title || ''} → ${this.pointB && this.pointB.title || ''})`
 	}
 
+	get firstImageUrl(): string {
+		if (this.images.length <= 0)
+			return 'none'
+
+		return `url(${this.images[0].link})`
+	}
+
+	get firstHotel(): Hotel {
+		if (this.hotels.length <= 0)
+			return null
+
+		return this.hotels[0]
+	}
+
 	constructor(value: any = {}) {
 		super(value)
 
@@ -199,6 +213,24 @@ export class Trip extends Model {
 			Number(value.startDate) <= currentDate &&
 			Number(value.endDate) >= currentDate
 		) || null
+	}
+
+	get basePrice(): number {
+		let sum = 0
+
+		let hotel = this.firstHotel
+
+		if (hotel)
+			sum += hotel.minimalCost
+
+		let price = this.getPrice()
+
+		if (price && price.costs.length > 0) {
+			let cost = price.costs.find( (value:Cost) => value.ageGroup.id === 'adults' )
+			sum += (cost ? cost.cost : price.costs[0].cost)
+		}
+
+		return sum
 	}
 
 	toObject(): {} {

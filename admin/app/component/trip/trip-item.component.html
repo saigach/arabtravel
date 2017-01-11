@@ -50,6 +50,25 @@
 			</div>
 		</div>
 
+		<div class="uk-width-1-1 uk-grid uk-margin-top">
+			<div class="uk-width-8-10">
+				<h3 class="tm-article-subtitle">Prices<span [class.uk-hidden]="!item.package"> (Two way)</span></h3>
+			</div>
+			<div class="uk-width-2-10">
+				<a class="uk-align-right admin-cursor-pointer" (click)="addPrice(); $event.stopPropagation()">
+					<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
+					<u>Add price</u>
+				</a>
+			</div>
+		</div>
+		<div class="uk-width-1-1 uk-margin-top">
+			<div  *ngFor="let price of item.prices; let i = index;" class="uk-panel uk-panel-box uk-width-1-1">
+				<div class="uk-panel-badge uk-badge uk-badge-danger admin-cursor-pointer" (click)="deletePrice(price); $event.stopPropagation()"><i class="uk-icon-trash"></i></div>
+				<h3 class="uk-panel-title">Price from {{ price.startDate | date: 'dd.MM.yyyy' }} to {{ price.endDate | date: 'dd.MM.yyyy' }}</h3>
+				<trip-price [(price)]="item.prices[i]"></trip-price>
+			</div>
+		</div>
+
 		<div class="uk-width-1-1 uk-form-controls uk-margin-top" [class.uk-hidden]="!item.package">
 			<h3 class="tm-article-subtitle">Package description</h3>
 			<div class="uk-form-controls">
@@ -120,25 +139,6 @@
 					<input type="file" accept="image/*" (change)="addImage($event.target)">
 				</li>
 			</ul>
-		</div>
-
-		<div class="uk-width-1-1 uk-grid uk-margin-top">
-			<div class="uk-width-8-10">
-				<h3 class="tm-article-subtitle">Prices</h3>
-			</div>
-			<div class="uk-width-2-10">
-				<a class="uk-align-right admin-cursor-pointer" (click)="addPrice(); $event.stopPropagation()">
-					<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
-					<u>Add price</u>
-				</a>
-			</div>
-		</div>
-		<div class="uk-width-1-1 uk-margin-top">
-			<div  *ngFor="let price of item.prices; let i = index;" class="uk-panel uk-panel-box uk-width-1-1">
-				<div class="uk-panel-badge uk-badge uk-badge-danger admin-cursor-pointer" (click)="deletePrice(price); $event.stopPropagation()"><i class="uk-icon-trash"></i></div>
-				<h3 class="uk-panel-title">Price from {{ price.startDate | date: 'dd.MM.yyyy' }} to {{ price.endDate | date: 'dd.MM.yyyy' }}</h3>
-				<trip-price [(price)]="item.prices[i]"></trip-price>
-			</div>
 		</div>
 
 		<div class="uk-width-1-1 uk-margin-top">

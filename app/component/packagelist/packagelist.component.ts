@@ -3,7 +3,7 @@ import { Router } from '@angular/router'
 
 import { APIService } from '../../service/api.service'
 
-import { str2Date } from '../../../model/common'
+import { str2Date, SearchData, newDate } from '../../../model/common'
 import { Order, Shift, PaymentType } from '../../../model/order'
 import { Trip, Price, VehicleCost } from '../../../model/trip'
 import { Point } from '../../../model/point'
@@ -43,7 +43,7 @@ export class PackageListComponent implements OnInit {
 
 	pointB: Point = null
 
-	private getPoints(type: 'A' | 'B', otherPoint: Point, isPackage: boolean = false): Point[] {
+	private getPoints(type: 'A' | 'B', otherPoint: Point): Point[] {
 		let points = this.getTrips().reduce( (prev: Point[], trip: Trip) => {
 			if (!otherPoint || trip[type === 'A' ? 'pointB' : 'pointA'].id.uuid === otherPoint.id.uuid )
 				return prev.concat(trip[type === 'A' ? 'pointA' : 'pointB'])
@@ -66,7 +66,7 @@ export class PackageListComponent implements OnInit {
 		if (!this.pointA)
 			return []
 
-		return this.getPoints('B', null)
+		return this.getPoints('B', this.pointA)
 	}
 
 	anyDate: boolean = false
@@ -84,7 +84,9 @@ export class PackageListComponent implements OnInit {
 		[]
 	)
 
-	submitted: boolean = false
+	get tripList(): Point[] {
+		return this.getTrips(this.pointA, this.pointB)
+	}
 
 	get valid(): boolean {
 		return !!this.pointA
@@ -95,11 +97,20 @@ export class PackageListComponent implements OnInit {
 				)
 	}
 
-	constructor(private router: Router, private apiService: APIService) {
-
-	}
+	constructor(private router: Router, private apiService: APIService) {}
 
 	ngOnInit(): void {
+		let searchData: SearchData = null
+
+		try {
+			searchData = JSON.parse(localStorage.getItem('searchData'))
+		} catch(error) {
+			searchData = null
+		}
+
+		if (searchData) {
+			console.dir(searchData)
+		}
 
 		Promise.all([
 			this.apiService.get<Point>(Point).then( (response: Point[]) => this.points = response ),
@@ -113,7 +124,36 @@ export class PackageListComponent implements OnInit {
 					&& this.points.find(value => value.id.uuid === trip.pointB.id.uuid)
 					|| null
 				return trip
-			} ).filter( (trip:Trip) => trip.pointA && trip.pointB)
+			} ).filter( (trip:Trip) => trip.pointA && trip.pointB && trip.package)
+
+			if (searchData) {
+				this.anyDate = !!searchData.anyDate
+
+				let date = newDate(searchData.departureDate || null) || new Date()
+				this.departureDate = date
+
+				let pointAuuid = searchData.pointA.trim().toLowerCase()
+
+				if (pointAuuid) {
+					this.pointA = this.APoints.find( (value:Point) => value.id.uuid === pointAuuid )
+
+					let pointBuuid = searchData.pointB.trim().toLowerCase()
+
+					if (pointBuuid)
+						this.pointB = this.BPoints.find( (value:Point) => value.id.uuid === pointBuuid )
+				}
+
+				if (searchData.peopleCount instanceof Array)
+				this.peopleCount.forEach( (peopleCount:PeopleCount) => {
+					let pc = searchData.peopleCount.find(
+						(value:{ ageGroup: string, count: number }) => value.ageGroup === peopleCount.ageGroup.id
+					)
+					if (pc)
+						peopleCount.count = pc.count || peopleCount.count
+				})
+
+
+			}
 		})
 
 		this.departureDateDatepicker = UIkit.datepicker(this.departureDateRef.nativeElement, {
@@ -126,9 +166,7 @@ export class PackageListComponent implements OnInit {
 		)
 	}
 
-	submit(): void {
-		if (this.submitted)
-			return
-		this.submitted = true
+	select(trip: Trip): void {
+
 	}
 }

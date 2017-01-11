@@ -107,6 +107,13 @@ export class Hotel extends Model {
 		return this.roomsCost + this.optionsCost
 	}
 
+	get minimalCost(): number {
+		return this.rooms.reduce( (prev: number, room: Room) =>
+			prev > 0 ? Math.min(room.cost, prev) : room.cost,
+			0
+		)
+	}
+
 	constructor(value: any = {}) {
 		super(value)
 

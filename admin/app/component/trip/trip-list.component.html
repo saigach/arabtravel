@@ -26,8 +26,8 @@
 						<i class="uk-icon-check-square-o" [class.uk-hidden]="!item.enable"></i>
 					</td>
 					<td>
-						<i class="uk-icon-suitcase" [class.uk-hidden]="item.package"></i>
-						<i class="uk-icon-exchange" [class.uk-hidden]="!item.package"></i>
+						<i class="uk-icon-suitcase" [class.uk-hidden]="!item.package"></i>
+						<i class="uk-icon-exchange" [class.uk-hidden]="item.package"></i>
 					</td>
 					<td>{{ item.title }}</td>
 					<td>{{ item.pointA && item.pointA.title }}&nbsp;&rarr;&nbsp;{{ item.pointB && item.pointB.title }}</td>
