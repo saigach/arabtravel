@@ -11,12 +11,16 @@ import { FileService } from './service/file.service'
 
 import { ListFilterPipe } from './pipe/list-filter.pipe'
 import { ListOrderBy } from './pipe/list-orderby.pipe'
+import { MLPipe } from './pipe/ml.pipe'
 
 import { FroalaEditorDirective, FroalaViewDirective } from './directive/froala.directives'
 
 import { AppComponent } from './component/app.component'
 
 import { CommonComponent } from './component/common/common.component'
+
+import { MLInputComponent } from './component/mlinput/mlinput.component'
+import { MLEditorComponent } from './component/mlinput/mleditor.component'
 
 import { OrderListComponent } from './component/order/order-list.component'
 import { OrderItemComponent } from './component/order/order-item.component'
@@ -51,11 +55,14 @@ import { StaticItemComponent } from './component/static/static-item.component'
 
 		ListFilterPipe,
 		ListOrderBy,
+		MLPipe,
 
 		FroalaEditorDirective,
 		FroalaViewDirective,
 
 		CommonComponent,
+		MLInputComponent,
+		MLEditorComponent,
 
 		OrderListComponent,
 		OrderItemComponent,

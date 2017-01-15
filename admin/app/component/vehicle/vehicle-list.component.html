@@ -20,7 +20,9 @@
 						<i class="uk-icon-square-o" [class.uk-hidden]="item.enable"></i>
 						<i class="uk-icon-check-square-o" [class.uk-hidden]="!item.enable"></i>
 					</td>
-					<td class="uk-width-6-10"><input class="uk-width-1-1" type="text" placeholder="Point title" [(ngModel)]="item.title" (change)="update(item)"></td>
+					<td class="uk-width-6-10">
+						<mlinput [(value)]="item.title" (change)="update(item)" [size]="'medium'"></mlinput>
+					</td>
 					<td class="uk-width-1-10" (click)="delete(item); $event.stopPropagation()"><i class="uk-icon-trash-o"></i></td>
 				</tr>
 			</tbody>

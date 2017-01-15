@@ -5,6 +5,7 @@ import { Location } from '@angular/common'
 import { APIService } from '../../service/api.service'
 import { FileService } from '../../service/file.service'
 
+import { MLString } from '../../../../model/common'
 import { Order, Shift, OrderStatus, PaymentType } from '../../../../model/order'
 import { Human } from '../../../../model/human'
 import { Hotel } from '../../../../model/hotel'
@@ -28,7 +29,7 @@ export class OrderItemComponent implements OnInit {
 	submitted: boolean = false
 
 	get valid(): boolean {
-		return this.item.title.length > 0
+		return true
 	}
 
 	constructor(private route: ActivatedRoute,

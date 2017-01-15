@@ -25,8 +25,10 @@ module.exports = class StaticEngine {
 		return this.DB.query(`
 			SELECT
 				*
-			FROM static
-			WHERE url = '${url}'
+			FROM
+				objects
+			WHERE
+				model = 'static'
 			LIMIT 1
 		`).then(rows => {
 			let item = rows.length && rows[0] || null

@@ -2,12 +2,10 @@ import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { Location } from '@angular/common'
 
-import editorOptions from '../../editor.options'
-
 import { APIService } from '../../service/api.service'
 import { FileService } from '../../service/file.service'
 
-import { File } from '../../../../model/common'
+import { File, MLString } from '../../../../model/common'
 import { Static } from '../../../../model/static'
 
 @Component({
@@ -17,16 +15,12 @@ import { Static } from '../../../../model/static'
 })
 export class StaticItemComponent implements OnInit {
 
-	contentEditorOptions = Object.assign({}, editorOptions, {
-		placeholderText: 'Page content'
-	})
-
 	item: Static = new Static()
 
 	submitted: boolean = false
 
 	get valid(): boolean {
-		return this.item.title.length > 0
+		return MLString.checkValid(this.item.title)
 			&& this.item.url.length > 0
 			&& /[a-z0-9\-]+/.test(this.item.url)
 	}

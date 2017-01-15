@@ -1,6 +1,6 @@
 <div class="uk-grid">
 	<div class="uk-width-3-4 uk-margin-bottom">
-		<h2>Hotel <span *ngIf="item">&laquo;{{ item.title }}&raquo;</span></h2>
+		<h2>Hotel <span *ngIf="item">&laquo;{{ item.title | ml:'en' }}&raquo;</span></h2>
 	</div>
 	<div class="uk-width-1-4 uk-margin-bottom">
 		<button class="uk-button uk-button-primary uk-align-right" (click)="back()"><i class="uk-icon-arrow-left"></i>&emsp;Back</button>
@@ -15,21 +15,19 @@
 			</div>
 			<div class="uk-width-1-1 uk-margin-top">
 				<label class="uk-form-label uk-width-1-1">Title</label>
-				<div class="uk-form-controls">
-					<input class="uk-width-1-1" type="text" placeholder="Hotel title" [(ngModel)]="item.title">
+				<div class="uk-width-1-1">
+					<mlinput [(value)]="item.title"></mlinput>
 				</div>
 			</div>
 			<div class="uk-width-1-1 uk-margin-top">
 				<label class="uk-form-label uk-width-1-1">Short description</label>
-				<div class="uk-form-controls">
-					<input class="uk-width-1-1" type="text" placeholder="Hotel short description" [(ngModel)]="item.description">
+				<div class="uk-width-1-1">
+					<mlinput [(value)]="item.description"></mlinput>
 				</div>
 			</div>
 			<div class="uk-width-1-1 uk-margin-top">
-				<label class="uk-form-label uk-width-1-1">Hotel page content</label>
-				<div class="uk-form-controls">
-					<div [froalaEditor]="contentEditorOptions" [(froalaModel)]="item.content"></div>
-				</div>
+				<h3 class="tm-article-subtitle">Hotel page content</h3>
+				<mleditor [(value)]="item.content"></mleditor>
 			</div>
 			<div class="uk-width-1-1 uk-grid uk-margin-top">
 				<div class="uk-width-8-10">
@@ -45,36 +43,34 @@
 			<div class="uk-width-1-1 uk-margin-top">
 				<div  *ngFor="let room of item.rooms;" class="uk-panel uk-panel-box uk-width-1-1">
 					<div class="uk-panel-badge uk-badge uk-badge-danger admin-cursor-pointer" (click)="deleteRoom(room); $event.stopPropagation()"><i class="uk-icon-trash"></i></div>
-					<h3 class="uk-panel-title">Room &laquo;{{ room.title }}&raquo;</h3>
+					<h3 class="uk-panel-title">Room &laquo;{{ room.title | ml:'en' }}&raquo;</h3>
 					<div class="uk-grid">
-						<div class="uk-width-1-4">
+						<div class="uk-width-1-1 uk-margin-top">
 							<label class="uk-form-label uk-width-1-1">Title</label>
-							<div class="uk-form-controls">
-								<input class="uk-width-1-1" type="text" [(ngModel)]="room.title">
-							</div>
+							<mlinput [(value)]="room.title"></mlinput>
 						</div>
-						<div class="uk-width-1-4">
+						<div class="uk-width-1-3 uk-margin-top">
 							<label class="uk-form-label uk-width-1-1">Size</label>
 							<div class="uk-form-controls">
 								<input class="uk-width-1-1" type="number" min="1" [(ngModel)]="room.size">
 							</div>
 						</div>
-						<div class="uk-width-1-4">
+						<div class="uk-width-1-3 uk-margin-top">
 							<label class="uk-form-label uk-width-1-1">Beds</label>
 							<div class="uk-form-controls">
 								<input class="uk-width-1-1" type="number" min="1" [(ngModel)]="room.beds">
 							</div>
 						</div>
-						<div class="uk-width-1-4">
+						<div class="uk-width-1-3 uk-margin-top">
 							<label class="uk-form-label uk-width-1-1">Cost, JD</label>
 							<div class="uk-form-controls">
 								<input class="uk-width-1-1" type="number" min="0" [(ngModel)]="room.cost">
 							</div>
 						</div>
 						<div class="uk-width-1-1 uk-margin-top">
-							<label class="uk-form-label uk-width-1-1">Room description</label>
-							<div class="uk-form-controls">
-								<div [froalaEditor]="contentEditorOptions" [(froalaModel)]="room.content"></div>
+							<h4 class="tm-article-subtitle">Room description</h4>
+							<div class="uk-width-1-1">
+								<mleditor [(value)]="room.content"></mleditor>
 							</div>
 						</div>
 						<div class="uk-width-1-1 uk-grid uk-margin-top">
@@ -91,8 +87,7 @@
 						<div class="uk-width-1-1">
 							<ul class="uk-list uk-list-space">
 								<li *ngFor="let option of room.options" class="uk-form uk-form-stacked">
-									<label>title:</label>
-									<input class="uk-form-width-large uk-margin-right" type="text" [(ngModel)]="option.title">
+									<mlinput [(value)]="option.title" [size]="'medium'"></mlinput>
 									<label>Cost, JD:</label>
 									<input class="uk-form-width-small uk-margin-right" type="number" min="0" [(ngModel)]="option.cost">
 									<i class="uk-icon-trash admin-cursor-pointer" (click)="deleteOption(room, option); $event.stopPropagation()"></i>
@@ -117,8 +112,7 @@
 			<div class="uk-width-1-1">
 				<ul class="uk-list uk-list-space">
 					<li *ngFor="let option of item.options" class="uk-form uk-form-stacked">
-						<label>title:</label>
-						<input class="uk-form-width-large uk-margin-right" type="text" [(ngModel)]="option.title">
+						<mlinput [(value)]="option.title" [size]="'medium'"></mlinput>
 						<label>Cost, JD:</label>
 						<input class="uk-form-width-small uk-margin-right" type="number" min="0" [(ngModel)]="option.cost">
 						<i class="uk-icon-trash admin-cursor-pointer" (click)="deleteOption(undefined, option); $event.stopPropagation()"></i>

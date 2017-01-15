@@ -1,0 +1,5 @@
+<span class="uk-margin-right uk-form uk-form-controls uk-form-stacked" *ngFor="let lang of Languages">
+	<label>{{ lang | uppercase }}:</label>
+	<input type="text" [class]="class" [(ngModel)]="item[lang]">
+</span>
+

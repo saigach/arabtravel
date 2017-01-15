@@ -17,8 +17,8 @@
 		<label class="uk-form-label uk-width-1-1">Vehicle</label>
 		<select [(ngModel)]="item.vehicle">
 			<option [ngValue]="null">None</option>
-			<option *ngIf="item.vehicle" [ngValue]="item.vehicle">{{ item.vehicle.title }} (Current)</option>
-			<option *ngFor="let vehicle of vehicles" [ngValue]="vehicle">{{ vehicle.title }}</option>
+			<option *ngIf="item.vehicle" [ngValue]="item.vehicle">{{ item.vehicle.title | ml:'en' }} (Current)</option>
+			<option *ngFor="let vehicle of vehicles" [ngValue]="vehicle">{{ vehicle.title | ml:'en' }}</option>
 		</select>
 	</div>
 	<div class="uk-width-1-1 admin-hidde-cild" *ngIf="item.price">

@@ -34,7 +34,7 @@ export class OrderListComponent implements OnInit {
 	}
 
 	delete(item: Order): void {
-		UIkit.modal.confirm(`Order &laquo;${item.title}&raquo; can be deleted.<br>Are you sure?`, () =>
+		UIkit.modal.confirm(`Order &laquo;&raquo; can be deleted.<br>Are you sure?`, () =>
 			this.apiService.delete<Order>(Order, item).then(() =>
 				this.items = this.items.filter(value => value !== item)
 			)

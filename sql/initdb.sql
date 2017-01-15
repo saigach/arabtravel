@@ -102,7 +102,7 @@ $$;
 CREATE TRIGGER sessions_delete_old_rows_trigger AFTER INSERT OR UPDATE ON sessions FOR EACH STATEMENT EXECUTE PROCEDURE sessions_delete_old_rows();
 
 -- Models
-CREATE TYPE models AS ENUM ('hotel', 'human', 'order', 'point', 'trip', 'vehicle');
+CREATE TYPE models AS ENUM ('hotel', 'human', 'order', 'point', 'trip', 'vehicle', 'static');
 
 -- Objects data store
 CREATE TABLE objects (
@@ -110,7 +110,7 @@ CREATE TABLE objects (
 	model models NOT NULL,
 	enable boolean NOT NULL DEFAULT TRUE,
 	owner uuid DEFAULT NULL,
-	title text NOT NULL DEFAULT ''::text,
+	title json NOT NULL DEFAULT '{}'::json,
 	data json NOT NULL DEFAULT '{}'::json,
 	CONSTRAINT objects_pkey PRIMARY KEY (id),
 	CONSTRAINT objects_owner_fkey FOREIGN KEY (owner) REFERENCES users (id) ON UPDATE CASCADE ON DELETE SET NULL
@@ -118,17 +118,3 @@ CREATE TABLE objects (
 CREATE INDEX objects_model_idx ON objects USING btree (model);
 CREATE INDEX objects_enable_idx ON objects USING btree (enable);
 CREATE INDEX objects_owner_idx ON objects USING btree (owner);
-
--- Static data storage
-CREATE TABLE static (
-	id uuid NOT NULL DEFAULT uuid_generate_v1(),
-	enable boolean NOT NULL DEFAULT TRUE,
-	url varchar(80) NOT NULL,
-	title text NOT NULL DEFAULT ''::text,
-	description text NOT NULL DEFAULT ''::text,
-	content text NOT NULL DEFAULT ''::text,
-	image json NOT NULL DEFAULT 'null'::json,
-	CONSTRAINT static_pkey PRIMARY KEY (id)
-) WITH (OIDS = FALSE);
-CREATE INDEX static_enable_idx ON static USING btree (enable);
-CREATE UNIQUE INDEX static_url_unique_idx ON static USING btree (url);

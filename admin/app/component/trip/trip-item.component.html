@@ -1,6 +1,6 @@
 <div class="uk-grid">
 	<div class="uk-width-3-4 uk-margin-bottom">
-		<h2>Trip <span *ngIf="item">&laquo;{{ item.title }}&raquo;</span></h2>
+		<h2>Trip <span *ngIf="item">&laquo;{{ item.title | ml:'en' }}&raquo;</span></h2>
 	</div>
 	<div class="uk-width-1-4 uk-margin-bottom">
 		<button class="uk-button uk-button-primary uk-align-right" (click)="back()"><i class="uk-icon-arrow-left"></i>&emsp;Back</button>
@@ -18,20 +18,20 @@
 		</div>
 
 		<label class="uk-width-1-1 uk-margin-top uk-form-label">Title</label>
-		<div class="uk-width-1-1 uk-form-controls">
-			<input class="uk-width-1-1" type="text" placeholder="Trip title" [(ngModel)]="item.title">
+		<div class="uk-width-1-1">
+			<mlinput [(value)]="item.title"></mlinput>
 		</div>
 
 		<label class="uk-width-1-1 uk-margin-top uk-form-label">Short description</label>
-		<div class="uk-width-1-1 uk-form-controls">
-			<input class="uk-width-1-1" type="text" placeholder="Trip description" [(ngModel)]="item.description">
+		<div class="uk-width-1-1">
+			<mlinput [(value)]="item.description"></mlinput>
 		</div>
 
 		<div class="uk-width-4-10">
 			<label class="uk-width-1-1 uk-margin-top uk-form-label">Start Point</label>
 			<div class="uk-width-1-1 uk-form-controls">
 				<select class="uk-width-1-1" [(ngModel)]="item.pointA">
-					<option *ngFor="let point of points | listOrderBy : ['title']" [ngValue]="point">{{ point.title }}</option>
+					<option *ngFor="let point of points | listOrderBy : ['title']" [ngValue]="point">{{ point.title | ml:'en' }}</option>
 				</select>
 			</div>
 		</div>
@@ -45,7 +45,7 @@
 			<label class="uk-width-1-1 uk-margin-top uk-form-label">End Point</label>
 			<div class="uk-width-1-1 uk-form-controls">
 				<select class="uk-width-1-1" [(ngModel)]="item.pointB">
-					<option *ngFor="let point of points | listOrderBy : ['title']" [ngValue]="point">{{ point.title }}</option>
+					<option *ngFor="let point of points | listOrderBy : ['title']" [ngValue]="point">{{ point.title | ml:'en' }}</option>
 				</select>
 			</div>
 		</div>
@@ -69,11 +69,9 @@
 			</div>
 		</div>
 
-		<div class="uk-width-1-1 uk-form-controls uk-margin-top" [class.uk-hidden]="!item.package">
+		<div class="uk-width-1-1 uk-margin-top" [class.uk-hidden]="!item.package">
 			<h3 class="tm-article-subtitle">Package description</h3>
-			<div class="uk-form-controls">
-				<div [froalaEditor]="contentEditorOptions" [(froalaModel)]="item.content"></div>
-			</div>
+			<mleditor [(value)]="item.content"></mleditor>
 		</div>
 
 		<div class="uk-width-1-1 uk-grid uk-margin-top" [class.uk-hidden]="!item.package">
@@ -93,8 +91,8 @@
 				<div class="uk-panel-title">
 					<select name="type" [(ngModel)]="item.hotels[i]" (change)="hotelChange(i);">
 						<option [ngValue]="null">None</option>
-						<option *ngIf="item.hotels[i]" [ngValue]="item.hotels[i]">{{ item.hotels[i].title }} (Current)</option>
-						<option *ngFor="let hotelItem of hotels" [ngValue]="hotelItem">{{ hotelItem.title }}</option>
+						<option *ngIf="item.hotels[i]" [ngValue]="item.hotels[i]">{{ item.hotels[i].title | ml:'en' }} (Current)</option>
+						<option *ngFor="let hotelItem of hotels" [ngValue]="hotelItem">{{ hotelItem.title | ml:'en' }}</option>
 					</select>
 				</div>
 				<div class="uk-grid" *ngIf="hotel !== null">
@@ -104,9 +102,9 @@
 					<div class="uk-width-1-1 uk-margin-left">
 						<ul class="uk-width-1-1 uk-list">
 							<li *ngFor="let room of hotel.rooms | listOrderBy : ['title']">
-								<b>{{ room.title }}, {{ room.size }} bed, {{ room.cost | currency:'USD':true:'1.2-2' }}</b>
+								<b>{{ room.title | ml:'en' }}, {{ room.size }} bed, {{ room.cost | currency:'USD':true:'1.2-2' }}</b>
 								<ul class="uk-width-1-1 uk-list" *ngIf="room.options.length > 0">
-									<li *ngFor="let option of room.options | listOrderBy : ['title']">{{ option.title }}, {{ option.cost | currency:'USD':true:'1.2-2' }}</li>
+									<li *ngFor="let option of room.options | listOrderBy : ['title']">{{ option.title | ml:'en' }}, {{ option.cost | currency:'USD':true:'1.2-2' }}</li>
 								</ul>
 							</li>
 						</ul>
@@ -116,7 +114,7 @@
 					</div>
 					<div class="uk-width-1-1 uk-margin-left" *ngIf="hotel.options.length > 0">
 						<ul class="uk-width-1-1 uk-list">
-							<li *ngFor="let option of hotel.options | listOrderBy : ['title']">{{ option.title }}, {{ option.cost | currency:'USD':true:'1.2-2' }}</li>
+							<li *ngFor="let option of hotel.options | listOrderBy : ['title']">{{ option.title | ml:'en' }}, {{ option.cost | currency:'USD':true:'1.2-2' }}</li>
 						</ul>
 					</div>
 				</div>

@@ -4,6 +4,7 @@ import { Router } from '@angular/router'
 import { APIService } from '../../service/api.service'
 
 import { Hotel } from '../../../../model/hotel'
+import { MLPipe } from '../../pipe/ml.pipe'
 
 @Component({
 	moduleId: module.id,
@@ -34,7 +35,7 @@ export class HotelListComponent implements OnInit {
 	}
 
 	delete(item: Hotel): void {
-		UIkit.modal.confirm(`Hotel &laquo;${item.title}&raquo; can be deleted.<br>Are you sure?`, () =>
+		UIkit.modal.confirm(`Hotel &laquo;${ item.title['en'] }&raquo; can be deleted.<br>Are you sure?`, () =>
 			this.apiService.delete<Hotel>(Hotel, item).then(() =>
 				this.items = this.items.filter(value => value !== item)
 			)

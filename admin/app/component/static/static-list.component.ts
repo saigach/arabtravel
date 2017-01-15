@@ -34,7 +34,7 @@ export class StaticListComponent implements OnInit {
 	}
 
 	delete(item: Static): void {
-		UIkit.modal.confirm(`Static page &laquo;${item.title}&raquo; can be deleted.<br>Are you sure?`, () =>
+		UIkit.modal.confirm(`Static page &laquo;${ item.title['en'] }&raquo; can be deleted.<br>Are you sure?`, () =>
 			this.apiService.delete<Static>(Static, item).then(() =>
 				this.items = this.items.filter(value => value !== item)
 			)

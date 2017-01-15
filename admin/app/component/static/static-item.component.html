@@ -1,6 +1,6 @@
 <div class="uk-grid">
 	<div class="uk-width-3-4 uk-margin-bottom">
-		<h2>Static page <span *ngIf="item">&laquo;{{ item.title }}&raquo;</span></h2>
+		<h2>Static page <span *ngIf="item">&laquo;{{ item.title | ml:'en' }}&raquo;</span></h2>
 	</div>
 	<div class="uk-width-1-4 uk-margin-bottom">
 		<button class="uk-button uk-button-primary uk-align-right" (click)="back()"><i class="uk-icon-arrow-left"></i>&emsp;Back</button>
@@ -22,15 +22,11 @@
 				</div>
 				<div class="uk-width-1-1 uk-margin-top">
 					<label class="uk-form-label uk-width-1-1">Title</label>
-					<div class="uk-form-controls">
-						<input class="uk-width-1-1" type="text" placeholder="Page title" [(ngModel)]="item.title">
-					</div>
+					<mlinput [(value)]="item.title" [size]="'medium'"></mlinput>
 				</div>
 				<div class="uk-width-1-1 uk-margin-top">
 					<label class="uk-form-label uk-width-1-1">Description</label>
-					<div class="uk-form-controls">
-						<input class="uk-width-1-1" type="text" placeholder="Page description" [(ngModel)]="item.description">
-					</div>
+					<mlinput [(value)]="item.description" [size]="'medium'"></mlinput>
 				</div>
 			</div>
 			<div class="uk-width-3-10 uk-margin-top">
@@ -41,9 +37,9 @@
 				</div>
 			</div>
 			<div class="uk-width-1-1 uk-margin-top">
-				<label class="uk-form-label uk-width-1-1">Content</label>
-				<div class="uk-form-controls">
-					<div [froalaEditor]="contentEditorOptions" [(froalaModel)]="item.content"></div>
+				<h4 class="tm-article-subtitle">Content</h4>
+				<div class="uk-width-1-1">
+					<mleditor [(value)]="item.content"></mleditor>
 				</div>
 			</div>
 			<div class="uk-width-1-1 uk-margin-top">

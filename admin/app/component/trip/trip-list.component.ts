@@ -34,7 +34,7 @@ export class TripListComponent implements OnInit {
 	}
 
 	delete(item: Trip): void {
-		UIkit.modal.confirm(`Trip &laquo;${item.title}&raquo; can be deleted.<br>Are you sure?`, () =>
+		UIkit.modal.confirm(`Trip &laquo;${ item.title['en'] }&raquo; can be deleted.<br>Are you sure?`, () =>
 			this.apiService.delete<Trip>(Trip, item).then(() =>
 				this.items = this.items.filter(value => value !== item)
 			)

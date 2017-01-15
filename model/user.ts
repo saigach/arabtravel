@@ -1,4 +1,4 @@
-import { Model, File } from './common'
+import { Model, File, MLString } from './common'
 
 export class Role {
 	static List: Role[] = [
@@ -26,6 +26,9 @@ export class User extends Model {
 	static __api: string = 'user'
 	static __primaryFields = Model.__primaryFields.concat(['email', 'phone', 'roles'])
 
+	title: string
+	description: string
+
 	email: string
 	phone: string
 
@@ -35,6 +38,9 @@ export class User extends Model {
 
 	constructor(value: any = {}) {
 		super(value)
+
+		this.title = String(value.title || '')
+		this.description = String(value.description || '')
 
 		this.email = String(value.email || '')
 		this.phone = String(value.phone || '')
@@ -54,6 +60,8 @@ export class User extends Model {
 
 	toObject(): {} {
 		return Object.assign(super.toObject(), {
+			title: this.title,
+			description: this.description,
 			phone: this.phone,
 			email: this.email,
 			roles: this.roles.reduce( (prev: string[], value: Role) => prev.concat(value.id), []),

@@ -1,14 +1,14 @@
-import { newDate, Model, File } from './common'
+import { newDate, Model, File, MLString } from './common'
 import { User } from './user'
 
 export class Option {
 	enable: boolean
-	title: string
+	title: MLString
 	cost: number
 
 	constructor(value: any = {}) {
 		this.enable = !!value.enable
-		this.title = String(value.title || '')
+		this.title = new MLString(value.title)
 		this.cost = Math.max( 0, Number.parseFloat(value.cost || 0) || 0 )
 	}
 
@@ -23,11 +23,11 @@ export class Option {
 
 export class Room {
 
-	title: string
+	title: MLString
 	size: number
 	beds: number
 	cost: number
-	content: string
+	content: MLString
 
 	options: Option[]
 
@@ -47,11 +47,11 @@ export class Room {
 	}
 
 	constructor(value: any = {}) {
-		this.title = String(value.title || '')
+		this.title = new MLString(value.title)
 		this.size = Math.max( 1, Number.parseInt(value.size || 0) || 0 )
 		this.beds = Math.max( 1, Number.parseInt(value.beds || 0) || 0 )
 		this.cost = Math.max( 0, Number.parseFloat(value.cost || 0) || 0 )
-		this.content = String(value.content || ''),
+		this.content = new MLString(value.content),
 		this.options = value.options instanceof Array ?
 			value.options.reduce(
 				( prev: Option[] , value:any ) =>
@@ -76,9 +76,12 @@ export class Hotel extends Model {
 	static __api: string = 'objects/hotel'
 	static __primaryFields = Model.__primaryFields.concat(['owner'])
 
+	title: MLString
+	description: MLString
+
 	owner: User = null
 
-	content: string
+	content: MLString
 
 	rooms: Room[]
 	images: File[]
@@ -117,10 +120,13 @@ export class Hotel extends Model {
 	constructor(value: any = {}) {
 		super(value)
 
+		this.title = new MLString(value.title)
+		this.description = new MLString(value.description)
+
 		if (value.owner && value.owner.id)
 			this.owner = new User(value.owner)
 
-		this.content = String(value.content || '')
+		this.content = new MLString(value.content)
 
 		this.rooms = value.rooms instanceof Array ?
 			value.rooms.reduce(
@@ -146,6 +152,8 @@ export class Hotel extends Model {
 
 	toObject(): {} {
 		return Object.assign({}, super.toObject(), {
+			title: this.title,
+			description: this.description,
 			owner: this.owner && this.owner.id.uuid || null,
 			content: this.content,
 			rooms: this.rooms.reduce( (prev: {}[], value: Room) => prev.concat(value.toObject()), []),

@@ -40,7 +40,7 @@ export class VehicleListComponent implements OnInit {
 	}
 
 	delete(item: Vehicle): void {
-		UIkit.modal.confirm(`Vehicle &laquo;${item.title}&raquo; can be deleted.<br>Are you sure?`, () =>
+		UIkit.modal.confirm(`Vehicle &laquo;${ item.title['en'] }&raquo; can be deleted.<br>Are you sure?`, () =>
 			this.apiService.delete<Vehicle>(Vehicle, item).then(() =>
 				this.items = this.items.filter(value => value !== item)
 			)

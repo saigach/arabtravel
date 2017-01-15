@@ -25,7 +25,7 @@
 						<i class="uk-icon-check-square-o" [class.uk-hidden]="!item.enable"></i>
 					</td>
 					<td>/{{ item.url }}</td>
-					<td>{{ item.title }}</td>
+					<td>{{ item.title | ml:'en' }}</td>
 					<td (click)="delete(item); $event.stopPropagation()"><i class="uk-icon-trash-o"></i></td>
 				</tr>
 			</tbody>

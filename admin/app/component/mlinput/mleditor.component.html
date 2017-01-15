@@ -1,0 +1,6 @@
+<ul class="uk-width-1-1 uk-tab">
+	<li *ngFor="let lang of Languages" [class.uk-active]="currentLanhuage === lang"><a (click)="currentLanhuage = lang">{{ lang | uppercase }}</a></li>
+</ul>
+<div class="uk-width-1-1" *ngFor="let lang of Languages" [class.uk-hidden]="currentLanhuage !== lang">
+	<div [froalaEditor]="contentEditorOptions" [(froalaModel)]="item[lang]"></div>
+</div>

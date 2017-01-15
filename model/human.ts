@@ -1,4 +1,4 @@
-import { newDate, Model, File } from './common'
+import { newDate, Model, File, MLString } from './common'
 
 export class Nationality {
 	static List:Nationality[] = [
@@ -214,9 +214,27 @@ export class Nationality {
 
 export class AgeGroup {
 	static List: AgeGroup[] = [
-		new AgeGroup({ id: 'adults', title: 'Adults', icon: null }),
-		new AgeGroup({ id: 'kids', title: 'Kids', icon: null }),
-		new AgeGroup({ id: 'infants', title: 'Infants', icon: null })
+		new AgeGroup({
+			id: 'adults',
+			title: new MLString({
+				en: 'Adults'
+			}),
+			icon: null
+		}),
+		new AgeGroup({
+			id: 'kids',
+			title: new MLString({
+				en: 'Kids'
+			}),
+			icon: null
+		}),
+		new AgeGroup({
+			id: 'infants',
+			title: new MLString({
+				en: 'Infants'
+			}),
+			icon: null
+		})
 	]
 
 	static getAgeGroup(id: string): AgeGroup {
@@ -224,17 +242,20 @@ export class AgeGroup {
 	}
 
 	id: string
-	title: string
+	title: MLString
 	icon: string
 
 	constructor(value: any = {}) {
 		this.id = String(value.id || '')
-		this.title = String(value.title || '')
+		this.title = new MLString(value.title)
 		this.icon = String(value.icon || '')
 	}
 }
 
 export class Human extends Model {
+
+	title: string
+
 	nationality: Nationality
 
 	_dob: Date
@@ -292,6 +313,8 @@ export class Human extends Model {
 	constructor(value: any = {}) {
 		super(value)
 
+		this.title = String(value.title || '')
+
 		this.nationality = Nationality.getNationality(value.nationality || null)
 
 		this.dob = value.dob ? newDate(value.dob) : null
@@ -315,6 +338,7 @@ export class Human extends Model {
 
 	toObject(): {} {
 		return Object.assign({}, super.toObject(), {
+			title: this.title,
 			nationality: this.nationality.id,
 			dob: this.dob,
 			phone: this.phone,

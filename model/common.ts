@@ -119,6 +119,31 @@ export function str2Date(value = null) {
 	return newDate(new Date(year, month - 1, day))
 }
 
+export class MLString {
+	static  Languages: string[] = ['en', 'ar']
+	static checkValid(value: MLString): boolean {
+		for (let key in value)
+			if (value[key].length <= 0)
+				return false
+		return true
+	}
+
+	[key: string]: string
+
+	constructor(value: any = null) {
+		for (let key of MLString.Languages)
+			this[key] = ''
+
+		if (typeof value === 'string')
+			this[MLString.Languages[0]] = String(value)
+
+		else if (value)
+			for (let key of MLString.Languages)
+				if (key in value)
+					this[key] = String(value[key])
+	}
+}
+
 export class Model {
 	static __api: string = null
 	static __primaryFields = ['id', 'enable', 'title']
@@ -126,25 +151,17 @@ export class Model {
 	id: UUID = new UUID()
 	enable: boolean
 
-	title: string
-	description: string
-
 	constructor(value: any = {}) {
 		if (value.id)
 			this.id = value.id instanceof UUID ? value.id : new UUID(value.id)
 
 		this.enable = value.enable === undefined ? true : Boolean(value.enable)
-
-		this.title = String(value.title || '')
-		this.description = String(value.description || '')
 	}
 
 	toObject(): {} {
 		return {
 			id: this.id.uuid,
-			enable: this.enable,
-			title: this.title,
-			description: this.description
+			enable: this.enable
 		}
 	}
 

@@ -1,4 +1,4 @@
-import { newDate, Model, File } from './common'
+import { newDate, Model, File, MLString } from './common'
 import { User } from './user'
 
 import { Trip, Price } from './trip'
@@ -32,9 +32,26 @@ export class Shift {
 
 export class PaymentType {
 	static List:PaymentType[] = [
-		new PaymentType( { id: 'card', title: 'Card', icon: null } ),
-		new PaymentType( { id: 'bank', title: 'Bank transfer', icon: null } ),
-		new PaymentType( { id: 'wu', title: 'Western Union', icon: null } )
+		new PaymentType({
+			id: 'card',
+			title: new MLString({
+				en: 'Card'
+			}),
+			icon: null }),
+		new PaymentType({
+			id: 'bank',
+			title: new MLString({
+				en: 'Bank transfer'
+			}),
+			icon: null
+		}),
+		new PaymentType({
+			id: 'wu',
+			title: new MLString({
+				en: 'Western Union'
+			}),
+			icon: null
+		})
 	]
 
 	static getPaymentType(id: string = ''): PaymentType {
@@ -42,25 +59,67 @@ export class PaymentType {
 	}
 
 	id: string
-	title: string
+	title: MLString
 	icon: string
 
 	constructor(value: any = {}) {
 		this.id = String(value.id || '')
-		this.title = String(value.title || '')
+		this.title = new MLString(value.title)
 		this.icon = String(value.icon || '')
 	}
 }
 
 export class OrderStatus {
 	static List:OrderStatus[] = [
-		new OrderStatus( { id: 'new', title: 'New order', icon: null } ),
-		new OrderStatus( { id: 'processing', title: 'Under processing', icon: null } ),
-		new OrderStatus( { id: 'need-payment-confirm', title: 'Need payment confirm', icon: null } ),
-		new OrderStatus( { id: 'confirmed', title: 'Confirmed', icon: null } ),
-		new OrderStatus( { id: 'not-approved', title: 'Not approved', icon: null } ),
-		new OrderStatus( { id: 'cancellation', title: 'Cancellation', icon: null } ),
-		new OrderStatus( { id: 'canceled', title: 'Canceled', icon: null } )
+		new OrderStatus({
+			id: 'new',
+			title: new MLString({
+				en: 'New order'
+			}),
+			icon: null
+		}),
+		new OrderStatus({
+			id: 'processing',
+			title: new MLString({
+				en: 'Under processing'
+			}),
+			icon: null
+		}),
+		new OrderStatus({
+			id: 'need-payment-confirm',
+			title: new MLString({
+				en: 'Need payment confirm'
+			}),
+			icon: null
+		}),
+		new OrderStatus({
+			id: 'confirmed',
+			title: new MLString({
+				en: 'Confirmed'
+			}),
+			icon: null
+		}),
+		new OrderStatus({
+			id: 'not-approved',
+			title: new MLString({
+				en: 'Not approved'
+			}),
+			icon: null
+		}),
+		new OrderStatus({
+			id: 'cancellation',
+			title: new MLString({
+				en: 'Cancellation'
+			}),
+			icon: null
+		}),
+		new OrderStatus({
+			id: 'canceled',
+			title: new MLString({
+				en: 'Canceled'
+			}),
+			icon: null
+		})
 	]
 
 	static getOrderStatus(id: string = ''): OrderStatus {
@@ -68,11 +127,11 @@ export class OrderStatus {
 	}
 
 	id: string
-	title: string
+	title: MLString
 	icon: string
 	constructor(value: any = {}) {
 		this.id = String(value.id || '')
-		this.title = String(value.title || '')
+		this.title = new MLString(value.title)
 		this.icon = String(value.icon || '')
 	}
 }
@@ -140,6 +199,8 @@ export class Order extends Model {
 	static __api: string = 'objects/order'
 	static __primaryFields = Model.__primaryFields.concat(['owner', 'date', 'status'])
 
+	description: string
+
 	package: boolean
 
 	owner: User = null
@@ -163,6 +224,8 @@ export class Order extends Model {
 
 	constructor(value: any = {}) {
 		super(value)
+
+		this.description = String(value.description || '')
 
 		this.package = !!value.package
 
@@ -204,6 +267,7 @@ export class Order extends Model {
 
 	toObject(): {} {
 		return Object.assign({}, super.toObject(), {
+			description: this.description,
 			package: this.package,
 			owner: this.owner && this.owner.id.uuid || null,
 			date: this.date,

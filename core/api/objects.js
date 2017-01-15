@@ -9,9 +9,6 @@ const customQueryList = {
 	trip: `objects.data->'package' AS "package", objects.data->'pointA' AS "pointA", objects.data->'pointB' AS "pointB"`
 }
 
-
-const translite = require('../translite.js')
-
 const escapeStr = str => "'" + String(str).replace(/'/g, "\\'") + "'"
 
 module.exports = class APIProject {
@@ -59,7 +56,6 @@ module.exports = class APIProject {
 						FROM objects
 						LEFT JOIN users ON objects.owner = users.id
 						WHERE model = '${model}'
-						ORDER BY title
 					`).then(rows => ({
 						code: 200,
 						data: rows
@@ -137,12 +133,12 @@ module.exports = class APIProject {
 						}
 						enable = enable && 'TRUE' || 'FALSE'
 
-						let title = ''
+						let title = {}
 						if (data.title !== undefined) {
-							title = String(data.title).trim()
+							title = data.title
 							delete data.title
 						}
-						title = escapeStr(title)
+						title = escapeStr(JSON.stringify(title || {}))
 
 					 	data = escapeStr(JSON.stringify(data || {}))
 

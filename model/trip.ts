@@ -1,4 +1,4 @@
-import { newDate, Model, File } from './common'
+import { newDate, Model, File, MLString } from './common'
 
 import { Point } from './point'
 import { Vehicle } from './vehicle'
@@ -142,9 +142,12 @@ export class Trip extends Model {
 	static __api: string = 'objects/trip'
 	static __primaryFields = Model.__primaryFields.concat(['package', 'pointA', 'pointB'])
 
+	title: MLString
+	description: MLString
+
 	package: boolean
 
-	content: string
+	content: MLString
 
 	pointA: Point
 	pointB: Point
@@ -155,7 +158,7 @@ export class Trip extends Model {
 	prices: Price[] = []
 
 	get fullTitle():string {
-		return `${this.title} (${this.pointA && this.pointA.title || ''} → ${this.pointB && this.pointB.title || ''})`
+		return `${this.title['en']} (${this.pointA && this.pointA.title['en'] || ''} → ${this.pointB && this.pointB.title['en'] || ''})`
 	}
 
 	get firstImageUrl(): string {
@@ -175,9 +178,12 @@ export class Trip extends Model {
 	constructor(value: any = {}) {
 		super(value)
 
+		this.title = new MLString(value.title)
+		this.description = new MLString(value.description)
+
 		this.package = !!value.package
 
-		this.content = String(value.content || '')
+		this.content = new MLString(value.content)
 
 		this.pointA = value.pointA ? ( value.pointA instanceof Point ? value.pointA : new Point(value.pointA) ) : null
 		this.pointB = value.pointB ? ( value.pointB instanceof Point ? value.pointB : new Point(value.pointB) ) : null
@@ -235,6 +241,8 @@ export class Trip extends Model {
 
 	toObject(): {} {
 		return Object.assign(super.toObject(), {
+			title: this.title,
+			description: this.description,
 			package: this.package,
 			content: this.content,
 			pointA: this.pointA.toObject(),

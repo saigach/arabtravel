@@ -5,7 +5,7 @@ import { Location } from '@angular/common'
 import { APIService } from '../../service/api.service'
 import { FileService } from '../../service/file.service'
 
-import { File } from '../../../../model/common'
+import { File, MLString } from '../../../../model/common'
 import { User, Role } from '../../../../model/user'
 
 @Component({

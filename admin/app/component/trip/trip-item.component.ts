@@ -2,12 +2,10 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { Location } from '@angular/common'
 
-import editorOptions from '../../editor.options'
-
 import { APIService } from '../../service/api.service'
 import { FileService } from '../../service/file.service'
 
-import { File } from '../../../../model/common'
+import { File, MLString } from '../../../../model/common'
 import { Trip, Price } from '../../../../model/trip'
 import { Point } from '../../../../model/point'
 import { Hotel } from '../../../../model/hotel'
@@ -19,10 +17,6 @@ import { Hotel } from '../../../../model/hotel'
 })
 export class TripItemComponent implements OnInit {
 
-	contentEditorOptions = Object.assign({}, editorOptions, {
-		placeholderText: 'Package description content'
-	})
-
 	points: Point[] = []
 	hotels: Hotel[] = []
 
@@ -31,7 +25,7 @@ export class TripItemComponent implements OnInit {
 	submitted: boolean = false
 
 	get valid(): boolean {
-		return  this.item.title.trim().length > 0 &&
+		return  MLString.checkValid(this.item.title) &&
 				this.item.pointA &&
 				this.item.pointB &&
 				this.item.prices.length > 0
