@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{=it.lang}}" itemscope itemtype="http://schema.org/Webpage">
+<html lang="{{=it.lang}}" {{? it.lang === 'ar'}}dir=rtl{{?}} itemscope itemtype="http://schema.org/Webpage">
 <head>
 	<base href="/">
 

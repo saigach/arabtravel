@@ -6,16 +6,16 @@
 
 	"tripTypeOneway": {
 		"en": "One way",
-		"ar": "One way AR"
+		"ar": "اتجاه واحد"
 	},
 
 	"tripTypeRound": {
 		"en": "Round Trip",
-		"ar": "Round Trip AR"
+		"ar": "جولة"
 	},
 
 	"tripTypePackage": {
 		"en": "Tourist Package",
-		"ar": "Tourist Package AR"
+		"ar": "السياحية حزمة"
 	}
 }
