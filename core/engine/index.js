@@ -15,7 +15,9 @@ module.exports = class IndexEngine {
 			data: {
 				angular: true,
 				title: 'Arabtravel Index',
-				main: this.template['index']({})
+				main: this.template['index']({
+					lang: requestData.request.language
+				})
 			}
 		})
 	}

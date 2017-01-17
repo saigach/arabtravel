@@ -10,6 +10,8 @@ import { Vehicle } from '../../../model/vehicle'
 import { Human, AgeGroup } from '../../../model/human'
 import { Order, Shift } from '../../../model/order'
 
+const lang = document.querySelector('html').getAttribute('lang') || 'en'
+
 type TripType = 'oneway' | 'round' | 'package'
 type PeopleCount = { ageGroup: AgeGroup, count: number }
 
@@ -240,7 +242,7 @@ export class TripSelectorFormComponent implements OnInit {
 			)
 
 			localStorage.setItem('currentOrder', order.toString())
-			window.location.href = '/order'
+			window.location.href = `/${lang}/order`
 			return
 		}
 
@@ -256,6 +258,6 @@ export class TripSelectorFormComponent implements OnInit {
 		}
 
 		localStorage.setItem('searchData', JSON.stringify(searchData))
-		window.location.href = '/package-list'
+		window.location.href = `/${lang}/package-list`
 	}
 }

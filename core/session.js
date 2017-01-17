@@ -29,9 +29,12 @@ module.exports = class Session {
 
 		let requestUrl = url.parse(request.url, true, false)
 
+		let requestPath = requestUrl.pathname.split(/\/+/).map(value => value.toLowerCase().trim()).filter(value => !!value)
+
 		this.request = {
 			method: request.method.toUpperCase(),
-			path: requestUrl.pathname.split(/\/+/).map(value => value.toLowerCase().trim()).filter(value => !!value),
+			language: requestPath.shift() || 'en',
+			path: requestPath,
 			query: requestUrl.query,
 			body: null,
 			file: request.headers['x-file'] || null

@@ -1,5 +1,5 @@
 /*!
- * Package list Page engine
+ * Package Page engine
  * Copyright(c) 2016 Wisdman <wisdman@ajaw.it>
  */
 
@@ -14,8 +14,8 @@ module.exports = class PackageListEngine {
 			code: 200,
 			data: {
 				angular: true,
-				title: 'Package list',
-				main: this.template['package-list']({
+				title: 'Package',
+				main: this.template['package']({
 					lang: requestData.request.language
 				})
 			}

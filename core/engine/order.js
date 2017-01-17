@@ -15,7 +15,9 @@ module.exports = class OrderEngine {
 			data: {
 				angular: true,
 				title: 'Order page',
-				main: this.template['order']({})
+				main: this.template['order']({
+					lang: requestData.request.language
+				})
 			}
 		})
 	}

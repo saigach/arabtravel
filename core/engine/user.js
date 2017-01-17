@@ -1,5 +1,5 @@
 /*!
- * Order Page engine
+ * User Page engine
  * Copyright(c) 2016 Wisdman <wisdman@ajaw.it>
  */
 
@@ -15,7 +15,9 @@ module.exports = class UserEngine {
 			data: {
 				angular: true,
 				title: 'User page',
-				main: this.template['user']({})
+				main: this.template['user']({
+					lang: requestData.request.language
+				})
 			}
 		})
 	}

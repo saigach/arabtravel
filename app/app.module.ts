@@ -8,6 +8,7 @@ import { routing } from './app.routing'
 
 import { APIService } from './service/api.service'
 import { AppComponent } from './component/app.component'
+import { MLPipe } from './pipe/ml.pipe'
 
 import { TripSelectorFormComponent } from './component/tripselector/tripselector-form.component'
 import { OrderPageComponent } from './component/order/order-page.component'
@@ -25,6 +26,7 @@ import { UserPageComponent } from './component/user/user-page.component'
 	],
 	declarations: [
 		AppComponent,
+		MLPipe,
 		TripSelectorFormComponent,
 		OrderPageComponent,
 		PackageListComponent,

@@ -10,7 +10,7 @@
                         <div class="col-md-3">
                             <div class="styled-radio">
                                 <input class="radio" type="radio" name="tripselector-form_check" id="tripselector-form_check-oneway" [checked]="type === 'oneway'" (click)="type = 'oneway'">
-                                <label for="tripselector-form_check-oneway">One way</label>
+                                <label for="tripselector-form_check-oneway">{{ { en: 'One way', ar: 'One way AR'} | ml }}</label>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -33,7 +33,7 @@
                             <div class="col-md-4">
                                 <label for="routefrom">Route from</label>
                                 <select name="routefrom" [(ngModel)]="pointA" id="routefrom" class="form-control fit-width">
-									<option *ngFor="let point of APoints" [ngValue]="point">{{ point.title }}</option>
+									<option *ngFor="let point of APoints" [ngValue]="point">{{ point.title | ml }}</option>
                                 </select>
                                 <i class="fa fa-exchange tripselector-arrow" aria-hidden="true" [class.hide]="type !== 'round'"></i>
                                 <i class="fa fa-long-arrow-right tripselector-arrow" aria-hidden="true" [class.hide]="type === 'round'"></i>
@@ -42,7 +42,7 @@
                             <div class="col-md-4">
                                 <label for="routeto">Route to</label>
                                 <select name="routeto" [(ngModel)]="pointB" id="routeto" class="form-control fit-width" [disabled]="!pointA">
-									<option *ngFor="let point of BPoints" [ngValue]="point">{{ point.title }}</option>
+									<option *ngFor="let point of BPoints" [ngValue]="point">{{ point.title | ml }}</option>
                                 </select>
 
                             </div>
@@ -51,7 +51,7 @@
                                 <div class="row">
 
                                     <div class="col-md-4 form-group" *ngFor="let pc of peopleCount">
-                                        <label for="rf">{{pc.ageGroup.title}}</label>
+                                        <label for="rf">{{pc.ageGroup.title  | ml }}</label>
                                         <input type="number" min="0" class="form-control" [(ngModel)]="pc.count" [ngModelOptions]="{standalone: true}">
                                     </div>
 
@@ -94,7 +94,7 @@
                                 <label>Vehicle</label>
                                 <select name="vehicle" [(ngModel)]="vehicle" id="rf" class="form-control fit-width" [disabled]="!pointA || !pointB">
                                 	<option [ngValue]="null">None</option>
-                                    <option *ngFor="let curVehicle of vehicleList" [ngValue]="curVehicle">{{ curVehicle.title }}</option>
+                                    <option *ngFor="let curVehicle of vehicleList" [ngValue]="curVehicle">{{ curVehicle.title | ml }}</option>
                                 </select>
                             </div>
 

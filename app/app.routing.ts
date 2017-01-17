@@ -9,19 +9,35 @@ import { UserPageComponent } from './component/user/user-page.component'
 
 const appRoutes: Routes = [
 	{
-		path: '',
+		path: 'en',
 		component: TripSelectorFormComponent
 	},
 	{
-		path: 'order',
+		path: 'ar',
+		component: TripSelectorFormComponent
+	},
+	{
+		path: 'en/order',
 		component: OrderPageComponent
 	},
 	{
-		path: 'package-list',
+		path: 'ar/order',
+		component: OrderPageComponent
+	},
+	{
+		path: 'en/package-list',
 		component: PackageListComponent
 	},
 	{
-		path: 'user',
+		path: 'ar/package-list',
+		component: PackageListComponent
+	},
+	{
+		path: 'en/user',
+		component: UserPageComponent
+	},
+	{
+		path: 'ar/user',
 		component: UserPageComponent
 	}
 ];

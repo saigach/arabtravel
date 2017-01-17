@@ -9,6 +9,8 @@ import { Vehicle } from '../../../model/vehicle'
 import { Human, AgeGroup } from '../../../model/human'
 import { Hotel } from '../../../model/hotel'
 
+const lang = document.querySelector('html').getAttribute('lang') || 'en'
+
 type TripType = 'oneway' | 'round' | 'package'
 
 @Component({
@@ -43,7 +45,7 @@ export class OrderPageComponent implements OnInit {
 		}
 
 		if (!currentOrderObj)
-			window.location.href = '/'
+			window.location.href = '/' + lang
 		else
 			this.item =  new Order(currentOrderObj)
 	}

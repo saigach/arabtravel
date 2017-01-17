@@ -6,6 +6,8 @@
 'use strict'
 process.env.TZ = 'UTC'
 
+const languages = ['en', 'ar']
+
 const fs = require('fs')
 const path = require('path')
 
@@ -17,7 +19,7 @@ const DB = new (require('./db.js'))()
 const Session = require('./session.js')
 
 const Template = {}
-const templateDirectory = path.resolve(process.cwd(), 'tpl/', process.env.WORKER_LANGUAGE || '')
+const templateDirectory = path.resolve(process.cwd(), 'tpl/')
 const reloadTemplate = (filename) => {
 	if (!filename)
 		return
@@ -72,7 +74,6 @@ const worker = http.createServer( (request, response) => {
 				return Engine['api']
 						.engine(requestData)
 						.then(response => session.set(response))
-
 
 			return (Engine[backendEngine] ?
 				Engine[backendEngine].engine(requestData) :
