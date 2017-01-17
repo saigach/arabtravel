@@ -4,9 +4,10 @@
  */
 
 module.exports = class RootEngine {
-	constructor(DB, templat) {
+	constructor(DB, templat, MLData) {
 		this.DB = DB
 		this.template = templat
+		this.ml = MLData
 	}
 
 	engine(requestData, responseData) {
@@ -26,6 +27,7 @@ module.exports = class RootEngine {
 			responseData.data.static = staticPages
 			responseData.data.userEmail = requestData.user && requestData.user.email || null
 			responseData.data.lang = requestData.request.language
+			responseData.data.ml = requestData.ml
 			responseData.data = this.template['root'](responseData.data)
 			return responseData
 		})

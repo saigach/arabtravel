@@ -7,6 +7,8 @@ import { HttpModule } from '@angular/http'
 import { routing } from './app.routing'
 
 import { APIService } from './service/api.service'
+import { MLService } from './service/ml.service'
+
 import { AppComponent } from './component/app.component'
 import { MLPipe } from './pipe/ml.pipe'
 
@@ -34,7 +36,8 @@ import { UserPageComponent } from './component/user/user-page.component'
 		UserPageComponent
 	],
 	providers: [
-		APIService
+		APIService,
+		MLService
 	],
 	bootstrap: [
 		AppComponent

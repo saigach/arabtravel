@@ -9,6 +9,9 @@ const globalLang = document.querySelector('html').getAttribute('lang')
 })
 export class MLPipe implements PipeTransform {
 	transform(value: MLString | string, lang: string = null): string {
+		if (!value)
+			return ''
+
 		if (typeof value === 'string')
 			return value
 

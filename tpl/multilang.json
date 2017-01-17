@@ -1,0 +1,21 @@
+{
+	"phone": {
+		"en": "(123) 456 78 99",
+		"ar": "(123) 456 78 99 AR"
+	},
+
+	"tripTypeOneway": {
+		"en": "One way",
+		"ar": "One way AR"
+	},
+
+	"tripTypeRound": {
+		"en": "Round Trip",
+		"ar": "Round Trip AR"
+	},
+
+	"tripTypePackage": {
+		"en": "Tourist Package",
+		"ar": "Tourist Package AR"
+	}
+}

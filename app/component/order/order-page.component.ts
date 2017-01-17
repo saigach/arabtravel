@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 
 import { APIService } from '../../service/api.service'
+import { MLService } from '../../service/ml.service'
 
+import { MLString } from '../../../model/common'
 import { Order, Shift, PaymentType } from '../../../model/order'
 import { Trip, Price, VehicleCost } from '../../../model/trip'
 import { Vehicle } from '../../../model/vehicle'
@@ -31,7 +33,10 @@ export class OrderPageComponent implements OnInit {
 
 	submitted: boolean = false
 
-	constructor(private router: Router, private apiService: APIService) {
+	ml: { [key:string]: MLString } = {}
+
+	constructor(private router: Router, private apiService: APIService, private mlService: MLService) {
+
 		let thisYear = (new Date()).getFullYear()
 		for (let i = thisYear; i <= thisYear + 10; i++)
 			this.years.push(i)
@@ -51,6 +56,8 @@ export class OrderPageComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+		this.mlService.get().then( ml => this.ml = ml)
+
 		this.primaryContact = this.item.people.length > 0 ? this.item.people[0] : null
 
 		this.apiService.config().then((response: {

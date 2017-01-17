@@ -10,19 +10,19 @@
                         <div class="col-md-3">
                             <div class="styled-radio">
                                 <input class="radio" type="radio" name="tripselector-form_check" id="tripselector-form_check-oneway" [checked]="type === 'oneway'" (click)="type = 'oneway'">
-                                <label for="tripselector-form_check-oneway">{{ { en: 'One way', ar: 'One way AR'} | ml }}</label>
+                                <label for="tripselector-form_check-oneway">{{ ml.tripTypeOneway | ml }}</label>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="styled-radio">
                                 <input class="radio" type="radio" name="tripselector-form_check" id="tripselector-form_check-roundtrip" [checked]="type === 'round'" (click)="type = 'round'">
-                                <label for="tripselector-form_check-roundtrip">Round Trip</label>
+                                <label for="tripselector-form_check-roundtrip">{{ ml.tripTypeRound | ml }}</label>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="styled-radio">
                                 <input class="radio" type="radio" name="tripselector-form_check" id="tripselector-form_check-touristpackage" [checked]="type === 'package'" (click)="type = 'package'">
-                                <label for="tripselector-form_check-touristpackage">Tourist Package</label>
+                                <label for="tripselector-form_check-touristpackage">{{ ml.tripTypePackage | ml }}</label>
                             </div>
                         </div>
                     </div>
