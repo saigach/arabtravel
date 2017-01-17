@@ -19,7 +19,7 @@
                                         Route from
                                     </label> <br>
 	                                <select name="routefrom" [(ngModel)]="pointA" id="routefrom" class="form-control fit-width">
-										<option *ngFor="let point of APoints" [ngValue]="point">{{ point.title }}</option>
+										<option *ngFor="let point of APoints" [ngValue]="point">{{ point.title | ml }}</option>
 	                                </select>
                                 </div>
 
@@ -28,7 +28,7 @@
                                         Route to
                                     </label> <br>
                                     <select name="routeto" [(ngModel)]="pointB" id="routeto" class="form-control fit-width" [disabled]="!pointA">
-										<option *ngFor="let point of BPoints" [ngValue]="point">{{ point.title }}</option>
+										<option *ngFor="let point of BPoints" [ngValue]="point">{{ point.title | ml }}</option>
 	                                </select>
                                 </div>
 
@@ -50,7 +50,7 @@
                                 <div class="row">
 
 									<div class="col-md-4 form-group" *ngFor="let pc of peopleCount">
-                                        <label for="rf">{{pc.ageGroup.title}}</label>
+                                        <label for="rf">{{pc.ageGroup.title | ml}}</label>
                                         <input type="number" min="0" class="form-control" [(ngModel)]="pc.count" [ngModelOptions]="{standalone: true}">
                                     </div>
 
@@ -64,7 +64,7 @@
 
                     <div class="col-md-9">
 
-                        <h1>All trips from <span *ngIf="pointA">{{ pointA.title }}</span><span *ngIf="pointB"> to {{ pointB.title }}</span></h1>
+                        <h1>All trips from <span *ngIf="pointA">{{ pointA.title | ml }}</span><span *ngIf="pointB"> to {{ pointB.title | ml }}</span></h1>
 
                         <div class="sort-line">
                             <div class="sort-line_title">
@@ -114,7 +114,7 @@
 
                                     <div class="col-md-7">
                                         <div class="tourist-package-item_description">
-                                            <div class="h3 tourist-package-item_title"><a (click)="select(item); $event.stopPropagation()">{{ item.title }}</a></div>
+                                            <div class="h3 tourist-package-item_title"><a (click)="select(item); $event.stopPropagation()">{{ item.title | ml }}</a></div>
 
                                             <!-- <div class="tourist-package-item_date-line">
                                                 <span class="tourist-package-item_date">21 Aug 2016 > 28 Aug 2016 (7 nights)</span>
@@ -125,8 +125,8 @@
                                                 <p class="lbl">Tour includes</p>
 
                                                 <ul class="tourist-package-item_includes-list">
-                                                    <li><i class="ico ico_boat"></i> Ferry from {{ item.pointA.title }} to {{ item.pointB.title }} and back</li>
-                                                    <li *ngIf="item.firstHotel"><i class="ico ico_hotel"></i> Hotel <strong>{{item.firstHotel.title}}</strong></li>
+                                                    <li><i class="ico ico_boat"></i> Ferry from {{ item.pointA.title | ml }} to {{ item.pointB.title | ml }} and back</li>
+                                                    <li *ngIf="item.firstHotel"><i class="ico ico_hotel"></i> Hotel <strong>{{item.firstHotel.title | ml}}</strong></li>
                                                     <!-- <li><i class="ico ico_tour"></i> Cairo Day Tour</li> -->
                                                 </ul>
                                             </div>
