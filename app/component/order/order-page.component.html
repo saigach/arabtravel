@@ -41,7 +41,7 @@
 							<span class="payment-details_method" *ngFor="let paymentType of paymentTypes; let i = index">
 								<span class="styled-radio">
 									<input name="paymentType" class="radio" type="radio" [attr.id]="'pt-' + i" [checked]="item.paymentType === paymentType" (click)="item.paymentType = paymentType">
-									<label [attr.for]="'pt-' + i">{{ paymentType.title }}</label>
+									<label [attr.for]="'pt-' + i">{{ paymentType.title | ml }}</label>
 								</span>
 							</span>
 						</div>
@@ -125,16 +125,16 @@
                     <div *ngFor="let shift of item.shifts" class="order-trip_container">
                         <div class="order-trip order-trip-outward">
                             <i class="ico ico_boat"></i>
-                            <b>{{ shift.trip.pointA.title }} &rarr; {{ shift.trip.pointB.title }}</b> valid <b>{{ shift.date | date: 'dd.MM.yyyy'}}</b>
+                            <b>{{ shift.trip.pointA.title | ml }} &rarr; {{ shift.trip.pointB.title | ml }}</b> valid <b>{{ shift.date | date: 'dd.MM.yyyy'}}</b>
                         </div>
 
                         <div *ngIf="shift.price" class="order-trip_details">
 							<div class="order-trip_detail" *ngFor="let peopleCount of item.getPeopleCounts(shift.date)">
-								<div class="lbl">{{ peopleCount.ageGroup.title }}</div>
+								<div class="lbl">{{ peopleCount.ageGroup.title | ml }}</div>
 								<div class="val">{{ peopleCount.count }}&nbsp;x&nbsp;{{ (shift.price && shift.price.getCost(peopleCount.ageGroup) || 0) | number:'1.2-2' }}</div>
 							</div>
 							<div class="order-trip_detail" *ngIf="shift.vehicle">
-								<div class="lbl">{{ shift.vehicle.title }}</div>
+								<div class="lbl">{{ shift.vehicle.title | ml }}</div>
 								<div class="val">1&nbsp;x&nbsp;{{ (shift.price && shift.price.getVehicleCost(shift.vehicle)) | number:'1.2-2' }}</div>
 							</div>
                         </div>
