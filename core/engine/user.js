@@ -13,10 +13,10 @@ module.exports = class UserEngine {
 		return Promise.resolve({
 			code: 200,
 			data: {
-				angular: true,
 				title: 'User page',
 				main: this.template['user']({
-					lang: requestData.request.language
+					lang: requestData.request.language,
+					ml: requestData.ml
 				})
 			}
 		})

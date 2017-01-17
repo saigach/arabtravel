@@ -18,6 +18,9 @@ const doT = require('dot')
 const DB = new (require('./db.js'))()
 const Session = require('./session.js')
 
+
+const MLData = require('./mldata.js')
+
 const Template = {}
 const templateDirectory = path.resolve(process.cwd(), 'tpl/')
 const reloadTemplate = (filename) => {
@@ -69,6 +72,8 @@ const worker = http.createServer( (request, response) => {
 				session: session.data,
 				user: session.user
 			}
+
+			requestData.ml = MLData(requestData.request.language)
 
 			if (backendEngine === 'api' && Engine['api'])
 				return Engine['api']

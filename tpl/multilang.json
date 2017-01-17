@@ -1,0 +1,11 @@
+{
+	"test1": {
+		"en": "En text",
+		"ar": "Ar text"
+	},
+
+	"test2": {
+		"en": "En text 2",
+		"ar": "Ar text 2"
+	}
+}

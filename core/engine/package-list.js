@@ -13,10 +13,10 @@ module.exports = class PackageListEngine {
 		return Promise.resolve({
 			code: 200,
 			data: {
-				angular: true,
 				title: 'Package list',
 				main: this.template['package-list']({
-					lang: requestData.request.language
+					lang: requestData.request.language,
+					ml: requestData.ml
 				})
 			}
 		})

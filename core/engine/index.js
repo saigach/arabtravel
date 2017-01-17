@@ -13,10 +13,10 @@ module.exports = class IndexEngine {
 		return Promise.resolve({
 			code: 200,
 			data: {
-				angular: true,
 				title: 'Arabtravel Index',
 				main: this.template['index']({
-					lang: requestData.request.language
+					lang: requestData.request.language,
+					ml: requestData.ml
 				})
 			}
 		})

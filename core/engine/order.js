@@ -13,10 +13,10 @@ module.exports = class OrderEngine {
 		return Promise.resolve({
 			code: 200,
 			data: {
-				angular: true,
 				title: 'Order page',
 				main: this.template['order']({
-					lang: requestData.request.language
+					lang: requestData.request.language,
+					ml: requestData.ml
 				})
 			}
 		})

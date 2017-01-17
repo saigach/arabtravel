@@ -112,10 +112,8 @@
 	<script src="/js/auth.js"></script>
 
 	<!-- SystemJS -->
-	{{? it.angular }}
-		<script src="/systemjs.config.js" type="text/javascript"></script>
-		<script type="text/javascript">System.import('app').catch(function(err){ throw err })</script>
-	{{?}}
+	<script src="/systemjs.config.js" type="text/javascript"></script>
+	<script type="text/javascript">System.import('app').catch(function(err){ throw err })</script>
 </head>
 <body>
 <div id="wrap">
@@ -123,7 +121,7 @@
         <div class="container">
             <div class="row top-line">
                 <div class="col-md-6 top-contacts">
-                    <div class="top-contacts_elem top-contacts_phone"><i class="demo-icon ico_phone"></i>(123) 456 78 99 </div>
+                    <div class="top-contacts_elem top-contacts_phone"><i class="demo-icon ico_phone"></i>{{=it.ml.test1}} </div>
                     <div class="top-contacts_elem top-contacts_email"><a href="mailto:ask@arabtravel.jo"><i class="demo-icon ico_mail"></i>ask@arabtravel.jo</a></div>
                 </div>
                 <div class="col-md-4 col-md-push-2">

@@ -18,7 +18,10 @@ module.exports = class StaticEngine {
 				data: {
 					url: url,
 					title: 'Страница не найдена',
-					main: this.template['404']({ title: 'Страница не найдена' })
+					main: this.template['404']({
+						title: 'Страница не найдена',
+						ml: requestData.ml
+					})
 				}
 			})
 
@@ -41,7 +44,10 @@ module.exports = class StaticEngine {
 						data: {
 							url: url,
 							title: 'Страница не найдена',
-							main: this.template['404']({ title: 'Страница не найдена' })
+							main: this.template['404']({
+								title: 'Страница не найдена',
+								ml: requestData.ml
+							})
 						}
 					}
 
@@ -49,11 +55,15 @@ module.exports = class StaticEngine {
 					code: 200,
 					data: {
 						url: url,
-						main: this.template[url]({})
+						main: this.template[url]({
+							ml: requestData.ml
+						})
 					}
 				}
 
 			}
+
+			item.ml = requestData.ml
 
 			return {
 				code: 200,
