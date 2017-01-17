@@ -1,11 +1,21 @@
 {
-	"test1": {
-		"en": "En text",
-		"ar": "Ar text"
+	"phone": {
+		"en": "(123) 456 78 99",
+		"ar": "(123) 456 78 99 AR"
 	},
 
-	"test2": {
-		"en": "En text 2",
-		"ar": "Ar text 2"
+	"tripTypeOneway": {
+		"en": "One way",
+		"ar": "One way AR"
+	},
+
+	"tripTypeRound": {
+		"en": "Round Trip",
+		"ar": "Round Trip AR"
+	},
+
+	"tripTypePackage": {
+		"en": "Tourist Package",
+		"ar": "Tourist Package AR"
 	}
 }

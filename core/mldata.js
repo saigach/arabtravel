@@ -9,7 +9,7 @@ const reloadML = (filename) => {
 	if (!filename)
 		return
 
-	let match = filename.match(/multilang.json$/i)
+	let match = filename.match(/^multilang\.json$/i)
 	if (match) {
 		fs.readFile(path.resolve(mlDirectory, filename), 'utf8', (error, data) => {
 			if (error)
@@ -19,7 +19,7 @@ const reloadML = (filename) => {
 
 			try {
 				newData = JSON.parse(data)
-			} catch (eror) {
+			} catch (error) {
 				console.error(error)
 				newData = null
 			}
@@ -33,8 +33,6 @@ fs.readdir(mlDirectory, (error, files) =>
 	error && console.error(error) || files.forEach(filename => reloadML(filename))
 )
 fs.watch(mlDirectory, (eventType, filename) => reloadML(filename))
-
-
 
 module.exports = (lang = 'en') => {
 	return new Proxy(DATA, {

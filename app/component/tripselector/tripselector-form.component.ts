@@ -2,8 +2,9 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { Router } from '@angular/router'
 
 import { APIService } from '../../service/api.service'
+import { MLService } from '../../service/ml.service'
 
-import { str2Date, SearchData } from '../../../model/common'
+import { str2Date, SearchData, MLString } from '../../../model/common'
 import { Trip, VehicleCost} from '../../../model/trip'
 import { Point } from '../../../model/point'
 import { Vehicle } from '../../../model/vehicle'
@@ -163,9 +164,13 @@ export class TripSelectorFormComponent implements OnInit {
 				)
 	}
 
-	constructor(private router: Router, private apiService: APIService) {}
+	ml: { [key:string]: MLString } = {}
+
+	constructor(private router: Router, private apiService: APIService, private mlService: MLService) {}
 
 	ngOnInit(): void {
+
+		this.mlService.get().then( ml => this.ml = ml)
 
 		Promise.all([
 			this.apiService.get<Point>(Point).then( (response: Point[]) => this.points = response ),

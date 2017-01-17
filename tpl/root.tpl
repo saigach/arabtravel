@@ -121,7 +121,7 @@
         <div class="container">
             <div class="row top-line">
                 <div class="col-md-6 top-contacts">
-                    <div class="top-contacts_elem top-contacts_phone"><i class="demo-icon ico_phone"></i>{{=it.ml.test1}} </div>
+                    <div class="top-contacts_elem top-contacts_phone"><i class="demo-icon ico_phone"></i>{{=it.ml.phone}}</div>
                     <div class="top-contacts_elem top-contacts_email"><a href="mailto:ask@arabtravel.jo"><i class="demo-icon ico_mail"></i>ask@arabtravel.jo</a></div>
                 </div>
                 <div class="col-md-4 col-md-push-2">
@@ -159,7 +159,7 @@
                     <div class="logo-subtitle-container">
                         <div class="subtitle">Ferry booking agency</div>
                         <div class="logo">
-                            <a class="logo-link" href="/"><img src="img/logo.png" alt=""></a>
+                            <a class="logo-link" href="/{{=it.lang}}"><img src="img/logo.png" alt=""></a>
                         </div>
                     </div>
                     <div class="subtitle2">Your road between Jordan, Egypt and Saudi Arabia</div>

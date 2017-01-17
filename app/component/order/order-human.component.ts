@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef, Output, Input, EventEmitter } from '@angular/core'
 
+import { MLService } from '../../service/ml.service'
+
+import { MLString } from '../../../model/common'
 import { Human, Nationality } from '../../../model/human'
 import { str2Date } from '../../../model/common'
 
@@ -29,9 +32,13 @@ export class OrderHumanComponent implements OnInit {
 	@ViewChild('dobNode') dobRef: ElementRef
 	dobDatepicker: any = null
 
-	constructor() {}
+	ml: { [key:string]: MLString } = {}
+
+	constructor(private mlService: MLService) {}
 
 	ngOnInit(): void {
+		this.mlService.get().then( ml => this.ml = ml)
+
 		this.dobDatepicker = UIkit.datepicker(this.dobRef.nativeElement, {
 			weekstart: 1,
 			format:'DD.MM.YYYY'

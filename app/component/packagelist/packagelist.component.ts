@@ -2,8 +2,9 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { Router } from '@angular/router'
 
 import { APIService } from '../../service/api.service'
+import { MLService } from '../../service/ml.service'
 
-import { str2Date, SearchData, newDate } from '../../../model/common'
+import { str2Date, SearchData, newDate, MLString } from '../../../model/common'
 import { Order, Shift, PaymentType } from '../../../model/order'
 import { Trip, Price, VehicleCost } from '../../../model/trip'
 import { Point } from '../../../model/point'
@@ -97,9 +98,13 @@ export class PackageListComponent implements OnInit {
 				)
 	}
 
-	constructor(private router: Router, private apiService: APIService) {}
+	ml: { [key:string]: MLString } = {}
+
+	constructor(private router: Router, private apiService: APIService, private mlService: MLService) {}
 
 	ngOnInit(): void {
+		this.mlService.get().then( ml => this.ml = ml)
+
 		let searchData: SearchData = null
 
 		try {
