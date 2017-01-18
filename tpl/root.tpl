@@ -157,8 +157,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row nav-line clearfix">
-                <div class="col-md-8 logo-container">
+            <div class="nav-line clearfix uk-flex uk-grid">
+                <div class="uk-width-2-3 logo-container">
                     <div class="logo-subtitle-container">
                         <div class="subtitle">Ferry booking agency</div>
                         <div class="logo">
@@ -172,7 +172,7 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
                 </button>
-                <ul class="nav navbar-nav navbar-right header-navbar">
+                <ul class="nav navbar-nav header-navbar uk-width-1-3">
                     <li class="dropdown" data-uk-dropdown="{mode:'click'}">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown">Passenger Info<strong class="caret"></strong></a>
                         <ul class="uk-dropdown dropdown-menu">
