@@ -1,18 +1,18 @@
-<form role="form" class="contact-form dark-form animated-form">
+<form role="form" class="contact-form dark-form animated-form" (ngSubmit)="submit($event)">
     <p class="footer-title">Ask us a question</p>
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
-                <input type="text" class="form-control" id="exampleInputEmail1" />
-                <label for="exampleInputEmail1">
+                <input name="contactName" required type="text" class="form-control" id="contactName" [(ngModel)]="name">
+                <label for="contactName">
                     Name
                 </label>
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <input type="email" class="form-control" id="exampleInputPassword1" />
-                <label for="exampleInput">
+                <input name="contactEmail" required type="email" class="form-control" id="contactEmail" [(ngModel)]="email">
+                <label for="contactEmail">
                     Email
                 </label>
             </div>
@@ -21,8 +21,8 @@
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
-                <textarea name="" class="form-control" id="" cols="30" rows="3"></textarea>
-                <label for="exampleInput">
+                <textarea name="contactMessage" class="form-control" id="contactMessage" cols="30" rows="3" [(ngModel)]="message"></textarea>
+                <label for="contactMessage">
                     Message
                 </label>
             </div>

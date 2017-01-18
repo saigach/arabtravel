@@ -7511,7 +7511,9 @@ a:not(.btn) {
   right: 0;
   float: none;
 }
-
+.dd-lang > button, .dd-currency > button {
+    text-transform: uppercase;
+}
 .form-area {
   position: relative;
 }
@@ -7780,7 +7782,8 @@ a:not(.btn) {
   transition: 300ms;
 }
 .animated-form .form-control:focus ~ label,
-.animated-form .form-control.non-empty ~ label {
+.animated-form .form-control.non-empty ~ label,
+.animated-form .form-control[ng-reflect-model] ~ label {
   top: 0px;
 }
 .dark-form label {
@@ -8257,7 +8260,8 @@ a:not(.btn) {
   padding-left: 28px;
   position: relative;
 }
-.main-search-form_form .styled-radio input[type=radio] + label:before {
+.main-search-form_form .styled-radio input[type=radio] + label:before,
+.styled-radio.styled-radio-w input[type=radio] + label:before  {
   border: 2px solid #fff !important;
 }
 .styled-radio input[type=radio] + label:before {
@@ -8604,21 +8608,21 @@ input[type=text]:focus {
 }
 
 .payment-details_submit {
-  text-align: center;
-  margin: 60px 0;
+  margin: 40px 0;
 }
 
 .cvv-label {
-  width: 20%;
   display: inline-block;
 }
 
 #cvv {
-  width: 80%;
-  float: right;
+  width: 70px;
   display: inline-block;
 }
 
+#cardholder-name {
+    text-transform: uppercase;
+}
 /****** Tourist package ******/
 .sort-line {
   border-bottom: 2px solid #dddddd;

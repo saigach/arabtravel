@@ -18,7 +18,7 @@
                     stopOn = function() { return $( document ).height() - (closestRow.offset().top + closestRow.height() ) + options.offsetBottom; };
                 }
                 else stopOn = false;
-                console.log(obj.offset());
+
                 obj.affix({
                   offset: {
                     top: fromTop + options.offsetTop,
@@ -39,7 +39,7 @@
 
 })(jQuery);
 
-$(document).ready(function() {	
+$(document).ready(function() {
 
     //var s = skrollr.init();
 
@@ -92,29 +92,11 @@ $(document).ready(function() {
 
         })();
     }
+
+    orderFormInitUi();
 });
 
-function tripselectorFormUiInit() {
-
-    /*$("select[data-control='selectpicker']").selectpicker({
-        style: 'btn-default',
-        size: 4
-    });*/
-
-    /*$("input[data-control='spinner-vertical']").TouchSpin({
-        verticalbuttons: true,
-        verticalupclass: 'glyphicon glyphicon-plus',
-        verticaldownclass: 'glyphicon glyphicon-minus'
-    });
-	
-	    $("input[data-control='datepicker']").datetimepicker({
-        format: 'MM/DD/YYYY'
-    });
-
-    $(".tour_datepicker").datetimepicker({
-        inline: true
-    });*/
-
-    var datepicker = UIkit.datepicker($('#DP').eq(0));
-    console.log('111');
+function orderFormInitUi() {
+    $('#card-number').mask('0000-0000-0000-0000');
+    $('#cvv').mask('000');
 }
