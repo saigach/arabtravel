@@ -207,11 +207,11 @@
             </div>
         </div>
     </header>
-
-	{{=it.main || ''}}
-
+	<div class="page-content">
+		{{=it.main || ''}}
+	</div>
 	</div><!-- /.wrap -->
-	<footer class="main-footer">
+	<footer class="main-footer" id="main-footer">
         <div class="container">
             <div class="row">
                 <div class="col-md-3">

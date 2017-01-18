@@ -1,57 +1,52 @@
 {
-	"name": "arabtravel",
-	"version": "0.0.5",
-	"description": "arabtravel.jo",
-	"author": "Wisdman <wisdman@ajaw.it>",
-	"license": "UNLICENSED",
-	"private": true,
-	"scripts": {
-		"postinstall": "typings install",
-		"tsc": "tsc",
-		"tsc:w": "tsc -w",
-		"typings": "typings"
-	},
-	"dependencies": {
-		"@angular/common": "~2.4.0",
-		"@angular/compiler": "~2.4.0",
-		"@angular/core": "~2.4.0",
-		"@angular/forms": "~2.4.0",
-		"@angular/http": "~2.4.0",
-		"@angular/platform-browser": "~2.4.0",
-		"@angular/platform-browser-dynamic": "~2.4.0",
-		"@angular/router": "~3.4.0",
-
-		"core-js": "^2.4.1",
-		"reflect-metadata": "^0.1.8",
-		"rxjs": "5.0.1",
-		"systemjs": "0.19.40",
-		"zone.js": "^0.7.4",
-
-		"pg-native": "*",
-		"nodemailer": "*",
-		"dot": "*",
-
-		"blueimp-canvas-to-blob": "*",
-		"jquery": "^2.2.4",
-		"uikit": "^2.27.2",
-		"pica": "*",
-		"font-awesome": "*",
-		"froala-editor": "*",
-
-		"bootstrap": "^3.3.7",
-		"bootstrap-select": "*",
-		"bootstrap-touchspin": "*",
-		"moment": "*",
-		"bootstrap-datetimepicker": "*",
-		"owl.carousel": "*"
-	},
-	"devDependencies": {
-		"typescript": "*",
-
-		"@types/node": "*",
-		"@types/jasmine": "*",
-		"@types/core-js": "*",
-
-		"typings": "*"
-	}
+  "name": "arabtravel",
+  "version": "0.0.5",
+  "description": "arabtravel.jo",
+  "author": "Wisdman <wisdman@ajaw.it>",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "postinstall": "typings install",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w",
+    "typings": "typings"
+  },
+  "dependencies": {
+    "@angular/common": "~2.4.0",
+    "@angular/compiler": "~2.4.0",
+    "@angular/core": "~2.4.0",
+    "@angular/forms": "~2.4.0",
+    "@angular/http": "~2.4.0",
+    "@angular/platform-browser": "~2.4.0",
+    "@angular/platform-browser-dynamic": "~2.4.0",
+    "@angular/router": "~3.4.0",
+    "blueimp-canvas-to-blob": "*",
+    "bootstrap": "^3.3.7",
+    "bootstrap-datetimepicker": "*",
+    "bootstrap-select": "*",
+    "bootstrap-touchspin": "*",
+    "core-js": "^2.4.1",
+    "dot": "*",
+    "font-awesome": "*",
+    "froala-editor": "*",
+    "jquery": "^2.2.4",
+    "jquery-mask-plugin": "^1.14.8",
+    "moment": "*",
+    "nodemailer": "*",
+    "owl.carousel": "*",
+    "pg-native": "*",
+    "pica": "*",
+    "reflect-metadata": "^0.1.8",
+    "rxjs": "5.0.1",
+    "systemjs": "0.19.40",
+    "uikit": "^2.27.2",
+    "zone.js": "^0.7.4"
+  },
+  "devDependencies": {
+    "typescript": "*",
+    "@types/node": "*",
+    "@types/jasmine": "*",
+    "@types/core-js": "*",
+    "typings": "*"
+  }
 }

@@ -7424,10 +7424,17 @@ a:not(.btn) {
   min-height: 100%;
   height: auto !important;
   height: 100%;
-  margin: 0 auto -400px;
+  margin: 0 auto -410px;
   overflow-x: hidden;
 }
-
+.main-footer {
+  height: 410px;
+}
+.page-content {
+    margin-bottom: 410px;
+    min-height: 200px;
+    position: relative;
+}
 .full-width {
   width: 100vw;
   position: relative;
@@ -7727,7 +7734,7 @@ a:not(.btn) {
 }
 
 .main-content {
-  padding-bottom: 450px;
+  padding-bottom: 40px;
   padding-top: 100px;
 }
 
@@ -7735,11 +7742,12 @@ a:not(.btn) {
   background-color: #001116;
   color: #fff;
   padding-top: 50px;
-  height: 410px;
+  //height: 410px;
 }
 .main-footer .bottom-line {
   border-top: 1px solid #2b434b;
   padding: 16px 0;
+  margin-top: 16px;
 }
 .main-footer .footer-title {
   font-size: 18px;
@@ -8312,9 +8320,9 @@ a:not(.btn) {
     position: relative;
     margin: 0;
 }
-.styled-radio input[type=radio]:checked + label:before {
+/*.styled-radio input[type=radio]:checked + label:before {
     background: #00b7f4;
-}
+}*/
 .styled-radio input[type=radio]:checked + label i {
     color: #fff;
 }

@@ -69,6 +69,8 @@ export class OrderPageComponent implements OnInit {
 			this.item.exchangeRate = response.exchangeRate
 			this.item.egyptianMarkUp = response.egyptianMarkUp
 		})
+
+		UIkit.sticky('#order-details', {boundary: '#sticky-boundary'});
 	}
 
 	addHuman(): void {
