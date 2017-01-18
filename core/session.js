@@ -19,7 +19,7 @@ const querystring = require('querystring')
 const DB = new (require('./db.js'))()
 
 module.exports = class Session {
-	constructor(request, body = null) {
+	constructor(request, body = null, ml = false) {
 		let sessionId = request.headers['cookie'] &&
 						request.headers['cookie'].match(/session_id\s*=\s*([0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})/i)
 		sessionId =  sessionId && sessionId[1] || null
@@ -33,7 +33,7 @@ module.exports = class Session {
 
 		this.request = {
 			method: request.method.toUpperCase(),
-			language: requestPath.shift() || 'en',
+			language: ml ? requestPath.shift() || 'en' : 'en',
 			path: requestPath,
 			query: requestUrl.query,
 			body: null,

@@ -11,6 +11,7 @@ import { MLService } from './service/ml.service'
 
 import { AppComponent } from './component/app.component'
 import { MLPipe } from './pipe/ml.pipe'
+import { CurrencyPipe } from './pipe/currency.pipe'
 
 import { TripSelectorFormComponent } from './component/tripselector/tripselector-form.component'
 import { OrderPageComponent } from './component/order/order-page.component'
@@ -30,6 +31,7 @@ import { ContactFormComponent } from './component/contact/contact-form.component
 	declarations: [
 		AppComponent,
 		MLPipe,
+		CurrencyPipe,
 		TripSelectorFormComponent,
 		OrderPageComponent,
 		PackageListComponent,

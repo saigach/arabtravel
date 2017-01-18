@@ -63,7 +63,7 @@ const worker = http.createServer( (request, response) => {
 	let body = ''
 	request.on('data', chunk => body += String(chunk) )
 	request.on('end', () =>
-		new Session(request, body).get.then(session => {
+		new Session(request, body, true).get.then(session => {
 
 			let backendEngine = session.request.path.shift() || 'index'
 

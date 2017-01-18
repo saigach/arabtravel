@@ -8,7 +8,7 @@ import { User } from '../../model/user'
 
 @Injectable()
 export class APIService {
-	private static apiRoot = '/api'
+	private static apiRoot = '/en/api'
 
 	private static options = new RequestOptions({
 		headers: new Headers({

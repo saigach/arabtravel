@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core'
 import { Router } from '@angular/router'
 
 import { APIService } from '../../service/api.service'
@@ -35,7 +35,27 @@ export class OrderPageComponent implements OnInit {
 
 	ml: { [key:string]: MLString } = {}
 
-	constructor(private router: Router, private apiService: APIService, private mlService: MLService) {
+	_currency: string = 'usd'
+
+	get currency():string {
+		return this._currency === 'usd' ? '$' : this._currency
+	}
+
+	set currency(value: string) {
+		this._currency = value ? value : 'usd'
+		// this.ref.detectChanges()
+	}
+
+	get exchangeRate(): number {
+		if (this._currency === 'jod')
+			return 1
+
+		return this.item && this.item.exchangeRate || 0
+	}
+
+	constructor(private router: Router, private apiService: APIService, private mlService: MLService, private ref: ChangeDetectorRef) {
+
+		this.currency = localStorage && localStorage.getItem('currency') || null
 
 		let thisYear = (new Date()).getFullYear()
 		for (let i = thisYear; i <= thisYear + 10; i++)
@@ -71,6 +91,14 @@ export class OrderPageComponent implements OnInit {
 		})
 
 		UIkit.sticky('#order-details', {boundary: '#sticky-boundary'});
+
+		Array.prototype.forEach.call(
+			document.querySelectorAll('[currency-set]'),
+			currencySetNode => currencySetNode.addEventListener('click', event =>{
+				event.preventDefault()
+				this.currency = currencySetNode.getAttribute('currency-set') || null
+			})
+		)
 	}
 
 	addHuman(): void {
