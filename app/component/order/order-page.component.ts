@@ -38,7 +38,7 @@ export class OrderPageComponent implements OnInit {
 	_currency: string = 'usd'
 
 	get currency():string {
-		return this._currency
+		return this._currency === 'usd' ? '$' : this._currency
 	}
 
 	set currency(value: string) {
@@ -47,7 +47,7 @@ export class OrderPageComponent implements OnInit {
 	}
 
 	get exchangeRate(): number {
-		if (this.currency === 'jod')
+		if (this._currency === 'jod')
 			return 1
 
 		return this.item && this.item.exchangeRate || 0
