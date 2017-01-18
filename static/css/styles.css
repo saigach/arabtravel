@@ -4017,6 +4017,7 @@ tbody.collapse.in {
   width: 0;
   height: 0;
   margin-left: 2px;
+  margin-right: 2px;
   vertical-align: middle;
   border-top: 4px dashed;
   border-top: 4px solid \9;
@@ -7510,6 +7511,10 @@ a:not(.btn) {
   font-style: italic;
   line-height: 1.167;
   vertical-align: -0.8em;
+}
+
+html[dir='rtl'] .subtitle2 {
+    margin-right: 6px;
 }
 
 .header-navbar {

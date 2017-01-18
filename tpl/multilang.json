@@ -3,6 +3,31 @@
 		"en": "(123) 456 78 99",
 		"ar": "(123) 456 78 99 AR"
 	},
+	
+	"signUp": {
+		"en": "Sign up",
+		"ar": "سجل"
+	},
+	
+	"ferryBookingAgency": {
+		"en": "Ferry booking agency",
+		"ar": "وكالة الحجز العبارة"
+	},
+	
+	"subtitle": {
+		"en": "Your road between Jordan, Egypt and Saudi Arabia",
+		"ar": "طريقك بين الأردن ومصر والمملكة العربية السعودية"
+	},
+	
+	"passengerInfo": {
+		"en": "Passenger Info",
+		"ar": "معلومات الركاب"
+	},
+	
+	"contactUs": {
+		"en": "Contact Us",
+		"ar": "اتصل بنا"
+	},
 
 	"tripTypeOneway": {
 		"en": "One way",

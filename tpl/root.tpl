@@ -130,7 +130,7 @@
                 <div class="col-md-4 col-md-push-2">
                     <div class="pull-left">
                         <a id="currentAccountLink" href="{{=it.userEmail && '/user' || '#login-form-modal'}}" class="btn btn-default btn-ghost btn-ui btn-account" {{? !it.userEmail }} data-uk-modal {{?}}>
-                            <i class="demo-icon ico_user"></i><span id="currentAccount">{{=it.userEmail || 'Sign Up'}}</span>
+                            <i class="demo-icon ico_user"></i><span id="currentAccount">{{=it.userEmail || it.ml.signUp}}</span>
                         </a>
                     </div>
                     <div class="pull-right">
@@ -160,12 +160,12 @@
             <div class="nav-line clearfix uk-flex uk-grid">
                 <div class="uk-width-2-3 logo-container">
                     <div class="logo-subtitle-container">
-                        <div class="subtitle">Ferry booking agency</div>
+                        <div class="subtitle">{{=it.ml.ferryBookingAgency}}</div>
                         <div class="logo">
                             <a class="logo-link" href="/{{=it.lang}}"><img src="img/logo.png" alt=""></a>
                         </div>
                     </div>
-                    <div class="subtitle2">Your road between Jordan, Egypt and Saudi Arabia</div>
+                    <div class="subtitle2">{{=it.ml.subtitle}}</div>
 
                 </div>
 
@@ -174,7 +174,7 @@
                 </button>
                 <ul class="nav navbar-nav header-navbar uk-width-1-3">
                     <li class="dropdown" data-uk-dropdown="{mode:'click'}">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Passenger Info<strong class="caret"></strong></a>
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">{{=it.ml.passengerInfo}}<strong class="caret"></strong></a>
                         <ul class="uk-dropdown dropdown-menu">
                         	{{~it.static :value:index}}
 								 <li>
@@ -184,7 +184,7 @@
                         </ul>
                     </li>
                     <li class="dropdown" data-uk-dropdown="{mode:'click'}">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Contact Us<strong class="caret"></strong></a>
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">{{=it.ml.contactUs}}<strong class="caret"></strong></a>
                         <ul class="uk-dropdown dropdown-menu">
                             <li>
                                 <a href="#">Jordan</a>
