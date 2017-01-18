@@ -7513,9 +7513,9 @@ a:not(.btn) {
 }
 
 .header-navbar {
-  position: absolute;
+  /*position: absolute;
   bottom: 0;
-  right: 0;
+  right: 0;*/
   float: none;
 }
 .dd-lang > button, .dd-currency > button {
@@ -8257,7 +8257,13 @@ a:not(.btn) {
   background: #0d42fa;
   border-color: #0d42fa;
 }
-
+html[dir='rtl'] .styled-checkbox input[type=checkbox] + label {
+    padding: 0 30px 0 0;
+}
+html[dir='rtl'] .styled-checkbox input[type=checkbox] + label:before {
+    left: auto;
+    right: 0;
+}
 .styled-radio input[type=radio] {
   display: none;
 }
@@ -8266,7 +8272,7 @@ a:not(.btn) {
   line-height: 26px;
   display: inline-block;
   vertical-align: middle;
-  padding-left: 28px;
+  padding-left: 30px;
   position: relative;
 }
 .main-search-form_form .styled-radio input[type=radio] + label:before,
@@ -8300,6 +8306,18 @@ a:not(.btn) {
   display: block;
   border-radius: 50%;
 }
+html[dir='rtl'] .styled-radio input[type=radio] + label {
+    padding: 0 30px 0 0;
+}
+html[dir='rtl'] .styled-radio input[type=radio] + label:before {
+    left: auto;
+    right: 0;
+}
+html[dir='rtl'] .styled-radio input[type=radio]:checked + label:after {
+    left: auto;
+    right: 7px;
+}
+
 .styled-radio.radio-sort input[type=radio] + label:before {
     background: #e8e8e8;
     border-radius: 3px;
@@ -8606,7 +8624,7 @@ html[dir='rtl'] .passenger-info_delete {
   color: #fff;
 
   width: 66%;
- 
+
 }
 .payment-system_container label {
   color: #fff;
