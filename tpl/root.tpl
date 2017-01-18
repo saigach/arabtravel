@@ -105,6 +105,9 @@
 	<link rel="stylesheet" href="/node_modules/owl.carousel/dist/assets/owl.carousel.css">
 	<script src="/node_modules/owl.carousel/dist/owl.carousel.min.js"></script>
 
+	<!-- jquery.mask -->
+	<script src="/node_modules/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+
 	<link rel="stylesheet" href="/css/loader.min.css" type="text/css">
 	<link rel="stylesheet" href="/css/styles.css" type="text/css">
 	<script src="/js/main.js"></script>
@@ -131,7 +134,7 @@
                         </a>
                     </div>
                     <div class="pull-right">
-                        <div class="dropdown pull-right" data-uk-dropdown="{mode:'click'}">
+                        <div class="dropdown pull-right dd-currency" data-uk-dropdown="{mode:'click'}">
                             <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 USD
                                 <span class="caret"></span>
@@ -141,7 +144,7 @@
                                 <li><a href="">JOD</a></li>
                             </ul>
                         </div>
-                        <div class="dropdown pull-right" data-uk-dropdown="{mode:'click'}">
+                        <div class="dropdown pull-right dd-lang" data-uk-dropdown="{mode:'click'}">
                             <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 {{=it.lang}}
                                 <span class="caret"></span>

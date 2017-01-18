@@ -45,64 +45,84 @@
 								</span>
 							</span>
 						</div>
-
-                        <div class="payment-system_container" id="payment-system_card" [class.hide]="item.paymentType.id !== 'card'">
+                        <div class="clearfix">
+                            <div class="payment-system_container col-md-8" id="payment-system_card" [class.hide]="item.paymentType.id !== 'card'">
                             <div class="payment-system_card">
                                 <div class="form-group row">
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <label>
-                                            CARD NUMBER <span *ngIf="item.card.type">({{item.card.type}})</span>
+                                            CARD TYPE
                                         </label>
                                     </div>
-                                    <div class="col-md-9">
-                                        <input type="text" class="form-control" id="card-number" [(ngModel)]="item.card.number">
+                                    <div class="col-md-8">
+                                        <span class="styled-radio styled-radio-w">
+        									<input name="card-type" class="radio" type="radio" id="card-type_visa">
+        									<label for="card-type_visa">
+        									    <img src="/img/visa.svg" width="40" alt="">
+        									</label>
+        								</span>
+                                        &nbsp; / &nbsp;
+                                        <span class="styled-radio styled-radio-w">
+        									<input name="card-type" class="radio" type="radio" id="card-type_mc">
+        									<label for="card-type_mc"><img src="/img/mastercard.svg" width="40" alt=""></label>
+        								</span>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
+                                        <label>
+                                            CARD NUMBER <span *ngIf="item.card.type" class="card-type ({{item.card.type}})"></span>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input required type="text" class="form-control" id="card-number" [(ngModel)]="item.card.number">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-4">
                                         <label for="cardholder-name">
                                             CARDHOLDER NAME
                                         </label>
                                     </div>
-                                    <div class="col-md-9">
-                                        <input type="text" class="form-control" id="cardholder-name" [(ngModel)]="item.card.cardholder">
+                                    <div class="col-md-8">
+                                        <input required type="text" class="form-control" id="cardholder-name" [(ngModel)]="item.card.cardholder">
                                     </div>
                                 </div>
                                 <div class="row">
 
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <label for="cardholder-name">
                                             VALID THRU
                                         </label>
                                     </div>
                                     <div class="col-md-5 valid-thru">
                                         <div class="valid-thru_month">
-                                            <select  id="valid-thru_month" data-control="selectpicker" class="selectpicker form-control fit-width" [(ngModel)]="item.card.validMonth">
+                                            <select required id="valid-thru_month" data-control="selectpicker" class="selectpicker form-control fit-width" [(ngModel)]="item.card.validMonth">
                                                 <option *ngFor="let month of months" [ngValue]="month">{{month}}</option>
                                             </select>
                                        </div>
                                         <div class="valid-thru_year">
-                                            <select name="" id="valid-thru_year" data-control="selectpicker" class="selectpicker form-control fit-width" [(ngModel)]="item.card.validYear">
+                                            <select required name="" id="valid-thru_year" data-control="selectpicker" class="selectpicker form-control fit-width" [(ngModel)]="item.card.validYear">
                                                 <option *ngFor="let year of years" [ngValue]="year">{{year}}</option>
                                             </select>
                                         </div>
                                     </div>
 
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <label for="cvv" class="cvv-label">
                                             CVV
                                         </label>
-                                        <input type="text" class="form-control" id="cvv" [(ngModel)]="item.card.cvv">
+                                        <input type="text" max="3" size="3" required class="form-control" id="cvv" [(ngModel)]="item.card.cvv">
                                     </div>
 
                                 </div>
                             </div>
                         </div>
 
-                        <div class="payment-system_container" id="payment-system_card" [class.hide]="item.paymentType.id === 'card'">
-                            You have chosen (payment system name). We will contact you as soon as possible and inform you on next steps.
+                            <div class="payment-system_container col-md-8" id="payment-system_card" [class.hide]="item.paymentType.id === 'card'">
+                                You have chosen {{ item.paymentType.title | ml }}. We will contact you as soon as possible and inform you on next steps.
+                            </div>
                         </div>
-
                     </section>
 
                     <div class="payment-details_submit">
