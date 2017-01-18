@@ -3,9 +3,9 @@
         <div class="row" style="position:relative;">
             <div class="col-md-9">
 
-                <h1>Ticket reservation</h1>
-                <a href="/" class="btn btn-primary btn-ghost btn-left">New search</a>
-                <p>Some text describing important info. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud ex ercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <h1>{{ ml.ticketReservation | ml }}</h1>
+                <a href="/" class="btn btn-primary btn-ghost btn-left">{{ ml.newSearch | ml }}</a>
+                <p>{{ ml.ticketReservationDescr | ml }}</p>
 
                 <!-- <p> DEBUG: {{ primaryContact | json }}</p> -->
 
@@ -13,10 +13,10 @@
 
                     <div *ngFor="let human of item.people; let i = index" class="passenger-info">
                         <header class="passenger-info_header">
-                            <span class="h3">Passenger {{ i + 1 }}</span>
+                            <span class="h3">{{ ml.passenger | ml }} {{ i + 1 }}</span>
                             <span class="styled-radio primary-contact-radio">
                                 <input name="primaryContact" class="radio" type="radio" [attr.id]="'pc-' + i" [checked]="primaryContact === human" (click)="primaryContact = human">
-                                <label [attr.for]="'pc-' + i">Primary contact</label>
+                                <label [attr.for]="'pc-' + i">{{ ml.primaryContact | ml }}</label>
                             </span>
                             <a class="passenger-info_delete" (click)="deleteHuman(human); $event.stopPropagation()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                         </header>
@@ -26,7 +26,7 @@
 
                     <div class="text-right">
                         <button class="btn btn-primary btn-ghost" (click)="addHuman(); $event.stopPropagation()">
-                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add passenger
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> {{ ml.addPassenger | ml }}
                         </button>
                     </div>
 
@@ -35,7 +35,7 @@
 
                     <section class="payment-details">
 
-                        <h3>Enter your payment details</h3>
+                        <h3>{{ ml.paymentDetails | ml }}</h3>
 
                         <div class="payment-details_methods">
 							<span class="payment-details_method" *ngFor="let paymentType of paymentTypes; let i = index">
@@ -46,12 +46,12 @@
 							</span>
 						</div>
                         <div class="clearfix">
-                            <div class="payment-system_container col-md-8" id="payment-system_card" [class.hide]="item.paymentType.id !== 'card'">
+                            <div class="payment-system_container" id="payment-system_card" [class.hide]="item.paymentType.id !== 'card'">
                             <div class="payment-system_card">
                                 <div class="form-group row">
                                     <div class="col-md-4">
                                         <label>
-                                            CARD TYPE
+                                            {{ ml.cardType | ml }}
                                         </label>
                                     </div>
                                     <div class="col-md-8">
@@ -71,7 +71,7 @@
                                 <div class="form-group row">
                                     <div class="col-md-4">
                                         <label>
-                                            CARD NUMBER <span *ngIf="item.card.type" class="card-type ({{item.card.type}})"></span>
+                                            {{ ml.cardNumber | ml }} <span *ngIf="item.card.type" class="card-type ({{item.card.type}})"></span>
                                         </label>
                                     </div>
                                     <div class="col-md-8">
@@ -81,7 +81,7 @@
                                 <div class="form-group row">
                                     <div class="col-md-4">
                                         <label for="cardholder-name">
-                                            CARDHOLDER NAME
+                                            {{ ml.cardholderName | ml }}
                                         </label>
                                     </div>
                                     <div class="col-md-8">
@@ -92,7 +92,7 @@
 
                                     <div class="col-md-4">
                                         <label for="cardholder-name">
-                                            VALID THRU
+                                            {{ ml.validThru | ml }}
                                         </label>
                                     </div>
                                     <div class="col-md-5 valid-thru">
@@ -110,7 +110,7 @@
 
                                     <div class="col-md-3">
                                         <label for="cvv" class="cvv-label">
-                                            CVV
+                                            {{ ml.cvv | ml }}
                                         </label>
                                         <input type="text" max="3" size="3" required class="form-control" id="cvv" [(ngModel)]="item.card.cvv">
                                     </div>
@@ -119,7 +119,7 @@
                             </div>
                         </div>
 
-                            <div class="payment-system_container col-md-8" id="payment-system_card" [class.hide]="item.paymentType.id === 'card'">
+                            <div class="payment-system_container" id="payment-system_card" [class.hide]="item.paymentType.id === 'card'">
                                 You have chosen {{ item.paymentType.title | ml }}. We will contact you as soon as possible and inform you on next steps.
                             </div>
                         </div>
@@ -127,7 +127,7 @@
 
                     <div class="payment-details_submit">
                         <button type="submit" class="btn btn-danger btn-lg" (click)="submit(); $event.stopPropagation()">
-                            Submit Payment
+                            {{ ml.submitPayment | ml }}
                         </button>
 
 

@@ -17,5 +17,110 @@
 	"tripTypePackage": {
 		"en": "Tourist Package",
 		"ar": "السياحية حزمة"
+	},
+
+	"routeFrom": {
+		"en": "Route from",
+		"ar": "الطريق من"
+	},
+
+	"routeTo": {
+		"en": "Route to",
+		"ar": "الطريق إلى"
+	},
+	
+	"dateOfDeparture": {
+		"en": "Date of departure",
+		"ar": "موعد المغادرة"
+	},
+	
+	"dateOfReturn": {
+		"en": "Date of return",
+		"ar": "تاريخ العودة"
+	},
+	
+	"anyDate": {
+		"en": "Any date",
+		"ar": "أي تاريخ"
+	},
+	
+	"vehicle": {
+		"en": "Vehicle",
+		"ar": "مركبة"
+	},
+	
+	"none": {
+		"en": "None",
+		"ar": "لا شيء"
+	},
+	
+	"checkAvailability": {
+		"en": "CHECK AVAILABILITY",
+		"ar": "التحقق من الصلاحية"
+	},
+	
+	"ticketReservation": {
+		"en": "Ticket reservation",
+		"ar": "حجز تذكرة"
+	},
+	
+	"ticketReservationDescr": {
+		"en": "Some text describing important info. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud ex ercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+		"ar": "كن لا بد أن أوضح لك أن كل هذه الأفكار المغلوطة حول استنكار  النشوة وتمجيد الألم نشأت بالفعل، وسأعرض لك التفاصيل لتكتشف حقيقة وأساس تلك السعادة البشرية، فلا أحد يرفض أو يكره أو يتجنب الشعور بالسعادة، ولكن بفضل هؤلاء الأشخاص الذين لا يدركون بأن السعادة لا بد أن نستشعرها بصورة أكثر عقلانية ومنطقية فيعرضهم هذا لمواجهة الظروف الأليمة، وأكرر بأنه لا يوجد من يرغب في الحب ونيل المنال ويتلذذ بالآلام، الألم هو الألم ولكن نتيجة لظروف ما قد تكمن السعاده فيما نتحمله من كد وأسي."
+	},
+	
+	"newSearch": {
+		"en": "New Search",
+		"ar": "بحث جديد"
+	},
+	
+	"passenger": {
+		"en": "Passenger",
+		"ar": "راكب"
+	},
+	
+	"primaryContact": {
+		"en": "Primary contact",
+		"ar": "اتصال رئيسي"
+	},
+	
+	"addPassenger": {
+		"en": "Add passenger",
+		"ar": "إضافة الركاب"
+	},
+	
+	"paymentDetails": {
+		"en": "Enter your payment details",
+		"ar": "إدخال تفاصيل الدفع الخاصة بك"
+	},
+	
+	"cardType": {
+		"en": "CARD TYPE",
+		"ar": "نوع البطاقة"
+	},
+	
+	"cardNumber": {
+		"en": "CARD NUMBER",
+		"ar": "رقم البطاقة"
+	},
+	
+	"cardholderName": {
+		"en": "CARDHOLDER NAME",
+		"ar": "إسم صاحب البطاقة"
+	},
+	
+	"validThru": {
+		"en": "VALID THRU",
+		"ar": "صالح حتى"
+	},
+	
+	"cvv": {
+		"en": "CVV",
+		"ar": "CVV"
+	},
+	
+	"submitPayment": {
+		"en": "Submit Payment",
+		"ar": "تقديم دفعة"
 	}
 }

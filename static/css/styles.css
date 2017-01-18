@@ -8590,7 +8590,10 @@ input[type=text]:focus {
   border-color: #e90019;
   color: #e90019;
 }
-
+html[dir='rtl'] .passenger-info_delete {
+    left: 0;
+    right: auto;
+}
 .payment-details_method {
   margin-right: 28px;
 }
@@ -8601,6 +8604,9 @@ input[type=text]:focus {
   border-radius: 4px;
   margin: 12px -15px;
   color: #fff;
+
+  width: 66%;
+ 
 }
 .payment-system_container label {
   color: #fff;
@@ -9128,6 +9134,9 @@ select.form-control, input[type=email] {
     background-repeat: no-repeat;
     cursor: pointer;
     box-shadow: none;
+}
+html[dir="rtl"] .input-group.date input {
+    background-position: 2% center;
 }
 .uk-form-select {
     padding-right: 10px;

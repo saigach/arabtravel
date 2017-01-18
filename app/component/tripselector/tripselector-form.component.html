@@ -31,7 +31,7 @@
                         <div class="row">
 
                             <div class="col-md-4">
-                                <label for="routefrom">Route from</label>
+                                <label for="routefrom">{{ ml.routeFrom | ml }}</label>
                                 <select name="routefrom" [(ngModel)]="pointA" id="routefrom" class="form-control fit-width">
 									<option *ngFor="let point of APoints" [ngValue]="point">{{ point.title | ml }}</option>
                                 </select>
@@ -40,7 +40,7 @@
                             </div>
 
                             <div class="col-md-4">
-                                <label for="routeto">Route to</label>
+                                <label for="routeto">{{ ml.routeTo | ml }}</label>
                                 <select name="routeto" [(ngModel)]="pointB" id="routeto" class="form-control fit-width" [disabled]="!pointA">
 									<option *ngFor="let point of BPoints" [ngValue]="point">{{ point.title | ml }}</option>
                                 </select>
@@ -64,7 +64,7 @@
                         <div class="row">
 
                             <div class="col-md-4 form-group">
-                                <label for="rf">Date of departure</label>
+                                <label for="rf">{{ ml.dateOfDeparture | ml }}</label>
                                 <div class='input-group date'>
 									<input #departureDateNode name="departureDate" class="form-control" type="text"  [value]="departureDate | date: 'dd.MM.yyyy'">
                                 </div>
@@ -72,7 +72,7 @@
                             </div>
 
                             <div class="col-md-4 form-group" [class.hide]="type !== 'round'">
-                                <label for="rf">Date of return</label>
+                                <label for="rf">{{ ml.dateOfReturn | ml }}</label>
                                 <div class='input-group date'>
                                    <input #returnDateNode name="returnDate" class="form-control" type="text" [value]="returnDate | date: 'dd.MM.yyyy'">
                                 </div>
@@ -84,16 +84,16 @@
                                     <div class="">
                                         <div class="styled-checkbox">
                                             <input class="checkbox" type="checkbox" id="ch3">
-                                            <label for="ch3">Any date</label>
+                                            <label for="ch3">{{ ml.anyDate | ml }}</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="col-md-4" [class.hide]="type === 'package'">
-                                <label>Vehicle</label>
+                                <label>{{ ml.vehicle | ml }}</label>
                                 <select name="vehicle" [(ngModel)]="vehicle" id="rf" class="form-control fit-width" [disabled]="!pointA || !pointB">
-                                	<option [ngValue]="null">None</option>
+                                	<option [ngValue]="null">{{ ml.none | ml }}</option>
                                     <option *ngFor="let curVehicle of vehicleList" [ngValue]="curVehicle">{{ curVehicle.title | ml }}</option>
                                 </select>
                             </div>
@@ -101,7 +101,7 @@
                         </div>
 
                         <div class="text-center submit-btn-container">
-                            <input type="submit" class="btn btn-danger" (click)="submit()" value="CHECK AVALIABILITY" [disabled]="!valid">
+                            <input type="submit" class="btn btn-danger" (click)="submit()" value="{{ ml.checkAvailability | ml }}" [disabled]="!valid">
                         </div>
                     </form>
 
