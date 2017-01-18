@@ -113,6 +113,7 @@
 	<script src="/js/main.js"></script>
 
 	<script src="/js/auth.js"></script>
+	<script src="/js/currency.js"></script>
 
 	<!-- SystemJS -->
 	<script src="/systemjs.config.js" type="text/javascript"></script>
@@ -136,12 +137,12 @@
                     <div class="pull-right">
                         <div class="dropdown pull-right dd-currency" data-uk-dropdown="{mode:'click'}">
                             <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                USD
+                                <span currency-field>USD</span>
                                 <span class="caret"></span>
                             </button>
                             <ul class="uk-dropdown dropdown-menu" aria-labelledby="dLabel">
-                                <li><a href="">USD</a></li>
-                                <li><a href="">JOD</a></li>
+                                <li><a currency-set="usd">USD</a></li>
+                                <li><a currency-set="jod">JOD</a></li>
                             </ul>
                         </div>
                         <div class="dropdown pull-right dd-lang" data-uk-dropdown="{mode:'click'}">
