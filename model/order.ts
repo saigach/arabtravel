@@ -35,20 +35,23 @@ export class PaymentType {
 		new PaymentType({
 			id: 'card',
 			title: new MLString({
-				en: 'Card'
+				en: 'Card',
+				ar: 'بطاقة ائتمان'
 			}),
 			icon: null }),
 		new PaymentType({
 			id: 'bank',
 			title: new MLString({
-				en: 'Bank transfer'
+				en: 'Bank transfer',
+				ar: 'التحويل المصرفي'
 			}),
 			icon: null
 		}),
 		new PaymentType({
 			id: 'wu',
 			title: new MLString({
-				en: 'Western Union'
+				en: 'Western Union',
+				ar: 'الاتحاد الغربي'
 			}),
 			icon: null
 		})
@@ -74,49 +77,56 @@ export class OrderStatus {
 		new OrderStatus({
 			id: 'new',
 			title: new MLString({
-				en: 'New order'
+				en: 'New order',
+				ar: 'طلب جديد'
 			}),
 			icon: null
 		}),
 		new OrderStatus({
 			id: 'processing',
 			title: new MLString({
-				en: 'Under processing'
+				en: 'Under processing',
+				ar: 'تحت التجهيز'
 			}),
 			icon: null
 		}),
 		new OrderStatus({
 			id: 'need-payment-confirm',
 			title: new MLString({
-				en: 'Need payment confirm'
+				en: 'Need payment confirm',
+				ar: 'تحتاج تأكيد الدفع'
 			}),
 			icon: null
 		}),
 		new OrderStatus({
 			id: 'confirmed',
 			title: new MLString({
-				en: 'Confirmed'
+				en: 'Confirmed',
+				ar: 'مؤكد'
 			}),
 			icon: null
 		}),
 		new OrderStatus({
 			id: 'not-approved',
 			title: new MLString({
-				en: 'Not approved'
+				en: 'Not approved',
+				ar: 'غير مقبول'
 			}),
 			icon: null
 		}),
 		new OrderStatus({
 			id: 'cancellation',
 			title: new MLString({
-				en: 'Cancellation'
+				en: 'Cancellation',
+				ar: 'إلغاء'
 			}),
 			icon: null
 		}),
 		new OrderStatus({
 			id: 'canceled',
 			title: new MLString({
-				en: 'Canceled'
+				en: 'Canceled',
+				ar: 'ألغيت'
 			}),
 			icon: null
 		})

@@ -217,21 +217,24 @@ export class AgeGroup {
 		new AgeGroup({
 			id: 'adults',
 			title: new MLString({
-				en: 'Adults'
+				en: 'Adults',
+				ar: 'الكبار'
 			}),
 			icon: null
 		}),
 		new AgeGroup({
 			id: 'kids',
 			title: new MLString({
-				en: 'Kids'
+				en: 'Kids',
+				ar: 'أطفال'
 			}),
 			icon: null
 		}),
 		new AgeGroup({
 			id: 'infants',
 			title: new MLString({
-				en: 'Infants'
+				en: 'Infants',
+				ar: 'الرضع'
 			}),
 			icon: null
 		})
