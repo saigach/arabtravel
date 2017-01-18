@@ -3,6 +3,8 @@
  * Copyright(c) 2016 Wisdman <wisdman@ajaw.it>
  */
 
+const INFO_EMAIL = 'd@ajaw.it'
+
 const Mail = require('../mail.js')
 
 const escapeStr = str => "'" + String(str).replace(/\\/g, "\\\\").replace(/'/g, "\\'") + "'"
@@ -208,6 +210,41 @@ module.exports = class APIEngine {
 					code: 200,
 					data: rows.reduce( (prev, row) => Object.assign(prev, { [row.key]: row.value } ), {} )
 				}))
+			case 'message':
+
+				let messageData = requestData.request.body || {}
+
+				if (!messageData.name)
+					return Promise.resolve({
+						code: 400,
+						data: { error: 'Name is not valid' }
+					})
+
+				let message = 'Name: ' + String(messageData.name) + '\n'
+
+				if (!messageData.email)
+					return Promise.resolve({
+						code: 400,
+						data: { error: 'Email is not valid' }
+					})
+
+				message += 'E-mail: ' + String(messageData.email) + '\n'
+
+				message += 'Message: ' + (messageData.message && String(messageData.message) || '')
+
+				return this.mail
+					.sendMail(INFO_EMAIL, 'Message from arabtravel webform', message)
+					.then(result => {
+						return {
+							code: 200,
+							date: { sucess: true }
+						}
+					}).catch(error => {
+						return {
+							code: 500,
+							date: { error: 'Mail not sended' }
+						}
+					})
 			default:
 				return Promise.resolve({
 					code: 400,
