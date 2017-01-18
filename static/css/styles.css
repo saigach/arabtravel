@@ -7755,6 +7755,7 @@ a:not(.btn) {
   color: white;
   font-weight: bold;
   line-height: 1.05;
+  margin-bottom: 10px;
 }
 .main-footer .footer-menu {
   list-style: none;
@@ -7776,7 +7777,7 @@ a:not(.btn) {
 }
 
 .contact-form {
-  margin: 0 10% 20px 10%;
+  margin: 0 10% 0 10%;
 }
 .animated-form .form-group {
   padding-top: 20px;
