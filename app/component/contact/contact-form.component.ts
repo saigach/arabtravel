@@ -36,6 +36,11 @@ export class ContactFormComponent implements OnInit {
             email: this.email,
             message: this.message
         })
-        this.http.post('/api/message', postData, options).toPromise().then(response => response.json() || null)
+        this.http.post('/en/api/message', postData, options).toPromise()
+        .then(()=>{
+            UIkit.notify("Your message have been sent", {status:'success', pos: 'bottom-center'})
+        }).catch((response:any)=>{
+            let resp = response.json() || {error:'unknown error'}
+        })
     }
 }
