@@ -221,8 +221,7 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-
-
+					<contact-form></contact-form>
                 </div>
                 <div class="col-md-3">
                     <div class="row">

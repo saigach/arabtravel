@@ -7780,7 +7780,8 @@ a:not(.btn) {
   transition: 300ms;
 }
 .animated-form .form-control:focus ~ label,
-.animated-form .form-control.non-empty ~ label {
+.animated-form .form-control.non-empty ~ label,
+.animated-form .form-control[ng-reflect-model] ~ label {
   top: 0px;
 }
 .dark-form label {

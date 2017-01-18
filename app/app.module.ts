@@ -18,6 +18,7 @@ import { PackageListComponent } from './component/packagelist/packagelist.compon
 import { OrderHumanComponent } from './component/order/order-human.component'
 
 import { UserPageComponent } from './component/user/user-page.component'
+import { ContactFormComponent } from './component/contact/contact-form.component'
 
 @NgModule({
 	imports: [
@@ -33,14 +34,16 @@ import { UserPageComponent } from './component/user/user-page.component'
 		OrderPageComponent,
 		PackageListComponent,
 		OrderHumanComponent,
-		UserPageComponent
+		UserPageComponent,
+		ContactFormComponent
 	],
 	providers: [
 		APIService,
 		MLService
 	],
 	bootstrap: [
-		AppComponent
+		AppComponent,
+		ContactFormComponent
 	]
 })
 export class AppModule { }
