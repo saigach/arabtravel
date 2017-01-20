@@ -1,17 +1,17 @@
 
     <div class="form-area">
 
-        <div class="carousel-container">
-            <div class="carousel slide" data-ride="carousel" id="main-page-carousel">
+        <div class="data-uk-slideshow">
+            <div class="carousel slide uk-slideshow" id="main-page-carousel">
                 <ol class="carousel-indicators">
-                    <li class="active" data-slide-to="0" data-target="#main-page-carousel">
+                    <li data-uk-slideshow-item="0">
                     </li>
-                    <li data-slide-to="1" data-target="#main-page-carousel">
+                    <li data-uk-slideshow-item="1">
                     </li>
-                    <li data-slide-to="2" data-target="#main-page-carousel">
+                    <li data-uk-slideshow-item="2">
                     </li>
                 </ol>
-                <div class="carousel-inner">
+                <div class="carousel-inner uk-slideshow" data-uk-slideshow="{autoplay:true}">
                     <div class="item active">
                         <img alt="Carousel Bootstrap First" src="img/slide1.jpg" />
                     </div>
@@ -22,6 +22,8 @@
                         <img alt="Carousel Bootstrap Third" src="img/slide3.jpg" />
                     </div>
                 </div>
+                <a href="" class="left carousel-control" data-uk-slideshow-item="previous"></a>
+                <a href="" class="right carousel-control" data-uk-slideshow-item="next"></a>
                 <a class="left carousel-control" href="#main-page-carousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#main-page-carousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
             </div>
         </div>

@@ -123,12 +123,12 @@
 <div id="wrap">
     <header class="main-header">
         <div class="container">
-            <div class="row top-line">
-                <div class="col-md-6 top-contacts">
+            <div class="top-line uk-flex uk-grid">
+                <div class="uk-width-1-2 top-contacts">
                     <div class="top-contacts_elem top-contacts_phone"><i class="demo-icon ico_phone"></i>{{=it.ml.phone}}</div>
                     <div class="top-contacts_elem top-contacts_email"><a href="mailto:ask@arabtravel.jo"><i class="demo-icon ico_mail"></i>ask@arabtravel.jo</a></div>
                 </div>
-                <div class="col-md-4 col-md-push-2">
+                <div class="uk-width-1-2">
                     <div class="pull-left">
                         <a id="currentAccountLink" href="{{=it.userEmail && '/user' || '#login-form-modal'}}" class="btn btn-default btn-ghost btn-ui btn-account" {{? !it.userEmail }} data-uk-modal {{?}}>
                             <i class="demo-icon ico_user"></i><span id="currentAccount">{{=it.userEmail || it.ml.signUp}}</span>
@@ -216,8 +216,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-3">
-                    ferry booking agency
-                    <img alt="Bootstrap Image Preview" src="img/logo-footer.png" style="width: 100%" /> Your road between Jordan Egypt and Saudi Arabia
+                    {{=it.ml.ferryBookingAgency}}
+                    <img alt="Bootstrap Image Preview" src="img/logo-footer.png" style="width: 100%" /> {{=it.ml.subtitle}}
 
                     <div class="top-contacts">
                         <div class="top-contacts_elem top-contacts_phone"><i class="demo-icon ico_phone"></i>(123) 456 78 99 </div>
@@ -268,7 +268,7 @@
             <div class="row bottom-line">
                 <div class="col-md-12">
                     <div class="copyright">
-                        © Arab Travel, 2016
+						{{=it.ml.arabTravelCopyright}}
                     </div>
                 </div>
             </div>
