@@ -164,25 +164,25 @@
                     <div class="order-details_summary">
                         <div class="order-details_summary_line">
                             <div class="lbl">Tickets price</div>
-                            <div class="val">{{ item.fullCost | currency:exchangeRate | number:'1.2-2' }}{{currency}}</div>
+                            <div class="val">{{ item.fullCost | currency:exchangeRate | number:'1.2-2' }} <span class="currency">{{currency}}</span></div>
                         </div>
                     </div>
 
                     <div class="order-details_summary">
                         <div class="order-details_summary_line">
                             <div class="lbl">Processing fee:</div>
-                            <div class="val">{{ item.processingFee | currency:exchangeRate | number:'1.2-2' }}{{currency}}</div>
+                            <div class="val">{{ item.processingFee | currency:exchangeRate | number:'1.2-2' }} <span class="currency">{{currency}}</span></div>
                         </div>
                     </div>
 
                     <footer class="widget_footer">
                         <div class="order-details_total">
                             <div class="lbl">Total</div>
-                            <div class="val">{{ item.totalCost | currency:exchangeRate | number:'1.2-2' }}{{currency}}</div>
+                            <div class="val">{{ item.totalCost | currency:exchangeRate | number:'1.2-2' }} <span class="currency">{{currency}}</span></div>
                         </div>
                         <div class="order-details_total" *ngIf="currency === '$'">
-                            <div class="lbl">In JOD:</div>
-                            <div class="val">{{ item.totalCost | number:'1.2-2' }}jod</div>
+                            <div class="lbl">(approx.:</div>
+                            <div class="val">{{ item.totalCost | number:'1.2-2' }} jod)</div>
                         </div>
                     </footer>
                 </aside>
