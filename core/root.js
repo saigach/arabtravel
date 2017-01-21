@@ -4,10 +4,9 @@
  */
 
 module.exports = class RootEngine {
-	constructor(DB, templat, MLData) {
+	constructor(DB, templat) {
 		this.DB = DB
 		this.template = templat
-		this.ml = MLData
 	}
 
 	engine(requestData, responseData) {
