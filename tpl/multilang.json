@@ -1,4 +1,3 @@
-﻿
 {
 	"phone": {
 		"en": "+962797043670",
@@ -154,4 +153,167 @@
 		"en": "© Arab Travel, 2017",
 		"ar": "© Arab Travel, 2017 AR"
 	}
+}
+=======
+{
+	"phone": {
+		"en": "+962797043670",
+		"ar": "+962797043670"
+	},
+
+	"signUp": {
+		"en": "Sign up",
+		"ar": "أشترك"
+	},
+
+	"ferryBookingAgency": {
+		"en": "Ferry booking agency",
+		"ar": "موقع حجز القوارب والعبارات مباشره بدون وسيط"
+	},
+
+	"subtitle": {
+		"en": "Your road between Jordan, Egypt and Saudi Arabia",
+		"ar": "طريقك البحري بين الاردن ومصر والسعودية"
+	},
+
+	"passengerInfo": {
+		"en": "Passenger Info",
+		"ar": "معلومات المسافرون"
+	},
+
+	"contactUs": {
+		"en": "Contact Us",
+		"ar": "اتصل بنا"
+	},
+
+	"tripTypeOneway": {
+		"en": "One way",
+		"ar": "تذاكر الاتجاه الواحد -الذهاب فقط"
+	},
+
+	"tripTypeRound": {
+		"en": "Round Trip",
+		"ar": "تذاكر الاتجاهين - ذهاب وعوده"
+	},
+
+	"tripTypePackage": {
+		"en": "Tourist Package",
+		"ar": "الرحلات السياحيه"
+	},
+
+	"routeFrom": {
+		"en": "Route from",
+		"ar": "الطريق من"
+	},
+
+	"routeTo": {
+		"en": "Route to",
+		"ar": "الطريق إلى"
+	},
+
+	"dateOfDeparture": {
+		"en": "Date of departure",
+		"ar": "موعد المغادرة"
+	},
+
+	"dateOfReturn": {
+		"en": "Date of return",
+		"ar": "تاريخ العودة"
+	},
+
+	"anyDate": {
+		"en": "Any date",
+		"ar": "غير مقيده بتاريخ"
+	},
+
+	"vehicle": {
+		"en": "Vehicle",
+		"ar": "هل لديك مركبه"
+	},
+
+	"none": {
+		"en": "None",
+		"ar": "لا يوجد"
+	},
+
+	"checkAvailability": {
+		"en": "CHECK AVAILABILITY",
+		"ar": "احجز الان"
+	},
+
+	"ticketReservation": {
+		"en": "Ticket reservation",
+		"ar": "حجز تذكرة"
+	},
+
+	"ticketReservationDescr": {
+		"en": "Some text describing important info. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud ex ercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+		"ar": "عزيزي المسافر يرجى تعبئه البيانات الصحيحه للمسافرين وأختيار طريقه الدفه المناسبه , وبما يتعلق بمواعيد مغادره العبارات و القوارب ستتوفر في جدول مواعيد المغادره اليوميه, جميع تاذكرنا صلاحه لمده 3 أشهر من تاريخ الحجز وغير مقيده تاريخ معين للسفر خلال تلك الفتره ,سيتم أرسال رساله تأكيد الحجز من خلال الايميل الخاص بك ونتمنى لكم رحله سعيده "
+	},
+
+	"newSearch": {
+		"en": "New Search",
+		"ar": "بحث جديد"
+	},
+
+	"passenger": {
+		"en": "Passenger",
+		"ar": "المسافر"
+	},
+
+	"primaryContact": {
+		"en": "Primary contact",
+		"ar": "رقم الهاتف الاساسي"
+	},
+
+	"addPassenger": {
+		"en": "Add passenger",
+		"ar": "إضافة الركاب"
+	},
+
+	"paymentDetails": {
+		"en": "Enter your payment details",
+		"ar": "إدخال تفاصيل الدفع الخاصة بك"
+	},
+
+	"cardType": {
+		"en": "CARD TYPE",
+		"ar": "نوع البطاقة"
+	},
+
+	"cardNumber": {
+		"en": "CARD NUMBER",
+		"ar": "رقم البطاقة"
+	},
+
+	"cardholderName": {
+		"en": "CARDHOLDER NAME",
+		"ar": "إسم صاحب البطاقة"
+	},
+
+	"validThru": {
+		"en": "VALID THRU",
+		"ar": "صالح حتى"
+	},
+
+	"cvv": {
+		"en": "CVV",
+		"ar": "CVV"
+	},
+
+	"submitPayment": {
+		"en": "Submit Payment",
+		"ar": "تقديم دفعة"
+	},
+
+	"arabTravelCopyright": {
+		"en": "© Arab Travel, 2017",
+		"ar": "© Arab Travel, 2017 AR"
+	},
+
+	"orderConfirm": {
+		"en": "Your order have been successfully created. Please, wait until our manager confirms it. You will recieve a ticket that you can print.",
+		"ar": "Your order have been successfully created. Please, wait until our manager confirms it. You will recieve a ticket that you can print."
+	}
+
 }
