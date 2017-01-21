@@ -31,6 +31,7 @@ export class OrderPageComponent implements OnInit {
 	item: Order = new Order()
 	primaryContact: Human =  null
 
+	submitting: boolean = false
 	submitted: boolean = false
 
 	ml: { [key:string]: MLString } = {}
@@ -114,14 +115,18 @@ export class OrderPageComponent implements OnInit {
 	}
 
 	submit(): void {
-		if (this.submitted)
+		if (this.submitting)
 			return
-		this.submitted = true
+		this.submitting = true
 
 		this.apiService.order(this.item).then( value => {
 			UIkit.notify('Order sucess', {status  : 'success' })
+			this.submitted = true
+			localStorage.removeItem('currentOrder')
+			this.submitting = false
 		}).catch( error => {
 			UIkit.notify('Server error', {status  : 'warning' })
+			this.submitting = false
 		})
 	}
 }

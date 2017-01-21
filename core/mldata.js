@@ -24,10 +24,10 @@ const reloadML = (filename) => {
 				newData = null
 			}
 
-			if (newData)
+			if (newData) {
 				DATA = newData
-
-			console.log('Multilanguage data updated')
+				console.log('Multilanguage data updated')
+			}
 		})
 	}
 }

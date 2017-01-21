@@ -36,6 +36,7 @@ const reloadTemplate = (filename) => {
 						.replace(/\s*(?:\r|\n)\s*/g, '')
 						.replace(/<\!\-\-.*?\-\->/g, '')
 			Template[name] = doT.template(tpl)
+			console.log(`Template "${name}" updated`)
 		})
 	}
 }

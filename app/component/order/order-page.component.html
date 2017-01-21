@@ -1,5 +1,5 @@
 <div class="main-content" role="content">
-    <div class="container" id="order-details-container">
+    <div class="container" id="order-details-container" [class.hidden]=" submitted ">
         <div class="row" style="position:relative;">
             <div class="col-md-9">
 
@@ -192,7 +192,7 @@
     </div>
     <div id="sticky-boundary"></div>
 
-    <div id="orderSuccess">
+    <div id="orderSuccess" [class.hidden]=" !submitted ">
         {{ ml.orderConfirm | ml }}
     </div>
 </div>

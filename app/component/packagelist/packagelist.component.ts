@@ -113,9 +113,7 @@ export class PackageListComponent implements OnInit {
 			searchData = null
 		}
 
-		if (searchData) {
-			console.dir(searchData)
-		}
+		localStorage.removeItem('searchData')
 
 		Promise.all([
 			this.apiService.get<Point>(Point).then( (response: Point[]) => this.points = response ),

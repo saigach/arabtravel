@@ -140,10 +140,12 @@ module.exports = class APIEngine {
 				data.date = new Date()
 
 				let owner = "'" + requestData.user.id + "'"
-				let title = "'New order at " + data.date.toString() + "'"
+				let title = {
+					en: 'New order at ' + data.date.toString(),
+					ar: 'New order at ' + data.date.toString()
+				}
 
-				// TODO: Check date
-
+			 	title = escapeStr(JSON.stringify(title || {}))
 			 	data = escapeStr(JSON.stringify(data || {}))
 
 				return this.DB.query(`
