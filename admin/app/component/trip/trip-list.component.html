@@ -30,7 +30,7 @@
 						<i class="uk-icon-exchange" [class.uk-hidden]="item.package"></i>
 					</td>
 					<td>{{ item.title | ml:'en' }}</td>
-					<td>{{ item.pointA && item.pointA.title }}&nbsp;&rarr;&nbsp;{{ item.pointB && item.pointB.title }}</td>
+					<td>{{ item.pointA && item.pointA.title | ml:'en' }}&nbsp;&rarr;&nbsp;{{ item.pointB && item.pointB.title | ml:'en' }}</td>
 					<td (click)="delete(item); $event.stopPropagation()"><i class="uk-icon-trash-o"></i></td>
 				</tr>
 			</tbody>

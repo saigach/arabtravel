@@ -1,22 +1,47 @@
-{
+﻿{
 	"phone": {
-		"en": "(123) 456 78 99",
-		"ar": "(123) 456 78 99 AR"
+		"en": "+962797043670",
+		"ar": "+962797043670"
+	},
+
+	"signUp": {
+		"en": "Sign up",
+		"ar": "أشترك"
+	},
+
+	"ferryBookingAgency": {
+		"en": "Ferry booking agency",
+		"ar": "موقع حجز القوارب والعبارات مباشره بدون وسيط"
+	},
+
+	"subtitle": {
+		"en": "Your road between Jordan, Egypt and Saudi Arabia",
+		"ar": "طريقك البحري بين الاردن ومصر والسعودية"
+	},
+
+	"passengerInfo": {
+		"en": "Passenger Info",
+		"ar": "معلومات المسافرون"
+	},
+
+	"contactUs": {
+		"en": "Contact Us",
+		"ar": "اتصل بنا"
 	},
 
 	"tripTypeOneway": {
 		"en": "One way",
-		"ar": "اتجاه واحد"
+		"ar": "تذاكر الاتجاه الواحد -الذهاب فقط"
 	},
 
 	"tripTypeRound": {
 		"en": "Round Trip",
-		"ar": "جولة"
+		"ar": "تذاكر الاتجاهين - ذهاب وعوده"
 	},
 
 	"tripTypePackage": {
 		"en": "Tourist Package",
-		"ar": "السياحية حزمة"
+		"ar": "الرحلات السياحيه"
 	},
 
 	"routeFrom": {
@@ -28,99 +53,104 @@
 		"en": "Route to",
 		"ar": "الطريق إلى"
 	},
-	
+
 	"dateOfDeparture": {
 		"en": "Date of departure",
 		"ar": "موعد المغادرة"
 	},
-	
+
 	"dateOfReturn": {
 		"en": "Date of return",
 		"ar": "تاريخ العودة"
 	},
-	
+
 	"anyDate": {
 		"en": "Any date",
-		"ar": "أي تاريخ"
+		"ar": "غير مقيده بتاريخ"
 	},
-	
+
 	"vehicle": {
 		"en": "Vehicle",
-		"ar": "مركبة"
+		"ar": "هل لديك مركبه"
 	},
-	
+
 	"none": {
 		"en": "None",
-		"ar": "لا شيء"
+		"ar": "لا يوجد"
 	},
-	
+
 	"checkAvailability": {
 		"en": "CHECK AVAILABILITY",
-		"ar": "التحقق من الصلاحية"
+		"ar": "احجز الان"
 	},
-	
+
 	"ticketReservation": {
 		"en": "Ticket reservation",
 		"ar": "حجز تذكرة"
 	},
-	
+
 	"ticketReservationDescr": {
 		"en": "Some text describing important info. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud ex ercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-		"ar": "كن لا بد أن أوضح لك أن كل هذه الأفكار المغلوطة حول استنكار  النشوة وتمجيد الألم نشأت بالفعل، وسأعرض لك التفاصيل لتكتشف حقيقة وأساس تلك السعادة البشرية، فلا أحد يرفض أو يكره أو يتجنب الشعور بالسعادة، ولكن بفضل هؤلاء الأشخاص الذين لا يدركون بأن السعادة لا بد أن نستشعرها بصورة أكثر عقلانية ومنطقية فيعرضهم هذا لمواجهة الظروف الأليمة، وأكرر بأنه لا يوجد من يرغب في الحب ونيل المنال ويتلذذ بالآلام، الألم هو الألم ولكن نتيجة لظروف ما قد تكمن السعاده فيما نتحمله من كد وأسي."
+		"ar": "عزيزي المسافر يرجى تعبئه البيانات الصحيحه للمسافرين وأختيار طريقه الدفه المناسبه , وبما يتعلق بمواعيد مغادره العبارات و القوارب ستتوفر في جدول مواعيد المغادره اليوميه, جميع تاذكرنا صلاحه لمده 3 أشهر من تاريخ الحجز وغير مقيده تاريخ معين للسفر خلال تلك الفتره ,سيتم أرسال رساله تأكيد الحجز من خلال الايميل الخاص بك ونتمنى لكم رحله سعيده "
 	},
-	
+
 	"newSearch": {
 		"en": "New Search",
 		"ar": "بحث جديد"
 	},
-	
+
 	"passenger": {
 		"en": "Passenger",
-		"ar": "راكب"
+		"ar": "المسافر"
 	},
-	
+
 	"primaryContact": {
 		"en": "Primary contact",
-		"ar": "اتصال رئيسي"
+		"ar": "رقم الهاتف الاساسي"
 	},
-	
+
 	"addPassenger": {
 		"en": "Add passenger",
 		"ar": "إضافة الركاب"
 	},
-	
+
 	"paymentDetails": {
 		"en": "Enter your payment details",
 		"ar": "إدخال تفاصيل الدفع الخاصة بك"
 	},
-	
+
 	"cardType": {
 		"en": "CARD TYPE",
 		"ar": "نوع البطاقة"
 	},
-	
+
 	"cardNumber": {
 		"en": "CARD NUMBER",
 		"ar": "رقم البطاقة"
 	},
-	
+
 	"cardholderName": {
 		"en": "CARDHOLDER NAME",
 		"ar": "إسم صاحب البطاقة"
 	},
-	
+
 	"validThru": {
 		"en": "VALID THRU",
 		"ar": "صالح حتى"
 	},
-	
+
 	"cvv": {
 		"en": "CVV",
 		"ar": "CVV"
 	},
-	
+
 	"submitPayment": {
 		"en": "Submit Payment",
 		"ar": "تقديم دفعة"
+	},
+
+	"arabTravelCopyright": {
+		"en": "© Arab Travel, 2017",
+		"ar": "© Arab Travel, 2017 AR"
 	}
 }

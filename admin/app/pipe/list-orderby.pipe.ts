@@ -1,5 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core'
 
+import { MLString } from '../../../model/common'
+
 @Pipe({
 	name: 'listOrderBy',
 	pure: false
@@ -14,9 +16,14 @@ export class ListOrderBy implements PipeTransform {
 				let field = fields[i]
 				if (field[0] === '!') {
 					field = field.substr(1)
-					result = a[field] > b[field] ? -1 : a[field] < b[field] ? 1 : 0
-				} else
-					result = a[field] > b[field] ? 1 : a[field] < b[field] ? -1 : 0
+					let aField = a[field] instanceof MLString ? a[field][MLString.Languages[0]] : a[field]
+					let bField = b[field] instanceof MLString ? b[field][MLString.Languages[0]] : b[field]
+					result = aField > bField ? -1 : aField < bField ? 1 : 0
+				} else {
+					let aField = a[field] instanceof MLString ? a[field][MLString.Languages[0]] : a[field]
+					let bField = b[field] instanceof MLString ? b[field][MLString.Languages[0]] : b[field]
+					result = aField > bField ? 1 : aField < bField ? -1 : 0
+				}
 				i++
 			}
 			return result

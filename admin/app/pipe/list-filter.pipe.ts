@@ -1,5 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core'
 
+import { MLString } from '../../../model/common'
+
 @Pipe({
 	name: 'listFilter',
 	pure: false
@@ -15,7 +17,12 @@ export class ListFilterPipe implements PipeTransform {
 			fields.reduce( (prev: boolean, value:string) => {
 				if (item[value] === undefined)
 					throw new TypeError(`Field ${value} is not found`)
-				return prev || String(item[value]).toLowerCase().indexOf(filterStr) >= 0
+
+				let str = typeof item[value] === 'string' ?
+							item[value] :
+							( item[MLString.Languages[0]] || String(item[value]) )
+
+				return prev || str.toLowerCase().indexOf(filterStr) >= 0
 			}, false)
 		)
 	}

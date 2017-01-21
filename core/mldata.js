@@ -26,6 +26,8 @@ const reloadML = (filename) => {
 
 			if (newData)
 				DATA = newData
+
+			console.log('Multilanguage data updated')
 		})
 	}
 }
