@@ -132,6 +132,9 @@
                     <div class="pull-left">
                         <a id="currentAccountLink" href="{{=it.userEmail && '/user' || '#login-form-modal'}}" class="btn btn-default btn-ghost btn-ui btn-account" {{? !it.userEmail }} data-uk-modal {{?}}>
                             <i class="demo-icon ico_user"></i><span id="currentAccount">{{=it.userEmail || it.ml.signUp}}</span>
+                        </a>&nbsp;
+						<a id="logoutLink" href="/auth/logout" class="btn btn-default btn-ghost btn-ui btn-account">
+                            <i class="glyphicon glyphicon-log-out"></i><span>{{=it.ml.logout}}</span>
                         </a>
                     </div>
                     <div class="pull-right">

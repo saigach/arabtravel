@@ -155,9 +155,20 @@
 	},
 
 	"orderConfirm": {
+<<<<<<< Updated upstream
 		"en": "Your order have been successfully created. Please, wait until our manager confirms it. You will recieve a ticket that you can print.",
 		"ar": "Your order have been successfully created. Please, wait until our manager confirms it. You will recieve a ticket that you can print."
 	},
+=======
+		"en": "Order success",
+		"ar": "Order success"
+	},
+
+	"orderConfirm": {
+		"en": "Your order have been successfully created. Please, wait until our manager confirms it. You will recieve a ticket that you can print. Your order number is",
+		"ar": "Your order have been successfully created. Please, wait until our manager confirms it. You will recieve a ticket that you can print. Your order number is"
+	}
+>>>>>>> Stashed changes
 
 	"emailOrderConfirmTitle": {
 		"en": "Order confirm",

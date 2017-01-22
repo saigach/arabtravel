@@ -193,7 +193,11 @@
     <div id="sticky-boundary"></div>
 
     <div id="orderSuccess" [class.hidden]=" !submitted ">
-        {{ ml.orderConfirm | ml }}
-        <p>{{item.hrid}}</p>
+
+        <div class="container">
+            <h1>{{ ml.orderConfirmHeader | ml }}</h1>
+            {{ ml.orderConfirm | ml }} <strong></strong>
+        </div>
+
     </div>
 </div>
