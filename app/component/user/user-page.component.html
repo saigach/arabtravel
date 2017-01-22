@@ -54,10 +54,10 @@
                     <div class="user-order_date">{{ order.date | date: 'dd.MM.yyyy'}}</div>
                     <div class="user-order_shift">
                         <div *ngFor="let shift of order.shifts">
-                            <b>{{ shift.trip.pointA.title }} &rarr; {{ shift.trip.pointB.title }}</b> valid <b>{{ shift.date | date: 'dd.MM.yyyy'}}</b>
+                            <b>{{ shift.trip.pointA.title | ml }} &rarr; {{ shift.trip.pointB.title | ml }}</b> valid <b>{{ shift.date | date: 'dd.MM.yyyy'}}</b>
                         </div>
                     </div>
-                    <div class="h4 user-order_cost">{{ order.totalCost | currency:'USD':true:'1.2-2' }}</div>
+                    <div class="h4 user-order_cost">{{ order.totalCost | currency:exchangeRate(order) | number:'1.2-2' }}<span class="currency">{{currency}}</span></div>
                     <div class="user-order_status"></div>
                     <div class="user-order_action">
                         <a href="" class="btn btn-danger btn-ghost ticket-cancel" data-toggle="modal" data-target="#ticket_cancel_modal">

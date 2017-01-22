@@ -20,12 +20,40 @@ export class UserPageComponent implements OnInit {
 
 	ml: { [key:string]: MLString } = {}
 
-	constructor(private router: Router, private apiService: APIService, private mlService: MLService ) {}
+	_currency: string = 'usd'
+
+	get currency():string {
+		return this._currency === 'usd' ? '$' : this._currency
+	}
+
+	set currency(value: string) {
+		this._currency = value ? value : 'usd'
+		// this.ref.detectChanges()
+	}
+
+	exchangeRate(order: Order = null): number {
+		if (this._currency === 'jod')
+			return 1
+
+		return order && order.exchangeRate || 0
+	}
+
+	constructor(private router: Router, private apiService: APIService, private mlService: MLService ) {
+		this.currency = localStorage && localStorage.getItem('currency') || null
+	}
 
 	ngOnInit(): void {
 		this.mlService.get().then( ml => this.ml = ml)
 		this.apiService.me().then( (user: User) => this.user = user)
 		this.apiService.get<Order>(Order).then( ( orders:Order[] ) => this.orders = orders )
+
+		Array.prototype.forEach.call(
+			document.querySelectorAll('[currency-set]'),
+			currencySetNode => currencySetNode.addEventListener('click', event =>{
+				event.preventDefault()
+				this.currency = currencySetNode.getAttribute('currency-set') || null
+			})
+		)
 	}
 }
 

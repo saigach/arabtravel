@@ -41,8 +41,8 @@ export class TripSelectorFormComponent implements OnInit {
 	private getTrips(pointA: Point = null, pointB: Point = null, isPackage: boolean = false): Trip[] {
 		return this.trips.filter( (trip: Trip) =>
 			trip.package === isPackage &&
-			trip.pointA && (!pointA || trip.pointA.id.uuid === pointA.id.uuid) &&
-			trip.pointB && (!pointB || trip.pointB.id.uuid === pointB.id.uuid)
+			(!pointA || trip.pointA.id.uuid === pointA.id.uuid) &&
+			(!pointB || trip.pointB.id.uuid === pointB.id.uuid)
 		)
 	}
 
@@ -140,12 +140,14 @@ export class TripSelectorFormComponent implements OnInit {
 	)
 
 	get vehicleList(): Vehicle[] {
-		let trip = this.getTrips(this.pointB, this.pointA).shift()
+		let trip = this.getTrips(this.pointA, this.pointB).shift()
 
 		if (!trip)
 			return []
 
-		return trip.getPrice(this.departureDate || null).vehicles.reduce( (prev: Vehicle[], value:VehicleCost) =>
+		let price = trip.getPrice(this.departureDate || null)
+
+		return price.vehicles.reduce( (prev: Vehicle[], value:VehicleCost) =>
 			value.enable ? prev.concat(value.vehicle) : prev,
 			[]
 		)

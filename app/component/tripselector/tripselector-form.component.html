@@ -92,7 +92,7 @@
 
                             <div class="uk-width-medium-1-3" [class.hide]="type === 'package'">
                                 <label>{{ ml.vehicle | ml }}</label>
-                                <select name="vehicle" [(ngModel)]="vehicle" id="rf" class="form-control fit-width" [disabled]="!pointA || !pointB">
+                                <select name="vehicle" [(ngModel)]="vehicle" class="form-control fit-width" [disabled]="!pointA || !pointB">
                                 	<option [ngValue]="null">{{ ml.none | ml }}</option>
                                     <option *ngFor="let curVehicle of vehicleList" [ngValue]="curVehicle">{{ curVehicle.title | ml }}</option>
                                 </select>
