@@ -392,6 +392,50 @@
 	"printTicket": {
 		"en": "Print ticket",
 		"ar": "Print ticket"
-	}
+	},
 	
+	"allTripsFrom": {
+		"en": "All trips from",
+		"ar": "All trips from"
+	},
+	
+	"sortBy": {
+		"en": "Sort by",
+		"ar": "Sort by"
+	},
+
+	"tourIncludes": {
+		"en": "Tour includes",
+		"ar": "Tour includes"
+	},
+	
+	"ferryFrom": {
+		"en": "Ferry from",
+		"ar": "Ferry from"
+	},
+
+	"hotel": {
+		"en": "Hotel",
+		"ar": "Hotel"
+	},	
+	
+	"from": {
+		"en": "per person",
+		"ar": "per person"
+	},
+	
+	"andBack": {
+		"en": "and back",
+		"ar": "and back"
+	},
+	
+	"tickets2way": {
+		"en": "Tickets 2 way",
+		"ar": "Tickets 2 way"
+	},
+	
+	"bookNow": {
+		"en": "Book Now",
+		"ar": "Book Now"
+	}
 }
