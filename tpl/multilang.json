@@ -322,5 +322,76 @@
 	"email": {
 		"en": "Email",
 		"ar": "Email"
+	},
+	
+	"message": {
+		"en": "Message",
+		"ar": "Message"
+	},
+	
+	"myOrders": {
+		"en": "My orders",
+		"ar": "My orders"
+	},
+	
+	"order": {
+		"en": "Order",
+		"ar": "Order"
+	},
+	
+	"date": {
+		"en": "Date",
+		"ar": "Date"
+	},
+	
+	"route": {
+		"en": "Route",
+		"ar": "Route"
+	},
+	
+	"price": {
+		"en": "Price",
+		"ar": "Price"
+	},
+	
+	"status": {
+		"en": "Status",
+		"ar": "Status"
+	},
+	
+	"cancel": {
+		"en": "Cancel",
+		"ar": "Cancel"
+	},
+	
+	"view": {
+		"en": "View",
+		"ar": "View"
+	},
+	
+	"ticketID": {
+		"en": "Ticket ID",
+		"ar": "Ticket ID"
+	},
+	
+	"passengerName": {
+		"en": "Passenger name",
+		"ar": "Passenger name"
+	},
+	
+	"passengerInfo": {
+		"en": "passengerInfo",
+		"ar": "passengerInfo"
+	},
+	
+	"print": {
+		"en": "Print",
+		"ar": "Print"
+	},
+	
+	"printTicket": {
+		"en": "Print ticket",
+		"ar": "Print ticket"
 	}
+	
 }
