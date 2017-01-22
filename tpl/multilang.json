@@ -1,4 +1,4 @@
-{
+﻿{
 	"phone": {
 		"en": "+962797043670",
 		"ar": "+962797043670"
@@ -155,28 +155,172 @@
 	},
 
 	"orderConfirm": {
-<<<<<<< Updated upstream
 		"en": "Your order have been successfully created. Please, wait until our manager confirms it. You will recieve a ticket that you can print.",
 		"ar": "Your order have been successfully created. Please, wait until our manager confirms it. You will recieve a ticket that you can print."
 	},
-=======
-		"en": "Order success",
-		"ar": "Order success"
-	},
-
-	"orderConfirm": {
-		"en": "Your order have been successfully created. Please, wait until our manager confirms it. You will recieve a ticket that you can print. Your order number is",
-		"ar": "Your order have been successfully created. Please, wait until our manager confirms it. You will recieve a ticket that you can print. Your order number is"
-	}
->>>>>>> Stashed changes
 
 	"emailOrderConfirmTitle": {
 		"en": "Order confirm",
-		"ar": "Order confirm"
+		"ar": "تأكيد الحجز"
 	},
 
 	"emailNewUserTitle": {
 		"en": "New user created",
-		"ar": "New user created"
+		"ar": "تم تسجيل مستخدم جديد"
+	},
+	
+	"whyToBookOnline": {
+		"en": "Why to Book Online",
+		"ar": "لماذا تحجز أون لاين"
+	},
+
+	"moreChoice": {
+		"en": "More Choice",
+		"ar": "خيارات أكثر"
+	},
+
+	"moreChoiceText": {
+		"en": "Arab Travel features the widest selection of ferry routes giving you flexibility and choice as well as access to the best ferry deals around..",
+		"ar": "رغبات المسافرين متنوعه وعديده , نحن هنا نقدم لكم خدمه مباشره من خلال المصدر دون وجود الوسيط مما يتيح للمسافرين الحصول على جميع العروض المتاحه  بما يتناسب مع أحتياجاتكم"
+	},
+
+	"betterDeals": {
+		"en": "Better Deals",
+		"ar": "عروض أفضل"
+	},
+
+	"betterDealsText": {
+		"en": "You can compare all suitable ferry crossings in our quick and easy search to find the cheapest ferry fares at the time you want to travel!",
+		"ar": "نحن نقدم لك الخدمه للأطلاع على كافه المشغلين للقوارب والرحلات السياحيه للتمكن من أختيار الرحلات المناسبه"
+	},
+
+	"saveMoney": {
+		"en": "Save Money",
+		"ar": "وفر بمال"
+	},
+
+	"saveMoneyText": {
+		"en": "Best price guaranteed, you are getting the lowest possible price at the time of booking – guaranteed.",
+		"ar": "نضمن لك أقل الاسعار , وفي حاله توفر سعر أقل من سعرنا المعلن يمكن الأتصال بنا بشكل مباشر لتحقق من الامر"
+	},
+
+	"howWeWork": {
+		"en": "How we work",
+		"ar": "كيف نعمل"
+	},
+
+	"howWeWork1": {
+		"en": "Fill the form above and check your options and the availability",
+		"ar": "أختر الخيارات المناسبه للبحث عن العرض الأفضل وحدد نقاط السفر والعوده "
+	},
+
+	"howWeWork2": {
+		"en": "Enter your personal information and reserve a ticket",
+		"ar": "قم بملأ بيناتك الشخصيه وأختر طريقه الدفع المناسبه ثم قم بتأكيد الحجز"
+	},
+
+	"howWeWork3": {
+		"en": "Get your ticket on your email and in your personal account on the site",
+		"ar": "سنقوم بتحقق من البيانات المسجله وتنفيذ عمليه الحجز مباشره من خلال الموقع وتأكيد الحجز من خلال رساله للأيميل الشخصي"
+	},
+
+	"howWeWork4": {
+		"en": "Print it and use it! Our ferries tickets are open-date for 3 months to use",
+		"ar": "قم بطباعه التذكره وأستخدمها في الموعد المحدد , غالبا تذاكرنا غير مقيده بتاريخ سفر معين فهي صلاحيه لغايه 3 أشهر من تاريخ الحجز"
+	},
+
+	"partners1": {
+		"en": "We are the partners of AB Maritime —",
+		"ar": "نحن شركاء شركه الجسر العربي للملاحه البحريه"
+	},
+
+	"partners2": {
+		"en": "best maritime carrier in the red sea region and beyond",
+		"ar": "أكبر وأفضل شركه ملاحيه على مستوى البحر الأحمر "
+	},
+
+	"connecting1": {
+		"en": "Connecting",
+		"ar": "نحن نربط"
+	},
+
+	"connecting2": {
+		"en": "Arab Asia and Arab Africa together",
+		"ar": "القاره الاسيويه والافريقيه للنسهل سفركم من خلال البحر الاحمر"
+	},
+
+	"connecting3": {
+		"en": "See our <a href=''>Routes</a> and <a href=''>Schedule</a>",
+		"ar": "See our <a href=''>Routes</a> and <a href=''>مواعيد المغادره</a>"
+	},
+
+	"checkTP": {
+		"en": "Check our Tourist Packages",
+		"ar": "أستمتع بعروضنا السياحيه"
+	},
+
+	"checkTPText": {
+		"en": "Enjoy your vacation and we will take care of everything else. Our pre-built Tourist Packages include tickets, hotel and tours. And even something more.",
+		"ar": "نحن هنا نضمن لكم أجمل الاوقات والرحلات السياحيه"
+	},
+	
+	"ticketsPrice": {
+		"en": "Tickets price",
+		"ar": "Tickets price"
+	},
+	
+	"processingFee": {
+		"en": "Processing fee",
+		"ar": "Processing fee"
+	},
+	
+	"total": {
+		"en": "Total",
+		"ar": "Total"
+	},
+	
+	"approx": {
+		"en": "approx.",
+		"ar": "approx."
+	},
+	
+	"youHaveChosen": {
+		"en": "You have chosen",
+		"ar": "You have chosen"
+	},
+	
+	"nextSteps": {
+		"en": "We will contact you as soon as possible and inform you on next steps.",
+		"ar": "We will contact you as soon as possible and inform you on next steps."
+	},
+	
+	"name": {
+		"en": "Name",
+		"ar": "Name"
+	},
+	
+	"nationality": {
+		"en": "Nationality",
+		"ar": "Nationality"
+	},
+	
+	"dateOfBirth": {
+		"en": "Date of birth",
+		"ar": "Date of birth"
+	},
+	
+	"passportNumber": {
+		"en": "Passport number",
+		"ar": "Passport number"
+	},
+	
+	"phone": {
+		"en": "Phone",
+		"ar": "Phone"
+	},
+	
+	"email": {
+		"en": "Email",
+		"ar": "Email"
 	}
 }

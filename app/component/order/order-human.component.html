@@ -4,7 +4,7 @@
         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
             <div class="form-group">
                 <label for="exampleInputEmail1">
-                    Name
+                    {{ ml.name | ml }}
                 </label>
                 <input type="text" class="form-control" [(ngModel)]="item.title">
             </div>
@@ -12,7 +12,7 @@
         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
             <div class="form-group">
                 <label for="exampleInputEmail1">
-                    Nationality
+                    {{ ml.nationality | ml }}
                 </label>
                 <select [(ngModel)]="item.nationality" data-control="selectpicker" class="selectpicker form-control fit-width">
                     <option *ngFor="let n of nationality" [ngValue]="n">{{ n.title }}</option>
@@ -21,7 +21,7 @@
         </div>
         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
             <div class="form-group">
-                <label for="rf">Date of birth</label>
+                <label for="rf">{{ ml.dateOfBirth | ml }}</label>
                 <div class='input-group date'>
                     <input #dobNode type="text" class="form-control" [value]="item.dob | date: 'dd.MM.yyyy'">
                 </div>
@@ -30,7 +30,7 @@
         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
             <div class="form-group">
                 <label for="exampleInputEmail1">
-                    Passport number
+                    {{ ml.passportNumber | ml }}
                 </label>
                 <input type="text" class="form-control" [(ngModel)]="item.passport">
             </div>
@@ -38,7 +38,7 @@
         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
             <div class="form-group">
                 <label for="exampleInputEmail1">
-                    Phone
+                    {{ ml.phone | ml }}
                 </label>
                 <input type="text" class="form-control" [(ngModel)]="item.phone">
             </div>
@@ -46,7 +46,7 @@
         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
             <div class="form-group">
                 <label for="exampleInputEmail1">
-                    Email
+                    {{ ml.email | ml }}
                 </label>
                 <input type="email" class="form-control" [(ngModel)]="item.email">
             </div>

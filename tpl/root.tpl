@@ -125,39 +125,43 @@
         <div class="container">
             <div class="top-line uk-flex uk-grid">
                 <div class="uk-width-1-2 top-contacts">
-                    <div class="top-contacts_elem top-contacts_phone"><i class="demo-icon ico_phone"></i>{{=it.ml.phone}}</div>
-                    <div class="top-contacts_elem top-contacts_email"><a href="mailto:ask@arabtravel.jo"><i class="demo-icon ico_mail"></i>ask@arabtravel.jo</a></div>
-                </div>
+					<div class="uk-flex uk-grid">
+                    	<div class="uk-width-1-2 top-contacts_elem top-contacts_phone"><i class="demo-icon ico_phone"></i>{{=it.ml.phone}}</div>
+                    	<div class="uk-width-1-2 top-contacts_elem top-contacts_email"><a href="mailto:ask@arabtravel.jo"><i class="demo-icon ico_mail"></i>ask@arabtravel.jo</a></div>
+					</div>
+				</div>
                 <div class="uk-width-1-2">
-                    <div class="pull-left">
-                        <a id="currentAccountLink" href="{{=it.userEmail && '/user' || '#login-form-modal'}}" class="btn btn-default btn-ghost btn-ui btn-account" {{? !it.userEmail }} data-uk-modal {{?}}>
-                            <i class="demo-icon ico_user"></i><span id="currentAccount">{{=it.userEmail || it.ml.signUp}}</span>
-                        </a>&nbsp;
-						<a id="logoutLink" href="/auth/logout" class="btn btn-default btn-ghost btn-ui btn-account">
-                            <i class="glyphicon glyphicon-log-out"></i><span>{{=it.ml.logout}}</span>
-                        </a>
-                    </div>
-                    <div class="pull-right">
-                        <div class="dropdown pull-right dd-currency" data-uk-dropdown="{mode:'click'}">
-                            <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span currency-field>USD</span>
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="uk-dropdown dropdown-menu" aria-labelledby="dLabel">
-                                <li><a currency-set="usd">USD</a></li>
-                                <li><a currency-set="jod">JOD</a></li>
-                            </ul>
-                        </div>
-                        <div class="dropdown pull-right dd-lang" data-uk-dropdown="{mode:'click'}">
-                            <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {{=it.lang}}
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="uk-dropdown dropdown-menu" aria-labelledby="dLabel">
-                                <li><a href="/en">en</a></li>
-                                <li><a href="/ar">ar</a></li>
-                            </ul>
-                        </div>
+                    <div class="uk-flex uk-grid">
+                    	<div class="uk-width-1-2">
+                    	    <a id="currentAccountLink" href="{{=it.userEmail && '/user' || '#login-form-modal'}}" class="btn btn-default btn-ghost btn-ui btn-account" {{? !it.userEmail }} data-uk-modal {{?}}>
+                    	        <i class="demo-icon ico_user"></i><span id="currentAccount">{{=it.userEmail || it.ml.signUp}}</span>
+                    	    </a>&nbsp;
+                    							<a id="logoutLink" href="/auth/logout" class="btn btn-default btn-ghost btn-ui btn-account">
+                    	        <i class="glyphicon glyphicon-log-out"></i><span>{{=it.ml.logout}}</span>
+                    	    </a>
+                    	</div>
+                    	<div class="uk-width-1-2 lang-cur-dd">
+                    	    <div class="dropdown dd-currency" data-uk-dropdown="{mode:'click'}">
+                    	        <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    	            <span currency-field>USD</span>
+                    	            <span class="caret"></span>
+                    	        </button>
+                    	        <ul class="uk-dropdown dropdown-menu" aria-labelledby="dLabel">
+                    	            <li><a currency-set="usd">USD</a></li>
+                    	            <li><a currency-set="jod">JOD</a></li>
+                    	        </ul>
+                    	    </div>
+                    	    <div class="dropdown dd-lang" data-uk-dropdown="{mode:'click'}">
+                    	        <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    	            {{=it.lang}}
+                    	            <span class="caret"></span>
+                    	        </button>
+                    	        <ul class="uk-dropdown dropdown-menu" aria-labelledby="dLabel">
+                    	            <li><a href="/en">en</a></li>
+                    	            <li><a href="/ar">ar</a></li>
+                    	        </ul>
+                    	    </div>
+                    	</div>
                     </div>
                 </div>
             </div>

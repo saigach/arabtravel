@@ -1,7 +1,7 @@
 <div class="main-content" role="content">
     <div class="container" id="order-details-container" [class.hidden]=" submitted ">
-        <div class="row" style="position:relative;">
-            <div class="col-md-9">
+        <div class="uk-grid uk-flex" style="position:relative;">
+            <div class="uk-width-medium-7-10">
 
                 <h1>{{ ml.ticketReservation | ml }}</h1>
                 <a href="/" class="btn btn-primary btn-ghost btn-left">{{ ml.newSearch | ml }}</a>
@@ -120,7 +120,7 @@
                         </div>
 
                             <div class="payment-system_container" id="payment-system_card" [class.hide]="item.paymentType.id === 'card'">
-                                You have chosen {{ item.paymentType.title | ml }}. We will contact you as soon as possible and inform you on next steps.
+                                {{ ml.youHaveChosen | ml }} {{ item.paymentType.title | ml }}. {{ ml.nextSteps | ml }}
                             </div>
                         </div>
                     </section>
@@ -135,11 +135,11 @@
 
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="uk-width-medium-3-10">
 
                 <aside class="order-details widget trip-details" id="order-details">
                     <header class="widget_header">
-                        Order details
+                        {{ ml.orderDetails | ml }}
                     </header>
 
                     <div *ngFor="let shift of item.shifts" class="order-trip_container">
@@ -163,25 +163,25 @@
 
                     <div class="order-details_summary">
                         <div class="order-details_summary_line">
-                            <div class="lbl">Tickets price</div>
+                            <div class="lbl">{{ ml.ticketsPrice | ml }}</div>
                             <div class="val">{{ item.fullCost | currency:exchangeRate | number:'1.2-2' }} <span class="currency">{{currency}}</span></div>
                         </div>
                     </div>
 
                     <div class="order-details_summary">
                         <div class="order-details_summary_line">
-                            <div class="lbl">Processing fee:</div>
+                            <div class="lbl">{{ ml.processingFee | ml }}</div>
                             <div class="val">{{ item.processingFee | currency:exchangeRate | number:'1.2-2' }} <span class="currency">{{currency}}</span></div>
                         </div>
                     </div>
 
                     <footer class="widget_footer">
                         <div class="order-details_total">
-                            <div class="lbl">Total</div>
+                            <div class="lbl">{{ ml.total | ml }}</div>
                             <div class="val">{{ item.totalCost | currency:exchangeRate | number:'1.2-2' }} <span class="currency">{{currency}}</span></div>
                         </div>
                         <div class="order-details_total" *ngIf="currency === '$'">
-                            <div class="lbl">(approx.:</div>
+                            <div class="lbl">({{ ml.approx | ml }}:</div>
                             <div class="val">{{ item.totalCost | number:'1.2-2' }} jod)</div>
                         </div>
                     </footer>
