@@ -16,7 +16,7 @@
 
                                 <div class="form-group">
                                     <label for="">
-                                        Route from
+                                        {{ ml.routeFrom | ml }}
                                     </label> <br>
 	                                <select name="routefrom" [(ngModel)]="pointA" id="routefrom" class="form-control fit-width">
 										<option *ngFor="let point of APoints" [ngValue]="point">{{ point.title | ml }}</option>
@@ -25,7 +25,7 @@
 
                                 <div class="form-group">
                                     <label for="">
-                                        Route to
+                                        {{ ml.routeTo | ml }}
                                     </label> <br>
                                     <select name="routeto" [(ngModel)]="pointB" id="routeto" class="form-control fit-width" [disabled]="!pointA">
 										<option *ngFor="let point of BPoints" [ngValue]="point">{{ point.title | ml }}</option>
@@ -33,7 +33,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="rf">Date of departure</label>
+                                    <label for="rf">{{ ml.dateOfDeparture | ml }}</label>
 	                                <div class='input-group date'>
 										<input #departureDateNode name="departureDate" class="form-control" type="text"  [value]="departureDate | date: 'dd.MM.yyyy'">
 	                                </div>
@@ -43,7 +43,7 @@
                                 <div class="form-group">
                                     <div class="styled-checkbox">
 	                                    <input class="checkbox" type="checkbox" id="ch3">
-	                                    <label for="ch3">Any date</label>
+	                                    <label for="ch3">{{ ml.anyDate | ml }}</label>
 	                                </div>
                                 </div>
 
@@ -64,15 +64,15 @@
 
                     <div class="col-md-9">
 
-                        <h1>All trips from <span *ngIf="pointA">{{ pointA.title | ml }}</span><span *ngIf="pointB"> to {{ pointB.title | ml }}</span></h1>
+                        <h1>{{ ml.allTripsFrom | ml }} <span *ngIf="pointA">{{ pointA.title | ml }}</span><span *ngIf="pointB"> to {{ pointB.title | ml }}</span></h1>
 
                         <div class="sort-line">
                             <div class="sort-line_title">
-                                Sort by
+                                {{ ml.sortBy | ml }}
                             </div>
 
                             <div class="sort-line_sort">
-                                <span class="lbl">Price</span>&nbsp;
+                                <span class="lbl">{{ ml.price | ml }}</span>&nbsp;
                                 <span class="styled-radio radio-sort sort_down">
                                     <input type="radio" id="price_down" name="package-sort" value="">
                                     <label for="price_down"><i class="fa fa-chevron-down" aria-hidden="true"></i></label>
@@ -84,7 +84,7 @@
                             </div>
 
                             <div class="sort-line_sort">
-                                <span class="lbl">Date of Departure</span>&nbsp;
+                                <span class="lbl">{{ ml.dateOfDeparture | ml }}</span>&nbsp;
                                 <span class="styled-radio radio-sort sort_down">
                                     <input type="radio" id="date_down" name="package-sort" value="">
                                     <label for="date_down"><i class="fa fa-chevron-down" aria-hidden="true"></i></label>
@@ -122,11 +122,11 @@
                                             </div> -->
 
                                             <div class="tourist-package-item_includes">
-                                                <p class="lbl">Tour includes</p>
+                                                <p class="lbl">{{ ml.tourIncludes | ml }}</p>
 
                                                 <ul class="tourist-package-item_includes-list">
-                                                    <li><i class="ico ico_boat"></i> Ferry from {{ item.pointA.title | ml }} to {{ item.pointB.title | ml }} and back</li>
-                                                    <li *ngIf="item.firstHotel"><i class="ico ico_hotel"></i> Hotel <strong>{{item.firstHotel.title | ml}}</strong></li>
+                                                    <li><i class="ico ico_boat"></i>{{ ml.ferryFrom | ml }} {{ item.pointA.title | ml }} to {{ item.pointB.title | ml }} {{ ml.andBack | ml }}</li>
+                                                    <li *ngIf="item.firstHotel"><i class="ico ico_hotel"></i> {{ ml.hotel | ml }} <strong>{{item.firstHotel.title | ml}}</strong></li>
                                                     <!-- <li><i class="ico ico_tour"></i> Cairo Day Tour</li> -->
                                                 </ul>
                                             </div>
@@ -136,18 +136,18 @@
                                     <div class="col-md-2 tourist-package-item_pricing">
 
                                         <div class="tourist-package-item_price">
-                                            <div class="lbl">from</div>
+                                            <div class="lbl">{{ ml.from | ml }}</div>
                                             <div class="price">{{ item.basePrice | number:'1.2-2' }}</div>
-                                            <div class="lbl">per person</div>
+                                            <div class="lbl">{{ ml.perPerson | ml }}</div>
                                         </div>
 
                                         <ul class="tourist-package-item_includes-list-short">
-                                            <li>Tickets 2 way</li>
-                                            <li>Hotel</li>
+                                            <li>{{ ml.tickets2way | ml }}</li>
+                                            <li>{{ ml.hotel | ml }}</li>
                                             <!-- <li>Excursion</li> -->
                                         </ul>
 
-                                        <a class="btn btn-danger btn-sm tourist-package-item_book-now" (click)="select(item); $event.stopPropagation()">Book Now</a>
+                                        <a class="btn btn-danger btn-sm tourist-package-item_book-now" (click)="select(item); $event.stopPropagation()">{{ ml.bookNow | ml }}</a>
 
                                     </div>
 

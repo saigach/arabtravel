@@ -36,7 +36,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h2 class="h1 text-center">Why to Book Online</h2>
+                    <h2 class="h1 text-center">{{=it.ml.whyToBookOnline}}</h2>
                 </div>
             </div>
             <div class="row">
@@ -44,35 +44,33 @@
                     <div class="large-icon ico_click">
 
                     </div>
-                    <h3 class="text-center">More Choice</h3>
+                    <h3 class="text-center">{{=it.ml.moreChoice}}</h3>
                     <p>
-                        Arab Travel features the widest selection of ferry routes giving you flexibility and choice as well as access to the best ferry deals around..
+                        {{=it.ml.moreChoiceText}}
                     </p>
                 </div>
                 <div class="col-md-4">
                     <div class="large-icon ico_time">
 
                     </div>
-                    <h3 class="text-center">Better Deals</h3>
+                    <h3 class="text-center">{{=it.ml.betterDeals}}</h3>
                     <p>
-                        You can compare all suitable ferry crossings in our quick and easy search to find the cheapest ferry fares at the time you want to travel!
-
-
+{{=it.ml.betterDealsText}}
                     </p>
                 </div>
                 <div class="col-md-4">
                     <div class="large-icon ico_key">
                     </div>
-                    <h3 class="text-center">Save Money</h3>
+                    <h3 class="text-center">{{=it.ml.saveMoney}}</h3>
                     <p>
-                    Best price guaranteed, you are getting the lowest possible price at the time of booking – guaranteed.
+                    {{=it.ml.saveMoneyText}}
                     </p>
                 </div>
             </div>
             <section class="how-we-work">
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="h1 text-center">How we work</h2>
+						<h2 class="h1 text-center">{{=it.ml.howWeWork}}</h2>
 					</div>
 				</div>
 				<div class="row hww-graphics" id="hww-graphics">
@@ -81,19 +79,19 @@
 					</div>
 					<div class="col-md-3 hww-graphics_item">
 						<div class="hww-graphics_icon ico_pen"></div>
-						<p>Fill the form above and check your options and the availability</p>
+						<p>{{=it.ml.howWeWork1}}</p>
 					</div>
 					<div class="col-md-3 hww-graphics_item">
 						<div class="hww-graphics_icon ico_card-usd"></div>
-						<p>Enter your personal information and reserve a ticket</p>
+						<p>{{=it.ml.howWeWork2}}</p>
 					</div>
 					<div class="col-md-3 hww-graphics_item">
 						<div class="hww-graphics_icon ico_attachment"></div>
-						<p>Get your ticket on your email and in your personal account on the site</p>
+						<p>{{=it.ml.howWeWork3}}</p>
 					</div>
 					<div class="col-md-3 hww-graphics_item">
 						<div class="hww-graphics_icon ico_doc"></div>
-						<p>Print it and use it! Our ferries tickets are open-date for 3 months to use</p>
+						<p>{{=it.ml.howWeWork4}}</p>
 					</div>
 				</div>
 			</section>
@@ -104,8 +102,8 @@
                 <div class="row">
                     <div class="col-md-10 col-md-push-1">
                         <div class="slogan">
-                            <div class="line-1">We are the partners of AB Maritime —</div>
-                            <div class="line-2">best maritime carrier in the red sea region and beyond</div>
+                            <div class="line-1">{{=it.ml.partners1}}</div>
+                            <div class="line-2">{{=it.ml.partners2}}</div>
                         </div>
                     </div>
                 </div>
@@ -117,9 +115,9 @@
                 <div class="row">
                     <div class="col-md-6 col-md-pull-1">
                         <div class="slogan">
-                            <div class="line-1">Connecting</div>
-                            <div class="line-2">Arab Asia and Arab Africa together</div>
-                            <div class="line-3">See our <a href="">Routes</a> and <a href="">Schedule</a></div>
+                            <div class="line-1">{{=it.ml.connecting1}}</div>
+                            <div class="line-2">{{=it.ml.connecting2}}</div>
+                            <div class="line-3">{{=it.ml.connecting3}}</div>
                         </div>
                     </div>
                 </div>
@@ -129,11 +127,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h2>Check our Tourist Packages</h2>
+                    <h2>{{=it.ml.checkTP}}</h2>
                 </div>
                 <div class="col-md-6 col-md-push-3">
                     <p>
-                        Enjoy your vacation and we will take care of everything else. Our pre-built Tourist Packages include tickets, hotel and tours. And even something more.
+                        {{=it.ml.checkTPText}}
                     </p>
                 </div>
             </div>
