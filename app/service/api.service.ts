@@ -4,11 +4,14 @@ import 'rxjs/add/operator/toPromise'
 
 import { UUID, Model } from '../../model/common'
 import { Order } from '../../model/order'
+import { Human } from '../../model/human'
 import { User } from '../../model/user'
+
+const lang = document.querySelector('html').getAttribute('lang') || 'en'
 
 @Injectable()
 export class APIService {
-	private static apiRoot = '/en/api'
+	private static apiRoot = `/${lang}/api`
 
 	private static options = new RequestOptions({
 		headers: new Headers({
@@ -22,6 +25,12 @@ export class APIService {
 			console.error(error)
 			return Promise.reject(new Error('API service internal error'))
 		}
+
+		if (error.status && error.status === 401)
+			return Promise.reject({
+				code: 401,
+				error: 'Unauthorized'
+			})
 
 		let message = error.status && (
 						error.status === 403 && 'Действие запрещено политикой приложения' ||
@@ -59,8 +68,16 @@ export class APIService {
 						.catch(APIService.handleError)
 	}
 
-	order(order: Order): Promise<{}> {
-		return this.http.post(`${APIService.apiRoot}/order`, order.toString(), APIService.options)
+	order(order: Order, newUser: Human = null): Promise<{}> {
+		let data = {
+			order: order.toObject(),
+			human: newUser ? {
+				email: newUser.email,
+				title: newUser.title,
+				phone: newUser.phone
+			} : null
+		}
+		return this.http.post(`${APIService.apiRoot}/order`, JSON.stringify(data), APIService.options)
 						.toPromise()
 						.then(response => response.json() || null)
 						.then(value => value && value || Promise.reject({ message: 'Response is empty' }))

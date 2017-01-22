@@ -157,6 +157,15 @@
 	"orderConfirm": {
 		"en": "Your order have been successfully created. Please, wait until our manager confirms it. You will recieve a ticket that you can print.",
 		"ar": "Your order have been successfully created. Please, wait until our manager confirms it. You will recieve a ticket that you can print."
-	}
+	},
 
+	"emailOrderConfirmTitle": {
+		"en": "Order confirm",
+		"ar": "Order confirm"
+	},
+
+	"emailNewUserTitle": {
+		"en": "New user created",
+		"ar": "New user created"
+	}
 }

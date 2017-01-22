@@ -10,9 +10,10 @@ const Mail = require('../mail.js')
 const escapeStr = str => "'" + String(str).replace(/\\/g, "\\\\").replace(/'/g, "\\'") + "'"
 
 module.exports = class APIEngine {
-	constructor(DB) {
+	constructor(DB, templat) {
 		this.DB = DB
 		this.mail = new Mail()
+		this.template = templat
 	}
 
 	engine(requestData) {
@@ -88,7 +89,7 @@ module.exports = class APIEngine {
 
 						if (!requestData.user || !requestData.user.id)
 							return Promise.resolve({
-								code: 403,
+								code: 401,
 								session: null,
 								data: 'Unauthorized'
 							})
@@ -119,59 +120,162 @@ module.exports = class APIEngine {
 				}
 			case 'order':
 
-				if (!requestData.user || !requestData.user.id)
+				if (method !== 'POST')
 					return Promise.resolve({
-						code: 403,
-						session: null,
-						data: 'Unauthorized'
+						code: 400,
+						data: { error: 'Method is not allowed'}
 					})
 
-				let data = requestData.request.body || undefined
+				let data = requestData.request.body || {}
+				let order = data.order || null
 
-				if (data.id)
-					delete data.id
+				if (!order)
+					return Promise.resolve({
+						code: 400,
+						data: { error: 'Bad order data'}
+					})
 
-				if (data.enable)
-					delete data.enable
+				return new Promise( (resolve, reject) => {
+					if (requestData.user && requestData.user.id)
+						return resolve(requestData.user)
 
-				if (data.owner)
-					delete data.owner
+					return reject(data.human || null)
+				}).catch( human => {
 
-				data.date = new Date()
+					if (!human)
+						return Promise.reject({
+							code: 400,
+							data: { error: 'Human data is empty'}
+						})
 
-				let owner = "'" + requestData.user.id + "'"
-				let title = {
-					en: 'New order at ' + data.date.toString(),
-					ar: 'New order at ' + data.date.toString()
-				}
+					let email = human.email && human.email.trim() || null
 
-			 	title = escapeStr(JSON.stringify(title || {}))
-			 	data = escapeStr(JSON.stringify(data || {}))
+					if (!email)
+						return Promise.reject({
+							code: 400,
+							data: { error: 'Human email is empty'}
+						})
 
-				return this.DB.query(`
-					INSERT INTO objects (
-						model,   enable, owner,    title,    data
-					) VALUES (
-						'order', TRUE,   ${owner}, ${title}, ${data}
-					) RETURNING
-						objects.id
-				`).then( rows => ({
-					code: 200,
-					data: { id: rows[0].id }
-				}) )
+					if (!/^[a-z0-9_\.%+-]+@[a-z0-9_\.-]+?[a-z0-9]$/.test(email))
+						return Promise.reject({
+							code: 400,
+							data: { error: 'Email is not valid'}
+						})
 
-				// return this.mail
-				// 	.sendMail('d@ajaw.it', 'Test mail', 'Test text')
-				// 	.then(result => {
-				// 		return {
-				// 			code: 200,
-				// 			date: { sucess: 'Mail sended' }
-				// 		}
-				// 	})
+					email = escapeStr(email)
+
+					return this.DB.query(`
+						SELECT
+							users.email
+						FROM
+							users
+						WHERE
+							enable
+							AND
+							email = ${email}
+						LIMIT 1
+					`).then(users => {
+
+						if (users.length > 0)
+							return Promise.reject({
+								code: 401,
+								data: 'Unauthorized'
+							})
+
+						let title = human.title && human.title.trim() || null
+
+						if (!title)
+							return reject({
+								code: 400,
+								data: { error: 'Human title is empty'}
+							})
+
+						title = escapeStr(title)
+
+						let phone = escapeStr(human.phone && human.phone.trim() || '')
+						let password = Math.random().toString(36).slice(-8)
+
+						return this.DB.query(`
+							INSERT INTO users (
+								email,    title,    phone,    password
+							) VALUES (
+								${email}, ${title}, ${phone}, encode(digest(${escapeStr(password)}, 'sha512'), 'hex')
+							) RETURNING
+								title,
+								email,
+								id
+						`).then( users => {
+
+							let user = users[0]
+
+							this.mail.sendMail(
+								user.email,
+								requestData.ml.emailNewUserTitle,
+								this.template['email-new-user']({
+									lang: requestData.request.language,
+									ml: requestData.ml,
+									user: Object.assign({}, user, { password })
+								})
+							)
+
+							return user
+						})
+					})
+				}).then( user => {
+					if (order.id)
+						delete order.id
+
+					if (order.enable)
+						delete order.enable
+
+					if (order.owner)
+						delete order.owner
+
+					order.date = new Date()
+
+					let owner = "'" + user.id + "'"
+
+					let title = escapeStr(JSON.stringify({
+						en: 'New order at ' + order.date.toString(),
+						ar: 'New order at ' + order.date.toString()
+					}))
+
+			 		let data = escapeStr(JSON.stringify(order))
+
+			 		return this.DB.query(`
+						INSERT INTO objects (
+							model,   enable, owner,    title,
+							data
+						) VALUES (
+							'order', TRUE,   ${owner}, ${title},
+							jsonb_set(${data}::jsonb,'{hrid}'::text[],nextval('order_hrid')::text::jsonb)
+						) RETURNING
+							*
+					`).then( rows => {
+
+						let order = Object.assign({}, rows[0].data || {}, rows[0], { data: null })
+
+						this.mail.sendMail(
+							user.email,
+							requestData.ml.emailOrderConfirmTitle,
+							this.template['email-order-confirm']({
+								lang: requestData.request.language,
+								ml: requestData.ml,
+								user: user,
+								order: order
+							})
+						)
+
+						return {
+							code: 200,
+							data: order
+						}
+					})
+				}).catch( error => error )
 			case 'me':
 				if (!requestData.user || !requestData.user.id)
 					return Promise.resolve({
-						code: 403,
+						code: 401,
 						session: null,
 						data: 'Unauthorized'
 					})
@@ -191,7 +295,7 @@ module.exports = class APIEngine {
 					LIMIT 1
 				`).then(response =>
 					response.length !== 1 ? ({
-						code: 403,
+						code: 401,
 						session: null,
 						data: 'Unauthorized'
 					}) : ({
@@ -230,9 +334,9 @@ module.exports = class APIEngine {
 						data: { error: 'Email is not valid' }
 					})
 
-				message += 'E-mail: ' + String(messageData.email) + '\n'
+				message += '<p><b>E-mail:</b> ' + String(messageData.email) + '</p>'
 
-				message += 'Message: ' + (messageData.message && String(messageData.message) || '')
+				message += '<p><b>Message:</b> ' + (messageData.message && String(messageData.message) || '') + '</p>'
 
 				return this.mail
 					.sendMail(INFO_EMAIL, 'Message from arabtravel webform', message)

@@ -7,7 +7,7 @@
 	</div>
 	<div class="uk-width-1-1 uk-form uk-form-stacked">
 		<div class="uk-grid">
-			<div class="uk-width-1-1 uk-form-controls">
+			<div class="uk-width-7-10 uk-form-controls">
 				<label class="uk-button admin-button" [class.uk-active]="item.enable">
 					<span>Enable</span>
 					<input  class="uk-hidden" type="checkbox" [(ngModel)]="item.enable">
@@ -19,6 +19,9 @@
 				<select class="uk-margin-left" name="type" [(ngModel)]="item.status">
 					<option *ngFor="let statusItem of statusList" [ngValue]="statusItem">{{ statusItem.title | ml:'en' }}</option>
 				</select>
+			</div>
+			<div class="uk-width-3-10 uk-margin-top">
+				<b>ID:</b><span>{{ item.hrid }}</span>
 			</div>
 			<div class="uk-width-7-10 uk-margin-top">
 				<label class="uk-form-label uk-width-1-1">Description</label>

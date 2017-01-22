@@ -209,6 +209,8 @@ export class Order extends Model {
 	static __api: string = 'objects/order'
 	static __primaryFields = Model.__primaryFields.concat(['owner', 'date', 'status'])
 
+	hrid: number
+
 	description: string
 
 	package: boolean
@@ -235,6 +237,8 @@ export class Order extends Model {
 	constructor(value: any = {}) {
 		super(value)
 
+		this.hrid = Number.parseInt(value.hrid || 0) || 0
+
 		this.description = String(value.description || '')
 
 		this.package = !!value.package
@@ -242,7 +246,10 @@ export class Order extends Model {
 		if (value.owner && value.owner.id)
 			this.owner = new User(value.owner)
 
-		this.date = newDate(value.date || null)
+		this.date = value.date ? new Date(value.date) : new Date()
+
+		if (Number.isNaN( this.date.getTime() ))
+			this.date = new Date()
 
 		this.shifts = value.shifts instanceof Array ?
 			value.shifts.reduce(
@@ -277,6 +284,7 @@ export class Order extends Model {
 
 	toObject(): {} {
 		return Object.assign({}, super.toObject(), {
+			hrid: this.hrid,
 			description: this.description,
 			package: this.package,
 			owner: this.owner && this.owner.id.uuid || null,

@@ -119,12 +119,23 @@ export class OrderPageComponent implements OnInit {
 			return
 		this.submitting = true
 
-		this.apiService.order(this.item).then( value => {
+		this.apiService.order(this.item, this.primaryContact).then( value => {
+			this.item = new Order(value)
 			UIkit.notify('Order sucess', {status  : 'success' })
 			this.submitted = true
 			localStorage.removeItem('currentOrder')
 			this.submitting = false
 		}).catch( error => {
+			if (error.code && error.code === 401) {
+
+				let loginForm: any = document.querySelector('#login-form-modal form')
+				loginForm.elements.email.value = this.primaryContact && this.primaryContact.email
+
+				UIkit.modal('#login-form-modal').show()
+				this.submitting = false
+				return
+			}
+
 			UIkit.notify('Server error', {status  : 'warning' })
 			this.submitting = false
 		})

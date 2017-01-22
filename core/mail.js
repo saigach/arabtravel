@@ -22,13 +22,13 @@ module.exports = class Mail {
 		this.transporter = nodemailer.createTransport(smtpConfig)
 	}
 
-	sendMail(to, subject, text) {
+	sendMail(to, subject, html) {
 		return new Promise( (resolve, reject) =>
 			this.transporter.sendMail({
 				from: mailFrom,
 				to: to,
 				subject: subject,
-				text: text
+				html: html
 			}, (error, info) => {
 				if (error)
 					return reject(error)

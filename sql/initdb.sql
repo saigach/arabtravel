@@ -104,6 +104,9 @@ CREATE TRIGGER sessions_delete_old_rows_trigger AFTER INSERT OR UPDATE ON sessio
 -- Models
 CREATE TYPE models AS ENUM ('hotel', 'human', 'order', 'point', 'trip', 'vehicle', 'static');
 
+--- Order HRID
+CREATE SEQUENCE order_hrid START 1;
+
 -- Objects data store
 CREATE TABLE objects (
 	id uuid NOT NULL DEFAULT uuid_generate_v1(),
@@ -111,7 +114,7 @@ CREATE TABLE objects (
 	enable boolean NOT NULL DEFAULT TRUE,
 	owner uuid DEFAULT NULL,
 	title json NOT NULL DEFAULT '{}'::json,
-	data json NOT NULL DEFAULT '{}'::json,
+	data jsonb NOT NULL DEFAULT '{}'::jsonb,
 	CONSTRAINT objects_pkey PRIMARY KEY (id),
 	CONSTRAINT objects_owner_fkey FOREIGN KEY (owner) REFERENCES users (id) ON UPDATE CASCADE ON DELETE SET NULL
 ) WITH (OIDS = FALSE);

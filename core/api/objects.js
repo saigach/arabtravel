@@ -6,7 +6,8 @@
 'use strict'
 
 const customQueryList = {
-	trip: `objects.data->'package' AS "package", objects.data->'pointA' AS "pointA", objects.data->'pointB' AS "pointB"`
+	trip: `objects.data->'package' AS "package", objects.data->'pointA' AS "pointA", objects.data->'pointB' AS "pointB"`,
+	order: `objects.data->'hrid' AS "hrid", objects.data->'package' AS "package", objects.data->'date' AS "date"`
 }
 
 const escapeStr = str => "'" + String(str).replace(/'/g, "\\'") + "'"
