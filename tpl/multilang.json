@@ -264,6 +264,11 @@
 		"ar": "نحن هنا نضمن لكم أجمل الاوقات والرحلات السياحيه"
 	},
 	
+	"orderDetails": {
+		"en": "Order details",
+		"ar": "Order details"
+	},
+	
 	"ticketsPrice": {
 		"en": "Tickets price",
 		"ar": "Tickets price"
