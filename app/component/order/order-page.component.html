@@ -161,7 +161,6 @@
                         </div>
                     </div>
 
-
                     <div class="order-details_summary">
                         <div class="order-details_summary_line">
                             <div class="lbl">{{ ml.ticketsPrice | ml }}</div>
@@ -174,6 +173,19 @@
                             <div class="lbl">{{ ml.processingFee | ml }}</div>
                             <div class="val">{{ item.processingFee | currency:exchangeRate | number:'1.2-2' }} <span class="currency">{{currency}}</span></div>
                         </div>
+                    </div>
+
+                     <div  class="order-trip_container" *ngIf="item.hotel">
+						<div class="order-trip order-trip-outward">
+							<i class="ico ico_hotel"></i>
+							<b>{{ item.hotel.title | ml }}</b>
+						</div>
+                    	<div class="order-trip_details" *ngIf="item.room">
+                    		<div class="order-trip_detail">
+                    			<div class="lbl">{{ item.room.title | ml }}</div>
+                    			<div class="val">{{ item.duration }}&nbsp;x&nbsp;{{ item.room.cost | currency:exchangeRate | number:'1.2-2' }}{{currency}}</div>
+                    		</div>
+                    	</div>
                     </div>
 
                     <footer class="widget_footer">

@@ -322,9 +322,9 @@ export class Order extends Model {
 
 	get duration(): number {
 		if (!this.from || !this.to)
-			return 0
+			return 1
 
-		return Math.round( Math.abs( ( this.to.getTime() - this.from.getTime() ) / ONE_DAY ) )
+		return Math.round( Math.abs( ( this.to.getTime() - this.from.getTime() ) / ONE_DAY ) ) || 1
 	}
 
 	getPeopleCounts(date: Date = new Date()): PeopleCount[] {

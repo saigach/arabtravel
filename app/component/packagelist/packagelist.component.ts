@@ -9,7 +9,9 @@ import { Order, Shift, PaymentType } from '../../../model/order'
 import { Trip, Price, VehicleCost } from '../../../model/trip'
 import { Point } from '../../../model/point'
 import { Human, AgeGroup } from '../../../model/human'
-import { Hotel } from '../../../model/hotel'
+import { Hotel, Room } from '../../../model/hotel'
+
+const lang = document.querySelector('html').getAttribute('lang') || 'en'
 
 type PeopleCount = { ageGroup: AgeGroup, count: number }
 
@@ -170,6 +172,32 @@ export class PackageListComponent implements OnInit {
 	}
 
 	select(trip: Trip): void {
+		let order = new Order()
 
+		order.package = true
+
+		order.shifts.push(new Shift({
+			date: this.departureDate,
+			trip: trip,
+			price: trip.getPrice(this.departureDate)
+		}))
+
+		order.hotel = trip.firstHotel
+		order.room = trip.firstHotel.rooms.reduce(
+			(prev:Room, value:Room) => prev === null || value.cost <= prev.cost ? value : prev,
+			null
+		)
+
+		order.people = this.peopleCount.reduce(
+			(prev: Human[], value:PeopleCount) => {
+				for(let i = 0; i < value.count; i++)
+					prev.push(new Human({ defaultAgeGroup: value.ageGroup }))
+				return prev
+			},
+			[]
+		)
+
+		localStorage.setItem('currentOrder', order.toString())
+		window.location.href = `/${lang}/order`
 	}
 }
