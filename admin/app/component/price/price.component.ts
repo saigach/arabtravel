@@ -3,15 +3,15 @@ import { Component, OnInit, ViewChild, ElementRef, Output, Input, EventEmitter }
 import { APIService } from '../../service/api.service'
 
 import { str2Date } from '../../../../model/common'
-import { Price, VehicleCost, Refund } from '../../../../model/trip'
+import { Price, VehicleCost, Refund } from '../../../../model/price'
 import { Vehicle } from '../../../../model/vehicle'
 
 @Component({
 	moduleId: module.id,
-	selector: 'trip-price',
-	templateUrl: '/app/component/trip/trip-price.component.html'
+	selector: 'price',
+	templateUrl: '/app/component/price/price.component.html'
 })
-export class TripPriceComponent implements OnInit {
+export class PriceComponent implements OnInit {
 
 	item: Price = new Price()
 

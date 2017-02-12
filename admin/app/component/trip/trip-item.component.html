@@ -11,18 +11,12 @@
 				<span>Enable</span>
 				<input class="uk-hidden" type="checkbox" [(ngModel)]="item.enable">
 			</label>
-			<label class="uk-button admin-button uk-margin-left" [class.uk-active]="item.package">
-				<span>Package</span>
-				<input class="uk-hidden" type="checkbox" [(ngModel)]="item.package">
-			</label>
+			<div class="uk-button-group uk-margin-left">
+				<button *ngFor="let type of types" class="uk-button admin-button" [class.uk-active]="item.type === type" (click)="item.type = type; $event.preventDefault()"><i [class]="type.icon"></i>&nbsp;{{ type.title | ml:'en' }}</button>
+			</div>
 		</div>
 
-		<label class="uk-width-1-1 uk-margin-top uk-form-label">Title</label>
-		<div class="uk-width-1-1">
-			<mlinput [(value)]="item.title"></mlinput>
-		</div>
-
-		<label class="uk-width-1-1 uk-margin-top uk-form-label">Short description</label>
+		<label class="uk-width-1-1 uk-margin-top uk-form-label">Description</label>
 		<div class="uk-width-1-1">
 			<mlinput [(value)]="item.description"></mlinput>
 		</div>
@@ -38,7 +32,7 @@
 		<div class="uk-width-2-10">
 			<label class="uk-width-1-1 uk-margin-top uk-form-label">&emsp;</label>
 			<div class="uk-width-1-1 uk-form-controls uk-text-center">
-				<i class="uk-icon-medium uk-icon-arrow-right"></i>
+				<i [class]="'uk-icon-medium ' + item.type.icon"></i>
 			</div>
 		</div>
 		<div class="uk-width-4-10">
@@ -65,78 +59,8 @@
 			<div  *ngFor="let price of item.prices; let i = index;" class="uk-panel uk-panel-box uk-width-1-1">
 				<div class="uk-panel-badge uk-badge uk-badge-danger admin-cursor-pointer" (click)="deletePrice(price); $event.stopPropagation()"><i class="uk-icon-trash"></i></div>
 				<h3 class="uk-panel-title">Price from {{ price.startDate | date: 'dd.MM.yyyy' }} to {{ price.endDate | date: 'dd.MM.yyyy' }}</h3>
-				<trip-price [(price)]="item.prices[i]"></trip-price>
+				<price [(price)]="item.prices[i]"></price>
 			</div>
-		</div>
-
-		<div class="uk-width-1-1 uk-margin-top" [class.uk-hidden]="!item.package">
-			<h3 class="tm-article-subtitle">Package description</h3>
-			<mleditor [(value)]="item.content"></mleditor>
-		</div>
-
-		<div class="uk-width-1-1 uk-grid uk-margin-top" [class.uk-hidden]="!item.package">
-			<div class="uk-width-8-10">
-				<h3 class="tm-article-subtitle">Hotels</h3>
-			</div>
-			<div class="uk-width-2-10">
-				<a class="uk-align-right admin-cursor-pointer" (click)="addHotel(); $event.stopPropagation()">
-					<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
-					<u>Add hotel</u>
-				</a>
-			</div>
-		</div>
-		<div class="uk-width-1-1 uk-margin-top" [class.uk-hidden]="!item.package">
-			<div  *ngFor="let hotel of item.hotels; let i = index;" class="uk-panel uk-panel-box uk-width-1-1">
-				<div class="uk-panel-badge uk-badge uk-badge-danger admin-cursor-pointer" (click)="deleteHotel(hotel); $event.stopPropagation()"><i class="uk-icon-trash"></i></div>
-				<div class="uk-panel-title">
-					<select name="type" [(ngModel)]="item.hotels[i]" (change)="hotelChange(i);">
-						<option [ngValue]="null">None</option>
-						<option *ngIf="item.hotels[i]" [ngValue]="item.hotels[i]">{{ item.hotels[i].title | ml:'en' }} (Current)</option>
-						<option *ngFor="let hotelItem of hotels" [ngValue]="hotelItem">{{ hotelItem.title | ml:'en' }}</option>
-					</select>
-				</div>
-				<div class="uk-grid" *ngIf="hotel !== null">
-					<div class="uk-width-1-1">
-						<h4 class="tm-article-subtitle">Rooms</h4>
-					</div>
-					<div class="uk-width-1-1 uk-margin-left">
-						<ul class="uk-width-1-1 uk-list">
-							<li *ngFor="let room of hotel.rooms | listOrderBy : ['title']">
-								<b>{{ room.title | ml:'en' }}, {{ room.size }} bed, {{ room.cost | currency:'USD':true:'1.2-2' }}</b>
-								<ul class="uk-width-1-1 uk-list" *ngIf="room.options.length > 0">
-									<li *ngFor="let option of room.options | listOrderBy : ['title']">{{ option.title | ml:'en' }}, {{ option.cost | currency:'USD':true:'1.2-2' }}</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-					<div class="uk-width-1-1 uk-margin-top" *ngIf="hotel.options.length > 0">
-						<h4 class="tm-article-subtitle">Options</h4>
-					</div>
-					<div class="uk-width-1-1 uk-margin-left" *ngIf="hotel.options.length > 0">
-						<ul class="uk-width-1-1 uk-list">
-							<li *ngFor="let option of hotel.options | listOrderBy : ['title']">{{ option.title | ml:'en' }}, {{ option.cost | currency:'USD':true:'1.2-2' }}</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="uk-width-1-1 uk-margin-top" [class.uk-hidden]="!item.package">
-			<h3 class="tm-article-subtitle">Images</h3>
-			<ul class="uk-thumbnav uk-grid-width-1-5">
-				<li *ngFor="let image of item.images">
-					<figure class="uk-overlay uk-overlay-hover">
-						<img [src]="image.link">
-						<figcaption class="uk-overlay-panel uk-flex uk-flex-center uk-flex-middle uk-text-center">
-							<button class="uk-button uk-button-mini" (click)="deleteImage(image); $event.stopPropagation()"><i class="uk-icon uk-icon-remove"></i></button>
-						</figcaption>
-					</figure>
-				</li>
-				<li class="uk-form-file">
-					<img class="uk-thumbnail admin-cursor-pointer" src="/placeholder_200x100.svg">
-					<input type="file" accept="image/*" (change)="addImage($event.target)">
-				</li>
-			</ul>
 		</div>
 
 		<div class="uk-width-1-1 uk-margin-top">

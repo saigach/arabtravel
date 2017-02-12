@@ -3,7 +3,6 @@ import { Model, File, MLString } from './common'
 
 export class Static extends Model {
 	static __api: string = 'objects/static'
-	static __primaryFields = Model.__primaryFields.concat(['url'])
 
 	title: MLString
 	description: MLString

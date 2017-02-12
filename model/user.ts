@@ -24,7 +24,6 @@ export class Role {
 
 export class User extends Model {
 	static __api: string = 'user'
-	static __primaryFields = Model.__primaryFields.concat(['email', 'phone', 'roles'])
 
 	title: string
 	description: string

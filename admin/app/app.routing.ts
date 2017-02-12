@@ -18,6 +18,9 @@ import { HotelItemComponent } from './component/hotel/hotel-item.component'
 import { TripListComponent } from './component/trip/trip-list.component'
 import { TripItemComponent } from './component/trip/trip-item.component'
 
+import { PackageListComponent } from './component/package/package-list.component'
+import { PackageItemComponent } from './component/package/package-item.component'
+
 import { StaticListComponent } from './component/static/static-list.component'
 import { StaticItemComponent } from './component/static/static-item.component'
 
@@ -36,7 +39,7 @@ const appRoutes: Routes = [
 		component: OrderListComponent
 	},
 	{
-		path: 'orders/:id',
+		path: 'orders/:type/:id',
 		component: OrderItemComponent
 	},
 	{
@@ -70,6 +73,14 @@ const appRoutes: Routes = [
 	{
 		path: 'trips/:id',
 		component: TripItemComponent
+	},
+	{
+		path: 'packages',
+		component: PackageListComponent
+	},
+	{
+		path: 'packages/:id',
+		component: PackageItemComponent
 	},
 	{
 		path: 'static',

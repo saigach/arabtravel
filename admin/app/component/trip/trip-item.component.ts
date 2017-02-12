@@ -6,10 +6,9 @@ import { APIService } from '../../service/api.service'
 import { FileService } from '../../service/file.service'
 
 import { File, MLString } from '../../../../model/common'
-import { Trip, Price } from '../../../../model/trip'
+import { Trip, TripType } from '../../../../model/trip'
+import { Price } from '../../../../model/price'
 import { Point } from '../../../../model/point'
-import { Hotel } from '../../../../model/hotel'
-
 @Component({
 	moduleId: module.id,
 	selector: 'trip-item',
@@ -17,16 +16,16 @@ import { Hotel } from '../../../../model/hotel'
 })
 export class TripItemComponent implements OnInit {
 
+	types: TripType[] = TripType.List
+
 	points: Point[] = []
-	hotels: Hotel[] = []
 
 	item: Trip = new Trip()
 
 	submitted: boolean = false
 
 	get valid(): boolean {
-		return  MLString.checkValid(this.item.title) &&
-				this.item.pointA &&
+		return  this.item.pointA &&
 				this.item.pointB &&
 				this.item.prices.length > 0
 	}
@@ -42,10 +41,9 @@ export class TripItemComponent implements OnInit {
 		if (!id)
 			return
 
-		Promise.all([
-			this.apiService.get<Point>(Point).then( (response: Point[]) => this.points = response ),
-			this.apiService.get<Hotel>(Hotel).then( (response: Hotel[]) => this.hotels = response )
-		]).then( () => {
+		this.apiService.get<Point>(Point).then( (response: Point[]) => {
+			this.points = response
+
 			if (id.toLowerCase() !== 'new')
 				this.apiService.get<Trip>(Trip, id)
 					.then((response: Trip) => {
@@ -56,30 +54,9 @@ export class TripItemComponent implements OnInit {
 						this.item.pointB = this.item.pointB
 										&& this.points.find(value => value.id.uuid === this.item.pointB.id.uuid)
 										|| null
-
-						this.item.hotels = this.item.hotels.map(
-							(hotel: Hotel) => this.hotels.find( value => value.id.uuid === hotel.id.uuid ) || null
-						).filter( (value: Hotel) => value && value.enable )
-
-						for (let i = 0; i < this.item.hotels.length; ++i)
-							 this.apiService.get<Hotel>(Hotel, this.item.hotels[i]).then(
-							 		(response: Hotel) => this.item.hotels[i] = response
-							 )
 					})
 					.catch(error => this.item = null)
 		})
-	}
-
-	addHotel(): void {
-		this.item.hotels.push(null)
-	}
-
-	deleteHotel(hotel: Hotel): void {
-		this.item.hotels = this.item.hotels.filter(value => value !== hotel)
-	}
-
-	hotelChange(i: number): void {
-		this.apiService.get<Hotel>(Hotel, this.item.hotels[i]).then( (response: Hotel) => this.item.hotels[i] = response)
 	}
 
 	addPrice(): void {
@@ -88,18 +65,6 @@ export class TripItemComponent implements OnInit {
 
 	deletePrice(price: Price): void {
 		this.item.prices = this.item.prices.filter(value => value !== price)
-	}
-
-	addImage(fileSelector: HTMLInputElement): void {
-		if (fileSelector.files.length) {
-			this.fileService.uploadImage(fileSelector.files[0])
-							.then(response => response.link && this.item.images.push(new File(response)))
-			fileSelector.value = null
-		}
-	}
-
-	deleteImage(image: File): void {
-		this.item.images = this.item.images.filter( value => value !== image)
 	}
 
 	back(): void {

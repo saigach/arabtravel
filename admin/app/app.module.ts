@@ -25,7 +25,8 @@ import { MLEditorComponent } from './component/mlinput/mleditor.component'
 import { OrderListComponent } from './component/order/order-list.component'
 import { OrderItemComponent } from './component/order/order-item.component'
 import { OrderHumanComponent } from './component/order/order-human.component'
-import { OrderShiftComponent } from './component/order/order-shift.component'
+import { OrderTripComponent } from './component/order/order-trip.component'
+import { OrderPackageComponent } from './component/order/order-package.component'
 
 import { UserListComponent } from './component/user/user-list.component'
 import { UserItemComponent } from './component/user/user-item.component'
@@ -38,7 +39,11 @@ import { HotelItemComponent } from './component/hotel/hotel-item.component'
 
 import { TripListComponent } from './component/trip/trip-list.component'
 import { TripItemComponent } from './component/trip/trip-item.component'
-import { TripPriceComponent } from './component/trip/trip-price.component'
+
+import { PackageListComponent } from './component/package/package-list.component'
+import { PackageItemComponent } from './component/package/package-item.component'
+
+import { PriceComponent } from './component/price/price.component'
 
 import { StaticListComponent } from './component/static/static-list.component'
 import { StaticItemComponent } from './component/static/static-item.component'
@@ -67,7 +72,8 @@ import { StaticItemComponent } from './component/static/static-item.component'
 		OrderListComponent,
 		OrderItemComponent,
 		OrderHumanComponent,
-		OrderShiftComponent,
+		OrderTripComponent,
+		OrderPackageComponent,
 
 		UserListComponent,
 		UserItemComponent,
@@ -80,7 +86,11 @@ import { StaticItemComponent } from './component/static/static-item.component'
 
 		TripListComponent,
 		TripItemComponent,
-		TripPriceComponent,
+
+		PackageListComponent,
+		PackageItemComponent,
+
+		PriceComponent,
 
 		StaticListComponent,
 		StaticItemComponent

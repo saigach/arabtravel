@@ -3,36 +3,40 @@ import { Component, OnInit, ViewChild, ElementRef, Output, Input, EventEmitter }
 import { APIService } from '../../service/api.service'
 
 import { str2Date } from '../../../../model/common'
-import { Shift } from '../../../../model/order'
-import { Trip, Price } from '../../../../model/trip'
+import { TripOrder } from '../../../../model/trip-order'
+import { Trip } from '../../../../model/trip'
+import { Price } from '../../../../model/price'
 import { Vehicle } from '../../../../model/vehicle'
 
 @Component({
 	moduleId: module.id,
-	selector: 'order-shift',
-	templateUrl: '/app/component/order/order-shift.component.html'
+	selector: 'order-trip',
+	templateUrl: '/app/component/order/order-trip.component.html'
 })
-export class OrderShiftComponent implements OnInit {
+export class OrderTripComponent implements OnInit {
 
 	trips: Trip[] = []
 	vehicles: Vehicle[] = []
 
-	item: Shift = new Shift()
+	item: TripOrder = new TripOrder()
 
-	@Output() shiftChange = new EventEmitter()
+	@Output() orderChange = new EventEmitter()
 
 	@Input()
-	get shift() {
+	get order() {
 		return this.item
 	}
 
-	set shift(value: Shift) {
+	set order(value: TripOrder) {
 		this.item = value
-		this.shiftChange.emit(this.item)
+		this.orderChange.emit(this.item)
 	}
 
-	@ViewChild('dateNode') dateRef: ElementRef
-	dateDatepicker: any = null
+	@ViewChild('departureDateNode') departureDateRef: ElementRef
+	departureDateDatepicker: any = null
+
+	@ViewChild('returnDateNode') returnDateRef: ElementRef
+	returnDateDatepicker: any = null
 
 	constructor(private apiService: APIService) {}
 
@@ -45,13 +49,23 @@ export class OrderShiftComponent implements OnInit {
 			this.vehicles = response.filter( (value:Vehicle) => value.enable )
 		)
 
-		this.dateDatepicker = UIkit.datepicker(this.dateRef.nativeElement, {
+		this.departureDateDatepicker = UIkit.datepicker(this.departureDateRef.nativeElement, {
 			weekstart: 1,
 			format:'DD.MM.YYYY'
 		})
 
-		this.dateDatepicker.on('hide.uk.datepicker', event => {
-			this.item.date = str2Date(event.target.value)
+		this.departureDateDatepicker.on('hide.uk.datepicker', event => {
+			this.item.departureDate = str2Date(event.target.value)
+			this.reloadPrice()
+		})
+
+		this.returnDateDatepicker = UIkit.datepicker(this.returnDateRef.nativeElement, {
+			weekstart: 1,
+			format:'DD.MM.YYYY'
+		})
+
+		this.returnDateDatepicker.on('hide.uk.datepicker', event => {
+			this.item.returnDate = str2Date(event.target.value)
 			this.reloadPrice()
 		})
 	}

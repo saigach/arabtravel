@@ -1,9 +1,9 @@
 <div class="uk-grid">
 	<div class="uk-width-3-4 uk-margin-bottom">
-		<h3>Trips list</h3>
+		<h3>Packages list</h3>
 	</div>
 	<div class="uk-width-1-4">
-		<button class="uk-button uk-button-primary uk-width-1-1" type="button" (click)="add()">Add trip</button>
+		<button class="uk-button uk-button-primary uk-width-1-1" type="button" (click)="add()">Add package</button>
 	</div>
 	<div class="uk-form uk-width-1-11">
 		<input #filterInput (keyup)="0" class="uk-width-1-1" type="text" placeholder="Search...">
@@ -13,8 +13,8 @@
 			<thead>
 				<tr>
 					<th>Enable</th>
-					<th>Type</th>
 					<th>Title</th>
+					<th>Shift</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -24,8 +24,8 @@
 						<i class="uk-icon-square-o" [class.uk-hidden]="item.enable"></i>
 						<i class="uk-icon-check-square-o" [class.uk-hidden]="!item.enable"></i>
 					</td>
-					<td class="uk-text-center"><i [class]="item.type.icon"></i></td>
-					<td>{{ item.title }}</td>
+					<td>{{ item.title | ml:'en' }}</td>
+					<td>{{ item.pointA && item.pointA.title | ml:'en' }}&nbsp;<i [class]="item.type.icon"></i>&nbsp;{{ item.pointB && item.pointB.title | ml:'en' }}</td>
 					<td (click)="delete(item); $event.stopPropagation()"><i class="uk-icon-trash-o"></i></td>
 				</tr>
 			</tbody>

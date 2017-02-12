@@ -12,10 +12,9 @@
 					<span>Enable</span>
 					<input  class="uk-hidden" type="checkbox" [(ngModel)]="item.enable">
 				</label>
-				<label class="uk-button admin-button uk-margin-left" [class.uk-active]="item.package">
-					<span>Package</span>
-					<input class="uk-hidden" type="checkbox" [(ngModel)]="item.package">
-				</label>
+				<div class="uk-button-group uk-margin-left">
+					<button *ngFor="let type of types" class="uk-button admin-button" [class.uk-active]="item.type === type" (click)="setType(type); $event.preventDefault()"><i [class]="type.icon"></i>&nbsp;{{ type.title | ml:'en' }}</button>
+				</div>
 				<select class="uk-margin-left" name="type" [(ngModel)]="item.status">
 					<option *ngFor="let statusItem of statusList" [ngValue]="statusItem">{{ statusItem.title | ml:'en' }}</option>
 				</select>
@@ -99,74 +98,14 @@
 				</div>
 			</div>
 
-			<div class="uk-width-1-1 uk-grid uk-margin-top">
-				<div class="uk-width-8-10">
-					<h3 class="tm-article-subtitle">Shifts</h3>
-				</div>
-				<div class="uk-width-2-10">
-					<a class="uk-align-right admin-cursor-pointer" (click)="addShift(); $event.stopPropagation()">
-						<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
-						<u>Add shift</u>
-					</a>
-				</div>
-			</div>
-			<div class="uk-width-1-1 uk-margin-top">
-				<div  *ngFor="let shift of item.shifts; let i = index;" class="uk-panel uk-panel-box uk-width-1-1">
-					<div class="uk-panel-badge uk-badge uk-badge-danger admin-cursor-pointer" (click)="deleteShift(shift); $event.stopPropagation()"><i class="uk-icon-trash"></i></div>
-					<h3 class="uk-panel-title">
-						<span>{{ shift.date | date: 'dd.MM.yyyy' }},&nbsp;</span>
-						<span *ngIf="shift.trip && shift.trip.pointA">{{ shift.trip.pointA.title | ml:'en' }}</span>
-						<span *ngIf="shift.trip && shift.trip.pointB">&nbsp;&rarr;&nbsp;{{ shift.trip.pointB.title | ml:'en' }}</span>
-					</h3>
-					<order-shift [(shift)]="item.shifts[i]"></order-shift>
-				</div>
+			<div class="uk-width-1-1 uk-margin-top" *ngIf="item.type.id === 'trip'">
+				<order-trip [(order)]="item"></order-trip>
 			</div>
 
-			<div class="uk-width-1-1 uk-grid uk-margin-top" [class.uk-hidden]="!item.package">
-				<div class="uk-width-1-1">
-					<h3 class="tm-article-subtitle">Hotel data</h3>
-				</div>
-				<div class="uk-width-1-2 uk-margin-top">
-					<b>Hotel:</b>
-					<select name="type" [(ngModel)]="item.hotel" (change)="hotelChange();">
-						<option [ngValue]="null">None</option>
-						<option *ngIf="item.hotel" [ngValue]="item.hotel">{{ item.hotel.title | ml:'en' }} (Current)</option>
-						<option *ngFor="let hotelItem of hotels" [ngValue]="hotelItem">{{ hotelItem.title | ml:'en' }}</option>
-					</select>
-					<label class="uk-form-label uk-width-1-1 uk-margin-top" *ngIf="item.hotel">Options:</label>
-					<ul class="uk-width-1-1 uk-list" *ngIf="item.hotel">
-						<li *ngFor="let option of item.hotel.options | listOrderBy : ['title']">
-							<input type="checkbox" [(ngModel)]="option.enable">
-							{{ option.title | ml:'en' }}
-							<input type="number" min="0" [(ngModel)]="option.cost">
-						</li>
-					</ul>
-				</div>
-				<div class="uk-width-1-2 uk-margin-top" *ngIf="item.hotel">
-					<b>Room:</b>
-					<select name="type" [(ngModel)]="item.room">
-						<option [ngValue]="null">None</option>
-						<option *ngIf="item.room" [ngValue]="item.room">{{ item.room.title | ml:'en' }} (Current)</option>
-						<option *ngFor="let roomItem of item.hotel.rooms" [ngValue]="roomItem">{{ roomItem.title | ml:'en' }}</option>
-					</select>
-					<div class="uk-width-1-1 uk-margin-top" *ngIf="item.room">
-						<b>Size:</b>
-						<span>{{item.room.size}}</span>
-						<b class="uk-margin-left">Beds:</b>
-						<span>{{item.room.beds}}</span>
-						<b class="uk-margin-left">Cost:</b>
-						<input class="" type="number" min="0" [(ngModel)]="item.room.cost">
-						<label class="uk-form-label uk-width-1-1 uk-margin-top">Options:</label>
-						<ul class="uk-width-1-1 uk-list" *ngIf="item.room">
-							<li *ngFor="let option of item.room.options | listOrderBy : ['title']">
-								<input type="checkbox" [(ngModel)]="option.enable">
-								{{ option.title | ml:'en' }}
-								<input type="number" min="0" [(ngModel)]="option.cost">
-							</li>
-						</ul>
-					</div>
-				</div>
+			<div class="uk-width-1-1 uk-margin-top" *ngIf="item.type.id === 'package'">
+				<order-package [(order)]="item"></order-package>
 			</div>
+
 			<div class="uk-width-1-1 uk-margin-top">
 				<h3 class="tm-article-subtitle">Global paremetrs</h3>
 			</div>
@@ -188,7 +127,8 @@
 					<input class="uk-width-1-1" type="number" min="0" [(ngModel)]="item.exchangeRate">
 				</div>
 			</div>
-			<div class="uk-width-1-1 uk-margin-top">
+
+			<!-- <div class="uk-width-1-1 uk-margin-top">
 				<h3 class="tm-article-subtitle">Calculation</h3>
 			</div>
 			<div class="uk-width-1-1 uk-margin-top">
@@ -270,7 +210,7 @@
 						</tr>
 					</tfoot>
 				</table>
-			</div>
+			</div> -->
 
 			<div class="uk-width-1-1 uk-margin-top">
 				<button type="submit" class="uk-button uk-button-success uk-align-right" (click)="submit()"><i class="uk-icon-floppy-o"></i>&emsp;Submit</button>

@@ -1,206 +1,72 @@
-import { newDate, Model, File, MLString } from './common'
+import { newDate, Model, MLString } from './common'
 
 import { Point } from './point'
-import { Vehicle } from './vehicle'
-import { Hotel } from './hotel'
-import { AgeGroup } from './human'
+import { Price } from './price'
 
-export class VehicleCost {
-	enable: boolean
-	vehicle: Vehicle
-	cost: number
+export class TripType {
+	static List:TripType[] = [
+		new TripType({
+			id: 'oneway',
+			title: new MLString({
+				en: 'One Way',
+				ar: 'اتجاه واحد'
+			}),
+			icon: 'uk-icon-long-arrow-right',
+			letter: '→'
+		}),
+		new TripType({
+			id: 'twoway',
+			title: new MLString({
+				en: 'Two Way',
+				ar: 'اتجاهين'
+			}),
+			icon: 'uk-icon-exchange',
+			letter: '↔'
+		})
+	]
+
+	static getTripType(id: string = ''): TripType {
+		return TripType.List.find( (value:TripType) => value.id === id) || TripType.List[0]
+	}
+
+	id: string
+	title: MLString
+	icon: string
+	letter: string
 
 	constructor(value: any = {}) {
-		this.enable = value.enable === undefined ? true : Boolean(value.enable)
-		this.vehicle = value.vehicle ? ( value.vehicle instanceof Vehicle ? value.vehicle : new Vehicle(value.vehicle) ) : null
-		this.cost = Math.max( 0, Number.parseFloat(value.cost || 0) || 0 )
-	}
-
-	toObject(): {} {
-		return {
-			enable: this.enable,
-			vehicle: this.vehicle.toObject(),
-			cost: this.cost
-		}
-	}
-}
-
-export class Cost {
-	ageGroup: AgeGroup = null
-	cost: number
-
-	constructor(ageGroup: AgeGroup, cost: number = 0) {
-		this.ageGroup = ageGroup
-		this.cost = cost
-	}
-
-	toObject(): {} {
-		return {
-			ageGroup: this.ageGroup.id,
-			cost: this.cost
-		}
-	}
-}
-
-export class Refund {
-	months: number
-	days: number
-	percent: number
-	sum: number
-
-	constructor(value: any = {}) {
-		this.months = Math.max( 0, Number.parseInt(value.months || 0) || 0 )
-		this.days = Math.max( 0, Math.min( Number.parseFloat(value.days || 0) || 0, 31 ) )
-		this.percent = Math.max( 0, Math.min( Number.parseFloat(value.percent || 0) || 0, 100 ) )
-		this.sum = Math.max( 0, Number.parseFloat(value.sum || 0) || 0 )
-	}
-
-	toObject(): {} {
-		return {
-			months: this.months,
-			days: this.days,
-			percent: this.percent,
-			sum: this.sum
-		}
-	}
-}
-
-export class Price {
-
-	enable: boolean
-
-	startDate: Date
-	endDate: Date
-
-	costs: Cost[] = AgeGroup.List.reduce( (prev: Cost[], ageGroup: AgeGroup) => prev.concat(new Cost(ageGroup)), [] )
-
-	getCost(arg: AgeGroup | string): number {
-		let cost = this.costs.find( (value:Cost) =>
-			arg instanceof AgeGroup ? value.ageGroup.id === arg.id : value.ageGroup.id === arg
-		)
-		return cost && cost.cost || 0
-	}
-
-	vehicles: VehicleCost[] = []
-
-	getVehicleCost(arg: Vehicle): number {
-		let cost = this.vehicles.find( (value:VehicleCost) =>
-			value.enable && value.vehicle.id.uuid === arg.id.uuid
-		)
-		return cost && cost.cost || 0
-	}
-
-	refunds: Refund[]
-
-	constructor(value: any = {}) {
-		this.enable = value.enable === undefined ? true : Boolean(value.enable)
-
-		this.startDate = newDate(value.startDate || null)
-		this.endDate = value.endDate && newDate(value.endDate) || (() => {
-			let date = newDate(this.startDate)
-			date.setFullYear(1 + date.getFullYear())
-			return date
-		})()
-
-		if (value.costs && value.costs instanceof Array)
-			this.costs.forEach( (costItem: Cost) => {
-				let costData = value.costs.find( costData => costData.ageGroup === costItem.ageGroup.id )
-
-				if (!costData)
-					return
-
-				costItem.cost = Math.max( 0, Number.parseFloat(costData.cost || 0) || 0 )
-			} )
-
-		this.vehicles = value.vehicles instanceof Array ?
-			value.vehicles.reduce(
-				( prev: VehicleCost[] , value: any) =>
-					value ? prev.concat( new VehicleCost(value)) : prev,
-				[]
-			) : []
-
-		this.refunds = value.refund instanceof Array ?
-			value.refund.reduce(
-				( prev: Refund[] , value:any ) => prev.concat(new Refund(value)),
-				[]
-			) : []
-	}
-
-	toObject(): {} {
-		return {
-			enable: this.enable,
-			startDate: this.startDate,
-			endDate: this.endDate,
-			costs: this.costs.reduce( (prev: {}[], value: Cost) => prev.concat(value.toObject()), []),
-			vehicles: this.vehicles.reduce( (prev: {}[], value: VehicleCost) => prev.concat(value.toObject()), []),
-			refunds: this.refunds.reduce( (prev: {}[], value: Refund) => prev.concat(value.toObject()), [])
-		}
+		this.id = String(value.id || '')
+		this.title = new MLString(value.title)
+		this.icon = String(value.icon || '')
+		this.letter = String(value.letter || '')
 	}
 }
 
 export class Trip extends Model {
 	static __api: string = 'objects/trip'
-	static __primaryFields = Model.__primaryFields.concat(['package', 'pointA', 'pointB'])
 
-	title: MLString
 	description: MLString
 
-	package: boolean
-
-	content: MLString
+	type: TripType
 
 	pointA: Point
 	pointB: Point
 
-	hotels: Hotel[] = []
-	images: File[] = []
-
 	prices: Price[] = []
 
-	get fullTitle():string {
-		return `${this.title['en']} (${this.pointA && this.pointA.title['en'] || ''} → ${this.pointB && this.pointB.title['en'] || ''})`
-	}
-
-	get firstImageUrl(): string {
-		if (this.images.length <= 0)
-			return 'none'
-
-		return `url(${this.images[0].link})`
-	}
-
-	get firstHotel(): Hotel {
-		if (this.hotels.length <= 0)
-			return null
-
-		return this.hotels[0]
+	get title(): string {
+		return (this.pointA && this.pointA.title['en'] || 'A') + ' ' + (this.type.letter) + ' ' + (this.pointB && this.pointB.title['en'] || 'B') + ' (' + this.description['en'] + ')'
 	}
 
 	constructor(value: any = {}) {
 		super(value)
 
-		this.title = new MLString(value.title)
 		this.description = new MLString(value.description)
 
-		this.package = !!value.package
-
-		this.content = new MLString(value.content)
+		this.type = TripType.getTripType(value.type || null)
 
 		this.pointA = value.pointA ? ( value.pointA instanceof Point ? value.pointA : new Point(value.pointA) ) : null
 		this.pointB = value.pointB ? ( value.pointB instanceof Point ? value.pointB : new Point(value.pointB) ) : null
-
-		this.hotels = value.hotels instanceof Array ?
-			value.hotels.reduce(
-				( prev: Hotel[] , value:any ) =>
-					value ? prev.concat(value instanceof Hotel ? value : new Hotel(value) ) : prev,
-				[]
-			) : []
-
-		this.images = value.images instanceof Array ?
-			value.images.reduce(
-				( prev: File[] , value:any ) =>
-					value ? prev.concat(value instanceof File ? value : new File(value)) : prev,
-				[]
-			) : []
 
 		this.prices = value.prices instanceof Array ?
 			value.prices.reduce(
@@ -221,35 +87,13 @@ export class Trip extends Model {
 		) || null
 	}
 
-	get basePrice(): number {
-		let sum = 0
-
-		let hotel = this.firstHotel
-
-		if (hotel)
-			sum += hotel.minimalCost
-
-		let price = this.getPrice()
-
-		if (price && price.costs.length > 0) {
-			let cost = price.costs.find( (value:Cost) => value.ageGroup.id === 'adults' )
-			sum += (cost ? cost.cost : price.costs[0].cost)
-		}
-
-		return sum
-	}
-
 	toObject(): {} {
 		return Object.assign(super.toObject(), {
-			title: this.title,
 			description: this.description,
-			package: this.package,
-			content: this.content,
+			type: this.type.id,
 			pointA: this.pointA.toObject(),
 			pointB: this.pointB.toObject(),
-			hotels: this.hotels.reduce( (prev: {}[], value: Hotel) => prev.concat(value.toObject()), []),
-			prices: this.prices.reduce( (prev: {}[], value: Price) => prev.concat(value.toObject()), []),
-			images: this.images.reduce( (prev: {}[], value: File) => prev.concat(value.toObject()), [])
+			prices: this.prices.reduce( (prev: {}[], value: Price) => prev.concat(value.toObject()), [])
 		})
 	}
 }

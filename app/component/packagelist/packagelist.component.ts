@@ -5,8 +5,9 @@ import { APIService } from '../../service/api.service'
 import { MLService } from '../../service/ml.service'
 
 import { str2Date, SearchData, newDate, MLString } from '../../../model/common'
-import { Order, Shift, PaymentType } from '../../../model/order'
-import { Trip, Price, VehicleCost } from '../../../model/trip'
+import { Order, PaymentType } from '../../../model/order'
+import { Trip } from '../../../model/trip'
+import { Price, VehicleCost } from '../../../model/price'
 import { Point } from '../../../model/point'
 import { Human, AgeGroup } from '../../../model/human'
 import { Hotel, Room } from '../../../model/hotel'
@@ -27,7 +28,7 @@ export class PackageListComponent implements OnInit {
 
 	private getTrips(pointA: Point = null, pointB: Point = null): Trip[] {
 		return this.trips.filter( (trip: Trip) =>
-			trip.package === true &&
+			// trip.package === true &&
 			trip.pointA && (!pointA || trip.pointA.id.uuid === pointA.id.uuid) &&
 			trip.pointB && (!pointB || trip.pointB.id.uuid === pointB.id.uuid)
 		)
@@ -88,7 +89,8 @@ export class PackageListComponent implements OnInit {
 	)
 
 	get tripList(): Point[] {
-		return this.getTrips(this.pointA, this.pointB)
+		return []
+		// return this.getTrips(this.pointA, this.pointB)
 	}
 
 	get valid(): boolean {
@@ -129,7 +131,7 @@ export class PackageListComponent implements OnInit {
 					&& this.points.find(value => value.id.uuid === trip.pointB.id.uuid)
 					|| null
 				return trip
-			} ).filter( (trip:Trip) => trip.pointA && trip.pointB && trip.package)
+			} ).filter( (trip:Trip) => trip.pointA && trip.pointB /* && trip.package */)
 
 			if (searchData) {
 				this.anyDate = !!searchData.anyDate
@@ -174,19 +176,19 @@ export class PackageListComponent implements OnInit {
 	select(trip: Trip): void {
 		let order = new Order()
 
-		order.package = true
+		// order.package = true
 
-		order.shifts.push(new Shift({
-			date: this.departureDate,
-			trip: trip,
-			price: trip.getPrice(this.departureDate)
-		}))
+		// order.shifts.push(new Shift({
+		// 	date: this.departureDate,
+		// 	trip: trip,
+		// 	price: trip.getPrice(this.departureDate)
+		// }))
 
-		order.hotel = trip.firstHotel
-		order.room = trip.firstHotel.rooms.reduce(
-			(prev:Room, value:Room) => prev === null || value.cost <= prev.cost ? value : prev,
-			null
-		)
+		// order.hotel = trip.firstHotel
+		// order.room = trip.firstHotel.rooms.reduce(
+		// 	(prev:Room, value:Room) => prev === null || value.cost <= prev.cost ? value : prev,
+		// 	null
+		// )
 
 		order.people = this.peopleCount.reduce(
 			(prev: Human[], value:PeopleCount) => {

@@ -1,0 +1,36 @@
+<div class="uk-panel uk-panel-box uk-width-1-1">
+	<h3 class="uk-panel-title">Trip data</h3>
+	<div class="uk-grid">
+		<div class="uk-width-1-6">
+			<label class="uk-form-label uk-width-1-1">Departure date</label>
+			<div class="uk-form-controls">
+				<input #departureDateNode class="uk-width-1-1" type="text" [value]="item.departureDate | date: 'dd.MM.yyyy'">
+			</div>
+		</div>
+		<div class="uk-width-1-6">
+			<label class="uk-form-label uk-width-1-1">Return date</label>
+			<div class="uk-form-controls">
+				<input #returnDateNode class="uk-width-1-1" type="text" [value]="item.returnDate | date: 'dd.MM.yyyy'">
+			</div>
+		</div>
+		<div class="uk-width-3-6">
+			<label class="uk-form-label uk-width-1-1">Trip</label>
+			<select [(ngModel)]="item.trip" (change)="changeTrip()">
+				<option [ngValue]="null">None</option>
+				<option *ngIf="item.trip" [ngValue]="item.trip">{{ item.trip.title | ml:'en' }} (Current)</option>
+				<option *ngFor="let trip of trips" [ngValue]="trip">{{ trip.title | ml:'en' }}</option>
+			</select>
+		</div>
+		<div class="uk-width-1-6">
+			<label class="uk-form-label uk-width-1-1">Vehicle</label>
+			<select [(ngModel)]="item.vehicle">
+				<option [ngValue]="null">None</option>
+				<option *ngIf="item.vehicle" [ngValue]="item.vehicle">{{ item.vehicle.title | ml:'en' }} (Current)</option>
+				<option *ngFor="let vehicle of vehicles" [ngValue]="vehicle">{{ vehicle.title | ml:'en' }}</option>
+			</select>
+		</div>
+		<div class="uk-width-1-1 admin-hidde-cild" *ngIf="item.price">
+			<price [(price)]="item.price"></price>
+		</div>
+	</div>
+</div>

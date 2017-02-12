@@ -3,7 +3,7 @@ import { Router } from '@angular/router'
 
 import { APIService } from '../../service/api.service'
 
-import { Order } from '../../../../model/order'
+import { Order, OrderType } from '../../../../model/order'
 
 @Component({
 	moduleId: module.id,
@@ -20,12 +20,12 @@ export class OrderListComponent implements OnInit {
 		this.apiService.get<Order>(Order).then( (response: Order[]) => this.items = response)
 	}
 
-	add(): void {
-		this.router.navigate(['/orders', 'new'])
+	add(type: string = 'trip'): void {
+		this.router.navigate(['/orders', type, 'new'])
 	}
 
 	select(item: Order): void {
-		this.router.navigate(['/orders', item.id.uuid])
+		this.router.navigate(['/orders', item.type.id, item.id.uuid])
 	}
 
 	enable(item: Order): void {
@@ -34,7 +34,7 @@ export class OrderListComponent implements OnInit {
 	}
 
 	delete(item: Order): void {
-		UIkit.modal.confirm(`Order &laquo;&raquo; can be deleted.<br>Are you sure?`, () =>
+		UIkit.modal.confirm(`Order can be deleted.<br>Are you sure?`, () =>
 			this.apiService.delete<Order>(Order, item).then(() =>
 				this.items = this.items.filter(value => value !== item)
 			)

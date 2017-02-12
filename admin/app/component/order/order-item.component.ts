@@ -6,9 +6,10 @@ import { APIService } from '../../service/api.service'
 import { FileService } from '../../service/file.service'
 
 import { MLString } from '../../../../model/common'
-import { Order, Shift, OrderStatus, PaymentType } from '../../../../model/order'
+import { Order, OrderStatus, PaymentType, OrderType } from '../../../../model/order'
+import { TripOrder } from '../../../../model/trip-order'
+import { PackageOrder } from '../../../../model/package-order'
 import { Human } from '../../../../model/human'
-import { Hotel } from '../../../../model/hotel'
 
 @Component({
 	moduleId: module.id,
@@ -22,9 +23,9 @@ export class OrderItemComponent implements OnInit {
 	statusList = OrderStatus.List
 	paymentTypeList = PaymentType.List
 
-	hotels: Hotel[] = []
+	types: OrderType[] = OrderType.List
 
-	item: Order = new Order()
+	item: TripOrder | PackageOrder | Order = new Order()
 
 	submitted: boolean = false
 
@@ -43,15 +44,46 @@ export class OrderItemComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+		let type: string = this.route.snapshot.params['type'] || null
 		let id: string = this.route.snapshot.params['id'] || null
-		if (!id)
+
+		if (!type || !id)
 			return
 
-		if (id.toLowerCase() !== 'new')
-			this.apiService.get<Order>(Order, id)
-				.then((response: Order) => this.item = response)
-				.catch(error => this.item = null)
-		else
+		if (id.toLowerCase() !== 'new') {
+			switch (type) {
+				case 'trip':
+					this.apiService.get<TripOrder>(TripOrder, id)
+						.then((response: TripOrder) => {
+							this.item = response
+							this.item.type = OrderType.getOrderType('trip')
+						})
+						.catch(error => this.item = null)
+					break
+
+				case 'package':
+					this.apiService.get<PackageOrder>(PackageOrder, id)
+						.then((response: PackageOrder) => {
+							this.item = response
+							this.item.type = OrderType.getOrderType('package')
+						})
+						.catch(error => this.item = null)
+					break
+			}
+		}
+		else {
+			switch (type) {
+				case 'trip':
+					this.item = new TripOrder()
+					this.item.type = OrderType.getOrderType('trip')
+					break
+
+				case 'package':
+					this.item = new PackageOrder()
+					this.item.type = OrderType.getOrderType('package')
+					break
+			}
+
 			this.apiService.config().then((response: {
 				processingFee: number,
 				exchangeRate: number,
@@ -61,8 +93,7 @@ export class OrderItemComponent implements OnInit {
 				this.item.exchangeRate = response.exchangeRate
 				this.item.egyptianMarkUp = response.egyptianMarkUp
 			})
-
-		this.apiService.get<Hotel>(Hotel).then( (response: Hotel[]) => this.hotels = response )
+		}
 	}
 
 	back(): void {
@@ -77,22 +108,18 @@ export class OrderItemComponent implements OnInit {
 		this.item.people = this.item.people.filter(value => value !== human)
 	}
 
-	hotelChange():void {
-		if (this.item.hotel)
-			this.apiService.get<Hotel>(Hotel, this.item.hotel)
-				.then((response: Hotel) => {
-					this.item.hotel = response
-					this.item.room = null
-				})
-				.catch(error => this.item.hotel = null)
-	}
+	setType(type: OrderType): void {
+		this.item.type = type
 
-	addShift(): void {
-		this.item.shifts.push(new Shift())
-	}
+		switch (this.item.type) {
+			case OrderType.getOrderType('trip'):
+				this.item = new TripOrder(this.item.toObject())
+				break
 
-	deleteShift(shift: Shift): void {
-		this.item.shifts = this.item.shifts.filter(value => value !== shift)
+			case OrderType.getOrderType('package'):
+				this.item = new PackageOrder(this.item.toObject())
+				break
+		}
 	}
 
 	submit(): void {
@@ -100,7 +127,15 @@ export class OrderItemComponent implements OnInit {
 			return
 		this.submitted = true
 
-		this.apiService.update<Order>(Order, this.item).then((response: Order) => this.back())
+		switch (this.item.type) {
+			case OrderType.getOrderType('trip'):
+				this.apiService.update<TripOrder>(TripOrder, this.item).then((response: TripOrder) => this.back())
+				break
+
+			case OrderType.getOrderType('package'):
+				this.apiService.update<PackageOrder>(PackageOrder, this.item).then((response: PackageOrder) => this.back())
+				break
+		}
 	}
 }
 

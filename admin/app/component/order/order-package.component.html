@@ -1,0 +1,68 @@
+<div class="uk-panel uk-panel-box uk-width-1-1">
+	<h3 class="uk-panel-title">Package data</h3>
+	<div class="uk-grid">
+		<div class="uk-width-1-6">
+			<label class="uk-form-label uk-width-1-1">Departure date</label>
+			<div class="uk-form-controls">
+				<input #departureDateNode class="uk-width-1-1" type="text" [value]="item.departureDate | date: 'dd.MM.yyyy'">
+			</div>
+		</div>
+		<div class="uk-width-1-6">
+			<label class="uk-form-label uk-width-1-1">Return date</label>
+			<div class="uk-form-controls">
+				<input #returnDateNode class="uk-width-1-1" type="text" [value]="item.returnDate | date: 'dd.MM.yyyy'">
+			</div>
+		</div>
+		<div class="uk-width-4-6">
+			<label class="uk-form-label uk-width-1-1">Package</label>
+			<select [(ngModel)]="item.trip" (change)="changeTrip()">
+				<option [ngValue]="null">None</option>
+				<option *ngIf="item.trip" [ngValue]="item.trip">{{ item.trip.title | ml:'en' }} (Current)</option>
+				<option *ngFor="let trip of trips" [ngValue]="trip">{{ trip.title | ml:'en' }}</option>
+			</select>
+		</div>
+		<div class="uk-width-1-2 uk-margin-top">
+			<b>Hotel:</b>
+			<select name="type" [(ngModel)]="item.hotel" (change)="hotelChange();">
+				<option [ngValue]="null">None</option>
+				<option *ngIf="item.hotel" [ngValue]="item.hotel">{{ item.hotel.title | ml:'en' }} (Current)</option>
+				<option *ngFor="let hotelItem of hotels" [ngValue]="hotelItem">{{ hotelItem.title | ml:'en' }}</option>
+			</select>
+			<label class="uk-form-label uk-width-1-1 uk-margin-top" *ngIf="item.hotel">Options:</label>
+			<ul class="uk-width-1-1 uk-list" *ngIf="item.hotel">
+				<li *ngFor="let option of item.hotel.options | listOrderBy : ['title']">
+					<input type="checkbox" [(ngModel)]="option.enable">
+					{{ option.title | ml:'en' }}
+					<input type="number" min="0" [(ngModel)]="option.cost">
+				</li>
+			</ul>
+		</div>
+		<div class="uk-width-1-2 uk-margin-top" *ngIf="item.hotel">
+			<b>Room:</b>
+			<select name="type" [(ngModel)]="item.room">
+				<option [ngValue]="null">None</option>
+				<option *ngIf="item.room" [ngValue]="item.room">{{ item.room.title | ml:'en' }} (Current)</option>
+				<option *ngFor="let roomItem of item.hotel.rooms" [ngValue]="roomItem">{{ roomItem.title | ml:'en' }}</option>
+			</select>
+			<div class="uk-width-1-1 uk-margin-top" *ngIf="item.room">
+				<b>Size:</b>
+				<span>{{item.room.size}}</span>
+				<b class="uk-margin-left">Beds:</b>
+				<span>{{item.room.beds}}</span>
+				<b class="uk-margin-left">Cost:</b>
+				<input class="" type="number" min="0" [(ngModel)]="item.room.cost">
+				<label class="uk-form-label uk-width-1-1 uk-margin-top">Options:</label>
+				<ul class="uk-width-1-1 uk-list" *ngIf="item.room">
+					<li *ngFor="let option of item.room.options | listOrderBy : ['title']">
+						<input type="checkbox" [(ngModel)]="option.enable">
+						{{ option.title | ml:'en' }}
+						<input type="number" min="0" [(ngModel)]="option.cost">
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="uk-width-1-1 admin-hidde-cild" *ngIf="item.price">
+			<price [(price)]="item.price"></price>
+		</div>
+	</div>
+</div>

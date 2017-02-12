@@ -102,7 +102,7 @@ $$;
 CREATE TRIGGER sessions_delete_old_rows_trigger AFTER INSERT OR UPDATE ON sessions FOR EACH STATEMENT EXECUTE PROCEDURE sessions_delete_old_rows();
 
 -- Models
-CREATE TYPE models AS ENUM ('hotel', 'human', 'order', 'point', 'trip', 'vehicle', 'static');
+CREATE TYPE models AS ENUM ('hotel', 'human', 'order', 'point', 'trip', 'package', 'vehicle', 'static');
 
 --- Order HRID
 CREATE SEQUENCE order_hrid START 1;

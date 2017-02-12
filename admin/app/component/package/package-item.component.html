@@ -1,0 +1,140 @@
+<div class="uk-grid">
+	<div class="uk-width-3-4 uk-margin-bottom">
+		<h2>Package <span *ngIf="item">&laquo;{{ item.title | ml:'en' }}&raquo;</span></h2>
+	</div>
+	<div class="uk-width-1-4 uk-margin-bottom">
+		<button class="uk-button uk-button-primary uk-align-right" (click)="back()"><i class="uk-icon-arrow-left"></i>&emsp;Back</button>
+	</div>
+	<div class="uk-width-1-1 uk-form uk-form-stacked uk-grid">
+		<div class="uk-width-1-1">
+			<label class="uk-button admin-button" [class.uk-active]="item.enable">
+				<span>Enable</span>
+				<input class="uk-hidden" type="checkbox" [(ngModel)]="item.enable">
+			</label>
+		</div>
+
+		<div class="uk-width-7-10 uk-margin-top">
+			<div class="uk-width-1-1 uk-margin-top">
+				<label class="uk-form-label uk-width-1-1">Title</label>
+				<div class="uk-width-1-1">
+					<mlinput [(value)]="item.title"></mlinput>
+				</div>
+			</div>
+			<div class="uk-width-1-1 uk-margin-top">
+				<label class="uk-form-label uk-width-1-1">Short description</label>
+				<div class="uk-width-1-1">
+					<mlinput [(value)]="item.description"></mlinput>
+				</div>
+			</div>
+		</div>
+		<div class="uk-width-3-10 uk-margin-top">
+			<label class="uk-form-label uk-width-1-1">Image<i class="uk-icon-times uk-align-right admin-cursor-pointer" (click)="item.image = null"></i></label>
+			<div class="uk-form-file">
+				<img class="uk-thumbnail admin-cursor-pointer" [src]="item.image && item.image.link || '/placeholder_200x100.svg'">
+				<input type="file" accept="image/*" (change)="setImage($event.target)">
+			</div>
+		</div>
+
+		<div class="uk-width-4-10">
+			<label class="uk-width-1-1 uk-margin-top uk-form-label">Start Point</label>
+			<div class="uk-width-1-1 uk-form-controls">
+				<select class="uk-width-1-1" [(ngModel)]="item.pointA">
+					<option *ngFor="let point of points | listOrderBy : ['title']" [ngValue]="point">{{ point.title | ml:'en' }}</option>
+				</select>
+			</div>
+		</div>
+		<div class="uk-width-2-10">
+			<label class="uk-width-1-1 uk-margin-top uk-form-label">&emsp;</label>
+			<div class="uk-width-1-1 uk-form-controls uk-text-center">
+				<i class="uk-icon-medium uk-icon-arrow-right"></i>
+			</div>
+		</div>
+		<div class="uk-width-4-10">
+			<label class="uk-width-1-1 uk-margin-top uk-form-label">End Point</label>
+			<div class="uk-width-1-1 uk-form-controls">
+				<select class="uk-width-1-1" [(ngModel)]="item.pointB">
+					<option *ngFor="let point of points | listOrderBy : ['title']" [ngValue]="point">{{ point.title | ml:'en' }}</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="uk-width-1-1 uk-margin-top">
+			<h3 class="tm-article-subtitle">Package description</h3>
+			<mleditor [(value)]="item.content"></mleditor>
+		</div>
+
+		<div class="uk-width-1-1 uk-grid uk-margin-top">
+			<div class="uk-width-8-10">
+				<h3 class="tm-article-subtitle">Hotels</h3>
+			</div>
+			<div class="uk-width-2-10">
+				<a class="uk-align-right admin-cursor-pointer" (click)="addHotel(); $event.stopPropagation()">
+					<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
+					<u>Add hotel</u>
+				</a>
+			</div>
+		</div>
+		<div class="uk-width-1-1 uk-margin-top">
+			<div  *ngFor="let hotel of item.hotels; let i = index;" class="uk-panel uk-panel-box uk-width-1-1">
+				<div class="uk-panel-badge uk-badge uk-badge-danger admin-cursor-pointer" (click)="deleteHotel(hotel); $event.stopPropagation()"><i class="uk-icon-trash"></i></div>
+				<div class="uk-panel-title">
+					<select name="type" [(ngModel)]="item.hotels[i]" (change)="hotelChange(i);">
+						<option [ngValue]="null">None</option>
+						<option *ngIf="item.hotels[i]" [ngValue]="item.hotels[i]">{{ item.hotels[i].title | ml:'en' }} (Current)</option>
+						<option *ngFor="let hotelItem of hotels" [ngValue]="hotelItem">{{ hotelItem.title | ml:'en' }}</option>
+					</select>
+				</div>
+				<div class="uk-grid" *ngIf="hotel !== null">
+					<div class="uk-width-1-1">
+						<h4 class="tm-article-subtitle">Rooms</h4>
+					</div>
+					<div class="uk-width-1-1 uk-margin-left">
+						<ul class="uk-width-1-1 uk-list">
+							<li *ngFor="let room of hotel.rooms | listOrderBy : ['title']">
+								<b>{{ room.title | ml:'en' }}, {{ room.size }} bed, {{ room.cost | currency:'USD':true:'1.2-2' }}</b>
+								<ul class="uk-width-1-1 uk-list" *ngIf="room.options.length > 0">
+									<li *ngFor="let option of room.options | listOrderBy : ['title']">{{ option.title | ml:'en' }}, {{ option.cost | currency:'USD':true:'1.2-2' }}</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+					<div class="uk-width-1-1 uk-margin-top" *ngIf="hotel.options.length > 0">
+						<h4 class="tm-article-subtitle">Options</h4>
+					</div>
+					<div class="uk-width-1-1 uk-margin-left" *ngIf="hotel.options.length > 0">
+						<ul class="uk-width-1-1 uk-list">
+							<li *ngFor="let option of hotel.options | listOrderBy : ['title']">{{ option.title | ml:'en' }}, {{ option.cost | currency:'USD':true:'1.2-2' }}</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="uk-width-1-1 uk-grid uk-margin-top">
+			<div class="uk-width-8-10">
+				<h3 class="tm-article-subtitle">Prices (Two way)</h3>
+			</div>
+			<div class="uk-width-2-10">
+				<a class="uk-align-right admin-cursor-pointer" (click)="addPrice(); $event.stopPropagation()">
+					<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
+					<u>Add price</u>
+				</a>
+			</div>
+		</div>
+		<div class="uk-width-1-1 uk-margin-top">
+			<div  *ngFor="let price of item.prices; let i = index;" class="uk-panel uk-panel-box uk-width-1-1">
+				<div class="uk-panel-badge uk-badge uk-badge-danger admin-cursor-pointer" (click)="deletePrice(price); $event.stopPropagation()"><i class="uk-icon-trash"></i></div>
+				<h3 class="uk-panel-title">Price from {{ price.startDate | date: 'dd.MM.yyyy' }} to {{ price.endDate | date: 'dd.MM.yyyy' }}</h3>
+				<price [(price)]="item.prices[i]"></price>
+			</div>
+		</div>
+
+		<div class="uk-width-1-1 uk-margin-top">
+			<button type="submit" class="uk-button uk-button-success uk-align-right" [disabled]="!valid" (click)="submit()"><i class="uk-icon-floppy-o"></i>&emsp;Submit</button>
+		</div>
+
+		<!-- <div class="uk-width-1-1 uk-margin-top">
+			<p>DEBUG: {{ item.getPrice() | json }}</p>
+		</div> -->
+	</div>
+</div>

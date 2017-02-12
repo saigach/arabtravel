@@ -5,11 +5,12 @@ import { APIService } from '../../service/api.service'
 import { MLService } from '../../service/ml.service'
 
 import { str2Date, SearchData, MLString } from '../../../model/common'
-import { Trip, VehicleCost} from '../../../model/trip'
+import { Trip } from '../../../model/trip'
+import { VehicleCost} from '../../../model/price'
 import { Point } from '../../../model/point'
 import { Vehicle } from '../../../model/vehicle'
 import { Human, AgeGroup } from '../../../model/human'
-import { Order, Shift } from '../../../model/order'
+import { Order } from '../../../model/order'
 
 const lang = document.querySelector('html').getAttribute('lang') || 'en'
 
@@ -40,7 +41,7 @@ export class TripSelectorFormComponent implements OnInit {
 
 	private getTrips(pointA: Point = null, pointB: Point = null, isPackage: boolean = false): Trip[] {
 		return this.trips.filter( (trip: Trip) =>
-			trip.package === isPackage &&
+			// trip.package === isPackage &&
 			(!pointA || trip.pointA.id.uuid === pointA.id.uuid) &&
 			(!pointB || trip.pointB.id.uuid === pointB.id.uuid)
 		)
@@ -215,27 +216,27 @@ export class TripSelectorFormComponent implements OnInit {
 
 		if (this.type !== 'package') {
 			let order = new Order()
-			order.package = false
+			// order.package = false
 
 			let AB = this.getTrips(this.pointA, this.pointB).shift()
 			if (AB) {
-				order.shifts.push(new Shift({
-					date: this.departureDate,
-					trip: AB,
-					price: AB.getPrice(this.departureDate),
-					vehicle: this.vehicle
-				}))
+				// order.shifts.push(new Shift({
+				// 	date: this.departureDate,
+				// 	trip: AB,
+				// 	price: AB.getPrice(this.departureDate),
+				// 	vehicle: this.vehicle
+				// }))
 			}
 
 			if (this.type === 'round') {
 				let BA = this.getTrips(this.pointB, this.pointA).shift()
 				if (BA) {
-					order.shifts.push(new Shift({
-						date: this.returnDate,
-						trip: BA,
-						price: BA.getPrice(this.returnDate),
-						vehicle: this.vehicle
-					}))
+					// order.shifts.push(new Shift({
+					// 	date: this.returnDate,
+					// 	trip: BA,
+					// 	price: BA.getPrice(this.returnDate),
+					// 	vehicle: this.vehicle
+					// }))
 				}
 			}
 

@@ -74,7 +74,6 @@ export class Room {
 
 export class Hotel extends Model {
 	static __api: string = 'objects/hotel'
-	static __primaryFields = Model.__primaryFields.concat(['owner'])
 
 	title: MLString
 	description: MLString
