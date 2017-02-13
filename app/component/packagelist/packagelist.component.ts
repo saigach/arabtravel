@@ -156,7 +156,7 @@ export class PackageListComponent implements OnInit {
 			) : null
 		})
 
-		localStorage.setItem('currentOrder', order.toString())
+		localStorage.setItem('currentPackageOrder', order.toString())
 		window.location.href = `/${lang}/order-package`
 	}
 }

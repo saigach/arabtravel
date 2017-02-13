@@ -50,7 +50,7 @@ export class OrderPackageComponent implements OnInit {
 		let currentOrderObj: {} = null
 
 		try {
-			currentOrderObj = JSON.parse(localStorage.getItem('currentOrder'))
+			currentOrderObj = JSON.parse(localStorage.getItem('currentPackageOrder'))
 		} catch(error) {
 			currentOrderObj = null
 		}
