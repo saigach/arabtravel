@@ -73,9 +73,6 @@
 	<!-- Icons -->
 	<link rel="stylesheet" href="/fonts/arabtravel-icons/css/arabtravel-icons.css" type="text/css">
 
-	<!-- Bootstrap -->
-	<link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css" type="text/css">
-
     <!-- UiKit -->
 	<script src="/node_modules/uikit/dist/js/uikit.min.js"></script>
     <link rel="stylesheet" href="/node_modules/uikit/dist/css/uikit.min.css" type="text/css">
@@ -86,10 +83,12 @@
 	<link rel="stylesheet" href="/node_modules/uikit/dist/css/components/form-advanced.almost-flat.min.css" type="text/css">
 	<link rel="stylesheet" href="/node_modules/uikit/dist/css/components/form-password.almost-flat.min.css" type="text/css">
 	<link rel="stylesheet" href="/node_modules/uikit/dist/css/components/form-select.almost-flat.min.css" type="text/css">
+	<link rel="stylesheet" href="/node_modules/uikit/dist/css/components/slideshow.almost-flat.min.css" type="text/css">
 	<script src="/node_modules/uikit/dist/js/components/form-password.min.js" type="text/javascript"></script>
 	<script src="/node_modules/uikit/dist/js/components/form-select.min.js" type="text/javascript"></script>
 	<script src="/node_modules/uikit/dist/js/core/switcher.min.js" type="text/javascript"></script>
 	<script src="/node_modules/uikit/dist/js/components/sticky.min.js" type="text/javascript"></script>
+	<script src="/node_modules/uikit/dist/js/components/slideshow.min.js" type="text/javascript"></script>
 
 	<script src="/node_modules/uikit/dist/js/components/grid.min.js" type="text/javascript"></script>
 
@@ -126,7 +125,7 @@
             <div class="top-line uk-flex uk-grid">
                 <div class="uk-width-1-2 top-contacts">
 					<div class="uk-flex uk-grid">
-                    	<div class="uk-width-1-2 top-contacts_elem top-contacts_phone"><i class="demo-icon ico_phone"></i>{{=it.ml.phone}}</div>
+                    	<div class="uk-width-1-2 top-contacts_elem top-contacts_phone"><i class="demo-icon ico_phone"></i>{{=it.ml.phone_header}}</div>
                     	<div class="uk-width-1-2 top-contacts_elem top-contacts_email"><a href="mailto:ask@arabtravel.jo"><i class="demo-icon ico_mail"></i>ask@arabtravel.jo</a></div>
 					</div>
 				</div>
@@ -227,7 +226,7 @@
                     <img alt="Bootstrap Image Preview" src="img/logo-footer.png" style="width: 100%" /> {{=it.ml.subtitle}}
 
                     <div class="top-contacts">
-                        <div class="top-contacts_elem top-contacts_phone"><i class="demo-icon ico_phone"></i>(123) 456 78 99 </div>
+                        <div class="top-contacts_elem top-contacts_phone"><i class="demo-icon ico_phone"></i>{{=it.ml.phone_header}}</div>
                         <div class="top-contacts_elem top-contacts_email"><a href="mailto:ask@arabtravel.jo"><i class="demo-icon ico_mail"></i>ask@arabtravel.jo</a></div>
                     </div>
                 </div>

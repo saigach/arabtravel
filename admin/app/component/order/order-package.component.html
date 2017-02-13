@@ -15,10 +15,10 @@
 		</div>
 		<div class="uk-width-4-6">
 			<label class="uk-form-label uk-width-1-1">Package</label>
-			<select [(ngModel)]="item.trip" (change)="changeTrip()">
+			<select [(ngModel)]="item.package" (change)="packageChange()">
 				<option [ngValue]="null">None</option>
-				<option *ngIf="item.trip" [ngValue]="item.trip">{{ item.trip.title | ml:'en' }} (Current)</option>
-				<option *ngFor="let trip of trips" [ngValue]="trip">{{ trip.title | ml:'en' }}</option>
+				<option *ngIf="item.package" [ngValue]="item.package">{{ item.package.title | ml:'en' }} (Current)</option>
+				<option *ngFor="let package of packages" [ngValue]="package">{{ package.title | ml:'en' }}</option>
 			</select>
 		</div>
 		<div class="uk-width-1-2 uk-margin-top">

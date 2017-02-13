@@ -94,21 +94,15 @@
                                     <label for="date_up"><i class="fa fa-chevron-up" aria-hidden="true"></i></label>
                                 </span>
                             </div>
-
-                            <!--div class="sort-line_sort">
-                                <span class="lbl">Distance</span>&nbsp;
-                                <a href="" class="sort_btn sort_down"><i class="fa fa-chevron-down" aria-hidden="true"></i></a>&nbsp;
-                                <a href="" class="sort_btn sort_up"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
-                            </div-->
                         </div>
 
                         <div class="tourist-packages-list">
 
-                            <article class="tourist-package-item" *ngFor="let item of tripList">
+                            <article class="tourist-package-item" *ngFor="let item of packageList">
 
                                 <div class="row">
 
-                                    <div class="col-md-3 tourist-package-item_image" [style.background-image]="item.firstImageUrl">
+                                    <div class="col-md-3 tourist-package-item_image" [style.background-image]="'url(' + item.image.link + ')' ">
 
                                     </div>
 
@@ -152,8 +146,9 @@
                                     </div>
 
                                 </div>
-
+								 <!-- <div> DEBUG: {{ item.image | json }} </div> -->
                             </article>
+
 
                            <!--  <nav aria-label="Page navigation">
                               <ul class="pagination">

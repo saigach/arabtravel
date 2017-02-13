@@ -14,7 +14,6 @@
 				<tr>
 					<th>Enable</th>
 					<th>Title</th>
-					<th>Shift</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -25,7 +24,6 @@
 						<i class="uk-icon-check-square-o" [class.uk-hidden]="!item.enable"></i>
 					</td>
 					<td>{{ item.title | ml:'en' }}</td>
-					<td>{{ item.pointA && item.pointA.title | ml:'en' }}&nbsp;<i [class]="item.type.icon"></i>&nbsp;{{ item.pointB && item.pointB.title | ml:'en' }}</td>
 					<td (click)="delete(item); $event.stopPropagation()"><i class="uk-icon-trash-o"></i></td>
 				</tr>
 			</tbody>

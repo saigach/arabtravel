@@ -225,6 +225,9 @@ export class Order extends Model {
 
 	date: Date
 
+	departureDate: Date
+	returnDate: Date
+
 	people: Human[]
 
 	paymentType: PaymentType
@@ -249,6 +252,9 @@ export class Order extends Model {
 			this.owner = new User(value.owner)
 
 		this.date = value.date ? new Date(value.date) : new Date()
+
+		this.departureDate = newDate(value.departureDate) || newDate()
+		this.returnDate = newDate(value.returnDate) || newDate()
 
 		if (Number.isNaN( this.date.getTime() ))
 			this.date = new Date()
@@ -278,6 +284,8 @@ export class Order extends Model {
 			description: this.description,
 			owner: this.owner && this.owner.id.uuid || null,
 			date: this.date,
+			departureDate: this.departureDate,
+			returnDate: this.returnDate,
 			people: this.people.reduce( (prev: {}[], value: Human) => prev.concat(value.toObject()), []),
 			paymentType: this.paymentType.id,
 			card: this.card.toObject(),

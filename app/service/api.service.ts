@@ -3,7 +3,8 @@ import { Http, Headers, Response, RequestOptions } from '@angular/http'
 import 'rxjs/add/operator/toPromise'
 
 import { UUID, Model } from '../../model/common'
-import { Order } from '../../model/order'
+import { TripOrder } from '../../model/trip-order'
+import { PackageOrder } from '../../model/package-order'
 import { Human } from '../../model/human'
 import { User } from '../../model/user'
 
@@ -68,7 +69,7 @@ export class APIService {
 						.catch(APIService.handleError)
 	}
 
-	order(order: Order, newUser: Human = null): Promise<{}> {
+	order(order: TripOrder | PackageOrder, newUser: Human = null): Promise<{}> {
 		let data = {
 			order: order.toObject(),
 			human: newUser ? {

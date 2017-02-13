@@ -7,7 +7,7 @@
                 <a href="/" class="btn btn-primary btn-ghost btn-left">{{ ml.newSearch | ml }}</a>
                 <p>{{ ml.ticketReservationDescr | ml }}</p>
 
-                <!-- <p> DEBUG: {{ primaryContact | json }}</p> -->
+                <!-- <p> DEBUG: {{ item | json }}</p> -->
 
                 <div class="order-form" id="order-form">
 
@@ -143,28 +143,32 @@
                         {{ ml.orderDetails | ml }}
                     </header>
 
-                    <div *ngFor="let shift of item.shifts" class="order-trip_container">
-                        <div class="order-trip order-trip-outward">
-                            <i class="ico ico_boat"></i>
-                            <b>{{ shift.trip.pointA.title | ml }} &rarr; {{ shift.trip.pointB.title | ml }}</b> valid <b>{{ shift.date | date: 'dd.MM.yyyy'}}</b>
-                        </div>
+					<div class="order-trip_container">
+						<div class="order-trip order-trip-outward">
+							 <i class="ico ico_boat"></i>
+							  <b>{{ item.trip.pointA.title | ml }} &rarr; {{ item.trip.pointB.title | ml }}</b> valid <b>{{ item.departureDate | date: 'dd.MM.yyyy'}}</b>
+						</div>
+						<div class="order-trip order-trip-outward" *ngIf="item.trip.type.id === 'twoway'">
+							 <i class="ico ico_boat"></i>
+							  <b>{{ item.trip.pointB.title | ml }} &rarr; {{ item.trip.pointA.title | ml }}</b> valid <b>{{ item.returnDate | date: 'dd.MM.yyyy'}}</b>
+						</div>
 
-                        <div *ngIf="shift.price" class="order-trip_details">
-							<div class="order-trip_detail" *ngFor="let peopleCount of item.getPeopleCounts(shift.date)">
+						<div *ngIf="item.price" class="order-trip_details">
+							<div class="order-trip_detail" *ngFor="let peopleCount of item.peopleCount">
 								<div class="lbl">{{ peopleCount.ageGroup.title | ml }}</div>
-								<div class="val">{{ peopleCount.count }}&nbsp;x&nbsp;{{ (shift.price && shift.price.getCost(peopleCount.ageGroup) || 0) | currency:exchangeRate | number:'1.2-2' }}{{currency}}</div>
+								<div class="val">{{ peopleCount.count }}&nbsp;x&nbsp;{{ (item.price.getCost(peopleCount.ageGroup) || 0) | currency:exchangeRate | number:'1.2-2' }}{{currency}}</div>
 							</div>
-							<div class="order-trip_detail" *ngIf="shift.vehicle">
-								<div class="lbl">{{ shift.vehicle.title | ml }}</div>
-								<div class="val">1&nbsp;x&nbsp;{{ (shift.price && shift.price.getVehicleCost(shift.vehicle)) | currency:exchangeRate | number:'1.2-2' }}{{currency}}</div>
+							<div class="order-trip_detail" *ngIf="item.vehicle">
+								<div class="lbl">{{ item.vehicle.title | ml }}</div>
+								<div class="val">1&nbsp;x&nbsp;{{ (item.price.getVehicleCost(item.vehicle)) | currency:exchangeRate | number:'1.2-2' }}{{currency}}</div>
 							</div>
                         </div>
-                    </div>
+					</div>
 
                     <div class="order-details_summary">
                         <div class="order-details_summary_line">
                             <div class="lbl">{{ ml.ticketsPrice | ml }}</div>
-                            <div class="val">{{ item.fullCost | currency:exchangeRate | number:'1.2-2' }} <span class="currency">{{currency}}</span></div>
+                            <div class="val">{{ item.cost | currency:exchangeRate | number:'1.2-2' }} <span class="currency">{{currency}}</span></div>
                         </div>
                     </div>
 
@@ -175,19 +179,6 @@
                         </div>
                     </div>
 
-                     <div  class="order-trip_container" *ngIf="item.hotel">
-						<div class="order-trip order-trip-outward">
-							<i class="ico ico_hotel"></i>
-							<b>{{ item.hotel.title | ml }}</b>
-						</div>
-                    	<div class="order-trip_details" *ngIf="item.room">
-                    		<div class="order-trip_detail">
-                    			<div class="lbl">{{ item.room.title | ml }}</div>
-                    			<div class="val">{{ item.duration }}&nbsp;x&nbsp;{{ item.room.cost | currency:exchangeRate | number:'1.2-2' }}{{currency}}</div>
-                    		</div>
-                    	</div>
-                    </div>
-
                     <footer class="widget_footer">
                         <div class="order-details_total">
                             <div class="lbl">{{ ml.total | ml }}</div>
@@ -195,7 +186,7 @@
                         </div>
                         <div class="order-details_total" *ngIf="currency === '$'">
                             <div class="lbl">({{ ml.approx | ml }}:</div>
-                            <div class="val">{{ item.totalCost | number:'1.2-2' }} jod)</div>
+                            <div class="val">{{ item.totalCost | number:'1.2-2' }} jod</div>
                         </div>
                     </footer>
                 </aside>

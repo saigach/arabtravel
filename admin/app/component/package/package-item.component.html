@@ -17,13 +17,13 @@
 			<div class="uk-width-1-1 uk-margin-top">
 				<label class="uk-form-label uk-width-1-1">Title</label>
 				<div class="uk-width-1-1">
-					<mlinput [(value)]="item.title"></mlinput>
+					<mlinput [(value)]="item.title" [size]="'medium'"></mlinput>
 				</div>
 			</div>
 			<div class="uk-width-1-1 uk-margin-top">
 				<label class="uk-form-label uk-width-1-1">Short description</label>
 				<div class="uk-width-1-1">
-					<mlinput [(value)]="item.description"></mlinput>
+					<mlinput [(value)]="item.description" [size]="'medium'"></mlinput>
 				</div>
 			</div>
 		</div>
@@ -125,7 +125,7 @@
 			<div  *ngFor="let price of item.prices; let i = index;" class="uk-panel uk-panel-box uk-width-1-1">
 				<div class="uk-panel-badge uk-badge uk-badge-danger admin-cursor-pointer" (click)="deletePrice(price); $event.stopPropagation()"><i class="uk-icon-trash"></i></div>
 				<h3 class="uk-panel-title">Price from {{ price.startDate | date: 'dd.MM.yyyy' }} to {{ price.endDate | date: 'dd.MM.yyyy' }}</h3>
-				<price [(price)]="item.prices[i]"></price>
+				<price [(price)]="item.prices[i]" [hideVehicle]="true"></price>
 			</div>
 		</div>
 

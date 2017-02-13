@@ -1,6 +1,6 @@
 import { newDate } from './common'
 
-import { Order, PeopleCount } from './order'
+import { Order, PeopleCount, OrderType } from './order'
 import { Package } from './package'
 import { Price } from './price'
 import { Hotel, Room } from './hotel'
@@ -16,11 +16,12 @@ export class PackageOrder extends Order {
 	hotel: Hotel
 	room: Room
 
-	departureDate: Date
-	returnDate: Date
+	anyDate: boolean
 
 	constructor(value: any = {}) {
 		super(value)
+
+		this.type = OrderType.getOrderType('package')
 
 		this.package = value.package ? ( value.package instanceof Package ? value.package : new Package(value.package) ) : null
 		this.price = value.price ? ( value.price instanceof Price ? value.price : new Price(value.price) ) : null
@@ -28,8 +29,7 @@ export class PackageOrder extends Order {
 		this.hotel = value.hotel ? (value.hotel instanceof Hotel ? value.hotel : new Hotel(value.hotel) ) : null
 		this.room = value.room ? (value.room instanceof Room ? value.room : new Room(value.room) ) : null
 
-		this.departureDate = newDate(value.departureDate) || newDate()
-		this.returnDate = newDate(value.returnDate) || newDate()
+		this.anyDate = !!value.anyDate
 	}
 
 	toObject(): {} {
@@ -38,8 +38,7 @@ export class PackageOrder extends Order {
 			price: this.price && this.price.toObject() || null,
 			hotel: this.hotel && this.hotel.toObject() || null,
 			room: this.hotel && this.room && this.room.toObject() || null,
-			departureDate: this.departureDate,
-			returnDate: this.returnDate
+			anyDate: this.anyDate
 		})
 	}
 

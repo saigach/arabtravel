@@ -1,30 +1,29 @@
 
     <div class="form-area">
 
-        <div class="data-uk-slideshow">
-            <div class="carousel slide uk-slideshow" id="main-page-carousel">
-                <ol class="carousel-indicators">
+        <div>
+            <div class="carousel slide">
+                <!--ol class="carousel-indicators">
                     <li data-uk-slideshow-item="0">
                     </li>
                     <li data-uk-slideshow-item="1">
                     </li>
                     <li data-uk-slideshow-item="2">
                     </li>
-                </ol>
-                <div class="carousel-inner uk-slideshow" data-uk-slideshow="{autoplay:true}">
-                    <div class="item active">
-                        <img alt="Carousel Bootstrap First" src="img/slide1.jpg" />
+                </ol-->
+                <div class="uk-slideshow" id="main-page-carousel">
+                    <div class="item">
+                        <img alt="" src="img/slide1.jpg" />
                     </div>
                     <div class="item">
-                        <img alt="Carousel Bootstrap Second" src="img/slide2.jpg" />
+                        <img alt="" src="img/slide3.jpg" />
                     </div>
-                    <div class="item">
-                        <img alt="Carousel Bootstrap Third" src="img/slide3.jpg" />
+					<div class="item">
+                        <img alt="" src="img/slide2.jpg" />
                     </div>
                 </div>
-                <a href="" class="left carousel-control" data-uk-slideshow-item="previous"></a>
-                <a href="" class="right carousel-control" data-uk-slideshow-item="next"></a>
-                <a class="left carousel-control" href="#main-page-carousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#main-page-carousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+                <!--a href="" class="left carousel-control" data-uk-slideshow-item="previous"></a>
+                <a href="" class="right carousel-control" data-uk-slideshow-item="next"></a-->
             </div>
         </div>
 

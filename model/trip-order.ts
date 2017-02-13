@@ -1,6 +1,6 @@
 import { newDate } from './common'
 
-import { Order, PeopleCount } from './order'
+import { Order, PeopleCount, OrderType } from './order'
 import { Trip, TripType } from './trip'
 import { Price } from './price'
 import { Vehicle } from './vehicle'
@@ -13,28 +13,22 @@ export class TripOrder extends Order {
 
 	vehicle: Vehicle
 
-	departureDate: Date
-	returnDate: Date
-
 	constructor(value: any = {}) {
 		super(value)
+
+		this.type = OrderType.getOrderType('trip')
 
 		this.trip = value.trip ? ( value.trip instanceof Trip ? value.trip : new Trip(value.trip) ) : null
 		this.price = value.price ? ( value.price instanceof Price ? value.price : new Price(value.price) ) : null
 
 		this.vehicle = value.vehicle ? ( value.vehicle instanceof Vehicle ? value.vehicle : new Vehicle(value.vehicle) ) : null
-
-		this.departureDate = newDate(value.departureDate) || newDate()
-		this.returnDate = newDate(value.returnDate) || newDate()
 	}
 
 	toObject(): {} {
 		return Object.assign({}, super.toObject(), {
 			trip: this.trip && this.trip.toObject() || null,
 			price: this.price && this.price.toObject() || null,
-			vehicle: this.vehicle && this.vehicle.toObject() || null,
-			departureDate: this.departureDate,
-			returnDate: this.returnDate
+			vehicle: this.vehicle && this.vehicle.toObject() || null
 		})
 	}
 

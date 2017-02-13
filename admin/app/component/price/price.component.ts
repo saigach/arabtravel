@@ -27,6 +27,20 @@ export class PriceComponent implements OnInit {
 		this.priceChange.emit(this.item)
 	}
 
+	_hideVehicle: boolean = false
+
+	@Output() hideVehicleChange = new EventEmitter()
+
+	@Input()
+	get hideVehicle() {
+		return this._hideVehicle
+	}
+
+	set hideVehicle(value: boolean) {
+		this._hideVehicle = value
+		this.hideVehicleChange.emit(this._hideVehicle)
+	}
+
 	@ViewChild('startDate') startDateRef: ElementRef
 	startDateDatepicker: any = null
 

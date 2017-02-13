@@ -5,17 +5,16 @@ import { APIService } from '../../service/api.service'
 import { MLService } from '../../service/ml.service'
 
 import { str2Date, SearchData, MLString } from '../../../model/common'
-import { Trip } from '../../../model/trip'
-import { VehicleCost} from '../../../model/price'
+import { Trip, TripType } from '../../../model/trip'
+import { Package } from '../../../model/package'
+import { OrderType, PeopleCount } from '../../../model/order'
+import { TripOrder } from '../../../model/trip-order'
 import { Point } from '../../../model/point'
 import { Vehicle } from '../../../model/vehicle'
+import { VehicleCost} from '../../../model/price'
 import { Human, AgeGroup } from '../../../model/human'
-import { Order } from '../../../model/order'
 
 const lang = document.querySelector('html').getAttribute('lang') || 'en'
-
-type TripType = 'oneway' | 'round' | 'package'
-type PeopleCount = { ageGroup: AgeGroup, count: number }
 
 @Component({
 	moduleId: module.id,
@@ -24,26 +23,58 @@ type PeopleCount = { ageGroup: AgeGroup, count: number }
 })
 export class TripSelectorFormComponent implements OnInit {
 
-	private _type: TripType = 'oneway'
+	ml: { [key:string]: MLString } = {}
 
-	get type(): TripType {
-		return this._type
+	orderType: OrderType = OrderType.List[0]
+	tripType: TripType = TripType.List[0]
+
+	checkType(order: string, trip: string = null): boolean {
+		return this.orderType.id === order && (trip === null || this.tripType.id === trip)
 	}
 
-	set type(value: TripType) {
-		this._type = value
+	setType(order: string, trip: string = null): void {
+		this.orderType = OrderType.getOrderType(order)
+		if (trip)
+			this.tripType = TripType.getTripType(trip)
+
 		this.pointA = null
-		this.pointB = null
 	}
 
-	points: Point[] = []
+	packages: Package[] = []
 	trips: Trip[] = []
 
-	private getTrips(pointA: Point = null, pointB: Point = null, isPackage: boolean = false): Trip[] {
-		return this.trips.filter( (trip: Trip) =>
-			// trip.package === isPackage &&
-			(!pointA || trip.pointA.id.uuid === pointA.id.uuid) &&
-			(!pointB || trip.pointB.id.uuid === pointB.id.uuid)
+	@ViewChild('departureDateNode') departureDateRef: ElementRef
+	departureDateDatepicker: any = null
+	departureDate = new Date()
+
+	@ViewChild('returnDateNode') returnDateRef: ElementRef
+	returnDateDatepicker: any = null
+	returnDate = new Date()
+
+	constructor(private router: Router, private apiService: APIService, private mlService: MLService) {}
+
+	ngOnInit(): void {
+
+		this.mlService.get().then( ml => this.ml = ml)
+		this.apiService.get<Trip>(Trip).then( (response: Trip[]) => this.trips = response )
+		this.apiService.get<Package>(Package).then( (response: Package[]) => this.packages = response )
+
+		this.departureDateDatepicker = UIkit.datepicker(this.departureDateRef.nativeElement, {
+			weekstart: 1,
+			format:'DD.MM.YYYY'
+		})
+
+		this.returnDateDatepicker = UIkit.datepicker(this.returnDateRef.nativeElement, {
+			weekstart: 1,
+			format:'DD.MM.YYYY'
+		})
+
+		this.departureDateDatepicker.on('hide.uk.datepicker', event =>
+			this.departureDate = str2Date(event.target.value)
+		)
+
+		this.returnDateDatepicker.on('hide.uk.datepicker', event =>
+			this.returnDate = str2Date(event.target.value)
 		)
 	}
 
@@ -56,7 +87,6 @@ export class TripSelectorFormComponent implements OnInit {
 	set pointA(value: Point) {
 		this._pointA = value
 		this.pointB = null
-		this.vehicle = null
 	}
 
 	private _pointB: Point = null
@@ -70,91 +100,76 @@ export class TripSelectorFormComponent implements OnInit {
 		this.vehicle = null
 	}
 
-	private getPoints(type: 'A' | 'B', otherPoint: Point, isPackage: boolean = false): Point[] {
-		let points = this.getTrips(null, null, isPackage).reduce( (prev: Point[], trip: Trip) => {
-			if (!otherPoint || trip[type === 'A' ? 'pointB' : 'pointA'].id.uuid === otherPoint.id.uuid )
-				return prev.concat(trip[type === 'A' ? 'pointA' : 'pointB'])
-			return prev
-		}, [])
-
-		return points.reduce( (prev: Point[], currentPoint: Point) =>
-			prev.find( (point: Point) =>
-				currentPoint.id.uuid === point.id.uuid
-			) ? prev : prev.concat(currentPoint),
-			[]
-		)
-	}
-
 	get APoints(): Point[] {
-		switch (this.type) {
-			case 'package':
-				return this.getPoints('A', null, true)
-			case 'oneway':
-				return this.getPoints('A', null)
-			case 'round':
-				return this.getPoints('A', null).filter( (pointA:Point) =>
-					this.getTrips(pointA).reduce( (prev: boolean, trip: Trip) =>
-						prev || this.getTrips(trip.pointB, pointA).length > 0,
-						false
-					)
+		switch (this.orderType) {
+			case OrderType.getOrderType('trip'):
+				return this.trips.reduce(
+					(prev: Point[], value: Trip ) =>
+						value.type === this.tripType ? prev.concat(value.pointA) : prev,
+					[]
 				)
-			default:
-				return []
+			case OrderType.getOrderType('package'):
+				return this.packages.reduce(
+					(prev: Point[], value: Package ) =>
+						prev.concat(value.pointA),
+					[]
+				)
+
 		}
 	}
 
 	get BPoints(): Point[] {
-		if (!this.pointA)
-			return []
-
-		switch (this.type) {
-			case 'package':
-				return this.getPoints('B', null, true)
-			case 'oneway':
-				return this.getPoints('B', this.pointA)
-			case 'round':
-				return this.getPoints('B', this.pointA).filter( (pointB:Point) =>
-					this.getTrips(pointB, this.pointA).length > 0
+		switch (this.orderType) {
+			case OrderType.getOrderType('trip'):
+				return this.trips.reduce(
+					(prev: Point[], value: Trip ) =>
+						value.type === this.tripType && value.pointA === this.pointA ? prev.concat(value.pointB) : prev,
+					[]
 				)
-			default:
-				return []
+			case OrderType.getOrderType('package'):
+				return this.packages.reduce(
+					(prev: Point[], value: Package ) =>
+						value.pointA === this.pointA ? prev.concat(value.pointB) : prev,
+					[]
+				)
+
 		}
 	}
 
-	anyDate: boolean = false
-
-	@ViewChild('departureDateNode') departureDateRef: ElementRef
-	departureDateDatepicker: any = null
-	departureDate: Date = new Date()
-
-	@ViewChild('returnDateNode') returnDateRef: ElementRef
-	returnDateDatepicker: any = null
-	returnDate: Date = new Date()
-
-	peopleCount: PeopleCount[] = AgeGroup.List.reduce(
-		( prev:PeopleCount[], value:AgeGroup ) =>
-			prev.concat({
-				ageGroup: value,
-				count: value.id === 'adults' ? 1 : 0
-			}),
-		[]
-	)
+	get trip(): Trip {
+		if (this.orderType === OrderType.getOrderType('trip'))
+			return this.trips.find( (value: Trip) =>
+				value.type === this.tripType &&
+				value.pointA === this.pointA &&
+				value.pointB === this.pointB
+			) || null
+		return null
+	}
 
 	get vehicleList(): Vehicle[] {
-		let trip = this.getTrips(this.pointA, this.pointB).shift()
-
-		if (!trip)
+		if (!this.trip)
 			return []
 
-		let price = trip.getPrice(this.departureDate || null)
+		let price = this.trip.getPrice(this.departureDate || null)
 
-		return price.vehicles.reduce( (prev: Vehicle[], value:VehicleCost) =>
+		return price.vehicles.reduce( (prev: Vehicle[], value: VehicleCost) =>
 			value.enable ? prev.concat(value.vehicle) : prev,
 			[]
 		)
 	}
 
 	vehicle: Vehicle = null
+
+	anyDate: boolean = false
+
+	peopleCount: PeopleCount[] = AgeGroup.List.reduce(
+		( prev: PeopleCount[], value: AgeGroup ) =>
+			prev.concat({
+				ageGroup: value,
+				count: value.id === 'adults' ? 1 : 0
+			}),
+		[]
+	)
 
 	submitted: boolean = false
 
@@ -167,105 +182,49 @@ export class TripSelectorFormComponent implements OnInit {
 				)
 	}
 
-	ml: { [key:string]: MLString } = {}
-
-	constructor(private router: Router, private apiService: APIService, private mlService: MLService) {}
-
-	ngOnInit(): void {
-
-		this.mlService.get().then( ml => this.ml = ml)
-
-		Promise.all([
-			this.apiService.get<Point>(Point).then( (response: Point[]) => this.points = response ),
-			this.apiService.get<Trip>(Trip).then( (response: Trip[]) => this.trips = response ),
-		]).then( () => {
-			this.trips = this.trips.map( (trip:Trip) => {
-				trip.pointA = trip.pointA
-					&& this.points.find(value => value.id.uuid === trip.pointA.id.uuid)
-					|| null
-				trip.pointB = trip.pointB
-					&& this.points.find(value => value.id.uuid === trip.pointB.id.uuid)
-					|| null
-				return trip
-			} ).filter( (trip:Trip) => trip.pointA && trip.pointB)
-		})
-
-		this.departureDateDatepicker = UIkit.datepicker(this.departureDateRef.nativeElement, {
-			weekstart: 1,
-			format:'DD.MM.YYYY'
-		})
-
-		this.departureDateDatepicker.on('hide.uk.datepicker', event =>
-			this.departureDate = str2Date(event.target.value)
-		)
-
-		this.returnDateDatepicker = UIkit.datepicker(this.returnDateRef.nativeElement, {
-			weekstart: 1,
-			format:'DD.MM.YYYY'
-		})
-
-		this.returnDateDatepicker.on('hide.uk.datepicker', event =>
-			this.returnDate = str2Date(event.target.value)
-		)
-	}
-
 	submit(): void {
 		if (this.submitted)
 			return
 		this.submitted = true
 
-		if (this.type !== 'package') {
-			let order = new Order()
-			// order.package = false
+		switch (this.orderType) {
+			case OrderType.getOrderType('trip'):
 
-			let AB = this.getTrips(this.pointA, this.pointB).shift()
-			if (AB) {
-				// order.shifts.push(new Shift({
-				// 	date: this.departureDate,
-				// 	trip: AB,
-				// 	price: AB.getPrice(this.departureDate),
-				// 	vehicle: this.vehicle
-				// }))
-			}
+				let order = new TripOrder({
+					trip: this.trip,
+					people: this.peopleCount.reduce(
+						(prev: Human[], value:PeopleCount) => {
+							for(let i = 0; i < value.count; i++)
+								prev.push(new Human({ defaultAgeGroup: value.ageGroup }))
+							return prev
+						},
+						[]
+					),
+					departureDate: this.departureDate,
+					returnDate: this.returnDate,
+					price: this.trip.getPrice(this.departureDate),
+					vehicle: this.vehicle
+				})
 
-			if (this.type === 'round') {
-				let BA = this.getTrips(this.pointB, this.pointA).shift()
-				if (BA) {
-					// order.shifts.push(new Shift({
-					// 	date: this.returnDate,
-					// 	trip: BA,
-					// 	price: BA.getPrice(this.returnDate),
-					// 	vehicle: this.vehicle
-					// }))
+				localStorage.setItem('currentOrder', order.toString())
+				window.location.href = `/${lang}/order`
+				return
+
+			case OrderType.getOrderType('package'):
+
+				let searchData: SearchData = {
+					pointA: this.pointA && this.pointA.id.uuid || null,
+					pointB: this.pointB && this.pointB.id.uuid || null,
+					departureDate: this.departureDate,
+					anyDate: this.anyDate,
+					peopleCount: this.peopleCount.reduce( (prev:{ ageGroup: string, count: number }[], value: PeopleCount ) =>
+						prev.concat({ ageGroup: value.ageGroup.id, count: value.count }),
+						[]
+					)
 				}
-			}
 
-			order.people = this.peopleCount.reduce(
-				(prev: Human[], value:PeopleCount) => {
-					for(let i = 0; i < value.count; i++)
-						prev.push(new Human({ defaultAgeGroup: value.ageGroup }))
-					return prev
-				},
-				[]
-			)
-
-			localStorage.setItem('currentOrder', order.toString())
-			window.location.href = `/${lang}/order`
-			return
+				localStorage.setItem('searchData', JSON.stringify(searchData))
+				window.location.href = `/${lang}/package-list`
 		}
-
-		let searchData: SearchData = {
-			pointA: this.pointA && this.pointA.id.uuid || null,
-			pointB: this.pointB && this.pointB.id.uuid || null,
-			departureDate: this.departureDate,
-			anyDate: this.anyDate,
-			peopleCount: this.peopleCount.reduce( (prev:{ ageGroup: string, count: number }[], value: PeopleCount ) =>
-				prev.concat({ ageGroup: value.ageGroup.id, count: value.count }),
-				[]
-			)
-		}
-
-		localStorage.setItem('searchData', JSON.stringify(searchData))
-		window.location.href = `/${lang}/package-list`
 	}
 }

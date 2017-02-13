@@ -1,7 +1,7 @@
-﻿{
-	"phone": {
-		"en": "+962797043670",
-		"ar": "+962797043670"
+{
+	"phone_header": {
+		"en": "7043670 79 962+",
+		"ar": "7043670 79 962+"
 	},
 
 	"signUp": {
@@ -106,7 +106,7 @@
 
 	"primaryContact": {
 		"en": "Primary contact",
-		"ar": "رقم الهاتف الاساسي"
+		"ar": "معلومات المسافر الأساسيه"
 	},
 
 	"addPassenger": {
@@ -121,7 +121,7 @@
 
 	"cardType": {
 		"en": "CARD TYPE",
-		"ar": "نوع البطاقة"
+		"ar": "أختار نوع بطاقه الائتمان"
 	},
 
 	"cardNumber": {
@@ -146,7 +146,7 @@
 
 	"submitPayment": {
 		"en": "Submit Payment",
-		"ar": "تقديم دفعة"
+		"ar": "أحجز الأن"
 	},
 
 	"arabTravelCopyright": {
@@ -171,7 +171,7 @@
 	
 	"whyToBookOnline": {
 		"en": "Why to Book Online",
-		"ar": "لماذا تحجز أون لاين"
+		"ar": "لماذا تحجز هنا"
 	},
 
 	"moreChoice": {
@@ -215,18 +215,18 @@
 	},
 
 	"howWeWork2": {
-		"en": "Enter your personal information and reserve a ticket",
-		"ar": "قم بملأ بيناتك الشخصيه وأختر طريقه الدفع المناسبه ثم قم بتأكيد الحجز"
+		"en": "Enter your personal information and reserve a ticket123123",
+		"ar": "قم بملء بياناتك الشخصيه وأختر طريقه الدفع المناسبه ثم  أضغط  تأكيد الحجز"
 	},
 
 	"howWeWork3": {
 		"en": "Get your ticket on your email and in your personal account on the site",
-		"ar": "سنقوم بتحقق من البيانات المسجله وتنفيذ عمليه الحجز مباشره من خلال الموقع وتأكيد الحجز من خلال رساله للأيميل الشخصي"
+		"ar": "سنقوم التحقق من البيانات المسجله وتنفيذ عمليه الحجز مباشره من خلال الموقع وتأكيد الحجز من خلال رساله للأيميل الشخصي"
 	},
 
 	"howWeWork4": {
 		"en": "Print it and use it! Our ferries tickets are open-date for 3 months to use",
-		"ar": "قم بطباعه التذكره وأستخدمها في الموعد المحدد , غالبا تذاكرنا غير مقيده بتاريخ سفر معين فهي صلاحيه لغايه 3 أشهر من تاريخ الحجز"
+		"ar": "طباعه التذكره وأستخدمها في الموعد المحدد , غالبا تذاكرنا غير مقيده بتاريخ سفر معين فهي صلاحيه لغايه 3 أشهر من تاريخ الحجز"
 	},
 
 	"partners1": {
@@ -266,181 +266,186 @@
 	
 	"orderDetails": {
 		"en": "Order details",
-		"ar": "Order details"
+		"ar": "تفاصيل الحجز"
 	},
 	
 	"ticketsPrice": {
 		"en": "Tickets price",
-		"ar": "Tickets price"
+		"ar": "مجموع أسعار التذاكر"
 	},
 	
 	"processingFee": {
 		"en": "Processing fee",
-		"ar": "Processing fee"
+		"ar": "بدل الخدمه"
 	},
 	
 	"total": {
 		"en": "Total",
-		"ar": "Total"
+		"ar": "المجموع"
 	},
 	
 	"approx": {
 		"en": "approx.",
-		"ar": "approx."
+		"ar": "تقريبا"
 	},
 	
 	"youHaveChosen": {
 		"en": "You have chosen",
-		"ar": "You have chosen"
+		"ar": "تم الاختيار"
 	},
 	
 	"nextSteps": {
 		"en": "We will contact you as soon as possible and inform you on next steps.",
-		"ar": "We will contact you as soon as possible and inform you on next steps."
+		"ar": "سيتم الاتصال بكم قريبا لأبلاغكم على الخطوات التاليه"
 	},
 	
 	"name": {
 		"en": "Name",
-		"ar": "Name"
+		"ar": "الاسم"
 	},
 	
 	"nationality": {
 		"en": "Nationality",
-		"ar": "Nationality"
+		"ar": "الجنسيه"
 	},
 	
 	"dateOfBirth": {
 		"en": "Date of birth",
-		"ar": "Date of birth"
+		"ar": "تاريخ الميلاد"
 	},
 	
 	"passportNumber": {
 		"en": "Passport number",
-		"ar": "Passport number"
+		"ar": "رقم الجواز"
 	},
 	
 	"phone": {
 		"en": "Phone",
-		"ar": "Phone"
+		"ar": "رقم الهاتف/الموبايل"
 	},
 	
 	"email": {
 		"en": "Email",
-		"ar": "Email"
+		"ar": "الايميل"
 	},
 	
 	"message": {
 		"en": "Message",
-		"ar": "Message"
+		"ar": "الرساله"
 	},
 	
 	"myOrders": {
 		"en": "My orders",
-		"ar": "My orders"
+		"ar": "حجوزاتي"
 	},
 	
 	"order": {
 		"en": "Order",
-		"ar": "Order"
+		"ar": "الحجز"
 	},
 	
 	"date": {
 		"en": "Date",
-		"ar": "Date"
+		"ar": "التاريخ"
 	},
 	
 	"route": {
 		"en": "Route",
-		"ar": "Route"
+		"ar": "الطريق"
 	},
 	
 	"price": {
 		"en": "Price",
-		"ar": "Price"
+		"ar": "السعر"
 	},
 	
 	"status": {
 		"en": "Status",
-		"ar": "Status"
+		"ar": "الحاله"
 	},
 	
 	"cancel": {
 		"en": "Cancel",
-		"ar": "Cancel"
+		"ar": "الغاء"
 	},
 	
 	"view": {
 		"en": "View",
-		"ar": "View"
+		"ar": "عرض"
 	},
 	
 	"ticketID": {
 		"en": "Ticket ID",
-		"ar": "Ticket ID"
+		"ar": "رقم الحجز"
 	},
 	
 	"passengerName": {
 		"en": "Passenger name",
-		"ar": "Passenger name"
+		"ar": "أسم المسافر"
 	},
 	
 	"passengerInfo": {
 		"en": "passengerInfo",
-		"ar": "passengerInfo"
+		"ar": "معلومات المسافر"
 	},
 	
 	"print": {
 		"en": "Print",
-		"ar": "Print"
+		"ar": "الطباعه"
 	},
 	
 	"printTicket": {
 		"en": "Print ticket",
-		"ar": "Print ticket"
+		"ar": "طباعه التذكره"
 	},
 	
 	"allTripsFrom": {
 		"en": "All trips from",
-		"ar": "All trips from"
+		"ar": "جميع العروض المتاحه من"
 	},
 	
 	"sortBy": {
 		"en": "Sort by",
-		"ar": "Sort by"
+		"ar": "الفرز بستخدام"
 	},
 
 	"tourIncludes": {
 		"en": "Tour includes",
-		"ar": "Tour includes"
+		"ar": "الرحله تشمل"
 	},
 	
 	"ferryFrom": {
 		"en": "Ferry from",
-		"ar": "Ferry from"
+		"ar": "القارب من "
 	},
 
 	"hotel": {
 		"en": "Hotel",
-		"ar": "Hotel"
+		"ar": "الفندق"
 	},	
 	
 	"from": {
 		"en": "per person",
-		"ar": "per person"
+		"ar": "للشخص الواحد"
 	},
 	
 	"andBack": {
 		"en": "and back",
-		"ar": "and back"
+		"ar": "والعوده"
 	},
 	
 	"tickets2way": {
 		"en": "Tickets 2 way",
-		"ar": "Tickets 2 way"
+		"ar": "تذكره الذهاب والعوده"
 	},
 	
 	"bookNow": {
 		"en": "Book Now",
-		"ar": "Book Now"
+		"ar": "أحجز الأن"
+	},
+	
+	"valid": {
+		"en": "date",
+		"ar": "التاريخ"
 	}
 }

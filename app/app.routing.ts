@@ -2,7 +2,8 @@ import { ModuleWithProviders }  from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 
 import { TripSelectorFormComponent } from './component/tripselector/tripselector-form.component'
-import { OrderPageComponent } from './component/order/order-page.component'
+import { OrderTripComponent } from './component/order/order-trip.component'
+import { OrderPackageComponent } from './component/order/order-package.component'
 import { PackageListComponent } from './component/packagelist/packagelist.component'
 
 import { UserPageComponent } from './component/user/user-page.component'
@@ -18,11 +19,19 @@ const appRoutes: Routes = [
 	},
 	{
 		path: 'en/order',
-		component: OrderPageComponent
+		component: OrderTripComponent
 	},
 	{
 		path: 'ar/order',
-		component: OrderPageComponent
+		component: OrderTripComponent
+	},
+	{
+		path: 'en/order-package',
+		component: OrderPackageComponent
+	},
+	{
+		path: 'ar/order-package',
+		component: OrderPackageComponent
 	},
 	{
 		path: 'en/package-list',

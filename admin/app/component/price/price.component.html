@@ -20,10 +20,10 @@
 			</div>
 		</div>
 	</div>
-	<div class="uk-width-1-1 uk-margin-top">
+	<div class="uk-width-1-1 uk-margin-top" [class.uk-hidden]="hideVehicle">
 		<h4 class="tm-article-subtitle">Vehicles</h4>
 	</div>
-	<div class="uk-width-1-1 uk-form uk-grid">
+	<div class="uk-width-1-1 uk-form uk-grid" [class.uk-hidden]="hideVehicle">
 		<div *ngFor="let vehicleCost of item.vehicles" class="uk-width-1-5">
 			<label class="uk-form-label uk-width-1-1">
 				<input type="checkbox" [(ngModel)]="vehicleCost.enable">

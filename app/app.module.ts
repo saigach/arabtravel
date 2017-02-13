@@ -14,7 +14,8 @@ import { MLPipe } from './pipe/ml.pipe'
 import { CurrencyPipe } from './pipe/currency.pipe'
 
 import { TripSelectorFormComponent } from './component/tripselector/tripselector-form.component'
-import { OrderPageComponent } from './component/order/order-page.component'
+import { OrderTripComponent } from './component/order/order-trip.component'
+import { OrderPackageComponent } from './component/order/order-package.component'
 import { PackageListComponent } from './component/packagelist/packagelist.component'
 import { OrderHumanComponent } from './component/order/order-human.component'
 
@@ -33,7 +34,8 @@ import { ContactFormComponent } from './component/contact/contact-form.component
 		MLPipe,
 		CurrencyPipe,
 		TripSelectorFormComponent,
-		OrderPageComponent,
+		OrderTripComponent,
+		OrderPackageComponent,
 		PackageListComponent,
 		OrderHumanComponent,
 		UserPageComponent,

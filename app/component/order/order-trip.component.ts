@@ -5,23 +5,18 @@ import { APIService } from '../../service/api.service'
 import { MLService } from '../../service/ml.service'
 
 import { MLString } from '../../../model/common'
-import { Order, PaymentType } from '../../../model/order'
-import { Trip } from '../../../model/trip'
-import { Price, VehicleCost } from '../../../model/price'
-import { Vehicle } from '../../../model/vehicle'
+import { PaymentType } from '../../../model/order'
+import { TripOrder } from '../../../model/trip-order'
 import { Human, AgeGroup } from '../../../model/human'
-import { Hotel } from '../../../model/hotel'
 
 const lang = document.querySelector('html').getAttribute('lang') || 'en'
 
-type TripType = 'oneway' | 'round' | 'package'
-
 @Component({
 	moduleId: module.id,
-	selector: 'order-page',
-	templateUrl: '/app/component/order/order-page.component.html'
+	selector: 'order-trip',
+	templateUrl: '/app/component/order/order-trip.component.html'
 })
-export class OrderPageComponent implements OnInit {
+export class OrderTripComponent implements OnInit {
 
 	months: number[] = [1,2,3,4,5,6,7,8,9,10]
 	years: number[] = []
@@ -29,7 +24,8 @@ export class OrderPageComponent implements OnInit {
 	paymentTypes: PaymentType[] = PaymentType.List
 	ageGroups: AgeGroup[] = AgeGroup.List
 
-	item: Order = new Order()
+	item: TripOrder = new TripOrder()
+
 	primaryContact: Human =  null
 
 	submitting: boolean = false
@@ -45,7 +41,6 @@ export class OrderPageComponent implements OnInit {
 
 	set currency(value: string) {
 		this._currency = value ? value : 'usd'
-		// this.ref.detectChanges()
 	}
 
 	get exchangeRate(): number {
@@ -74,7 +69,7 @@ export class OrderPageComponent implements OnInit {
 		if (!currentOrderObj)
 			window.location.href = '/' + lang
 		else
-			this.item =  new Order(currentOrderObj)
+			this.item =  new TripOrder(currentOrderObj)
 	}
 
 	ngOnInit(): void {
@@ -121,7 +116,7 @@ export class OrderPageComponent implements OnInit {
 		this.submitting = true
 
 		this.apiService.order(this.item, this.primaryContact).then( value => {
-			this.item = new Order(value)
+			this.item = new TripOrder(value)
 			UIkit.notify('Order sucess', {status  : 'success' })
 			this.submitted = true
 			localStorage.removeItem('currentOrder')

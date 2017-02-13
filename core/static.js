@@ -32,6 +32,8 @@ module.exports = class StaticEngine {
 				objects
 			WHERE
 				model = 'static'
+				AND
+				data->>'url' = '$url'
 			LIMIT 1
 		`).then(rows => {
 			let item = rows.length && rows[0] || null

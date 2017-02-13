@@ -5,16 +5,14 @@ import { APIService } from '../../service/api.service'
 import { MLService } from '../../service/ml.service'
 
 import { str2Date, SearchData, newDate, MLString } from '../../../model/common'
-import { Order, PaymentType } from '../../../model/order'
-import { Trip } from '../../../model/trip'
-import { Price, VehicleCost } from '../../../model/price'
+import { PackageOrder } from '../../../model/package-order'
+import { Package } from '../../../model/package'
 import { Point } from '../../../model/point'
+import { PeopleCount } from '../../../model/order'
 import { Human, AgeGroup } from '../../../model/human'
-import { Hotel, Room } from '../../../model/hotel'
+import { Room } from '../../../model/hotel'
 
 const lang = document.querySelector('html').getAttribute('lang') || 'en'
-
-type PeopleCount = { ageGroup: AgeGroup, count: number }
 
 @Component({
 	moduleId: module.id,
@@ -23,16 +21,7 @@ type PeopleCount = { ageGroup: AgeGroup, count: number }
 })
 export class PackageListComponent implements OnInit {
 
-	points: Point[] = []
-	trips: Trip[] = []
-
-	private getTrips(pointA: Point = null, pointB: Point = null): Trip[] {
-		return this.trips.filter( (trip: Trip) =>
-			// trip.package === true &&
-			trip.pointA && (!pointA || trip.pointA.id.uuid === pointA.id.uuid) &&
-			trip.pointB && (!pointB || trip.pointB.id.uuid === pointB.id.uuid)
-		)
-	}
+	packages: Package[] = []
 
 	private _pointA: Point = null
 
@@ -47,30 +36,30 @@ export class PackageListComponent implements OnInit {
 
 	pointB: Point = null
 
-	private getPoints(type: 'A' | 'B', otherPoint: Point): Point[] {
-		let points = this.getTrips().reduce( (prev: Point[], trip: Trip) => {
-			if (!otherPoint || trip[type === 'A' ? 'pointB' : 'pointA'].id.uuid === otherPoint.id.uuid )
-				return prev.concat(trip[type === 'A' ? 'pointA' : 'pointB'])
-			return prev
-		}, [])
-
-		return points.reduce( (prev: Point[], currentPoint: Point) =>
-			prev.find( (point: Point) =>
-				currentPoint.id.uuid === point.id.uuid
-			) ? prev : prev.concat(currentPoint),
+	get APoints(): Point[] {
+		return this.packages.reduce(
+			(prev: Point[], value: Package ) =>
+				prev.concat(value.pointA),
 			[]
 		)
-	}
-
-	get APoints(): Point[] {
-		return this.getPoints('A', null)
 	}
 
 	get BPoints(): Point[] {
 		if (!this.pointA)
 			return []
 
-		return this.getPoints('B', this.pointA)
+		return this.packages.reduce(
+			(prev: Point[], value: Package ) =>
+				value.pointA === this.pointA ? prev.concat(value.pointB) : prev,
+			[]
+		)
+	}
+
+	get packageList(): Package[] {
+		return this.packages.filter( (value: Package) =>
+			(!this.pointA || value.pointA === this.pointA) &&
+			(!this.pointB || value.pointB === this.pointB)
+		)
 	}
 
 	anyDate: boolean = false
@@ -87,20 +76,6 @@ export class PackageListComponent implements OnInit {
 			}),
 		[]
 	)
-
-	get tripList(): Point[] {
-		return []
-		// return this.getTrips(this.pointA, this.pointB)
-	}
-
-	get valid(): boolean {
-		return !!this.pointA
-			&& !!this.pointB
-			&& this.peopleCount.reduce( (prev: boolean, value: PeopleCount) =>
-					value.ageGroup.id === 'adults' && value.count > 0 ? true : prev,
-					false
-				)
-	}
 
 	ml: { [key:string]: MLString } = {}
 
@@ -119,19 +94,8 @@ export class PackageListComponent implements OnInit {
 
 		localStorage.removeItem('searchData')
 
-		Promise.all([
-			this.apiService.get<Point>(Point).then( (response: Point[]) => this.points = response ),
-			this.apiService.get<Trip>(Trip).then( (response: Trip[]) => this.trips = response ),
-		]).then( () => {
-			this.trips = this.trips.map( (trip:Trip) => {
-				trip.pointA = trip.pointA
-					&& this.points.find(value => value.id.uuid === trip.pointA.id.uuid)
-					|| null
-				trip.pointB = trip.pointB
-					&& this.points.find(value => value.id.uuid === trip.pointB.id.uuid)
-					|| null
-				return trip
-			} ).filter( (trip:Trip) => trip.pointA && trip.pointB /* && trip.package */)
+		this.apiService.get<Package>(Package).then( (response: Package[]) => {
+			this.packages = response
 
 			if (searchData) {
 				this.anyDate = !!searchData.anyDate
@@ -151,15 +115,13 @@ export class PackageListComponent implements OnInit {
 				}
 
 				if (searchData.peopleCount instanceof Array)
-				this.peopleCount.forEach( (peopleCount:PeopleCount) => {
-					let pc = searchData.peopleCount.find(
-						(value:{ ageGroup: string, count: number }) => value.ageGroup === peopleCount.ageGroup.id
-					)
-					if (pc)
-						peopleCount.count = pc.count || peopleCount.count
-				})
-
-
+					this.peopleCount.forEach( (peopleCount:PeopleCount) => {
+						let pc = searchData.peopleCount.find(
+							(value:{ ageGroup: string, count: number }) => value.ageGroup === peopleCount.ageGroup.id
+						)
+						if (pc)
+							peopleCount.count = pc.count || peopleCount.count
+					})
 			}
 		})
 
@@ -173,33 +135,28 @@ export class PackageListComponent implements OnInit {
 		)
 	}
 
-	select(trip: Trip): void {
-		let order = new Order()
-
-		// order.package = true
-
-		// order.shifts.push(new Shift({
-		// 	date: this.departureDate,
-		// 	trip: trip,
-		// 	price: trip.getPrice(this.departureDate)
-		// }))
-
-		// order.hotel = trip.firstHotel
-		// order.room = trip.firstHotel.rooms.reduce(
-		// 	(prev:Room, value:Room) => prev === null || value.cost <= prev.cost ? value : prev,
-		// 	null
-		// )
-
-		order.people = this.peopleCount.reduce(
-			(prev: Human[], value:PeopleCount) => {
-				for(let i = 0; i < value.count; i++)
-					prev.push(new Human({ defaultAgeGroup: value.ageGroup }))
-				return prev
-			},
-			[]
-		)
+	select(pack: Package): void {
+		let order = new PackageOrder({
+			package: pack,
+			people: this.peopleCount.reduce(
+				(prev: Human[], value:PeopleCount) => {
+					for(let i = 0; i < value.count; i++)
+						prev.push(new Human({ defaultAgeGroup: value.ageGroup }))
+					return prev
+				},
+				[]
+			),
+			departureDate: this.departureDate,
+			anyDate: this.anyDate,
+			price: pack.getPrice(this.anyDate ? undefined : this.departureDate),
+			hotel: pack.firstHotel,
+			room: pack.firstHotel ? pack.firstHotel.rooms.reduce(
+				(prev:Room, value:Room) => prev === null || value.cost <= prev.cost ? value : prev,
+				null
+			) : null
+		})
 
 		localStorage.setItem('currentOrder', order.toString())
-		window.location.href = `/${lang}/order`
+		window.location.href = `/${lang}/order-package`
 	}
 }

@@ -54,19 +54,13 @@ export class OrderItemComponent implements OnInit {
 			switch (type) {
 				case 'trip':
 					this.apiService.get<TripOrder>(TripOrder, id)
-						.then((response: TripOrder) => {
-							this.item = response
-							this.item.type = OrderType.getOrderType('trip')
-						})
+						.then((response: TripOrder) => this.item = response)
 						.catch(error => this.item = null)
 					break
 
 				case 'package':
 					this.apiService.get<PackageOrder>(PackageOrder, id)
-						.then((response: PackageOrder) => {
-							this.item = response
-							this.item.type = OrderType.getOrderType('package')
-						})
+						.then((response: PackageOrder) => this.item = response)
 						.catch(error => this.item = null)
 					break
 			}
@@ -75,12 +69,10 @@ export class OrderItemComponent implements OnInit {
 			switch (type) {
 				case 'trip':
 					this.item = new TripOrder()
-					this.item.type = OrderType.getOrderType('trip')
 					break
 
 				case 'package':
 					this.item = new PackageOrder()
-					this.item.type = OrderType.getOrderType('package')
 					break
 			}
 

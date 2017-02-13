@@ -39,6 +39,7 @@ module.exports = class APIEngine {
 
 				switch (model) {
 					case 'trip':
+					case 'package':
 						if (id)
 							return this.DB.query(`
 								SELECT

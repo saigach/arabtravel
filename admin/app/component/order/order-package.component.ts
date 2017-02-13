@@ -74,7 +74,7 @@ export class OrderPackageComponent implements OnInit {
 		this.item.price = this.item.package && this.item.package.getPrice(this.item.date) || new Price()
 	}
 
-	changeTrip(): void {
+	packageChange(): void {
 		if (this.item.package)
 			this.apiService.get<Package>(Package, this.item.package).then( (response: Package) => {
 				this.item.package = response
