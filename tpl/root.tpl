@@ -132,7 +132,7 @@
                 <div class="uk-width-1-2">
                     <div class="uk-flex uk-grid">
                     	<div class="uk-width-1-2">
-                    	    <a id="currentAccountLink" href="{{=it.userEmail && '/user' || '#login-form-modal'}}" class="btn btn-default btn-ghost btn-ui btn-account" {{? !it.userEmail }} data-uk-modal {{?}}>
+                    	    <a id="currentAccountLink" href="{{=it.userEmail && (it.lang + '/user') || '#login-form-modal'}}" class="btn btn-default btn-ghost btn-ui btn-account" {{? !it.userEmail }} data-uk-modal {{?}}>
                     	        <i class="demo-icon ico_user"></i><span id="currentAccount">{{=it.userEmail || it.ml.signUp}}</span>
                     	    </a>&nbsp;
                     							<a id="logoutLink" href="/auth/logout" class="btn btn-default btn-ghost btn-ui btn-account">

@@ -120,7 +120,7 @@
 
                                                 <ul class="tourist-package-item_includes-list">
                                                     <li><i class="ico ico_boat"></i>{{ ml.ferryFrom | ml }} {{ item.pointA.title | ml }} to {{ item.pointB.title | ml }} {{ ml.andBack | ml }}</li>
-                                                    <li *ngIf="item.firstHotel"><i class="ico ico_hotel"></i> {{ ml.hotel | ml }} <strong>{{item.firstHotel.title | ml}}</strong></li>
+                                                    <li *ngIf="item.hotel"><i class="ico ico_hotel"></i> {{ ml.hotel | ml }} <strong>{{item.hotel.title | ml}}</strong></li>
                                                     <!-- <li><i class="ico ico_tour"></i> Cairo Day Tour</li> -->
                                                 </ul>
                                             </div>

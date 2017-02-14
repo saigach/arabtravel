@@ -95,7 +95,7 @@ export class PackageListComponent implements OnInit {
 		localStorage.removeItem('searchData')
 
 		this.apiService.get<Package>(Package).then( (response: Package[]) => {
-			this.packages = response
+			this.packages = response.filter( (value: Package) => !!value.hotel )
 
 			if (searchData) {
 				this.anyDate = !!searchData.anyDate
@@ -147,13 +147,7 @@ export class PackageListComponent implements OnInit {
 				[]
 			),
 			departureDate: this.departureDate,
-			anyDate: this.anyDate,
-			price: pack.getPrice(this.anyDate ? undefined : this.departureDate),
-			hotel: pack.firstHotel,
-			room: pack.firstHotel ? pack.firstHotel.rooms.reduce(
-				(prev:Room, value:Room) => prev === null || value.cost <= prev.cost ? value : prev,
-				null
-			) : null
+			anyDate: this.anyDate
 		})
 
 		localStorage.setItem('currentPackageOrder', order.toString())

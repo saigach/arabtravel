@@ -15,18 +15,13 @@ export class Package extends Model {
 	pointA: Point
 	pointB: Point
 
-	image: File = null
+	image: File
 
-	hotels: Hotel[] = []
+	hotel: Hotel
+
+	duration: number
 
 	prices: Price[] = []
-
-	get firstHotel(): Hotel {
-		if (this.hotels.length <= 0)
-			return null
-
-		return this.hotels[0]
-	}
 
 	constructor(value: any = {}) {
 		super(value)
@@ -41,12 +36,9 @@ export class Package extends Model {
 
 		this.image = value.image ? ( value.image instanceof File ? value.image : new File(value.image) ) : null
 
-		this.hotels = value.hotels instanceof Array ?
-			value.hotels.reduce(
-				( prev: Hotel[] , value:any ) =>
-					value ? prev.concat(value instanceof Hotel ? value : new Hotel(value) ) : prev,
-				[]
-			) : []
+		this.hotel = value.hotel ? (value.hotel instanceof Hotel ? value.hotel : new Hotel(value.hotel)) : null
+
+		this.duration = value.duration && Number.parseInt(value.duration) || 1
 
 		this.prices = value.prices instanceof Array ?
 			value.prices.reduce(
@@ -70,10 +62,8 @@ export class Package extends Model {
 	get basePrice(): number {
 		let sum = 0
 
-		let hotel = this.firstHotel
-
-		if (hotel)
-			sum += hotel.minimalCost
+		if (this.hotel)
+			sum += this.hotel.minimalCost
 
 		let price = this.getPrice()
 
@@ -90,9 +80,10 @@ export class Package extends Model {
 			title: this.title,
 			description: this.description,
 			content: this.content,
-			pointA: this.pointA.toObject(),
-			pointB: this.pointB.toObject(),
-			hotels: this.hotels.reduce( (prev: {}[], value: Hotel) => prev.concat(value.toObject()), []),
+			pointA: this.pointA && this.pointA.toObject() || null,
+			pointB: this.pointB && this.pointB.toObject() || null,
+			hotel: this.hotel && this.hotel.toObject() || null,
+			duration: this.duration,
 			prices: this.prices.reduce( (prev: {}[], value: Price) => prev.concat(value.toObject()), []),
 			image: this.image && this.image.toObject() || null
 		})

@@ -10,7 +10,6 @@ export class PackageOrder extends Order {
 	static __api: string = Order.__api
 
 	package: Package
-	hotel: Hotel
 	room: Room
 
 	anyDate: boolean
@@ -22,31 +21,43 @@ export class PackageOrder extends Order {
 
 		this.package = value.package ? ( value.package instanceof Package ? value.package : new Package(value.package) ) : null
 
-		this.hotel = value.hotel ? (value.hotel instanceof Hotel ? value.hotel : new Hotel(value.hotel) ) : null
 		this.room = value.room ? (value.room instanceof Room ? value.room : new Room(value.room) ) : null
 
 		this.anyDate = !!value.anyDate
 	}
 
+	get returnDate(): Date {
+		if (!this.departureDate)
+			return null
+
+		let date = new Date(this.departureDate)
+
+		if (!this.package)
+			return date
+
+		date.setDate(date.getDate() + this.package.duration)
+
+		return date
+	}
+
+	set returnDate(date: Date) {
+
+	}
+
 	toObject(): {} {
 		return Object.assign({}, super.toObject(), {
 			package: this.package && this.package.toObject() || null,
-			hotel: this.hotel && this.hotel.toObject() || null,
-			room: this.hotel && this.room && this.room.toObject() || null,
+			room: this.room && this.room.toObject() || null,
 			anyDate: this.anyDate
 		})
 	}
 
-	get duration(): number {
-		if (!this.departureDate || !this.returnDate)
-			return 1
-
-		return Math.round( Math.abs( ( this.departureDate.getTime() - this.returnDate.getTime() ) / ONE_DAY ) ) || 1
-	}
-
 	get hotelCost(): number {
-		return (this.hotel ? this.hotel.optionsCost : 0)
-				+ (this.room ? this.room.fullCost * this.duration : 0)
+		if (!this.package)
+			return 0
+
+		return (this.package.hotel ? this.package.hotel.optionsCost : 0)
+				+ (this.room ? this.room.fullCost * this.package.duration : 0)
 	}
 
 	get roadCost(): number {

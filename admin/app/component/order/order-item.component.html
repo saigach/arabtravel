@@ -31,7 +31,13 @@
 			<div class="uk-width-3-10 uk-margin-top">
 				<label class="uk-form-label uk-width-1-1">User</label>
 				<div class="uk-form-controls" *ngIf="item.owner">
-					<a [attr.href]="'/users/' + item.owner.id"  target="_blank">{{item.owner.title}}</a>
+					<a [attr.href]="'/users/' + item.owner.id.uuid"  target="_blank">{{item.owner.title}}</a>
+				</div>
+				<div class="uk-form-controls" *ngIf="item.owner">
+					<b>Phone:</b>&nbsp;{{ item.owner.phone }}
+				</div>
+				<div class="uk-form-controls" *ngIf="item.owner">
+					<b>E-mail:</b>&nbsp;{{ item.owner.email }}
 				</div>
 			</div>
 
@@ -79,33 +85,6 @@
 				</div>
 			</div>
 
-			<div class="uk-width-1-1 uk-margin-top" *ngIf="item.type.id === 'trip'">
-				<order-trip [(order)]="item"></order-trip>
-			</div>
-
-			<div class="uk-width-1-1 uk-margin-top" *ngIf="item.type.id === 'package'">
-				<order-package [(order)]="item"></order-package>
-			</div>
-
-			<div class="uk-width-1-1 uk-grid uk-margin-top">
-				<div class="uk-width-8-10">
-					<h3 class="tm-article-subtitle">Passengers</h3>
-				</div>
-				<div class="uk-width-2-10">
-					<a class="uk-align-right admin-cursor-pointer" (click)="addHuman(); $event.stopPropagation()">
-						<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
-						<u>Add passenger</u>
-					</a>
-				</div>
-			</div>
-			<div class="uk-width-1-1 uk-margin-top">
-				<div  *ngFor="let human of item.people; let i = index;" class="uk-panel uk-panel-box uk-width-1-1">
-					<div class="uk-panel-badge uk-badge uk-badge-danger admin-cursor-pointer" (click)="deleteHuman(human); $event.stopPropagation()"><i class="uk-icon-trash"></i></div>
-					<h3 class="uk-panel-title">Passenger #{{ i + 1 }}</h3>
-					<order-human [(human)]="item.people[i]"></order-human>
-				</div>
-			</div>
-
 			<div class="uk-width-1-1 uk-margin-top">
 				<h3 class="tm-article-subtitle">Global paremetrs</h3>
 			</div>
@@ -127,6 +106,34 @@
 					<input class="uk-width-1-1" type="number" min="0" [(ngModel)]="item.exchangeRate">
 				</div>
 			</div>
+
+			<div class="uk-width-1-1" *ngIf="item.type.id === 'trip'">
+				<div class="uk-width-1-1 uk-grid uk-margin-top">
+					<div class="uk-width-8-10">
+						<h3 class="tm-article-subtitle">Passengers</h3>
+					</div>
+					<div class="uk-width-2-10">
+						<a class="uk-align-right admin-cursor-pointer" (click)="addHuman(); $event.stopPropagation()">
+							<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
+							<u>Add passenger</u>
+						</a>
+					</div>
+				</div>
+				<div class="uk-width-1-1 uk-margin-top">
+					<div  *ngFor="let human of item.people; let i = index;" class="uk-panel uk-panel-box uk-width-1-1">
+						<div class="uk-panel-badge uk-badge uk-badge-danger admin-cursor-pointer" (click)="deleteHuman(human); $event.stopPropagation()"><i class="uk-icon-trash"></i></div>
+						<h3 class="uk-panel-title">Passenger #{{ i + 1 }}</h3>
+						<order-human [(human)]="item.people[i]"></order-human>
+					</div>
+				</div>
+				<order-trip [(order)]="item"></order-trip>
+			</div>
+
+			<div class="uk-width-1-1" *ngIf="item.type.id === 'package'">
+				<order-package [(order)]="item"></order-package>
+			</div>
+
+
 
 			<!-- <div class="uk-width-1-1 uk-margin-top">
 				<h3 class="tm-article-subtitle">Calculation</h3>

@@ -51,6 +51,14 @@ export class HotelItemComponent implements OnInit {
 		this.item.rooms = this.item.rooms.filter(value => value !== room)
 	}
 
+	setRoomImage(fileSelector: HTMLInputElement, room: Room): void {
+		if (fileSelector.files.length) {
+			this.fileService.uploadImage(fileSelector.files[0])
+							.then(response => room.image = response.link && new File(response) || null)
+			fileSelector.value = null
+		}
+	}
+
 	addImage(fileSelector: HTMLInputElement): void {
 		if (fileSelector.files.length) {
 			this.fileService.uploadImage(fileSelector.files[0])

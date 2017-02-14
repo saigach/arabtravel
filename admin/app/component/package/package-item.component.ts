@@ -52,35 +52,21 @@ export class PackageItemComponent implements OnInit {
 					.then((response: Package) => {
 						this.item = response
 						this.item.pointA = this.item.pointA
-										&& this.points.find(value => value.id.uuid === this.item.pointA.id.uuid)
+										&& this.points.find(value => value.id.equal(this.item.pointA.id))
 										|| null
 						this.item.pointB = this.item.pointB
-										&& this.points.find(value => value.id.uuid === this.item.pointB.id.uuid)
+										&& this.points.find(value => value.id.equal(this.item.pointB.id))
 										|| null
 
-						this.item.hotels = this.item.hotels.map(
-							(hotel: Hotel) => this.hotels.find( value => value.id.uuid === hotel.id.uuid ) || null
-						).filter( (value: Hotel) => value && value.enable )
-
-						for (let i = 0; i < this.item.hotels.length; ++i)
-							 this.apiService.get<Hotel>(Hotel, this.item.hotels[i]).then(
-							 		(response: Hotel) => this.item.hotels[i] = response
-							 )
+						// this.hotelChange()
 					})
 					.catch(error => this.item = null)
 		})
 	}
 
-	addHotel(): void {
-		this.item.hotels.push(null)
-	}
-
-	deleteHotel(hotel: Hotel): void {
-		this.item.hotels = this.item.hotels.filter(value => value !== hotel)
-	}
-
-	hotelChange(i: number): void {
-		this.apiService.get<Hotel>(Hotel, this.item.hotels[i]).then( (response: Hotel) => this.item.hotels[i] = response)
+	hotelChange(): void {
+		if (this.item.hotel)
+			this.apiService.get<Hotel>(Hotel, this.item.hotel).then( (response: Hotel) => this.item.hotel = response)
 	}
 
 	addPrice(): void {

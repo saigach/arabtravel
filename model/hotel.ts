@@ -31,6 +31,8 @@ export class Room {
 
 	options: Option[]
 
+	image: File
+
 	get enabledOptions(): Option[] {
 		return this.options.filter( (value:Option) => value.enable )
 	}
@@ -58,6 +60,8 @@ export class Room {
 					value ? prev.concat(value instanceof Option ? value : new Option(value)) : prev,
 				[]
 			) : []
+
+		this.image = value.image ? ( value.image instanceof File ? value.image : new File(value.image) ) : null
 	}
 
 	toObject(): {} {
@@ -67,7 +71,8 @@ export class Room {
 			beds: this.beds,
 			cost: this.cost,
 			content: this.content,
-			options: this.options.reduce( (prev: {}[], value: Option) => prev.concat(value.toObject()), [])
+			options: this.options.reduce( (prev: {}[], value: Option) => prev.concat(value.toObject()), []),
+			image: this.image && this.image.toObject() || null
 		}
 	}
 }

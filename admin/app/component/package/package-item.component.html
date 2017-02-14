@@ -63,34 +63,27 @@
 			<mleditor [(value)]="item.content"></mleditor>
 		</div>
 
-		<div class="uk-width-1-1 uk-grid uk-margin-top">
-			<div class="uk-width-8-10">
-				<h3 class="tm-article-subtitle">Hotels</h3>
-			</div>
-			<div class="uk-width-2-10">
-				<a class="uk-align-right admin-cursor-pointer" (click)="addHotel(); $event.stopPropagation()">
-					<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
-					<u>Add hotel</u>
-				</a>
-			</div>
+		<div class="uk-width-1-1 uk-margin-top">
+			<h3 class="tm-article-subtitle">Hotel</h3>
 		</div>
 		<div class="uk-width-1-1 uk-margin-top">
-			<div  *ngFor="let hotel of item.hotels; let i = index;" class="uk-panel uk-panel-box uk-width-1-1">
-				<div class="uk-panel-badge uk-badge uk-badge-danger admin-cursor-pointer" (click)="deleteHotel(hotel); $event.stopPropagation()"><i class="uk-icon-trash"></i></div>
+			<div class="uk-panel uk-panel-box uk-width-1-1">
 				<div class="uk-panel-title">
-					<select name="type" [(ngModel)]="item.hotels[i]" (change)="hotelChange(i);">
+					<select name="type" [(ngModel)]="item.hotel" (change)="hotelChange()">
 						<option [ngValue]="null">None</option>
-						<option *ngIf="item.hotels[i]" [ngValue]="item.hotels[i]">{{ item.hotels[i].title | ml:'en' }} (Current)</option>
-						<option *ngFor="let hotelItem of hotels" [ngValue]="hotelItem">{{ hotelItem.title | ml:'en' }}</option>
+						<option *ngIf="item.hotel" [ngValue]="item.hotel">{{ item.hotel.title | ml:'en' }} (Current)</option>
+						<option *ngFor="let hotel of hotels" [ngValue]="hotel">{{ hotel.title | ml:'en' }}</option>
 					</select>
+					<label class="uk-margin-left">Duration, nights:</label>
+					<input class="uk-form-width-small" type="number" min="0" [(ngModel)]="item.duration">
 				</div>
-				<div class="uk-grid" *ngIf="hotel !== null">
+				<div class="uk-grid" *ngIf="item.hotel">
 					<div class="uk-width-1-1">
 						<h4 class="tm-article-subtitle">Rooms</h4>
 					</div>
 					<div class="uk-width-1-1 uk-margin-left">
 						<ul class="uk-width-1-1 uk-list">
-							<li *ngFor="let room of hotel.rooms | listOrderBy : ['title']">
+							<li *ngFor="let room of item.hotel.rooms | listOrderBy : ['title']">
 								<b>{{ room.title | ml:'en' }}, {{ room.size }} bed, {{ room.cost | currency:'USD':true:'1.2-2' }}</b>
 								<ul class="uk-width-1-1 uk-list" *ngIf="room.options.length > 0">
 									<li *ngFor="let option of room.options | listOrderBy : ['title']">{{ option.title | ml:'en' }}, {{ option.cost | currency:'USD':true:'1.2-2' }}</li>
@@ -98,12 +91,12 @@
 							</li>
 						</ul>
 					</div>
-					<div class="uk-width-1-1 uk-margin-top" *ngIf="hotel.options.length > 0">
+					<div class="uk-width-1-1 uk-margin-top" *ngIf="item.hotel.options.length > 0">
 						<h4 class="tm-article-subtitle">Options</h4>
 					</div>
-					<div class="uk-width-1-1 uk-margin-left" *ngIf="hotel.options.length > 0">
+					<div class="uk-width-1-1 uk-margin-left" *ngIf="item.hotel.options.length > 0">
 						<ul class="uk-width-1-1 uk-list">
-							<li *ngFor="let option of hotel.options | listOrderBy : ['title']">{{ option.title | ml:'en' }}, {{ option.cost | currency:'USD':true:'1.2-2' }}</li>
+							<li *ngFor="let option of item.hotel.options | listOrderBy : ['title']">{{ option.title | ml:'en' }}, {{ option.cost | currency:'USD':true:'1.2-2' }}</li>
 						</ul>
 					</div>
 				</div>
@@ -134,7 +127,7 @@
 		</div>
 
 		<!-- <div class="uk-width-1-1 uk-margin-top">
-			<p>DEBUG: {{ item.getPrice() | json }}</p>
+			<p>DEBUG: {{ item | json }}</p>
 		</div> -->
 	</div>
 </div>

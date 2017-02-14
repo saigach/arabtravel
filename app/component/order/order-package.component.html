@@ -1,18 +1,18 @@
 			<div class="tourist-package_slider-container">
 
-				<div data-uk-slideshow="autoplay:true" class="uk-slideshow" id="order-package-carousel" style="height: 200px;" *ngFor="let hotel of item.package.hotels">
-					<div class="item" *ngFor="let image of hotel.images">
-						<img alt="" src="{{image.link}}" />
+				<div data-uk-slideshow="autoplay:true" class="uk-slideshow" id="order-package-carousel" style="height: 200px;">
+					<div class="item" *ngFor="let image of item.package.hotel.images">
+						<img alt="" [src]="image && image.link || ''">
 					</div>
 				</div>
-				
+
 			</div>
 <script>
 /*var slideshow = UIkit.slideshow($('#order-package-carousel')[0], {autoplay:true, kenburns: true, autoplayInterval: 5000, pauseOnHover: false, height: '200px' });*/
 </script>
-		
+
 		<div class="" role="content">
-            <div class="container">
+            <div class="container" [class.hidden]="submitted">
 
                 <div class="tourist-package">
 
@@ -22,12 +22,12 @@
 
                         <div class="col-md-9">
 
-                            <a href="" class="btn btn-primary btn-ghost btn-left">{{ ml.newSearch | ml }}</a>
+                            <a href="/{{ lang }}/package-list" class="btn btn-primary btn-ghost btn-left">{{ ml.newSearch | ml }}</a>
 
                             <h1>{{ item.package.title | ml }}</h1>
 
                             <div class="tourist-package_date-line">
-                                <span class="tourist-package_date">21 Aug 2016 > 28 Aug 2016 (7 nights)</span>
+                                <span class="tourist-package_date">{{ item.departureDate | date: 'dd.MM.yyyy' }} > {{ item.returnDate | date: 'dd.MM.yyyy' }} ({{ item.package.duration }} nights)</span>
                                 <a class="datepicker-link" role="button" data-toggle="collapse" href="#tour123_datepicker" aria-expanded="false">other dates for this tour</a>
                                 <div style="position:relative" >
                                     <div id="tour123_datepicker" class="popover bottom datepicker-container collapse" role="tooltip"><div class="arrow"></div><div class="popover-content">
@@ -36,11 +36,11 @@
                                 </div>
                             </div>
 
-                            <div class="tourist-package_hotel" *ngFor="let hotel of item.package.hotels">
-                                <h3>Your Hotel Room</h3>
+                            <div class="tourist-package_hotel">
+                                <h3>{{ item.package.hotel.title | ml}}</h3>
                                 <div class="tourist_package_hotel_head row">
                                     <div class="col-md-10">
-                                        <h4>{{hotel.title | ml}} &nbsp;
+                                        <h4> &nbsp;
                                             <span class="rating">
                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                                 <i class="fa fa-star" aria-hidden="true"></i>
@@ -53,12 +53,7 @@
                                     </div>
                                 </div>
 
-                                <div class="tourist-package_hotel-description">
-
-                                    {{hotel.content | ml}}
-
-
-                                </div>
+                                <div class="tourist-package_hotel-description" [innerHTML]="item.package.hotel.content | ml">  </div>
 
                                 <h3>Hotel facilities</h3>
 
@@ -73,55 +68,24 @@
 
                                 <div class="tourist-package_hotel-options-list">
 
-                                    <div class="option-bar tourist-package_hotel-option selected">
-                                        <div class="option-bar_tag">Best option!</div>
+
+									<div *ngFor="let room of item.package.hotel.rooms">
+                                    <div class="option-bar tourist-package_hotel-option" [class.selected]="room === item.room" (click)="item.room = room">
+
                                         <div class="row option-bar_content">
 
                                             <div class="col-md-3 option-bar_image">
                                                 <div class="">
-                                                    <a href=""><img src="/pics/hotel/hotel-1330846_640.jpg" alt=""></a>
+                                                    <a href=""><img [src]="room.image && room.image.link || ''" alt=""></a>
                                                 </div>
                                             </div>
 
                                             <div class="col-md-7">
 
                                                 <div class="option-bar_description">
-                                                    <h5 class="option-bar_title">1 bedroom apartment</h5>
+                                                    <h5 class="option-bar_title">{{ room.title | ml }}</h5>
 
-                                                    <div class="text">
-                                                        Up to 4 people. With 1 double bed or twin beds and 1 sofa bed plus 1 fold-out bed in a separate living room. Air conditioning (payable locally)? kitchenette with small fridge, kettle, cooking rings & cooking utensils? shower room and a balcony or terrace.
-                                                    </div>
-                                                </div>
-
-                                            </div>
-
-                                            <div class="col-md-2 option-bar_pricing">
-                                                <div class="btn btn-chosen">
-                                                    <i class="fa fa-check" aria-hidden="true"></i> Your choise</div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                    <div class="option-bar tourist-package_hotel-option">
-
-                                        <div class="row option-bar_content">
-
-                                            <div class="col-md-3 option-bar_image">
-                                                <div class="">
-                                                    <a href=""><img src="/pics/hotel/hotel-1330846_640.jpg" alt=""></a>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-7">
-
-                                                <div class="option-bar_description">
-                                                    <h5 class="option-bar_title">2 bedroom apartment</h5>
-
-                                                    <div class="text">
-                                                        Up to 4 people. With 1 double bed or twin beds and 1 sofa bed plus 1 fold-out bed in a separate living room. Air conditioning (payable locally)? kitchenette with small fridge, kettle, cooking rings & cooking utensils? shower room and a balcony or terrace.
-                                                    </div>
+                                                    <div class="text" [innerHTML]="room.content | ml"></div>
                                                 </div>
 
                                             </div>
@@ -129,7 +93,7 @@
                                             <div class="col-md-2 option-bar_pricing">
 
                                                 <div class="option-bar-item_price">
-                                                    <div class="price">$100</div>
+                                                    <div class="price">{{ room.cost | currency:exchangeRate | number:'1.2-2' }} <span class="currency">{{currency}}</span></div>
                                                     <div class="lbl">per person</div>
                                                 </div>
 
@@ -140,30 +104,30 @@
 
                                         </div>
 
+                                    </div>
                                     </div>
 
 
                                     <h2>Upgrade your package</h2>
 
-                                    <div class="option-bar tourist-package_hotel-option">
+									<div *ngFor="let option of item.package.hotel.options">
+                                    <div class="option-bar tourist-package_hotel-option" [class.selected]="option.enable" (click)="option.enable = !option.enable">
 
                                         <div class="row option-bar_content">
 
                                             <div class="col-md-10">
 
                                                 <div class="option-bar_description">
-                                                    <h5 class="option-bar_title">Extra bed</h5>
+                                                    <h5 class="option-bar_title">{{ option.title | ml }}</h5>
 
-                                                    <div class="text">
-                                                        Up to 4 people. With 1 double bed or twin beds and 1 sofa bed plus 1 fold-out bed in a separate living room. Air conditioning (payable locally). </div>
                                                 </div>
 
                                             </div>
 
                                             <div class="col-md-2 option-bar_pricing">
 
-                                                <div class="option-bar-item_price">
-                                                    <div class="price">$20</div>
+                                            	  <div class="option-bar-item_price">
+                                                    <div class="price">{{ option.cost | currency:exchangeRate | number:'1.2-2' }} <span class="currency">{{currency}}</span></div>
                                                     <div class="lbl">per tour</div>
                                                 </div>
 
@@ -175,28 +139,26 @@
                                         </div>
 
                                     </div>
+                                    </div>
 
-                                    <div class="option-bar tourist-package_hotel-option">
+                                    <div *ngFor="let option of item.room.options">
+                                    <div class="option-bar tourist-package_hotel-option" [class.selected]="option.enable" (click)="option.enable = !option.enable">
 
                                         <div class="row option-bar_content">
-
-
 
                                             <div class="col-md-10">
 
                                                 <div class="option-bar_description">
-                                                    <h5 class="option-bar_title">Sea view</h5>
+                                                    <h5 class="option-bar_title">{{ option.title | ml }}</h5>
 
-                                                    <div class="text">
-                                                        Up to 4 people. With 1 double bed or twin beds and 1 sofa bed plus 1 fold-out bed in a separate living room. Air conditioning (payable locally). </div>
                                                 </div>
 
                                             </div>
 
                                             <div class="col-md-2 option-bar_pricing">
 
-                                                <div class="option-bar-item_price">
-                                                    <div class="price">$20</div>
+                                            	  <div class="option-bar-item_price">
+                                                    <div class="price">{{ option.cost | currency:exchangeRate | number:'1.2-2' }} <span class="currency">{{currency}}</span></div>
                                                     <div class="lbl">per tour</div>
                                                 </div>
 
@@ -208,48 +170,8 @@
                                         </div>
 
                                     </div>
-
-                                    <h2>Add tours from your hotel</h2>
-
-                                    <div class="option-bar tourist-package_hotel-option">
-
-                                        <div class="row option-bar_content">
-
-                                            <div class="col-md-3 option-bar_image">
-                                                <div class="">
-                                                    <a href=""><img src="/pics/2216756909_4d46dac5f6_z.jpg" alt=""></a>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-7">
-
-                                                <div class="option-bar_description">
-                                                    <h5 class="option-bar_title">Cairo Day Tour</h5>
-
-                                                    <div class="text">
-                                                    Up to 4 people. With 1 double bed or twin beds and 1 sofa bed plus 1 fold-out bed in a separate living room. Air conditioning (payable locally)? kitchenette with small fridge, kettle, cooking rings & cooking utensils? shower room and a balcony or terrace.
-                                                    </div>
-                                                </div>
-
-                                            </div>
-
-                                            <div class="col-md-2 option-bar_pricing">
-
-                                                <div class="option-bar-item_price">
-                                                    <div class="price">$80</div>
-                                                    <div class="lbl">per person</div>
-                                                </div>
-
-
-                                                <a href="" class="btn btn-info btn-ghost btn-option-choose">Chose this</a>
-
-                                            </div>
-
-                                        </div>
-
                                     </div>
 
-                                    <!-- -->
                                 </div>
 
                             </div>
@@ -260,7 +182,7 @@
 
                             <aside class="widget tour-details sticky-widget" id="order-details">
                                 <header class="widget_header">
-                                    {{ml.orderDetails | ml}}
+                                    {{ml.orderDetails | ml }}
                                 </header>
 
                                 <div class="widget_section-header tour-trip">
@@ -274,15 +196,15 @@
                                 <div class="widget_section-body tour-trip_details collapse in" id="tour-trip_details">
                                     <div class="order-trip_detail widget_line">
                                         <div class="lbl">Outbound</div>
-                                        <div class="val">21 aug 2016</div>
+                                        <div class="val">{{ item.departureDate | date: 'dd.MM.yyyy' }}</div>
                                     </div>
-                                    <div class="order-trip_outbound">10.00 Aqaba City Port - 11.00 Sharm el-Sheikh Marine Port</div>
+                                    <div class="order-trip_outbound">{{ item.package.pointA.title | ml }} &rarr; {{ item.package.pointB.title | ml }}</div>
 
                                     <div class="order-trip_detail widget_line">
                                         <div class="lbl">Return</div>
-                                        <div class="val">28 aug 2016</div>
+                                        <div class="val">{{ item.returnDate | date: 'dd.MM.yyyy' }}</div>
                                     </div>
-                                    <div class="order-trip_outbound">0.00 Sharm el-Sheikh Marine Port - 11.00 Aqaba City Port</div>
+                                    <div class="order-trip_outbound">{{ item.package.pointB.title | ml }} &rarr; {{ item.package.pointA.title | ml }}</div>
 
                                 </div>
 
@@ -335,63 +257,66 @@
                                         <p class="widget-label"><b>Number of guests</b></p>
 
                                         <div class="row">
-
-                                            <div class="col-md-4 form-group">
-                                                <label for="rf">Adults</label>
-                                                <input type="text" class="form-control" data-control="spinner-vertical" />
-                                            </div>
-
-                                            <div class="col-md-4 form-group">
-                                                <label for="rf">2-6 yr</label>
-                                                <input type="text" class="form-control" data-control="spinner-vertical" />
-                                            </div>
-
-                                            <div class="col-md-4 form-group">
-                                                <label for="rf">&lt;2 yr</label>
-                                                <input type="text" class="form-control" data-control="spinner-vertical" />
-                                            </div>
-
+                                        	<div class="col-md-4 form-group" *ngFor="let pc of peopleCount">
+                                       			<label for="rf">{{pc.ageGroup.title | ml}}</label>
+                                       			<input type="number" min="0" class="form-control" [(ngModel)]="pc.count" [ngModelOptions]="{standalone: true}" (change)="regenPeople()">
+                                   			 </div>
                                         </div>
 
                                         <p class="widget-label"><b>Price</b> (per person)</p>
 
                                         <div class="widget_section-body">
-                                            <div class="widget_line">
-                                                <div class="lbl">Adults</div>
-                                                <div class="val">$30 x 2</div>
-                                            </div>
-                                            <div class="widget_line">
-                                                <div class="lbl">2-6yr</div>
-                                                <div class="val">$15</div>
-                                            </div>
-                                            <div class="widget_line">
-                                                <div class="lbl">&lt;2yr</div>
-                                                <div class="val">$5</div>
-                                            </div>
-                                            <div class="widget_line">
-                                                <div class="lbl">Vehicle (car)</div>
-                                                <div class="val">$20</div>
+											<div class="widget_line" *ngFor="let peopleCount of item.peopleCount">
+												<div class="lbl">{{ peopleCount.ageGroup.title | ml }}</div>
+												<div class="val">{{ peopleCount.count }}&nbsp;x&nbsp;{{ (item.price.getCost(peopleCount.ageGroup) || 0) | currency:exchangeRate | number:'1.2-2' }}{{currency}}</div>
+											</div>
+                                        </div>
+
+                                        <div class="tour-details_summary">
+                                            <div class="tour-details_summary_line">
+                                                <div class="lbl">Tickets cost</div>
+                                                <div class="val">{{ item.roadCost | currency:exchangeRate | number:'1.2-2' }} <span class="currency">{{currency}}</span></div>
                                             </div>
                                         </div>
 
                                         <div class="tour-details_summary">
                                             <div class="tour-details_summary_line">
-                                                <div class="lbl">Tickets price</div>
-                                                <div class="val">$100</div>
+                                                <div class="lbl">Hotel cost</div>
+                                                <div class="val">{{ item.hotelCost | currency:exchangeRate | number:'1.2-2' }} <span class="currency">{{currency}}</span></div>
                                             </div>
                                         </div>
 
+                                        <div class="tour-details_summary">
+                                            <div class="tour-details_summary_line">
+                                                <div class="lbl">{{ ml.processingFee | ml }}</div>
+                                                <div class="val">{{ item.processingFee | currency:exchangeRate | number:'1.2-2' }} <span class="currency">{{currency}}</span></div>
+                                            </div>
+                                        </div>
+
+										<div class="tour-details_summary">
+                                            <div class="tour-details_summary_line">
+                                                <div class="lbl">{{ ml.total | ml }}</div>
+                                                <div class="val">{{ item.totalCost | currency:exchangeRate | number:'1.2-2' }} <span class="currency">{{currency}}</span></div>
+                                            </div>
+                                            <div class="tour-details_summary_line" *ngIf="currency === '$'">
+					                            <div class="lbl">({{ ml.approx | ml }}:</div>
+					                            <div class="val">{{ item.totalCost | number:'1.2-2' }} jod</div>
+					                        </div>
+                                        </div>
+
+
+
 										<hr>
-										
+
 										<p>{{ ml.leave_info | ml }}</p>
-				
+
 										<div class="row">
 											<div class="col-xs-12">
 												<div class="form-group">
 													<label for="">
 														{{ ml.name | ml }}
 													</label>
-													<input type="text" class="form-control">
+													<input type="text" class="form-control" [(ngModel)]="primaryContact.title" [ngModelOptions]="{standalone: true}">
 												</div>
 											</div>
 											<div class="col-xs-12">
@@ -399,7 +324,7 @@
 													<label for="">
 														{{ ml.phone | ml }}
 													</label>
-													<input type="text" class="form-control">
+													<input type="text" class="form-control" [(ngModel)]="primaryContact.phone" [ngModelOptions]="{standalone: true}">
 												</div>
 											</div>
 											<div class="col-xs-12">
@@ -407,17 +332,17 @@
 													<label for="">
 														{{ ml.email | ml }}
 													</label>
-													<input type="email" class="form-control">
+													<input type="email" class="form-control" [(ngModel)]="primaryContact.email" [ngModelOptions]="{standalone: true}">
 												</div>
 											</div>
 										</div>
-										
+
 										<div class="text-center widget_submit">
-											<button type="submit" class="btn btn-danger btn-lg">
+											<button type="submit" class="btn btn-danger btn-lg" (click)="submit(); $event.stopPropagation()">
 												{{ ml.submitPayment | ml }}
 											</button>
 										</div>
-										
+
 
                                     </form>
                                 </footer>
@@ -429,7 +354,12 @@
                     </div>
 
                 </div>
-				
+
             </div>
+
+            <div class="container" [class.hidden]=" !submitted ">
+		            <h1>{{ ml.orderConfirmHeader | ml }}</h1>
+		            {{ ml.orderConfirm | ml }} <strong>{{ item.hrid }}</strong>
+		    </div>
 
         </div>

@@ -7,6 +7,8 @@ import { MLService } from '../../service/ml.service'
 import { MLString } from '../../../model/common'
 import { PackageOrder } from '../../../model/package-order'
 import { Human, AgeGroup } from '../../../model/human'
+import { PeopleCount } from '../../../model/order'
+import { Room } from '../../../model/hotel'
 
 const lang = document.querySelector('html').getAttribute('lang') || 'en'
 
@@ -26,6 +28,8 @@ export class OrderPackageComponent implements OnInit {
 
 	ml: { [key:string]: MLString } = {}
 
+	lang = lang
+
 	_currency: string = 'usd'
 
 	get currency():string {
@@ -43,6 +47,16 @@ export class OrderPackageComponent implements OnInit {
 		return this.item && this.item.exchangeRate || 0
 	}
 
+	peopleCount: PeopleCount[] = AgeGroup.List.reduce(
+		( prev:PeopleCount[], value:AgeGroup ) =>
+			prev.concat({
+				ageGroup: value,
+				count: value.id === 'adults' ? 1 : 0
+			}),
+		[]
+	)
+
+
 	constructor(private router: Router, private apiService: APIService, private mlService: MLService, private ref: ChangeDetectorRef) {
 
 		this.currency = localStorage && localStorage.getItem('currency') || null
@@ -57,8 +71,22 @@ export class OrderPackageComponent implements OnInit {
 
 		if (!currentOrderObj)
 			window.location.href = '/' + lang
-		else
-			this.item =  new PackageOrder(currentOrderObj)
+		else {
+			this.item = new PackageOrder(currentOrderObj)
+			this.peopleCount.forEach( (value: PeopleCount) =>{
+				let pc:PeopleCount = this.item.peopleCount.find( (pc: PeopleCount ) => pc.ageGroup === value.ageGroup )
+				if (pc)
+					value.count = pc.count
+			})
+
+			this.item.price = this.item.package.getPrice(this.item.anyDate ? undefined : this.item.departureDate)
+			this.item.room = this.item.package.hotel.rooms.reduce(
+				(prev:Room, value:Room) => prev === null || value.cost <= prev.cost ? value : prev,
+				null
+			)
+
+			console.dir(this.item)
+		}
 	}
 
 	ngOnInit(): void {
@@ -83,30 +111,43 @@ export class OrderPackageComponent implements OnInit {
 		)
 	}
 
+	regenPeople() {
+		this.item.people = this.peopleCount.reduce(
+			(prev: Human[], value:PeopleCount) => {
+				for(let i = 0; i < value.count; i++)
+					prev.push(new Human({ defaultAgeGroup: value.ageGroup }))
+				return prev
+			},
+			[]
+		)
+	}
+
+	primaryContact = new Human()
+
 	submit(): void {
 		if (this.submitting)
 			return
 		this.submitting = true
 
-		// this.apiService.order(this.item, this.primaryContact).then( value => {
-		// 	this.item = new TripOrder(value)
-		// 	UIkit.notify('Order sucess', {status  : 'success' })
-		// 	this.submitted = true
-		// 	localStorage.removeItem('currentOrder')
-		// 	this.submitting = false
-		// }).catch( error => {
-		// 	if (error.code && error.code === 401) {
+		this.apiService.order(this.item, this.primaryContact).then( value => {
+			this.item = new PackageOrder(value)
+			UIkit.notify('Order sucess', {status  : 'success' })
+			this.submitted = true
+			localStorage.removeItem('currentPackageOrder')
+			this.submitting = false
+		}).catch( error => {
+			if (error.code && error.code === 401) {
 
-		// 		let loginForm: any = document.querySelector('#login-form-modal form')
-		// 		loginForm.elements.email.value = this.primaryContact && this.primaryContact.email
+				let loginForm: any = document.querySelector('#login-form-modal form')
+				loginForm.elements.email.value = this.primaryContact && this.primaryContact.email
 
-		// 		UIkit.modal('#login-form-modal').show()
-		// 		this.submitting = false
-		// 		return
-		// 	}
+				UIkit.modal('#login-form-modal').show()
+				this.submitting = false
+				return
+			}
 
-		// 	UIkit.notify('Server error', {status  : 'warning' })
-		// 	this.submitting = false
-		// })
+			UIkit.notify('Server error', {status  : 'warning' })
+			this.submitting = false
+		})
 	}
 }
