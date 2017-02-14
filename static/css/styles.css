@@ -3083,6 +3083,8 @@ label {
   max-width: 100%;
   margin-bottom: 5px;
   font-weight: bold;
+  
+  font-size: 16px;
 }
 
 input[type="search"] {
@@ -8179,6 +8181,9 @@ html[dir='rtl'] .subtitle2 {
 .submit-btn-container {
   margin-top: 25px;
 }
+.payment-details_submit button {
+	font-size: 30px;
+}
 
 .input-group-addon:not(:first-child):not(:last-child), .input-group-btn:not(:first-child):not(:last-child), .input-group .form-control:not(:first-child):not(:last-child) {
   border-radius: 4px;
@@ -8319,7 +8324,7 @@ html[dir='rtl'] .styled-checkbox input[type=checkbox] + label:before {
   border-radius: 50%;
 }
 html[dir='rtl'] .styled-radio input[type=radio] + label {
-    padding: 0 30px 0 0;
+    padding: 0 6px 0 0;
 }
 html[dir='rtl'] .styled-radio input[type=radio] + label:before {
     left: auto;
@@ -8424,6 +8429,8 @@ html[dir='rtl'] .styled-radio input[type=radio]:checked + label:after {
 }
 .widget.tour-details {
   border-color: #00b7f4;
+  
+  margin-top: -88px;
 }
 .widget.tour-details .widget_header {
   background-color: #00b7f4;
@@ -8534,11 +8541,11 @@ html[dir='rtl'] .styled-radio input[type=radio]:checked + label:after {
 }
 .order-details .order-details_total .lbl {
   display: table-cell;
-  width: 70%;
+  width: 60%;
 }
 .order-details .order-details_total .val {
   display: table-cell;
-  width: 30%;
+  width: 40%;
 }
 
 .tour-details .widget_section-header {
@@ -8644,7 +8651,7 @@ html[dir='rtl'] .passenger-info_delete {
 
 .valid-thru_month,
 .valid-thru_year {
-  width: 95px;
+  width: 90px;
   display: inline-block;
 }
 
@@ -8661,7 +8668,7 @@ html[dir='rtl'] .passenger-info_delete {
 }
 
 #cvv {
-  width: 50px;
+  width: 70px;
   display: inline-block;
 }
 
@@ -9182,4 +9189,39 @@ html[dir="rtl"] .input-group.date input {
     position: absolute;
     right: 0;
     top: 10px;
+}
+
+html[dir="rtl"] #order-details-container .uk-width-medium-3-10 {
+	left: 70%;
+	position: relative;
+}
+html[dir="rtl"] #order-details-container .uk-width-medium-7-10 {
+	left: -30%;
+	position: relative;
+}
+.larr {
+	display: none;
+}
+html[dir="rtl"] .rarr {
+	display: none;
+}
+html[dir="rtl"] .larr {
+	display: inline;
+}
+html[dir="rtl"] .ico_boat:before {
+-moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        filter: FlipH;
+        -ms-filter: "FlipH";
+}
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('../fonts/glyphicons-halflings-regular.eot');
+  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+
+#order-package-carousel {
+	height: 500px !important;
 }

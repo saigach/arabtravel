@@ -1,29 +1,30 @@
-        <div class="main-content" role="content">
+			<div class="tourist-package_slider-container">
+
+				<div data-uk-slideshow="autoplay:true" class="uk-slideshow" id="order-package-carousel" style="height: 200px;" *ngFor="let hotel of item.package.hotels">
+					<div class="item" *ngFor="let image of hotel.images">
+						<img alt="" src="{{image.link}}" />
+					</div>
+				</div>
+				
+			</div>
+<script>
+/*var slideshow = UIkit.slideshow($('#order-package-carousel')[0], {autoplay:true, kenburns: true, autoplayInterval: 5000, pauseOnHover: false, height: '200px' });*/
+</script>
+		
+		<div class="" role="content">
             <div class="container">
 
                 <div class="tourist-package">
 
-                    <div class="tourist-package_slider-container full-width">
-
-                        <div class="owl-carousel tour-carousel">
-                            <div class="carousel-item"><img src="pics/hotel/hotel-1330846_640.jpg" alt=""></div>
-                            <div class="carousel-item"><img src="pics/hotel/hotel-1330847_640.jpg" alt=""></div>
-                            <div class="carousel-item"><img src="pics/hotel/image2.jpg" alt=""></div>
-                            <div class="carousel-item"><img src="pics/hotel/image3.jpg" alt=""></div>
-                            <div class="carousel-item"><img src="pics/hotel/image61.jpg" alt=""></div>
-                            <div class="carousel-item"><img src="pics/hotel/image62.jpg" alt=""></div>
-                        </div>
-
-                    </div>
 
 
                     <div class="row tourist-package_body">
 
                         <div class="col-md-9">
 
-                            <a href="" class="btn btn-primary btn-ghost btn-left">New search</a>
+                            <a href="" class="btn btn-primary btn-ghost btn-left">{{ ml.newSearch | ml }}</a>
 
-                            <h1>Tour for two to Sharm El-Sheikh</h1>
+                            <h1>{{ item.package.title | ml }}</h1>
 
                             <div class="tourist-package_date-line">
                                 <span class="tourist-package_date">21 Aug 2016 > 28 Aug 2016 (7 nights)</span>
@@ -35,11 +36,11 @@
                                 </div>
                             </div>
 
-                            <div class="tourist-package_hotel">
+                            <div class="tourist-package_hotel" *ngFor="let hotel of item.package.hotels">
                                 <h3>Your Hotel Room</h3>
                                 <div class="tourist_package_hotel_head row">
                                     <div class="col-md-10">
-                                        <h4>Hotel Eden Rock Hotel Namaa Bay
+                                        <h4>{{hotel.title | ml}} &nbsp;
                                             <span class="rating">
                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                                 <i class="fa fa-star" aria-hidden="true"></i>
@@ -54,15 +55,7 @@
 
                                 <div class="tourist-package_hotel-description">
 
-                                    <p>One of our bestsellers in Sharm El Sheikh! This property is 3 minutes walk from the beach. Featuring stunning views of the Red Sea and the Sinai desert mountains, this hotel in Naama Bay offers rooms with a private balcony or terrace. Facilities include an outdoor pool.</p>
-                                    <p>The air-conditioned rooms of Eden Rock Hotel are decorated with wooden furniture and large windows. All rooms have satellite TV, a minibar, and an en suite bathroom. Some rooms have a seating area.</p>
-                                    <p>Guests can enjoy local and international cuisine in main restaurant Fever, which overlooks the pool. Pool bar Parrot offers a wide variety of drinks and panoramic views. Indoor bar Wave is open 24/7.</p>
-                                    <p>A staircase leads from Eden Rock?s pool area to a private, sandy beach area and Naama Bay?s marina. The hotel also offers massage services, laundry facilities, and a 24-hour reception.</p>
-                                    <p>Several shops, restaurants and bars are within walking distance of Eden Rock Hotel. Sharm el-Sheikh International Airport is just 15 km from the hotel.</p>
-                                    <p>This is our guests? favourite part of Sharm El Sheikh, according to independent reviews.</p>
-                                    <p>We speak your language!</p>
-                                    <p>Eden Rock Hotel Namaa Bay has been welcoming Booking.com guests since 2 Mar 2011</p>
-                                    <p>Hotel Rooms: 88</p>
+                                    {{hotel.content | ml}}
 
 
                                 </div>
@@ -265,9 +258,9 @@
 
                         <div class="col-md-3">
 
-                            <aside class="widget tour-details sticky-widget" id="tour-details">
+                            <aside class="widget tour-details sticky-widget" id="order-details">
                                 <header class="widget_header">
-                                    Order details
+                                    {{ml.orderDetails | ml}}
                                 </header>
 
                                 <div class="widget_section-header tour-trip">
@@ -390,7 +383,7 @@
 
 										<hr>
 										
-										<p>Leave your info and we will contact you as soon as possible</p>
+										<p>{{ ml.leave_info | ml }}</p>
 				
 										<div class="row">
 											<div class="col-xs-12">
@@ -398,7 +391,7 @@
 													<label for="">
 														{{ ml.name | ml }}
 													</label>
-													<input type="text" class="form-control" [(ngModel)]="item.title">
+													<input type="text" class="form-control">
 												</div>
 											</div>
 											<div class="col-xs-12">
@@ -406,7 +399,7 @@
 													<label for="">
 														{{ ml.phone | ml }}
 													</label>
-													<input type="text" class="form-control" [(ngModel)]="item.phone">
+													<input type="text" class="form-control">
 												</div>
 											</div>
 											<div class="col-xs-12">
@@ -414,13 +407,13 @@
 													<label for="">
 														{{ ml.email | ml }}
 													</label>
-													<input type="email" class="form-control" [(ngModel)]="item.email">
+													<input type="email" class="form-control">
 												</div>
 											</div>
 										</div>
 										
 										<div class="text-center widget_submit">
-											<button type="submit" class="btn btn-danger btn-lg" (click)="submit(); $event.stopPropagation()">
+											<button type="submit" class="btn btn-danger btn-lg">
 												{{ ml.submitPayment | ml }}
 											</button>
 										</div>
