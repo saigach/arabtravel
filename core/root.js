@@ -23,10 +23,13 @@ module.exports = class RootEngine {
 				enable
 		`).then(staticPages => {
 
-			responseData.data.static = staticPages
 			responseData.data.userEmail = requestData.user && requestData.user.email || null
 			responseData.data.lang = requestData.request.language
 			responseData.data.ml = requestData.ml
+			responseData.data.static = staticPages.map( value => {
+				value.title = value.title[responseData.data.lang]
+				return value
+			} )
 			responseData.data = this.template['root'](responseData.data)
 			return responseData
 		})
