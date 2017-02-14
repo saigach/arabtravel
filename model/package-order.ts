@@ -2,7 +2,6 @@ import { newDate } from './common'
 
 import { Order, PeopleCount, OrderType } from './order'
 import { Package } from './package'
-import { Price } from './price'
 import { Hotel, Room } from './hotel'
 
 const ONE_DAY = 24*60*60*1000
@@ -11,8 +10,6 @@ export class PackageOrder extends Order {
 	static __api: string = Order.__api
 
 	package: Package
-	price: Price
-
 	hotel: Hotel
 	room: Room
 
@@ -24,7 +21,6 @@ export class PackageOrder extends Order {
 		this.type = OrderType.getOrderType('package')
 
 		this.package = value.package ? ( value.package instanceof Package ? value.package : new Package(value.package) ) : null
-		this.price = value.price ? ( value.price instanceof Price ? value.price : new Price(value.price) ) : null
 
 		this.hotel = value.hotel ? (value.hotel instanceof Hotel ? value.hotel : new Hotel(value.hotel) ) : null
 		this.room = value.room ? (value.room instanceof Room ? value.room : new Room(value.room) ) : null
@@ -35,7 +31,6 @@ export class PackageOrder extends Order {
 	toObject(): {} {
 		return Object.assign({}, super.toObject(), {
 			package: this.package && this.package.toObject() || null,
-			price: this.price && this.price.toObject() || null,
 			hotel: this.hotel && this.hotel.toObject() || null,
 			room: this.hotel && this.room && this.room.toObject() || null,
 			anyDate: this.anyDate

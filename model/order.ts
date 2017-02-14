@@ -2,7 +2,7 @@ import { newDate, Model, MLString } from './common'
 import { User } from './user'
 
 import { Human, AgeGroup } from './human'
-import { Vehicle } from './vehicle'
+import { Price } from './price'
 
 export class PaymentType {
 	static List:PaymentType[] = [
@@ -228,6 +228,8 @@ export class Order extends Model {
 	departureDate: Date
 	returnDate: Date
 
+	price: Price
+
 	people: Human[]
 
 	paymentType: PaymentType
@@ -253,11 +255,13 @@ export class Order extends Model {
 
 		this.date = value.date ? new Date(value.date) : new Date()
 
+		if (Number.isNaN( this.date.getTime() ))
+			this.date = new Date()
+
 		this.departureDate = newDate(value.departureDate) || newDate()
 		this.returnDate = newDate(value.returnDate) || newDate()
 
-		if (Number.isNaN( this.date.getTime() ))
-			this.date = new Date()
+		this.price = value.price ? ( value.price instanceof Price ? value.price : new Price(value.price) ) : null
 
 		this.people = value.people instanceof Array ?
 			value.people.reduce(
@@ -286,6 +290,7 @@ export class Order extends Model {
 			date: this.date,
 			departureDate: this.departureDate,
 			returnDate: this.returnDate,
+			price: this.price && this.price.toObject() || null,
 			people: this.people.reduce( (prev: {}[], value: Human) => prev.concat(value.toObject()), []),
 			paymentType: this.paymentType.id,
 			card: this.card.toObject(),

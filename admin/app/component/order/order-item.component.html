@@ -79,6 +79,14 @@
 				</div>
 			</div>
 
+			<div class="uk-width-1-1 uk-margin-top" *ngIf="item.type.id === 'trip'">
+				<order-trip [(order)]="item"></order-trip>
+			</div>
+
+			<div class="uk-width-1-1 uk-margin-top" *ngIf="item.type.id === 'package'">
+				<order-package [(order)]="item"></order-package>
+			</div>
+
 			<div class="uk-width-1-1 uk-grid uk-margin-top">
 				<div class="uk-width-8-10">
 					<h3 class="tm-article-subtitle">Passengers</h3>
@@ -96,14 +104,6 @@
 					<h3 class="uk-panel-title">Passenger #{{ i + 1 }}</h3>
 					<order-human [(human)]="item.people[i]"></order-human>
 				</div>
-			</div>
-
-			<div class="uk-width-1-1 uk-margin-top" *ngIf="item.type.id === 'trip'">
-				<order-trip [(order)]="item"></order-trip>
-			</div>
-
-			<div class="uk-width-1-1 uk-margin-top" *ngIf="item.type.id === 'package'">
-				<order-package [(order)]="item"></order-package>
 			</div>
 
 			<div class="uk-width-1-1 uk-margin-top">

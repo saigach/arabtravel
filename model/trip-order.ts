@@ -9,8 +9,6 @@ export class TripOrder extends Order {
 	static __api: string = Order.__api
 
 	trip: Trip
-	price: Price
-
 	vehicle: Vehicle
 
 	constructor(value: any = {}) {
@@ -19,7 +17,6 @@ export class TripOrder extends Order {
 		this.type = OrderType.getOrderType('trip')
 
 		this.trip = value.trip ? ( value.trip instanceof Trip ? value.trip : new Trip(value.trip) ) : null
-		this.price = value.price ? ( value.price instanceof Price ? value.price : new Price(value.price) ) : null
 
 		this.vehicle = value.vehicle ? ( value.vehicle instanceof Vehicle ? value.vehicle : new Vehicle(value.vehicle) ) : null
 	}
@@ -27,7 +24,6 @@ export class TripOrder extends Order {
 	toObject(): {} {
 		return Object.assign({}, super.toObject(), {
 			trip: this.trip && this.trip.toObject() || null,
-			price: this.price && this.price.toObject() || null,
 			vehicle: this.vehicle && this.vehicle.toObject() || null
 		})
 	}
