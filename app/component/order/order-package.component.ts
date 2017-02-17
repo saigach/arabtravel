@@ -6,8 +6,7 @@ import { MLService } from '../../service/ml.service'
 
 import { MLString } from '../../../model/common'
 import { PackageOrder } from '../../../model/package-order'
-import { Human, AgeGroup } from '../../../model/human'
-import { PeopleCount } from '../../../model/order'
+import { Human } from '../../../model/human'
 import { Room } from '../../../model/hotel'
 
 const lang = document.querySelector('html').getAttribute('lang') || 'en'
@@ -18,8 +17,6 @@ const lang = document.querySelector('html').getAttribute('lang') || 'en'
 	templateUrl: '/app/component/order/order-package.component.html'
 })
 export class OrderPackageComponent implements OnInit {
-
-	ageGroups: AgeGroup[] = AgeGroup.List
 
 	item: PackageOrder = new PackageOrder()
 
@@ -47,14 +44,14 @@ export class OrderPackageComponent implements OnInit {
 		return this.item && this.item.exchangeRate || 0
 	}
 
-	peopleCount: PeopleCount[] = AgeGroup.List.reduce(
-		( prev:PeopleCount[], value:AgeGroup ) =>
-			prev.concat({
-				ageGroup: value,
-				count: value.id === 'adults' ? 1 : 0
-			}),
-		[]
-	)
+	// peopleCount: PeopleCount[] = AgeGroup.List.reduce(
+	// 	( prev:PeopleCount[], value:AgeGroup ) =>
+	// 		prev.concat({
+	// 			ageGroup: value,
+	// 			count: value.id === 'adults' ? 1 : 0
+	// 		}),
+	// 	[]
+	// )
 
 
 	constructor(private router: Router, private apiService: APIService, private mlService: MLService, private ref: ChangeDetectorRef) {
@@ -73,17 +70,17 @@ export class OrderPackageComponent implements OnInit {
 			window.location.href = '/' + lang
 		else {
 			this.item = new PackageOrder(currentOrderObj)
-			this.peopleCount.forEach( (value: PeopleCount) =>{
-				let pc:PeopleCount = this.item.peopleCount.find( (pc: PeopleCount ) => pc.ageGroup === value.ageGroup )
-				if (pc)
-					value.count = pc.count
-			})
+			// this.peopleCount.forEach( (value: PeopleCount) =>{
+			// 	let pc:PeopleCount = this.item.peopleCount.find( (pc: PeopleCount ) => pc.ageGroup === value.ageGroup )
+			// 	if (pc)
+			// 		value.count = pc.count
+			// })
 
 			this.item.price = this.item.package.getPrice(this.item.anyDate ? undefined : this.item.departureDate)
-			this.item.room = this.item.package.hotel.rooms.reduce(
-				(prev:Room, value:Room) => prev === null || value.cost <= prev.cost ? value : prev,
-				null
-			)
+			// this.item.room = this.item.package.hotel.rooms.reduce(
+			// 	(prev:Room, value:Room) => prev === null || value.cost <= prev.cost ? value : prev,
+			// 	null
+			// )
 
 			console.dir(this.item)
 		}
@@ -112,14 +109,14 @@ export class OrderPackageComponent implements OnInit {
 	}
 
 	regenPeople() {
-		this.item.people = this.peopleCount.reduce(
-			(prev: Human[], value:PeopleCount) => {
-				for(let i = 0; i < value.count; i++)
-					prev.push(new Human({ defaultAgeGroup: value.ageGroup }))
-				return prev
-			},
-			[]
-		)
+		// this.item.people = this.peopleCount.reduce(
+		// 	(prev: Human[], value:PeopleCount) => {
+		// 		for(let i = 0; i < value.count; i++)
+		// 			prev.push(new Human({ defaultAgeGroup: value.ageGroup }))
+		// 		return prev
+		// 	},
+		// 	[]
+		// )
 	}
 
 	primaryContact = new Human()

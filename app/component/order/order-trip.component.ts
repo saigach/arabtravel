@@ -7,7 +7,7 @@ import { MLService } from '../../service/ml.service'
 import { MLString } from '../../../model/common'
 import { PaymentType } from '../../../model/order'
 import { TripOrder } from '../../../model/trip-order'
-import { Human, AgeGroup } from '../../../model/human'
+import { Human } from '../../../model/human'
 
 const lang = document.querySelector('html').getAttribute('lang') || 'en'
 
@@ -22,7 +22,7 @@ export class OrderTripComponent implements OnInit {
 	years: number[] = []
 
 	paymentTypes: PaymentType[] = PaymentType.List
-	ageGroups: AgeGroup[] = AgeGroup.List
+	// ageGroups: AgeGroup[] = AgeGroup.List
 
 	item: TripOrder = new TripOrder()
 

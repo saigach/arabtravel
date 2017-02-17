@@ -19,7 +19,7 @@ export class Package extends Model {
 
 	hotel: Hotel
 
-	duration: number
+	durations: number[]
 
 	prices: Price[] = []
 
@@ -38,7 +38,10 @@ export class Package extends Model {
 
 		this.hotel = value.hotel ? (value.hotel instanceof Hotel ? value.hotel : new Hotel(value.hotel)) : null
 
-		this.duration = value.duration && Number.parseInt(value.duration) || 1
+		this.durations = value.durations instanceof Array ?
+			value.durations.reduce(( prev: number[] , value: any) => prev.concat(parseInt(value)), [])
+				.filter( (value, index, self) => value && value > 0 && self.indexOf(value) === index )
+			: []
 
 		this.prices = value.prices instanceof Array ?
 			value.prices.reduce(
@@ -59,21 +62,21 @@ export class Package extends Model {
 		) || null
 	}
 
-	get basePrice(): number {
-		let sum = 0
+	// getCost(date: Date = new Date(), ages: number[] = []): number {
+	// 	let sum = 0
 
-		if (this.hotel)
-			sum += this.hotel.minimalCost
+	// 	if (this.hotel)
+	// 		sum += this.hotel.getCost(ages)
 
-		let price = this.getPrice()
+	// 	let price = this.getPrice(date)
+	// 	if (price && price.costs.length > 0)
+	// 		sum += ages.reduce( (prev: number, age: number) => {
+	// 			let cost = price.costs.find( (value:Cost) => value.key === age )
+	// 			return cost ? prev + cost.cost : prev
+	// 		}, 0)
 
-		if (price && price.costs.length > 0) {
-			let cost = price.costs.find( (value:Cost) => value.ageGroup.id === 'adults' )
-			sum += (cost ? cost.cost : price.costs[0].cost)
-		}
-
-		return sum
-	}
+	// 	return sum
+	// }
 
 	toObject(): {} {
 		return Object.assign(super.toObject(), {
@@ -83,7 +86,7 @@ export class Package extends Model {
 			pointA: this.pointA && this.pointA.toObject() || null,
 			pointB: this.pointB && this.pointB.toObject() || null,
 			hotel: this.hotel && this.hotel.toObject() || null,
-			duration: this.duration,
+			durations: this.durations,
 			prices: this.prices.reduce( (prev: {}[], value: Price) => prev.concat(value.toObject()), []),
 			image: this.image && this.image.toObject() || null
 		})

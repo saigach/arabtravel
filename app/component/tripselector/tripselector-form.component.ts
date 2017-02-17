@@ -4,15 +4,16 @@ import { Router } from '@angular/router'
 import { APIService } from '../../service/api.service'
 import { MLService } from '../../service/ml.service'
 
-import { str2Date, SearchData, MLString } from '../../../model/common'
+import { str2Date, MLString, SearchData } from '../../../model/common'
 import { Trip, TripType } from '../../../model/trip'
 import { Package } from '../../../model/package'
-import { OrderType, PeopleCount } from '../../../model/order'
+import { OrderType } from '../../../model/order'
 import { TripOrder } from '../../../model/trip-order'
+import { PackageOrder } from '../../../model/package-order'
 import { Point } from '../../../model/point'
 import { Vehicle } from '../../../model/vehicle'
-import { VehicleCost} from '../../../model/price'
-import { Human, AgeGroup } from '../../../model/human'
+import { Human } from '../../../model/human'
+import { Cost } from '../../../model/price'
 
 const lang = document.querySelector('html').getAttribute('lang') || 'en'
 
@@ -152,8 +153,8 @@ export class TripSelectorFormComponent implements OnInit {
 
 		let price = this.trip.getPrice(this.departureDate || null)
 
-		return price.vehicles.reduce( (prev: Vehicle[], value: VehicleCost) =>
-			value.enable ? prev.concat(value.vehicle) : prev,
+		return price.costs.reduce( (prev: Vehicle[], value: Cost) =>
+			value.key instanceof Vehicle ? prev.concat(value.key) : prev,
 			[]
 		)
 	}
@@ -162,24 +163,15 @@ export class TripSelectorFormComponent implements OnInit {
 
 	anyDate: boolean = false
 
-	peopleCount: PeopleCount[] = AgeGroup.List.reduce(
-		( prev: PeopleCount[], value: AgeGroup ) =>
-			prev.concat({
-				ageGroup: value,
-				count: value.id === 'adults' ? 1 : 0
-			}),
-		[]
-	)
+	adults: number = 1
+	kids: number = 0
 
 	submitted: boolean = false
 
 	get valid(): boolean {
 		return !!this.pointA
 			&& !!this.pointB
-			&& this.peopleCount.reduce( (prev: boolean, value: PeopleCount) =>
-					value.ageGroup.id === 'adults' && value.count > 0 ? true : prev,
-					false
-				)
+			&& this.adults > 0
 	}
 
 	submit(): void {
@@ -190,23 +182,17 @@ export class TripSelectorFormComponent implements OnInit {
 		switch (this.orderType) {
 			case OrderType.getOrderType('trip'):
 
-				let order = new TripOrder({
+				let tripOrder = new TripOrder({
 					trip: this.trip,
-					people: this.peopleCount.reduce(
-						(prev: Human[], value:PeopleCount) => {
-							for(let i = 0; i < value.count; i++)
-								prev.push(new Human({ defaultAgeGroup: value.ageGroup }))
-							return prev
-						},
-						[]
-					),
+					people: new Array(this.adults).map( value => new Human())
+							.concat( new Array(this.kids > 0 ? this.kids : 0).map( value => new Human({ age: 0 })) ),
 					departureDate: this.departureDate,
 					returnDate: this.returnDate,
 					price: this.trip.getPrice(this.departureDate),
 					vehicle: this.vehicle
 				})
 
-				localStorage.setItem('currentOrder', order.toString())
+				localStorage.setItem('currentOrder', tripOrder.toString())
 				window.location.href = `/${lang}/order`
 				return
 
@@ -217,10 +203,7 @@ export class TripSelectorFormComponent implements OnInit {
 					pointB: this.pointB && this.pointB.id.uuid || null,
 					departureDate: this.departureDate,
 					anyDate: this.anyDate,
-					peopleCount: this.peopleCount.reduce( (prev:{ ageGroup: string, count: number }[], value: PeopleCount ) =>
-						prev.concat({ ageGroup: value.ageGroup.id, count: value.count }),
-						[]
-					)
+					peopleCount: { adults: this.adults, kids: this.kids > 0 ? this.kids : 0 }
 				}
 
 				localStorage.setItem('searchData', JSON.stringify(searchData))

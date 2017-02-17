@@ -67,13 +67,13 @@
 					</div>
 				</td>
 				<td>
-					<div *ngFor="let peopleCount of item.peopleCount">
-						<span>{{ peopleCount.ageGroup.title | ml:'en' }}</span>
-						<span class="uk-margin-small-left">{{ peopleCount.count }}&nbsp;x&nbsp;{{ (item.price && item.price.getCost(peopleCount.ageGroup) || 0) | number:'1.2-2' }}</span>
+					<div *ngFor="let age of item.ages">
+						<span *ngIf="age >= 200">Adult</span>
+						<span *ngIf="age < 200">{{ age }}&nbsp;yo</span>
+						<span>&nbsp;&times;&nbsp;{{ (item.price && item.price.getCost(age) || 0) | number:'1.2-2' }}</span>
 					</div>
 					<div *ngIf="item.vehicle">
-						<span>{{ item.vehicle.title | ml:'en' }}</span>
-						<span class="uk-margin-small-left">1&nbsp;x&nbsp;{{ (item.price && item.price.getVehicleCost(item.vehicle)) | number:'1.2-2' }}</span>
+						<span>{{ item.vehicle.title | ml:'en' }}&nbsp;&times;&nbsp;{{ (item.price && item.price.getCost(item.vehicle)) | number:'1.2-2' }}</span>
 					</div>
 				</td>
 				<td>{{ item.cost | number:'1.2-2' }}</td>

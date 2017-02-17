@@ -1,6 +1,6 @@
 import { newDate } from './common'
 
-import { Order, PeopleCount, OrderType } from './order'
+import { Order, OrderType } from './order'
 import { Trip, TripType } from './trip'
 import { Price } from './price'
 import { Vehicle } from './vehicle'
@@ -32,13 +32,10 @@ export class TripOrder extends Order {
 		if (!this.trip || !this.price)
 			return 0
 
-		let sum = this.peopleCount.reduce( (prev: number, peopleCount:PeopleCount) =>
-			prev + (this.price.getCost(peopleCount.ageGroup) * peopleCount.count),
-			0
-		)
+		let sum = this.ages.reduce( (prev: number, age: number) => prev + this.price.getCost(age) )
 
 		if (this.vehicle)
-			sum += this.price.getVehicleCost(this.vehicle)
+			sum += this.price.getCost(this.vehicle)
 
 		return sum
 	}

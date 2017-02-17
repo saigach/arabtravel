@@ -1,6 +1,6 @@
 import { newDate } from './common'
 
-import { Order, PeopleCount, OrderType } from './order'
+import { Order, OrderType } from './order'
 import { Package } from './package'
 import { Hotel, Room } from './hotel'
 
@@ -11,8 +11,22 @@ export class PackageOrder extends Order {
 
 	package: Package
 	room: Room
-
 	anyDate: boolean
+
+	_duration: number = 1
+
+	get duration(): number {
+		if (this.package && this.package.durations.length > 0)
+			return this.package.durations.sort((a, b) => a - b)
+				.reduce( (prev: number, value: number) => value <= this._duration ? value : prev, 1)
+		else
+			this._duration
+	}
+
+	set duration(value: number) {
+		this._duration = Math.max( 1, value)
+	}
+
 
 	constructor(value: any = {}) {
 		super(value)
@@ -24,6 +38,17 @@ export class PackageOrder extends Order {
 		this.room = value.room ? (value.room instanceof Room ? value.room : new Room(value.room) ) : null
 
 		this.anyDate = !!value.anyDate
+
+		this.duration = value.duration || 1
+	}
+
+	toObject(): {} {
+		return Object.assign({}, super.toObject(), {
+			package: this.package && this.package.toObject() || null,
+			room: this.room && this.room.toObject() || null,
+			anyDate: this.anyDate,
+			duration: this.duration
+		})
 	}
 
 	get returnDate(): Date {
@@ -35,39 +60,25 @@ export class PackageOrder extends Order {
 		if (!this.package)
 			return date
 
-		date.setDate(date.getDate() + this.package.duration)
+		date.setDate(date.getDate() + this.duration)
 
 		return date
 	}
 
-	set returnDate(date: Date) {
-
-	}
-
-	toObject(): {} {
-		return Object.assign({}, super.toObject(), {
-			package: this.package && this.package.toObject() || null,
-			room: this.room && this.room.toObject() || null,
-			anyDate: this.anyDate
-		})
-	}
+	set returnDate(date: Date) { }
 
 	get hotelCost(): number {
-		if (!this.package)
+		if (!this.package || !this.package.hotel || !this.room)
 			return 0
 
-		return (this.package.hotel ? this.package.hotel.optionsCost : 0)
-				+ (this.room ? this.room.fullCost * this.package.duration : 0)
+		return this.package.hotel.getCost(this.ages)
 	}
 
 	get roadCost(): number {
 		if (!this.price)
 			return 0
 
-		return this.peopleCount.reduce( (prev: number, peopleCount:PeopleCount) =>
-			prev + (this.price.getCost(peopleCount.ageGroup) * peopleCount.count),
-			0
-		)
+		return this.ages.reduce( (prev: number, age: number) => prev + this.price.getCost(age) )
 	}
 
 	get cost(): number {

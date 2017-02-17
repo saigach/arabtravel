@@ -1,40 +1,21 @@
 import { newDate } from './common'
-
 import { Vehicle } from './vehicle'
-import { AgeGroup } from './human'
 
-export class VehicleCost {
-	enable: boolean
-	vehicle: Vehicle
+export class Cost {
+	key: Vehicle | number
 	cost: number
 
 	constructor(value: any = {}) {
-		this.enable = value.enable === undefined ? true : Boolean(value.enable)
-		this.vehicle = value.vehicle ? ( value.vehicle instanceof Vehicle ? value.vehicle : new Vehicle(value.vehicle) ) : null
+		this.key = typeof value.key === 'object' ?
+						(value.key instanceof Vehicle ? value.key : new Vehicle(value.key)) :
+						Math.max( 0, Number.parseInt(value.key || 0) || 0 )
+
 		this.cost = Math.max( 0, Number.parseFloat(value.cost || 0) || 0 )
 	}
 
 	toObject(): {} {
 		return {
-			enable: this.enable,
-			vehicle: this.vehicle.toObject(),
-			cost: this.cost
-		}
-	}
-}
-
-export class Cost {
-	ageGroup: AgeGroup = null
-	cost: number
-
-	constructor(ageGroup: AgeGroup, cost: number = 0) {
-		this.ageGroup = ageGroup
-		this.cost = cost
-	}
-
-	toObject(): {} {
-		return {
-			ageGroup: this.ageGroup.id,
+			key: this.key instanceof Vehicle ? this.key.toObject() : this.key,
 			cost: this.cost
 		}
 	}
@@ -64,35 +45,29 @@ export class Refund {
 }
 
 export class Price {
-
-	enable: boolean
-
 	startDate: Date
 	endDate: Date
 
-	costs: Cost[] = AgeGroup.List.reduce( (prev: Cost[], ageGroup: AgeGroup) => prev.concat(new Cost(ageGroup)), [] )
-
-	getCost(arg: AgeGroup | string): number {
-		let cost = this.costs.find( (value:Cost) =>
-			arg instanceof AgeGroup ? value.ageGroup.id === arg.id : value.ageGroup.id === arg
-		)
-		return cost && cost.cost || 0
-	}
-
-	vehicles: VehicleCost[] = []
-
-	getVehicleCost(arg: Vehicle): number {
-		let cost = this.vehicles.find( (value:VehicleCost) =>
-			value.enable && value.vehicle.id.uuid === arg.id.uuid
-		)
-		return cost && cost.cost || 0
-	}
-
+	costs: Cost[] = []
 	refunds: Refund[]
 
-	constructor(value: any = {}) {
-		this.enable = value.enable === undefined ? true : Boolean(value.enable)
+	getCost(arg: number | Vehicle ): number {
+		if (arg instanceof Vehicle) {
+			let cost = this.costs
+						.find((value:Cost) => value.key instanceof Vehicle ? value.key.id.equal(arg.id) : false)
+			return cost && cost.cost || 0
+		} else if (typeof arg === 'number') {
+			return this.costs.sort((a:Cost, b:Cost) => a.cost - b.cost).reduce(
+				(prev: number, value:Cost) => typeof value.key === 'number' &&
+													(value.key === 0 || value.key < arg) ? value.cost : prev,
+				0
+			)
+		} else {
+			return 0
+		}
+	}
 
+	constructor(value: any = {}) {
 		this.startDate = newDate(value.startDate || null)
 		this.endDate = value.endDate && newDate(value.endDate) || (() => {
 			let date = newDate(this.startDate)
@@ -100,37 +75,18 @@ export class Price {
 			return date
 		})()
 
-		if (value.costs && value.costs instanceof Array)
-			this.costs.forEach( (costItem: Cost) => {
-				let costData = value.costs.find( costData => costData.ageGroup === costItem.ageGroup.id )
-
-				if (!costData)
-					return
-
-				costItem.cost = Math.max( 0, Number.parseFloat(costData.cost || 0) || 0 )
-			} )
-
-		this.vehicles = value.vehicles instanceof Array ?
-			value.vehicles.reduce(
-				( prev: VehicleCost[] , value: any) =>
-					value ? prev.concat( new VehicleCost(value)) : prev,
-				[]
-			) : []
+		this.costs = value.costs instanceof Array ?
+			value.costs.reduce(( prev: Cost[] , value: any) => value ? prev.concat( new Cost(value)) : prev, []) : []
 
 		this.refunds = value.refund instanceof Array ?
-			value.refund.reduce(
-				( prev: Refund[] , value:any ) => prev.concat(new Refund(value)),
-				[]
-			) : []
+			value.refund.reduce(( prev: Refund[] , value:any ) => prev.concat(new Refund(value)), []) : []
 	}
 
 	toObject(): {} {
 		return {
-			enable: this.enable,
 			startDate: this.startDate,
 			endDate: this.endDate,
 			costs: this.costs.reduce( (prev: {}[], value: Cost) => prev.concat(value.toObject()), []),
-			vehicles: this.vehicles.reduce( (prev: {}[], value: VehicleCost) => prev.concat(value.toObject()), []),
 			refunds: this.refunds.reduce( (prev: {}[], value: Refund) => prev.concat(value.toObject()), [])
 		}
 	}

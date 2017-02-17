@@ -1,7 +1,7 @@
 import { newDate, Model, MLString } from './common'
 import { User } from './user'
 
-import { Human, AgeGroup } from './human'
+import { Human } from './human'
 import { Price } from './price'
 
 export class PaymentType {
@@ -176,8 +176,6 @@ export class Card {
 	}
 }
 
-export type PeopleCount = { ageGroup: AgeGroup, count: number }
-
 export class OrderType {
 	static List:OrderType[] = [
 		new OrderType({
@@ -301,17 +299,7 @@ export class Order extends Model {
 		})
 	}
 
-	get peopleCount(): PeopleCount[] {
-		return AgeGroup.List.reduce( (prev: PeopleCount[] , ageGroup: AgeGroup) =>
-			prev.concat({
-				ageGroup: ageGroup,
-				count: this.people.reduce( (prev: number, human: Human) =>
-					human.getAgeGroup(this.date) === ageGroup ? ++prev : prev,
-					0
-				)
-			}),
-			[]
-		).filter( (value:PeopleCount) => value.count > 0 )
-
+	get ages(): number[] {
+		return this.people.reduce( (prev:number[], human: Human) => prev.concat(human.getAge(this.departureDate)), [] )
 	}
 }

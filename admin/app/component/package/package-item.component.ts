@@ -89,6 +89,14 @@ export class PackageItemComponent implements OnInit {
 		}
 	}
 
+	addDuration(): void {
+		this.item.durations.push(1)
+	}
+
+	deleteDuration(i: number): void {
+		this.item.durations.splice(i, 1)
+	}
+
 	submit(): void {
 		if (this.submitted)
 			return

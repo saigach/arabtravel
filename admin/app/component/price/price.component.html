@@ -1,39 +1,61 @@
 <div class="uk-grid">
 	<div class="uk-width-1-1 uk-form uk-form-stacked admin-hidden-cild">
-		<label class="uk-button admin-button" [class.uk-active]="item.enable">
-			<span>Enable</span>
-			<input class="uk-hidden" type="checkbox" [(ngModel)]="item.enable">
-		</label>
 		<label class="uk-margin-left">From:</label>
 		<input #startDate class="uk-form-width-small uk-margin-right" type="text" [value]="item.startDate | date: 'dd.MM.yyyy'">
 		<label>To:</label>
 		<input #endDate class="uk-form-width-small uk-margin-right" type="text" [value]="item.endDate | date: 'dd.MM.yyyy'">
 	</div>
-	<div class="uk-width-1-1 uk-margin-top">
-		<h4 class="tm-article-subtitle">Costs</h4>
-	</div>
-	<div class="uk-width-1-1 uk-form uk-grid">
-		<div *ngFor="let cost of item.costs" class="uk-width-1-5">
-			<label class="uk-form-label uk-width-1-1">{{ cost.ageGroup.title | ml:'en' }}, JD</label>
-			<div class="uk-form-controls">
-				<input class="uk-width-1-1" type="number" min="0" [(ngModel)]="cost.cost">
-			</div>
+	<div class="uk-width-1-1 uk-grid uk-margin-top">
+		<div class="uk-width-8-10">
+			<h4 class="tm-article-subtitle">Costs</h4>
+		</div>
+		<div class="uk-width-2-10">
+			<a class="uk-align-right admin-cursor-pointer" (click)="addAgeCosts(); $event.stopPropagation()">
+				<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
+				<u>Add cost</u>
+			</a>
 		</div>
 	</div>
-	<div class="uk-width-1-1 uk-margin-top" [class.uk-hidden]="hideVehicle">
-		<h4 class="tm-article-subtitle">Vehicles</h4>
+
+	<div class="uk-width-1-1">
+		<ul class="uk-list uk-list-space">
+			<li *ngFor="let cost of ageCosts" class="uk-form uk-form-stacked">
+				<label>Age:</label>
+				<input class="uk-form-width-small uk-margin-left" type="number" min="0" [(ngModel)]="cost.key">
+				<label class="uk-margin-left">Cost, JD:</label>
+				<input class="uk-form-width-small uk-margin-left" type="number" min="0" [(ngModel)]="cost.cost">
+				<i class="uk-icon-trash uk-margin-left admin-cursor-pointer" (click)="deleteCost(cost); $event.stopPropagation()"></i>
+			</li>
+		</ul>
 	</div>
-	<div class="uk-width-1-1 uk-form uk-grid" [class.uk-hidden]="hideVehicle">
-		<div *ngFor="let vehicleCost of item.vehicles" class="uk-width-1-5">
-			<label class="uk-form-label uk-width-1-1">
-				<input type="checkbox" [(ngModel)]="vehicleCost.enable">
-				<span>{{ vehicleCost.vehicle.title | ml:'en' }}, JD</span>
-			</label>
-			<div class="uk-form-controls">
-				<input class="uk-width-1-1" type="number" min="0" [(ngModel)]="vehicleCost.cost">
-			</div>
+
+	<div class="uk-width-1-1 uk-grid uk-margin-top" [class.uk-hidden]="hideVehicle">
+		<div class="uk-width-8-10">
+			<h4 class="tm-article-subtitle">Vehicles</h4>
+		</div>
+		<div class="uk-width-2-10">
+			<a class="uk-align-right admin-cursor-pointer" (click)="addVehicleCost(); $event.stopPropagation()">
+				<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
+				<u>Add vehicle</u>
+			</a>
 		</div>
 	</div>
+
+	<div class="uk-width-1-1" [class.uk-hidden]="hideVehicle">
+		<ul class="uk-list uk-list-space">
+			<li *ngFor="let cost of vehicleCosts" class="uk-form uk-form-stacked">
+				<label>Vehicle:</label>
+				<select class="uk-margin-left" [(ngModel)]="cost.key">
+					<option *ngIf="cost.key" [ngValue]="cost.key">{{ cost.key.title | ml:'en' }} (Current)</option>
+					<option *ngFor="let vehicle of vehicleList" [ngValue]="vehicle">{{ vehicle.title | ml:'en' }}</option>
+				</select>
+				<label class="uk-margin-left">Cost, JD:</label>
+				<input class="uk-form-width-small uk-margin-left" type="number" min="0" [(ngModel)]="cost.cost">
+				<i class="uk-icon-trash uk-margin-left admin-cursor-pointer" (click)="deleteCost(cost); $event.stopPropagation()"></i>
+			</li>
+		</ul>
+	</div>
+
 	<div class="uk-width-1-1 uk-grid uk-margin-top">
 		<div class="uk-width-8-10">
 			<h4 class="tm-article-subtitle">Refunds</h4>

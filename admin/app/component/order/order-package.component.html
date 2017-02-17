@@ -23,14 +23,6 @@
 			<div class="uk-width-1-2 uk-margin-top" *ngIf="item.package && item.package.hotel">
 				<b>Hotel:</b>
 				<span>{{ item.package.hotel.title | ml:'en' }}</span>
-				<label class="uk-form-label uk-width-1-1 uk-margin-top">Options:</label>
-				<ul class="uk-width-1-1 uk-list">
-					<li *ngFor="let option of item.package.hotel.options | listOrderBy : ['title']">
-						<input type="checkbox" [(ngModel)]="option.enable">
-						{{ option.title | ml:'en' }}
-						<input type="number" min="0" [(ngModel)]="option.cost">
-					</li>
-				</ul>
 			</div>
 			<div class="uk-width-1-2 uk-margin-top" *ngIf="item.package && item.package.hotel">
 				<b>Room:</b>
@@ -40,20 +32,7 @@
 					<option *ngFor="let roomItem of item.package.hotel.rooms" [ngValue]="roomItem">{{ roomItem.title | ml:'en' }}</option>
 				</select>
 				<div class="uk-width-1-1 uk-margin-top" *ngIf="item.room">
-					<b>Size:</b>
-					<span>{{item.room.size}}</span>
-					<b class="uk-margin-left">Beds:</b>
-					<span>{{item.room.beds}}</span>
-					<b class="uk-margin-left">Cost:</b>
-					<input class="" type="number" min="0" [(ngModel)]="item.room.cost">
-					<label class="uk-form-label uk-width-1-1 uk-margin-top">Options:</label>
-					<ul class="uk-width-1-1 uk-list" *ngIf="item.room">
-						<li *ngFor="let option of item.room.options | listOrderBy : ['title']">
-							<input type="checkbox" [(ngModel)]="option.enable">
-							{{ option.title | ml:'en' }}
-							<input type="number" min="0" [(ngModel)]="option.cost">
-						</li>
-					</ul>
+
 				</div>
 			</div>
 			<div class="uk-width-1-1 admin-hidde-cild" *ngIf="item.price">
@@ -87,24 +66,21 @@
 						<span *ngIf="item.package && item.package.pointB">&ensp;&rarr;&ensp;{{ item.package.pointB.title | ml:'en' }}</span>
 					</div>
 					<div>
-						<span>{{ item.returnDate | date: 'dd.MM.yyyy'}}</span>
+						<!-- <span>{{ item.returnDate | date: 'dd.MM.yyyy'}}</span> -->
 						<span *ngIf="item.package && item.package.pointB">&emsp;{{ item.package.pointB.title | ml:'en' }}</span>
 						<span *ngIf="item.package && item.package.pointA">&ensp;&rarr;&ensp;{{ item.package.pointA.title | ml:'en' }}</span>
 					</div>
 				</td>
 				<td>
-					<div *ngFor="let peopleCount of item.peopleCount">
-						<span>{{ peopleCount.ageGroup.title | ml:'en' }}</span>
-						<span class="uk-margin-small-left">{{ peopleCount.count }}&nbsp;x&nbsp;{{ (item.price && item.price.getCost(peopleCount.ageGroup) || 0) | number:'1.2-2' }}</span>
-					</div>
-					<div *ngIf="item.vehicle">
-						<span>{{ item.vehicle.title | ml:'en' }}</span>
-						<span class="uk-margin-small-left">1&nbsp;x&nbsp;{{ (item.price && item.price.getVehicleCost(item.vehicle)) | number:'1.2-2' }}</span>
+					<div *ngFor="let age of item.ages">
+						<span *ngIf="age >= 200">Adult</span>
+						<span *ngIf="age < 200">{{ age }}&nbsp;yo</span>
+						<span>&nbsp;&times;&nbsp;{{ (item.price && item.price.getCost(age) || 0) | number:'1.2-2' }}</span>
 					</div>
 				</td>
 				<td>{{ item.roadCost | number:'1.2-2' }}</td>
 			</tr>
-			<tr *ngIf="item.package.hotel">
+			<tr *ngIf="item.package && item.package.hotel">
 				<td></td>
 				<td>Hotel</td>
 				<td>
@@ -113,7 +89,7 @@
 					<span>,&emsp; {{ item.package.duration }} nights</span>
 				</td>
 				<td>
-					<div *ngIf="item.room">
+					<!-- <div *ngIf="item.room">
 						<div>
 							<span>Room</span>
 							<span class="uk-margin-small-left">{{ item.package.duration }}&nbsp;x&nbsp;{{ item.room.cost | number:'1.2-2' }}</span>
@@ -122,11 +98,8 @@
 							<span>{{ option.title }}</span>
 							<span class="uk-margin-small-left">{{ item.package.duration }}&nbsp;x&nbsp;{{ option.cost | number:'1.2-2' }}</span>
 						</div>
-					</div>
-					<div *ngFor="let option of item.package.hotel.enabledOptions">
-						<span>{{ option.title | ml:'en' }}</span>
-						<span class="uk-margin-small-left">1&nbsp;x&nbsp;{{ option.cost | number:'1.2-2' }}</span>
-					</div>
+					</div> -->
+
 				</td>
 				<td>{{ item.hotelCost | number:'1.2-2' }}</td>
 			</tr>

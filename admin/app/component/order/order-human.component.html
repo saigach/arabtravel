@@ -22,7 +22,8 @@
 			<label class="uk-form-label uk-width-1-1">Date of birth</label>
 			<div class="uk-form-controls">
 				<input #dobNode class="uk-width-1-1" type="text" [value]="item.dob | date: 'dd.MM.yyyy'">
-				<span>{{ item.getAge() }} years</span>
+				<span *ngIf="item.age >= 200">Adult</span>
+				<span *ngIf="item.age < 200">{{ item.age() }} years</span>
 			</div>
 		</div>
 	</div>

@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild, ElementRef, Output, Input, EventEmitter }
 import { APIService } from '../../service/api.service'
 
 import { str2Date } from '../../../../model/common'
-import { Price, VehicleCost, Refund } from '../../../../model/price'
+import { Price, Cost, Refund } from '../../../../model/price'
 import { Vehicle } from '../../../../model/vehicle'
 
 @Component({
@@ -47,23 +47,13 @@ export class PriceComponent implements OnInit {
 	@ViewChild('endDate') endDateRef: ElementRef
 	endDateDatepicker: any = null
 
-	vehicle: Vehicle[] = []
+	vehicleList: Vehicle[] = []
 
 	constructor(private apiService: APIService) {}
 
 	ngOnInit(): void {
 
-		this.apiService.get<Vehicle>(Vehicle).then( (response: Vehicle[]) => {
-			this.vehicle = response
-			this.vehicle.forEach( (vehicle:Vehicle) => {
-				let vehicleCost: VehicleCost = this.item.vehicles.find( (vehicleCost:VehicleCost) => vehicleCost.vehicle.id.uuid === vehicle.id.uuid )
-
-				if (!vehicleCost)
-					return this.item.vehicles.push(new VehicleCost({ vehicle: vehicle }))
-
-				vehicleCost.vehicle = vehicle
-			} )
-		})
+		this.apiService.get<Vehicle>(Vehicle).then( (response: Vehicle[]) => this.vehicleList = response)
 
 		this.startDateDatepicker = UIkit.datepicker(this.startDateRef.nativeElement, {
 			weekstart: 1,
@@ -82,6 +72,26 @@ export class PriceComponent implements OnInit {
 		this.endDateDatepicker.on('hide.uk.datepicker', event =>
 			this.item.endDate = str2Date(event.target.value)
 		)
+	}
+
+	get ageCosts(): Cost[] {
+		return this.item.costs.filter(value => ! (value.key instanceof Vehicle)).sort((a, b) => a.cost - b.cost)
+	}
+
+	get vehicleCosts(): Cost[] {
+		return this.item.costs.filter(value => value.key instanceof Vehicle)
+	}
+
+	addAgeCost(): void {
+		this.item.costs.push(new Cost())
+	}
+
+	addVehicleCost(): void {
+		this.item.costs.push(new Cost({ key: this.vehicleList[0] }))
+	}
+
+	deleteCost(cost: Cost): void {
+		this.item.costs = this.item.costs.filter(value => value !== cost)
 	}
 
 	addRefund(): void {
