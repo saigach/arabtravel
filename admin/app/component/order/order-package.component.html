@@ -1,68 +1,126 @@
-<div class="uk-panel uk-panel-box uk-width-1-1">
-	<h3 class="uk-panel-title">Package data</h3>
-	<div class="uk-grid">
-		<div class="uk-width-1-6">
-			<label class="uk-form-label uk-width-1-1">Departure date</label>
-			<div class="uk-form-controls">
-				<input #departureDateNode class="uk-width-1-1" type="text" [value]="item.departureDate | date: 'dd.MM.yyyy'">
+<div class="uk-width-1-1 uk-margin-top">
+	<div class="uk-panel uk-panel-box uk-width-1-1">
+		<h3 class="uk-panel-title">Package data</h3>
+		<div class="uk-grid">
+			<div class="uk-width-1-6">
+				<label class="uk-form-label uk-width-1-1">Departure date</label>
+				<div class="uk-form-controls">
+					<input #departureDateNode class="uk-width-1-1" type="text" [value]="item.departureDate | date: 'dd.MM.yyyy'">
+				</div>
 			</div>
-		</div>
-		<div class="uk-width-1-6">
-			<label class="uk-form-label uk-width-1-1">Return date</label>
-			<div class="uk-form-controls">
-				<input #returnDateNode class="uk-width-1-1" type="text" [value]="item.returnDate | date: 'dd.MM.yyyy'">
+			<div class="uk-width-4-6">
+				<label class="uk-form-label uk-width-1-1">Package</label>
+				<select [(ngModel)]="item.package" (change)="packageChange()">
+					<option [ngValue]="null">None</option>
+					<option *ngIf="item.package" [ngValue]="item.package">{{ item.package.title | ml:'en' }}, {{ item.package.duration }} nights (Current)</option>
+					<option *ngFor="let package of packages" [ngValue]="package">{{ package.title | ml:'en' }}, {{ package.duration }} nights</option>
+				</select>
 			</div>
-		</div>
-		<div class="uk-width-4-6">
-			<label class="uk-form-label uk-width-1-1">Package</label>
-			<select [(ngModel)]="item.package" (change)="packageChange()">
-				<option [ngValue]="null">None</option>
-				<option *ngIf="item.package" [ngValue]="item.package">{{ item.package.title | ml:'en' }} (Current)</option>
-				<option *ngFor="let package of packages" [ngValue]="package">{{ package.title | ml:'en' }}</option>
-			</select>
-		</div>
-		<div class="uk-width-1-2 uk-margin-top">
-			<b>Hotel:</b>
-			<select name="type" [(ngModel)]="item.hotel" (change)="hotelChange();">
-				<option [ngValue]="null">None</option>
-				<option *ngIf="item.hotel" [ngValue]="item.hotel">{{ item.hotel.title | ml:'en' }} (Current)</option>
-				<option *ngFor="let hotelItem of hotels" [ngValue]="hotelItem">{{ hotelItem.title | ml:'en' }}</option>
-			</select>
-			<label class="uk-form-label uk-width-1-1 uk-margin-top" *ngIf="item.hotel">Options:</label>
-			<ul class="uk-width-1-1 uk-list" *ngIf="item.hotel">
-				<li *ngFor="let option of item.hotel.options | listOrderBy : ['title']">
-					<input type="checkbox" [(ngModel)]="option.enable">
-					{{ option.title | ml:'en' }}
-					<input type="number" min="0" [(ngModel)]="option.cost">
-				</li>
-			</ul>
-		</div>
-		<div class="uk-width-1-2 uk-margin-top" *ngIf="item.hotel">
-			<b>Room:</b>
-			<select name="type" [(ngModel)]="item.room">
-				<option [ngValue]="null">None</option>
-				<option *ngIf="item.room" [ngValue]="item.room">{{ item.room.title | ml:'en' }} (Current)</option>
-				<option *ngFor="let roomItem of item.hotel.rooms" [ngValue]="roomItem">{{ roomItem.title | ml:'en' }}</option>
-			</select>
-			<div class="uk-width-1-1 uk-margin-top" *ngIf="item.room">
-				<b>Size:</b>
-				<span>{{item.room.size}}</span>
-				<b class="uk-margin-left">Beds:</b>
-				<span>{{item.room.beds}}</span>
-				<b class="uk-margin-left">Cost:</b>
-				<input class="" type="number" min="0" [(ngModel)]="item.room.cost">
-				<label class="uk-form-label uk-width-1-1 uk-margin-top">Options:</label>
-				<ul class="uk-width-1-1 uk-list" *ngIf="item.room">
-					<li *ngFor="let option of item.room.options | listOrderBy : ['title']">
-						<input type="checkbox" [(ngModel)]="option.enable">
-						{{ option.title | ml:'en' }}
-						<input type="number" min="0" [(ngModel)]="option.cost">
-					</li>
-				</ul>
+			<div class="uk-width-1-6">
+				<label class="uk-form-label uk-width-1-1">Return date</label>
+				<div class="uk-form-controls">{{ item.returnDate | date: 'dd.MM.yyyy' }}</div>
 			</div>
-		</div>
-		<div class="uk-width-1-1 admin-hidde-cild" *ngIf="item.price">
-			<price [(price)]="item.price"></price>
+			<div class="uk-width-1-2 uk-margin-top" *ngIf="item.package && item.package.hotel">
+				<b>Hotel:</b>
+				<span>{{ item.package.hotel.title | ml:'en' }}</span>
+			</div>
+			<div class="uk-width-1-2 uk-margin-top" *ngIf="item.package && item.package.hotel">
+				<b>Room:</b>
+				<select name="type" [(ngModel)]="item.room">
+					<option [ngValue]="null">None</option>
+					<option *ngIf="item.room" [ngValue]="item.room">{{ item.room.title | ml:'en' }} (Current)</option>
+					<option *ngFor="let roomItem of item.package.hotel.rooms" [ngValue]="roomItem">{{ roomItem.title | ml:'en' }}</option>
+				</select>
+				<div class="uk-width-1-1 uk-margin-top" *ngIf="item.room">
+
+				</div>
+			</div>
+			<div class="uk-width-1-1 admin-hidde-cild" *ngIf="item.price">
+				<price [(price)]="item.price" [hideVehicle]="true"></price>
+			</div>
 		</div>
 	</div>
+</div>
+<div class="uk-width-1-1 uk-margin-top">
+	<h3 class="tm-article-subtitle">Calculation</h3>
+</div>
+<div class="uk-width-1-1 uk-margin-top">
+	<table class="uk-table uk-table-hover uk-table-condensed">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Type</th>
+				<th>Content</th>
+				<th>Cost, JD</th>
+				<th>Sum, JD</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngIf="item.package">
+				<td></td>
+				<td>Trip</td>
+				<td>
+					<div>
+						<span>{{ item.departureDate | date: 'dd.MM.yyyy'}}</span>
+						<span *ngIf="item.package && item.package.pointA">&emsp;{{ item.package.pointA.title | ml:'en' }}</span>
+						<span *ngIf="item.package && item.package.pointB">&ensp;&rarr;&ensp;{{ item.package.pointB.title | ml:'en' }}</span>
+					</div>
+					<div>
+						<!-- <span>{{ item.returnDate | date: 'dd.MM.yyyy'}}</span> -->
+						<span *ngIf="item.package && item.package.pointB">&emsp;{{ item.package.pointB.title | ml:'en' }}</span>
+						<span *ngIf="item.package && item.package.pointA">&ensp;&rarr;&ensp;{{ item.package.pointA.title | ml:'en' }}</span>
+					</div>
+				</td>
+				<td>
+					<div *ngFor="let age of item.ages">
+						<span *ngIf="age >= 200">Adult</span>
+						<span *ngIf="age < 200">{{ age }}&nbsp;yo</span>
+						<span>&nbsp;&times;&nbsp;{{ (item.price && item.price.getCost(age) || 0) | number:'1.2-2' }}</span>
+					</div>
+				</td>
+				<td>{{ item.roadCost | number:'1.2-2' }}</td>
+			</tr>
+			<tr *ngIf="item.package && item.package.hotel">
+				<td></td>
+				<td>Hotel</td>
+				<td>
+					<span>{{ item.package.hotel.title | ml:'en' }}</span>
+					<span *ngIf="item.package.room">,&emsp;{{ item.package.room.title | ml:'en' }}</span>
+					<span>,&emsp; {{ item.package.duration }} nights</span>
+				</td>
+				<td>
+					<!-- <div *ngIf="item.room">
+						<div>
+							<span>Room</span>
+							<span class="uk-margin-small-left">{{ item.package.duration }}&nbsp;x&nbsp;{{ item.room.cost | number:'1.2-2' }}</span>
+						</div>
+						<div *ngFor="let option of item.room.enabledOptions">
+							<span>{{ option.title }}</span>
+							<span class="uk-margin-small-left">{{ item.package.duration }}&nbsp;x&nbsp;{{ option.cost | number:'1.2-2' }}</span>
+						</div>
+					</div> -->
+
+				</td>
+				<td>{{ item.hotelCost | number:'1.2-2' }}</td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="4" class="uk-text-right"><b>Full sum, JD:</b></td>
+				<td><b>{{ item.cost | number:'1.2-2' }}</b></td>
+			</tr>
+			<tr>
+				<td colspan="4" class="uk-text-right"><b>Processing fee, JD:</b></td>
+				<td><b>{{ item.processingFee | number:'1.2-2' }}</b></td>
+			</tr>
+			<tr>
+				<td colspan="4" class="uk-text-right"><b>Total cost, JD:</b></td>
+				<td><b>{{ item.totalCost | number:'1.2-2' }}</b></td>
+			</tr>
+			<tr>
+				<td colspan="4" class="uk-text-right"><b>Total cost, $:</b></td>
+				<td><b>{{ (item.totalCost * item.exchangeRate) | number:'1.2-2' }}</b></td>
+			</tr>
+		</tfoot>
+	</table>
 </div>

@@ -6,7 +6,7 @@ import { APIService } from '../../service/api.service'
 import { FileService } from '../../service/file.service'
 
 import { File, MLString } from '../../../../model/common'
-import { Hotel, Room, Option } from '../../../../model/hotel'
+import { Hotel, Room } from '../../../../model/hotel'
 
 @Component({
 	moduleId: module.id,
@@ -51,6 +51,33 @@ export class HotelItemComponent implements OnInit {
 		this.item.rooms = this.item.rooms.filter(value => value !== room)
 	}
 
+	setRoomImage(fileSelector: HTMLInputElement, room: Room): void {
+		if (fileSelector.files.length) {
+			this.fileService.uploadImage(fileSelector.files[0])
+							.then(response => room.image = response.link && new File(response) || null)
+			fileSelector.value = null
+		}
+	}
+
+	addColumn(room: Room): void {
+		room.costs = room.costs.map( value => value.concat(Array(1)).map( value => value === undefined ? null : value) )
+	}
+
+	addRow(room: Room): void {
+		room.costs.push( Array(room.costs[0].length).map( value => value === undefined ? null : value) )
+	}
+
+	deleteRow(room: Room, i: number): void {
+		room.costs.splice(i, 1)
+	}
+
+	deleteColumn(room: Room, i: number): void {
+		room.costs = room.costs.map( value => {
+			value.splice(i, 1)
+			return value
+		})
+	}
+
 	addImage(fileSelector: HTMLInputElement): void {
 		if (fileSelector.files.length) {
 			this.fileService.uploadImage(fileSelector.files[0])
@@ -61,20 +88,6 @@ export class HotelItemComponent implements OnInit {
 
 	deleteImage(image: File): void {
 		this.item.images = this.item.images.filter( value => value !== image)
-	}
-
-	addOption(room: Room): void {
-		if (!room)
-			this.item.options.push(new Option())
-		else
-			room.options.push(new Option())
-	}
-
-	deleteOption(room: Room, option: Option) {
-		if (!room)
-			this.item.options = this.item.options.filter(value => value !== option)
-		else
-			room.options = room.options.filter(value => value !== option)
 	}
 
 	back(): void {

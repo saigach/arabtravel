@@ -1,36 +1,101 @@
-<div class="uk-panel uk-panel-box uk-width-1-1">
-	<h3 class="uk-panel-title">Trip data</h3>
-	<div class="uk-grid">
-		<div class="uk-width-1-6">
-			<label class="uk-form-label uk-width-1-1">Departure date</label>
-			<div class="uk-form-controls">
-				<input #departureDateNode class="uk-width-1-1" type="text" [value]="item.departureDate | date: 'dd.MM.yyyy'">
+<div class="uk-width-1-1 uk-margin-top">
+	<div class="uk-panel uk-panel-box uk-width-1-1">
+		<h3 class="uk-panel-title">Trip data</h3>
+		<div class="uk-grid">
+			<div class="uk-width-1-6">
+				<label class="uk-form-label uk-width-1-1">Departure date</label>
+				<div class="uk-form-controls">
+					<input #departureDateNode class="uk-width-1-1" type="text" [value]="item.departureDate | date: 'dd.MM.yyyy'">
+				</div>
 			</div>
-		</div>
-		<div class="uk-width-1-6">
-			<label class="uk-form-label uk-width-1-1">Return date</label>
-			<div class="uk-form-controls">
-				<input #returnDateNode class="uk-width-1-1" type="text" [value]="item.returnDate | date: 'dd.MM.yyyy'">
+			<div class="uk-width-1-6">
+				<label class="uk-form-label uk-width-1-1">Return date</label>
+				<div class="uk-form-controls">
+					<input #returnDateNode class="uk-width-1-1" type="text" [value]="item.returnDate | date: 'dd.MM.yyyy'">
+				</div>
 			</div>
-		</div>
-		<div class="uk-width-3-6">
-			<label class="uk-form-label uk-width-1-1">Trip</label>
-			<select [(ngModel)]="item.trip" (change)="changeTrip()">
-				<option [ngValue]="null">None</option>
-				<option *ngIf="item.trip" [ngValue]="item.trip">{{ item.trip.title | ml:'en' }} (Current)</option>
-				<option *ngFor="let trip of trips" [ngValue]="trip">{{ trip.title | ml:'en' }}</option>
-			</select>
-		</div>
-		<div class="uk-width-1-6">
-			<label class="uk-form-label uk-width-1-1">Vehicle</label>
-			<select [(ngModel)]="item.vehicle">
-				<option [ngValue]="null">None</option>
-				<option *ngIf="item.vehicle" [ngValue]="item.vehicle">{{ item.vehicle.title | ml:'en' }} (Current)</option>
-				<option *ngFor="let vehicle of vehicles" [ngValue]="vehicle">{{ vehicle.title | ml:'en' }}</option>
-			</select>
-		</div>
-		<div class="uk-width-1-1 admin-hidde-cild" *ngIf="item.price">
-			<price [(price)]="item.price"></price>
+			<div class="uk-width-3-6">
+				<label class="uk-form-label uk-width-1-1">Trip</label>
+				<select [(ngModel)]="item.trip" (change)="changeTrip()">
+					<option [ngValue]="null">None</option>
+					<option *ngIf="item.trip" [ngValue]="item.trip">{{ item.trip.title | ml:'en' }} (Current)</option>
+					<option *ngFor="let trip of trips" [ngValue]="trip">{{ trip.title | ml:'en' }}</option>
+				</select>
+			</div>
+			<div class="uk-width-1-6">
+				<label class="uk-form-label uk-width-1-1">Vehicle</label>
+				<select [(ngModel)]="item.vehicle">
+					<option [ngValue]="null">None</option>
+					<option *ngIf="item.vehicle" [ngValue]="item.vehicle">{{ item.vehicle.title | ml:'en' }} (Current)</option>
+					<option *ngFor="let vehicle of vehicles" [ngValue]="vehicle">{{ vehicle.title | ml:'en' }}</option>
+				</select>
+			</div>
+			<div class="uk-width-1-1 admin-hidde-cild" *ngIf="item.price">
+				<price [(price)]="item.price"></price>
+			</div>
 		</div>
 	</div>
+</div>
+<div class="uk-width-1-1 uk-margin-top">
+	<h3 class="tm-article-subtitle">Calculation</h3>
+</div>
+<div class="uk-width-1-1 uk-margin-top">
+	<table class="uk-table uk-table-hover uk-table-condensed">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Type</th>
+				<th>Content</th>
+				<th>Cost, JD</th>
+				<th>Sum, JD</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngIf="item.trip">
+				<td></td>
+				<td>Trip</td>
+				<td>
+					<div>
+						<span>{{ item.departureDate | date: 'dd.MM.yyyy'}}</span>
+						<span *ngIf="item.trip && item.trip.pointA">&emsp;{{ item.trip.pointA.title | ml:'en' }}</span>
+						<span *ngIf="item.trip && item.trip.pointB">&ensp;&rarr;&ensp;{{ item.trip.pointB.title | ml:'en' }}</span>
+					</div>
+					<div *ngIf="item.trip.type.id === 'twoway'">
+						<span>{{ item.returnDate | date: 'dd.MM.yyyy'}}</span>
+						<span *ngIf="item.trip && item.trip.pointB">&emsp;{{ item.trip.pointB.title | ml:'en' }}</span>
+						<span *ngIf="item.trip && item.trip.pointA">&ensp;&rarr;&ensp;{{ item.trip.pointA.title | ml:'en' }}</span>
+					</div>
+				</td>
+				<td>
+					<div *ngFor="let age of item.ages">
+						<span *ngIf="age >= 200">Adult</span>
+						<span *ngIf="age < 200">{{ age }}&nbsp;yo</span>
+						<span>&nbsp;&times;&nbsp;{{ (item.price && item.price.getCost(age) || 0) | number:'1.2-2' }}</span>
+					</div>
+					<div *ngIf="item.vehicle">
+						<span>{{ item.vehicle.title | ml:'en' }}&nbsp;&times;&nbsp;{{ (item.price && item.price.getCost(item.vehicle)) | number:'1.2-2' }}</span>
+					</div>
+				</td>
+				<td>{{ item.cost | number:'1.2-2' }}</td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="4" class="uk-text-right"><b>Full sum, JD:</b></td>
+				<td><b>{{ item.cost | number:'1.2-2' }}</b></td>
+			</tr>
+			<tr>
+				<td colspan="4" class="uk-text-right"><b>Processing fee, JD:</b></td>
+				<td><b>{{ item.processingFee | number:'1.2-2' }}</b></td>
+			</tr>
+			<tr>
+				<td colspan="4" class="uk-text-right"><b>Total cost, JD:</b></td>
+				<td><b>{{ item.totalCost | number:'1.2-2' }}</b></td>
+			</tr>
+			<tr>
+				<td colspan="4" class="uk-text-right"><b>Total cost, $:</b></td>
+				<td><b>{{ (item.totalCost * item.exchangeRate) | number:'1.2-2' }}</b></td>
+			</tr>
+		</tfoot>
+	</table>
 </div>

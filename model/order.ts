@@ -1,8 +1,8 @@
 import { newDate, Model, MLString } from './common'
 import { User } from './user'
 
-import { Human, AgeGroup } from './human'
-import { Vehicle } from './vehicle'
+import { Human } from './human'
+import { Price } from './price'
 
 export class PaymentType {
 	static List:PaymentType[] = [
@@ -176,8 +176,6 @@ export class Card {
 	}
 }
 
-export type PeopleCount = { ageGroup: AgeGroup, count: number }
-
 export class OrderType {
 	static List:OrderType[] = [
 		new OrderType({
@@ -228,6 +226,8 @@ export class Order extends Model {
 	departureDate: Date
 	returnDate: Date
 
+	price: Price
+
 	people: Human[]
 
 	paymentType: PaymentType
@@ -253,11 +253,13 @@ export class Order extends Model {
 
 		this.date = value.date ? new Date(value.date) : new Date()
 
+		if (Number.isNaN( this.date.getTime() ))
+			this.date = new Date()
+
 		this.departureDate = newDate(value.departureDate) || newDate()
 		this.returnDate = newDate(value.returnDate) || newDate()
 
-		if (Number.isNaN( this.date.getTime() ))
-			this.date = new Date()
+		this.price = value.price ? ( value.price instanceof Price ? value.price : new Price(value.price) ) : null
 
 		this.people = value.people instanceof Array ?
 			value.people.reduce(
@@ -286,6 +288,7 @@ export class Order extends Model {
 			date: this.date,
 			departureDate: this.departureDate,
 			returnDate: this.returnDate,
+			price: this.price && this.price.toObject() || null,
 			people: this.people.reduce( (prev: {}[], value: Human) => prev.concat(value.toObject()), []),
 			paymentType: this.paymentType.id,
 			card: this.card.toObject(),
@@ -296,17 +299,7 @@ export class Order extends Model {
 		})
 	}
 
-	get peopleCount(): PeopleCount[] {
-		return AgeGroup.List.reduce( (prev: PeopleCount[] , ageGroup: AgeGroup) =>
-			prev.concat({
-				ageGroup: ageGroup,
-				count: this.people.reduce( (prev: number, human: Human) =>
-					human.getAgeGroup(this.date) === ageGroup ? ++prev : prev,
-					0
-				)
-			}),
-			[]
-		).filter( (value:PeopleCount) => value.count > 0 )
-
+	get ages(): number[] {
+		return this.people.reduce( (prev:number[], human: Human) => prev.concat(human.getAge(this.departureDate)), [] )
 	}
 }

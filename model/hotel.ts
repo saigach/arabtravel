@@ -1,74 +1,46 @@
 import { newDate, Model, File, MLString } from './common'
 import { User } from './user'
 
-export class Option {
-	enable: boolean
-	title: MLString
-	cost: number
-
-	constructor(value: any = {}) {
-		this.enable = !!value.enable
-		this.title = new MLString(value.title)
-		this.cost = Math.max( 0, Number.parseFloat(value.cost || 0) || 0 )
-	}
-
-	toObject(): {} {
-		return {
-			enable: this.enable,
-			title: this.title,
-			cost: this.cost,
-		}
-	}
-}
-
 export class Room {
 
 	title: MLString
-	size: number
-	beds: number
-	cost: number
 	content: MLString
+	image: File
 
-	options: Option[]
-
-	get enabledOptions(): Option[] {
-		return this.options.filter( (value:Option) => value.enable )
-	}
-
-	get optionsCost(): number {
-		return this.options.reduce( (prev: number, option: Option) =>
-			option.enable ? prev + option.cost : prev,
-			0
-		)
-	}
-
-	get fullCost(): number {
-		return this.cost + this.optionsCost
-	}
+	costs: number[][] = [[]]
 
 	constructor(value: any = {}) {
 		this.title = new MLString(value.title)
-		this.size = Math.max( 1, Number.parseInt(value.size || 0) || 0 )
-		this.beds = Math.max( 1, Number.parseInt(value.beds || 0) || 0 )
-		this.cost = Math.max( 0, Number.parseFloat(value.cost || 0) || 0 )
 		this.content = new MLString(value.content),
-		this.options = value.options instanceof Array ?
-			value.options.reduce(
-				( prev: Option[] , value:any ) =>
-					value ? prev.concat(value instanceof Option ? value : new Option(value)) : prev,
-				[]
+		this.image = value.image ? ( value.image instanceof File ? value.image : new File(value.image) ) : null
+
+		let maxColumn = 2
+		this.costs = value.costs instanceof Array ? value.costs.reduce((prev: number[][], value: any) => {
+			let arr = value instanceof Array ? value.map(
+				value => typeof value === 'number' ? Math.max( 0, value) : null
 			) : []
+			maxColumn = Math.max(maxColumn, arr.length)
+			prev.push(arr)
+			return prev
+		}, [] ) : []
+
+		if (this.costs.length <= 0)
+			this.costs = [[]]
+
+		this.costs = this.costs.map( value => value.concat(new Array(maxColumn - value.length)).map(value => value === undefined ? null : value) )
 	}
 
 	toObject(): {} {
 		return {
 			title: this.title,
-			size: this.size,
-			beds: this.beds,
-			cost: this.cost,
 			content: this.content,
-			options: this.options.reduce( (prev: {}[], value: Option) => prev.concat(value.toObject()), [])
+			image: this.image && this.image.toObject() || null,
+			costs: this.costs
 		}
+	}
+
+	getCost(ages: number[] = []): number {
+		return 0
 	}
 }
 
@@ -85,36 +57,29 @@ export class Hotel extends Model {
 	rooms: Room[]
 	images: File[]
 
-	options: Option[]
+	// options: Option[]
 
-	get enabledOptions(): Option[] {
-		return this.options.filter( (value:Option) => value.enable )
-	}
+	// get enabledOptions(): Option[] {
+	// 	return this.options.filter( (value:Option) => value.enable )
+	// }
 
-	get optionsCost(): number {
-		return this.options.reduce( (prev: number, option: Option) =>
-			option.enable ? prev + option.cost : prev,
-			0
-		)
-	}
+	// get optionsCost(): number {
+	// 	return this.options.reduce( (prev: number, option: Option) =>
+	// 		option.enable ? prev + option.cost : prev,
+	// 		0
+	// 	)
+	// }
 
-	get roomsCost():number {
-		return this.rooms.reduce( (prev: number, room: Room) =>
-			prev + room.fullCost,
-			0
-		)
-	}
+	// get roomsCost():number {
+	// 	return this.rooms.reduce( (prev: number, room: Room) =>
+	// 		prev + room.fullCost,
+	// 		0
+	// 	)
+	// }
 
-	get fullCost(): number {
-		return this.roomsCost + this.optionsCost
-	}
-
-	get minimalCost(): number {
-		return this.rooms.reduce( (prev: number, room: Room) =>
-			prev > 0 ? Math.min(room.cost, prev) : room.cost,
-			0
-		)
-	}
+	// get fullCost(): number {
+	// 	return this.roomsCost + this.optionsCost
+	// }
 
 	constructor(value: any = {}) {
 		super(value)
@@ -141,12 +106,12 @@ export class Hotel extends Model {
 				[]
 			) : []
 
-		this.options = value.options instanceof Array ?
-			value.options.reduce(
-				( prev: Option[] , value:any ) =>
-					value ? prev.concat(value instanceof Option ? value : new Option(value)) : prev,
-				[]
-			) : []
+		// this.options = value.options instanceof Array ?
+		// 	value.options.reduce(
+		// 		( prev: Option[] , value:any ) =>
+		// 			value ? prev.concat(value instanceof Option ? value : new Option(value)) : prev,
+		// 		[]
+		// 	) : []
 	}
 
 	toObject(): {} {
@@ -156,8 +121,12 @@ export class Hotel extends Model {
 			owner: this.owner && this.owner.id.uuid || null,
 			content: this.content,
 			rooms: this.rooms.reduce( (prev: {}[], value: Room) => prev.concat(value.toObject()), []),
-			images: this.images.reduce( (prev: {}[], value: File) => prev.concat(value.toObject()), []),
-			options: this.options.reduce( (prev: {}[], value: Option) => prev.concat(value.toObject()), [])
+			images: this.images.reduce( (prev: {}[], value: File) => prev.concat(value.toObject()), [])
+			// options: this.options.reduce( (prev: {}[], value: Option) => prev.concat(value.toObject()), [])
 		})
+	}
+
+	getCost(ages: number[] = []): number {
+		return 0
 	}
 }

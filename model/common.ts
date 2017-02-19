@@ -196,5 +196,5 @@ export type SearchData = {
 	pointB: string,
 	departureDate: Date,
 	anyDate: boolean,
-	peopleCount: { ageGroup: string, count: number }[]
+	peopleCount: { adults: number, kids: number }
 }

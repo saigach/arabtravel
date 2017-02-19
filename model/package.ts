@@ -15,18 +15,13 @@ export class Package extends Model {
 	pointA: Point
 	pointB: Point
 
-	image: File = null
+	image: File
 
-	hotels: Hotel[] = []
+	hotel: Hotel
+
+	durations: number[]
 
 	prices: Price[] = []
-
-	get firstHotel(): Hotel {
-		if (this.hotels.length <= 0)
-			return null
-
-		return this.hotels[0]
-	}
 
 	constructor(value: any = {}) {
 		super(value)
@@ -41,12 +36,12 @@ export class Package extends Model {
 
 		this.image = value.image ? ( value.image instanceof File ? value.image : new File(value.image) ) : null
 
-		this.hotels = value.hotels instanceof Array ?
-			value.hotels.reduce(
-				( prev: Hotel[] , value:any ) =>
-					value ? prev.concat(value instanceof Hotel ? value : new Hotel(value) ) : prev,
-				[]
-			) : []
+		this.hotel = value.hotel ? (value.hotel instanceof Hotel ? value.hotel : new Hotel(value.hotel)) : null
+
+		this.durations = value.durations instanceof Array ?
+			value.durations.reduce(( prev: number[] , value: any) => prev.concat(parseInt(value)), [])
+				.filter( (value, index, self) => value && value > 0 && self.indexOf(value) === index )
+			: []
 
 		this.prices = value.prices instanceof Array ?
 			value.prices.reduce(
@@ -67,32 +62,31 @@ export class Package extends Model {
 		) || null
 	}
 
-	get basePrice(): number {
-		let sum = 0
+	// getCost(date: Date = new Date(), ages: number[] = []): number {
+	// 	let sum = 0
 
-		let hotel = this.firstHotel
+	// 	if (this.hotel)
+	// 		sum += this.hotel.getCost(ages)
 
-		if (hotel)
-			sum += hotel.minimalCost
+	// 	let price = this.getPrice(date)
+	// 	if (price && price.costs.length > 0)
+	// 		sum += ages.reduce( (prev: number, age: number) => {
+	// 			let cost = price.costs.find( (value:Cost) => value.key === age )
+	// 			return cost ? prev + cost.cost : prev
+	// 		}, 0)
 
-		let price = this.getPrice()
-
-		if (price && price.costs.length > 0) {
-			let cost = price.costs.find( (value:Cost) => value.ageGroup.id === 'adults' )
-			sum += (cost ? cost.cost : price.costs[0].cost)
-		}
-
-		return sum
-	}
+	// 	return sum
+	// }
 
 	toObject(): {} {
 		return Object.assign(super.toObject(), {
 			title: this.title,
 			description: this.description,
 			content: this.content,
-			pointA: this.pointA.toObject(),
-			pointB: this.pointB.toObject(),
-			hotels: this.hotels.reduce( (prev: {}[], value: Hotel) => prev.concat(value.toObject()), []),
+			pointA: this.pointA && this.pointA.toObject() || null,
+			pointB: this.pointB && this.pointB.toObject() || null,
+			hotel: this.hotel && this.hotel.toObject() || null,
+			durations: this.durations,
 			prices: this.prices.reduce( (prev: {}[], value: Price) => prev.concat(value.toObject()), []),
 			image: this.image && this.image.toObject() || null
 		})

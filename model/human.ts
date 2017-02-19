@@ -212,49 +212,6 @@ export class Nationality {
 	}
 }
 
-export class AgeGroup {
-	static List: AgeGroup[] = [
-		new AgeGroup({
-			id: 'adults',
-			title: new MLString({
-				en: 'Adults',
-				ar: 'الكبار'
-			}),
-			icon: null
-		}),
-		new AgeGroup({
-			id: 'kids',
-			title: new MLString({
-				en: 'Kids',
-				ar: 'أطفال'
-			}),
-			icon: null
-		}),
-		new AgeGroup({
-			id: 'infants',
-			title: new MLString({
-				en: 'Infants',
-				ar: 'الرضع'
-			}),
-			icon: null
-		})
-	]
-
-	static getAgeGroup(id: string): AgeGroup {
-		return AgeGroup.List.find( (value:AgeGroup) => value.id === id) || AgeGroup.List[0]
-	}
-
-	id: string
-	title: MLString
-	icon: string
-
-	constructor(value: any = {}) {
-		this.id = String(value.id || '')
-		this.title = new MLString(value.title)
-		this.icon = String(value.icon || '')
-	}
-}
-
 export class Human extends Model {
 
 	title: string
@@ -262,6 +219,24 @@ export class Human extends Model {
 	nationality: Nationality
 
 	_dob: Date
+	_age: number
+
+	getAge(now: Date = newDate()): number {
+		if (!this.dob)
+			return this._age === null ? 999 : this._age
+
+		let ageDifMs: number = Number(now) - this.dob.getTime()
+		return Math.abs(new Date(ageDifMs).getUTCFullYear() - 1970)
+	}
+
+	get age(): number {
+		return this._age === null ? 999 : this._age
+	}
+
+	set age(value: number) {
+		this._dob = null
+		this._age = value
+	}
 
 	get dob() {
 		return this._dob
@@ -269,7 +244,7 @@ export class Human extends Model {
 
 	set dob(value: Date) {
 		this._dob = value
-		this.defaultAgeGroup = this.ageGroup
+		this._age = this.getAge()
 	}
 
 	phone: string
@@ -279,40 +254,6 @@ export class Human extends Model {
 
 	tickets: File[]
 
-	defaultAgeGroup: AgeGroup
-
-	getAge(now: Date = newDate()): number {
-		if (!this.dob)
-			return null
-
-		let ageDifMs: number = Number(now) - this.dob.getTime()
-		return Math.abs(new Date(ageDifMs).getUTCFullYear() - 1970)
-	}
-
-	get age(): number {
-		return this.getAge()
-	}
-
-	getAgeGroup(now: Date = newDate()): AgeGroup {
-		let age = this.getAge(now)
-
-		if (age === null)
-			return this.defaultAgeGroup || AgeGroup.List[0]
-
-		if (age > 6)
-			return  AgeGroup.getAgeGroup('adults')
-
-		if (age >= 2 && age <= 6)
-			return  AgeGroup.getAgeGroup('kids')
-
-		if (age < 2)
-			return  AgeGroup.getAgeGroup('infants')
-	}
-
-	get ageGroup(): AgeGroup {
-		return this.getAgeGroup(this.dob || null)
-	}
-
 	constructor(value: any = {}) {
 		super(value)
 
@@ -320,6 +261,7 @@ export class Human extends Model {
 
 		this.nationality = Nationality.getNationality(value.nationality || null)
 
+		this.age = value.age !== undefined ? value.age : null
 		this.dob = value.dob ? newDate(value.dob) : null
 
 		this.phone = String(value.phone || '')
@@ -333,10 +275,6 @@ export class Human extends Model {
 					value ? prev.concat(value instanceof File ? value : new File(value)) : prev,
 				[]
 			) : []
-
-		this.defaultAgeGroup = value.defaultAgeGroup instanceof AgeGroup ?
-									value.defaultAgeGroup :
-									AgeGroup.getAgeGroup(value.defaultAgeGroup || null)
 	}
 
 	toObject(): {} {
@@ -344,11 +282,11 @@ export class Human extends Model {
 			title: this.title,
 			nationality: this.nationality.id,
 			dob: this.dob,
+			age: this.age,
 			phone: this.phone,
 			email: this.email,
 			passport: this.passport,
-			tickets: this.tickets.reduce( (prev: {}[], value: File) => prev.concat(value.toObject()), []),
-			defaultAgeGroup: this.defaultAgeGroup.id
+			tickets: this.tickets.reduce( (prev: {}[], value: File) => prev.concat(value.toObject()), [])
 		})
 	}
 }

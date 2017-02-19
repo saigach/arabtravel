@@ -7,7 +7,7 @@
 
 const customQueryList = {
 	trip: `objects.data->'type' AS "type", objects.data->'pointA' AS "pointA", objects.data->'pointB' AS "pointB", objects.data->'description' AS "description"`,
-	package: `objects.data->'pointA' AS "pointA", objects.data->'pointB' AS "pointB"`,
+	package: `objects.data->'pointA' AS "pointA", objects.data->'pointB' AS "pointB", objects.data->'duration' AS "duration"`,
 	order: `objects.data->'hrid' AS "hrid", objects.data->'type' AS "type", objects.data->'date' AS "date"`
 }
 
@@ -53,7 +53,7 @@ module.exports = class APIProject {
 							objects.id,
 							objects.enable,
 							objects.title,
-							json_build_object('id',users.id, 'title',users.title) AS owner
+							json_build_object('id',users.id, 'title',users.title, 'email',users.email, 'phone',users.phone) AS owner
 							${customQuery}
 						FROM objects
 						LEFT JOIN users ON objects.owner = users.id
@@ -70,7 +70,7 @@ module.exports = class APIProject {
 						objects.enable,
 						objects.title,
 						objects.data,
-						json_build_object('id',users.id, 'title',users.title) AS owner
+						json_build_object('id',users.id, 'title',users.title, 'email',users.email, 'phone',users.phone) AS owner
 					FROM objects
 					LEFT JOIN users ON objects.owner = users.id
 					WHERE
