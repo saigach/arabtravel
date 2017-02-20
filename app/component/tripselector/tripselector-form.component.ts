@@ -29,16 +29,15 @@ export class TripSelectorFormComponent implements OnInit {
 	orderType: OrderType = OrderType.List[0]
 	tripType: TripType = TripType.List[0]
 
-	checkType(order: string, trip: string = null): boolean {
-		return this.orderType.id === order && (trip === null || this.tripType.id === trip)
+	checkType(typeId: 'trip' | 'package', tripTypeId: string = null ): boolean {
+		return this.orderType === OrderType.getOrderType(typeId) &&
+				(tripTypeId === null || this.tripType === TripType.getTripType(tripTypeId))
 	}
 
-	setType(order: string, trip: string = null): void {
-		this.orderType = OrderType.getOrderType(order)
-		if (trip)
-			this.tripType = TripType.getTripType(trip)
-
-		this.pointA = null
+	setType(type: 'trip' | 'package', tripTypeId: string = null): void {
+		this.orderType = OrderType.getOrderType(type)
+		if (tripTypeId)
+			this.tripType = TripType.getTripType(tripTypeId)
 	}
 
 	packages: Package[] = []
@@ -163,8 +162,14 @@ export class TripSelectorFormComponent implements OnInit {
 
 	anyDate: boolean = false
 
+	kidsAges: number[] = []
+
 	adults: number = 1
 	kids: number = 0
+
+	resetKidsAges(): void {
+		this.kidsAges = Array.apply(null, {length: this.kids}).map( () => 0 )
+	}
 
 	submitted: boolean = false
 
@@ -184,8 +189,8 @@ export class TripSelectorFormComponent implements OnInit {
 
 				let tripOrder = new TripOrder({
 					trip: this.trip,
-					people: new Array(this.adults).map( value => new Human())
-							.concat( new Array(this.kids > 0 ? this.kids : 0).map( value => new Human({ age: 0 })) ),
+					people: Array.apply(null, {length: this.adults}).map( () => new Human())
+							.concat( this.kidsAges.map( value => new Human({ age: value })) ),
 					departureDate: this.departureDate,
 					returnDate: this.returnDate,
 					price: this.trip.getPrice(this.departureDate),
