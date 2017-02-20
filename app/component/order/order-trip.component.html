@@ -154,13 +154,16 @@
 						</div>
 
 						<div *ngIf="item.price" class="order-trip_details">
-							<div class="order-trip_detail" *ngFor="let peopleCount of item.peopleCount">
-								<div class="lbl">{{ peopleCount.ageGroup.title | ml }}</div>
-								<div class="val">{{ peopleCount.count }}&nbsp;x&nbsp;{{ (item.price.getCost(peopleCount.ageGroup) || 0) | currency:exchangeRate | number:'1.2-2' }}{{currency}}</div>
+							<div class="order-trip_detail" *ngFor="let age of item.ages">
+								<div class="lbl">
+									<span *ngIf="age >= 200">Adult</span>
+									<span *ngIf="age < 200">{{ age }}&nbsp;yo</span>
+								</div>
+								<div class="val">&nbsp;&times;&nbsp;{{ (item.price && item.price.getCost(age) || 0) | currency:exchangeRate | number:'1.2-2' }}{{currency}}</div>
 							</div>
 							<div class="order-trip_detail" *ngIf="item.vehicle">
 								<div class="lbl">{{ item.vehicle.title | ml }}</div>
-								<div class="val">1&nbsp;x&nbsp;{{ (item.price.getVehicleCost(item.vehicle)) | currency:exchangeRate | number:'1.2-2' }}{{currency}}</div>
+								<div class="val">&nbsp;&times;&nbsp;{{ (item.price && item.price.getCost(item.vehicle)) | currency:exchangeRate | number:'1.2-2' }}{{currency}}</div>
 							</div>
                         </div>
 					</div>

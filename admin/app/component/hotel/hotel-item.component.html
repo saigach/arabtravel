@@ -74,7 +74,7 @@
 									<tbody>
 										<tr *ngFor="let tr of room.costs; let i = index;">
 											<td *ngFor="let td of room.costs[i]; let j = index">
-												<input class="uk-width-1-1" type="number" min="0" [(ngModel)]="room.costs[i][j]">
+												<input class="uk-width-1-1" type="number" min="0" [value]="room.costs[i][j]" (change)="room.costs[i][j] = $event.target.value">
 											</td>
 											<td *ngIf="i > 0"><i class="uk-icon-minus admin-cursor-pointer" (click)="deleteRow(room, i); $event.stopPropagation()"></i></td>
 										</tr>
