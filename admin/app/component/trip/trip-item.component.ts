@@ -36,10 +36,14 @@ export class TripItemComponent implements OnInit {
 				private fileService: FileService
 				) {}
 
+	@ViewChild('departureTimeNode') departureTimeRef: ElementRef
+	@ViewChild('returnTimeNode') returnTimeRef: ElementRef
+
 	ngOnInit(): void {
 		let id: string = this.route.snapshot.params['id'] || null
-		if (!id)
+		if (!id) {
 			return
+		}
 
 		this.apiService.get<Point>(Point).then( (response: Point[]) => {
 			this.points = response
@@ -56,6 +60,20 @@ export class TripItemComponent implements OnInit {
 										|| null
 					})
 					.catch(error => this.item = null)
+		})
+
+		this.departureTimeRef.nativeElement.addEventListener('change', event => {
+			let date = new Date(this.item.departureTime)
+			date.setHours(event.target.valueAsDate.getUTCHours())
+			date.setMinutes(event.target.valueAsDate.getUTCMinutes())
+			this.item.departureTime = date
+		})
+
+		this.returnTimeRef.nativeElement.addEventListener('change', event => {
+			let date = new Date(this.item.returnTime)
+			date.setHours(event.target.valueAsDate.getUTCHours())
+			date.setMinutes(event.target.valueAsDate.getUTCMinutes())
+			this.item.returnTime = date
 		})
 	}
 

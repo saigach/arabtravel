@@ -44,9 +44,23 @@
 			</div>
 		</div>
 
+		<div class="uk-width-6-10">
+			<label class="uk-width-1-1 uk-margin-top uk-form-label">Departure time</label>
+			<div class="uk-width-1-1 uk-form-controls">
+				<input #departureTimeNode type="time" [value]="item.departureTime | date:'HH:mm'">
+			</div>
+		</div>
+
+		<div class="uk-width-4-10" [class.uk-hidden]="item.type.id === 'oneway'">
+			<label class="uk-width-1-1 uk-margin-top uk-form-label">Return time</label>
+			<div class="uk-width-1-1 uk-form-controls">
+				<input #returnTimeNode type="time" [value]="item.returnTime | date:'HH:mm'">
+			</div>
+		</div>
+
 		<div class="uk-width-1-1 uk-grid uk-margin-top">
 			<div class="uk-width-8-10">
-				<h3 class="tm-article-subtitle">Prices<span [class.uk-hidden]="!item.package"> (Two way)</span></h3>
+				<h3 class="tm-article-subtitle">Prices</h3>
 			</div>
 			<div class="uk-width-2-10">
 				<a class="uk-align-right admin-cursor-pointer" (click)="addPrice(); $event.stopPropagation()">
@@ -67,8 +81,8 @@
 			<button type="submit" class="uk-button uk-button-success uk-align-right" [disabled]="!valid" (click)="submit()"><i class="uk-icon-floppy-o"></i>&emsp;Submit</button>
 		</div>
 
-		<!-- <div class="uk-width-1-1 uk-margin-top">
-			<p>DEBUG: {{ item.getPrice() | json }}</p>
-		</div> -->
+		<div class="uk-width-1-1 uk-margin-top">
+			<p>DEBUG: {{ item | json }}</p>
+		</div>
 	</div>
 </div>

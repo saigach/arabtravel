@@ -6,6 +6,7 @@
 const INFO_EMAIL = 'd@ajaw.it'
 
 const Mail = require('../mail.js')
+const MLTransform = require('../mltransform.js')
 
 const escapeStr = str => "'" + String(str).replace(/\\/g, "\\\\").replace(/'/g, "\\'") + "'"
 
@@ -352,6 +353,62 @@ module.exports = class APIEngine {
 							date: { error: 'Mail not sended' }
 						}
 					})
+			case 'confirm':
+				if (!requestData.user || !requestData.user.id)
+					return Promise.resolve({
+						code: 401,
+						session: null,
+						data: 'Unauthorized'
+					})
+
+				let orderHrid = requestData.request.path.shift() || null
+				if (!orderHrid || !/^[0-9]+$/i.test(orderHrid))
+					return Promise.resolve({
+						code: 400,
+						data: { error: 'ID is not valid Number'}
+					})
+
+				orderHrid = Number.parseInt(orderHrid)
+
+				return this.DB.query(`
+					SELECT
+						*
+					FROM
+						objects
+					WHERE
+						model = 'order'
+						AND
+						enable
+						AND
+						owner = '${requestData.user.id}'
+						AND
+						(data->>'hrid')::bigint = ${orderHrid}
+				`).then(rows => {
+
+					if (rows.length !== 1)
+						return {
+							code: 404,
+							data: { error: `Object "${orderHrid}"" not found`}
+						}
+
+					let order = Object.assign({}, rows[0].data || {}, rows[0], { data: null })
+
+					this.mail.sendMail(
+						requestData.user.email,
+						requestData.ml.emailOrderConfirmTitle,
+						this.template['email-order-confirm']({
+							lang: requestData.request.language,
+							ml: requestData.ml,
+							user: requestData.user,
+							order: MLTransform(order, requestData.request.language)
+						})
+					)
+
+					return {
+						code: 200,
+						data: order
+					}
+				})
 			default:
 				return Promise.resolve({
 					code: 400,
