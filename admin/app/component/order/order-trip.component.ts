@@ -7,6 +7,7 @@ import { TripOrder } from '../../../../model/trip-order'
 import { Trip } from '../../../../model/trip'
 import { Price } from '../../../../model/price'
 import { Vehicle } from '../../../../model/vehicle'
+import { Human } from '../../../../model/human'
 
 @Component({
 	moduleId: module.id,
@@ -72,6 +73,14 @@ export class OrderTripComponent implements OnInit {
 
 	reloadPrice(): void {
 		this.item.price = this.item.trip && this.item.trip.getPrice(this.item.date) || new Price()
+	}
+
+	addHuman(): void {
+		this.item.people.push(new Human())
+	}
+
+	deleteHuman(human: Human): void {
+		this.item.people = this.item.people.filter(value => value !== human)
 	}
 
 	changeTrip(): void {

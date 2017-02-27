@@ -105,13 +105,16 @@ export class TripSelectorFormComponent implements OnInit {
 			case OrderType.getOrderType('trip'):
 				return this.trips.reduce(
 					(prev: Point[], value: Trip ) =>
-						value.type === this.tripType ? prev.concat(value.pointA) : prev,
+						value.type === this.tripType &&
+						!prev.find( (prevValue: Point) => prevValue.id.equal(value.pointA.id) ) ?
+							prev.concat(value.pointA) : prev,
 					[]
 				)
 			case OrderType.getOrderType('package'):
 				return this.packages.reduce(
 					(prev: Point[], value: Package ) =>
-						prev.concat(value.pointA),
+						!!prev.find( (prevValue: Point) => prevValue.id.equal(value.pointA.id) ) ?
+							prev : prev.concat(value.pointA),
 					[]
 				)
 
@@ -119,17 +122,21 @@ export class TripSelectorFormComponent implements OnInit {
 	}
 
 	get BPoints(): Point[] {
+		if (!this.pointA)
+			return []
+
 		switch (this.orderType) {
 			case OrderType.getOrderType('trip'):
 				return this.trips.reduce(
 					(prev: Point[], value: Trip ) =>
-						value.type === this.tripType && value.pointA === this.pointA ? prev.concat(value.pointB) : prev,
+						value.type === this.tripType && value.pointA &&
+						value.pointA.id.equal(this.pointA.id) ? prev.concat(value.pointB) : prev,
 					[]
 				)
 			case OrderType.getOrderType('package'):
 				return this.packages.reduce(
 					(prev: Point[], value: Package ) =>
-						value.pointA === this.pointA ? prev.concat(value.pointB) : prev,
+						value.pointA && value.pointA.id.equal(this.pointA.id) ? prev.concat(value.pointB) : prev,
 					[]
 				)
 
@@ -137,13 +144,18 @@ export class TripSelectorFormComponent implements OnInit {
 	}
 
 	get trip(): Trip {
-		if (this.orderType === OrderType.getOrderType('trip'))
-			return this.trips.find( (value: Trip) =>
-				value.type === this.tripType &&
-				value.pointA === this.pointA &&
-				value.pointB === this.pointB
-			) || null
-		return null
+		if (!this.pointA || !this.pointB)
+			return null
+
+		if (this.orderType !== OrderType.getOrderType('trip'))
+			return null
+
+		return this.trips.find( (value: Trip) =>
+			value.type === this.tripType &&
+			value.pointA.id.equal(this.pointA.id) &&
+			value.pointB.id.equal(this.pointB.id)
+		) || null
+
 	}
 
 	get vehicleList(): Vehicle[] {

@@ -9,7 +9,6 @@ import { MLString } from '../../../../model/common'
 import { Order, OrderStatus, PaymentType, OrderType } from '../../../../model/order'
 import { TripOrder } from '../../../../model/trip-order'
 import { PackageOrder } from '../../../../model/package-order'
-import { Human } from '../../../../model/human'
 
 @Component({
 	moduleId: module.id,
@@ -90,14 +89,6 @@ export class OrderItemComponent implements OnInit {
 
 	back(): void {
 		this.location.back()
-	}
-
-	addHuman(): void {
-		this.item.people.push(new Human())
-	}
-
-	deleteHuman(human: Human): void {
-		this.item.people = this.item.people.filter(value => value !== human)
 	}
 
 	setType(type: OrderType): void {

@@ -59,25 +59,6 @@ export class HotelItemComponent implements OnInit {
 		}
 	}
 
-	addColumn(room: Room): void {
-		room.costs = room.costs.map( value => value.concat(Array(1)).map( value => value === undefined ? null : value) )
-	}
-
-	addRow(room: Room): void {
-		room.costs.push( Array(room.costs[0].length).map( value => value === undefined ? null : value) )
-	}
-
-	deleteRow(room: Room, i: number): void {
-		room.costs.splice(i, 1)
-	}
-
-	deleteColumn(room: Room, i: number): void {
-		room.costs = room.costs.map( value => {
-			value.splice(i, 1)
-			return value
-		})
-	}
-
 	addImage(fileSelector: HTMLInputElement): void {
 		if (fileSelector.files.length) {
 			this.fileService.uploadImage(fileSelector.files[0])

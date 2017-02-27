@@ -1,6 +1,8 @@
 <div class="uk-width-1-1 uk-margin-top">
+	<h3 class="tm-article-subtitle">Package data</h3>
+</div>
+<div class="uk-width-1-1 uk-margin-top">
 	<div class="uk-panel uk-panel-box uk-width-1-1">
-		<h3 class="uk-panel-title">Package data</h3>
 		<div class="uk-grid">
 			<div class="uk-width-1-6">
 				<label class="uk-form-label uk-width-1-1">Departure date</label>
@@ -8,23 +10,29 @@
 					<input #departureDateNode class="uk-width-1-1" type="text" [value]="item.departureDate | date: 'dd.MM.yyyy'">
 				</div>
 			</div>
-			<div class="uk-width-4-6">
+			<div class="uk-width-3-6">
 				<label class="uk-form-label uk-width-1-1">Package</label>
 				<select [(ngModel)]="item.package" (change)="packageChange()">
 					<option [ngValue]="null">None</option>
-					<option *ngIf="item.package" [ngValue]="item.package">{{ item.package.title | ml:'en' }}, {{ item.package.duration }} nights (Current)</option>
-					<option *ngFor="let package of packages" [ngValue]="package">{{ package.title | ml:'en' }}, {{ package.duration }} nights</option>
+					<option *ngIf="item.package" [ngValue]="item.package">{{ item.package.title | ml:'en' }} (Current)</option>
+					<option *ngFor="let package of packages" [ngValue]="package">{{ package.title | ml:'en' }}</option>
 				</select>
+			</div>
+			<div class="uk-width-1-6">
+				<label class="uk-form-label uk-width-1-1">Duration</label>
+				<div class="uk-form-controls">
+					<input class="uk-width-1-1" type="number" min="1" [(ngModel)]="item.duration">
+				</div>
 			</div>
 			<div class="uk-width-1-6">
 				<label class="uk-form-label uk-width-1-1">Return date</label>
 				<div class="uk-form-controls">{{ item.returnDate | date: 'dd.MM.yyyy' }}</div>
 			</div>
-			<div class="uk-width-1-2 uk-margin-top" *ngIf="item.package && item.package.hotel">
+			<!-- <div class="uk-width-1-2 uk-margin-top" *ngIf="item.package && item.package.hotel">
 				<b>Hotel:</b>
 				<span>{{ item.package.hotel.title | ml:'en' }}</span>
-			</div>
-			<div class="uk-width-1-2 uk-margin-top" *ngIf="item.package && item.package.hotel">
+			</div> -->
+			<!-- <div class="uk-width-1-2 uk-margin-top" *ngIf="item.package && item.package.hotel">
 				<b>Room:</b>
 				<select name="type" [(ngModel)]="item.room">
 					<option [ngValue]="null">None</option>
@@ -34,13 +42,69 @@
 				<div class="uk-width-1-1 uk-margin-top" *ngIf="item.room">
 
 				</div>
-			</div>
+			</div> -->
 			<div class="uk-width-1-1 admin-hidde-cild" *ngIf="item.price">
 				<price [(price)]="item.price" [hideVehicle]="true"></price>
 			</div>
 		</div>
 	</div>
 </div>
+
+<div class="uk-width-1-1 uk-grid uk-margin-top" *ngIf="item.package && item.package.hotel">
+	<div class="uk-width-8-10">
+		<h3 class="tm-article-subtitle">{{ item.package.hotel.title | ml:'en' }}, rooms</h3>
+	</div>
+	<div class="uk-width-2-10">
+		<a class="uk-align-right admin-cursor-pointer" (click)="addRoom(); $event.stopPropagation()">
+			<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
+			<u>Add room</u>
+		</a>
+	</div>
+</div>
+
+<div class="uk-width-1-1 uk-margin-top">
+	<div  *ngFor="let peopleInRoom of item.peopleInRoom;" class="uk-panel uk-panel-box uk-width-1-1">
+		<div class="uk-panel-badge uk-badge uk-badge-danger admin-cursor-pointer" (click)="deleteRoom(peopleInRoom); $event.stopPropagation()"><i class="uk-icon-trash"></i></div>
+		<div class="uk-panel-title">
+			<select name="type" [(ngModel)]="peopleInRoom.room">
+				<option *ngIf="peopleInRoom.room" [ngValue]="peopleInRoom.room">{{ peopleInRoom.room.title | ml:'en' }} (Current)</option>
+				<option *ngFor="let roomItem of item.package.hotel.rooms" [ngValue]="roomItem">{{ roomItem.title | ml:'en' }}</option>
+			</select>
+		</div>
+		<div class="uk-grid">
+			<div class="uk-width-1-1">
+				<h4 class="tm-article-subtitle">Room price</h4>
+				<hotel-price [(room)]="peopleInRoom.room"></hotel-price>
+			</div>
+			<div class="uk-width-1-1 uk-grid uk-margin-top">
+				<div class="uk-width-8-10">
+					<h4 class="tm-article-subtitle">People</h4>
+				</div>
+				<div class="uk-width-2-10">
+					<a class="uk-align-right admin-cursor-pointer" (click)="addHuman(peopleInRoom); $event.stopPropagation()">
+						<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
+						<u>Add human</u>
+					</a>
+				</div>
+			</div>
+			<div class="uk-width-1-1">
+				<ul class="uk-list uk-list-space">
+					<li *ngFor="let human of peopleInRoom.people; let i=index" class="uk-form uk-form-stacked">
+						<label>Passenger {{ i + 1}} age:</label>
+						<input class="uk-form-width-small uk-margin-left" type="number" min="0">
+						<i class="uk-icon-trash uk-margin-left admin-cursor-pointer" (click)="deleteHuman(peopleInRoom, human); $event.stopPropagation()"></i>
+					</li>
+				</ul>
+			</div>
+
+
+
+
+		</div>
+	</div>
+</div>
+
+
 <div class="uk-width-1-1 uk-margin-top">
 	<h3 class="tm-article-subtitle">Calculation</h3>
 </div>
@@ -66,7 +130,7 @@
 						<span *ngIf="item.package && item.package.pointB">&ensp;&rarr;&ensp;{{ item.package.pointB.title | ml:'en' }}</span>
 					</div>
 					<div>
-						<!-- <span>{{ item.returnDate | date: 'dd.MM.yyyy'}}</span> -->
+						<span>{{ item.returnDate | date: 'dd.MM.yyyy'}}</span>
 						<span *ngIf="item.package && item.package.pointB">&emsp;{{ item.package.pointB.title | ml:'en' }}</span>
 						<span *ngIf="item.package && item.package.pointA">&ensp;&rarr;&ensp;{{ item.package.pointA.title | ml:'en' }}</span>
 					</div>
@@ -86,7 +150,7 @@
 				<td>
 					<span>{{ item.package.hotel.title | ml:'en' }}</span>
 					<span *ngIf="item.package.room">,&emsp;{{ item.package.room.title | ml:'en' }}</span>
-					<span>,&emsp; {{ item.package.duration }} nights</span>
+					<span>,&emsp; {{ item.duration }} nights</span>
 				</td>
 				<td>
 					<!-- <div *ngIf="item.room">

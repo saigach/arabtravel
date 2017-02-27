@@ -1,7 +1,6 @@
 import { newDate, Model, MLString } from './common'
 import { User } from './user'
 
-import { Human } from './human'
 import { Price } from './price'
 
 export class PaymentType {
@@ -228,8 +227,6 @@ export class Order extends Model {
 
 	price: Price
 
-	people: Human[]
-
 	paymentType: PaymentType
 	card: Card
 
@@ -261,13 +258,6 @@ export class Order extends Model {
 
 		this.price = value.price ? ( value.price instanceof Price ? value.price : new Price(value.price) ) : null
 
-		this.people = value.people instanceof Array ?
-			value.people.reduce(
-				( prev: Human[] , value:any ) =>
-					value ? prev.concat(value instanceof Human ? value : new Human(value)) : prev,
-				[]
-			) : []
-
 		this.paymentType = PaymentType.getPaymentType(value.paymentType || null)
 
 		this.card = new Card(value.card || {})
@@ -289,7 +279,6 @@ export class Order extends Model {
 			departureDate: this.departureDate,
 			returnDate: this.returnDate,
 			price: this.price && this.price.toObject() || null,
-			people: this.people.reduce( (prev: {}[], value: Human) => prev.concat(value.toObject()), []),
 			paymentType: this.paymentType.id,
 			card: this.card.toObject(),
 			status: this.status.id,
@@ -297,9 +286,5 @@ export class Order extends Model {
 			exchangeRate: this.exchangeRate,
 			egyptianMarkUp: this.egyptianMarkUp
 		})
-	}
-
-	get ages(): number[] {
-		return this.people.reduce( (prev:number[], human: Human) => prev.concat(human.getAge(this.departureDate)), [] )
 	}
 }

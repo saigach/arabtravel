@@ -3,9 +3,10 @@ import { Component, OnInit, ViewChild, ElementRef, Output, Input, EventEmitter }
 import { APIService } from '../../service/api.service'
 
 import { str2Date } from '../../../../model/common'
-import { PackageOrder } from '../../../../model/package-order'
+import { PackageOrder, PeolpeInRoom } from '../../../../model/package-order'
 import { Package } from '../../../../model/package'
 import { Price } from '../../../../model/price'
+import { Human } from '../../../../model/human'
 
 @Component({
 	moduleId: module.id,
@@ -63,5 +64,20 @@ export class OrderPackageComponent implements OnInit {
 			})
 		else
 			this.reloadPrice()
+	}
+
+	addRoom(): void {
+		if (!this.item.package || !this.item.package.hotel || this.item.package.hotel.rooms.length <= 0)
+			return
+
+		this.item.peopleInRoom.push(new PeolpeInRoom({ room: this.item.package.hotel.rooms[0] }))
+	}
+
+	deleteRoom(peolpeInRoom: PeolpeInRoom): void {
+		this.item.peopleInRoom = this.item.peopleInRoom.filter(value => value !== peolpeInRoom)
+	}
+
+	addHuman(peopleInRoom: PeolpeInRoom): void {
+		peopleInRoom.people.push(new Human())
 	}
 }

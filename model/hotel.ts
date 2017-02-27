@@ -1,33 +1,48 @@
 import { newDate, Model, File, MLString } from './common'
 import { User } from './user'
 
+export class Cost {
+	ages: { value: number }[]
+	cost: number
+
+	constructor(value: any = {}) {
+		this.ages = value.ages instanceof Array ?
+						value.ages.map( value => ({ value: Math.max( 0, Number.parseFloat(value || 0) || 0)  }) ) :
+						[]
+
+		if (this.ages.length <= 0)
+			this.ages = [{value: 0}]
+
+		this.cost = Math.max(0, Number.parseFloat(value.cost || 0) || 0)
+	}
+
+	toObject(): {} {
+		return {
+			ages: this.ages.map( value => value.value ),
+			cost: this.cost
+		}
+	}
+}
+
 export class Room {
 
 	title: MLString
 	content: MLString
 	image: File
 
-	costs: number[][] = [[]]
+	costs: Cost[]
 
 	constructor(value: any = {}) {
 		this.title = new MLString(value.title)
 		this.content = new MLString(value.content),
 		this.image = value.image ? ( value.image instanceof File ? value.image : new File(value.image) ) : null
 
-		let maxColumn = 2
-		this.costs = value.costs instanceof Array ? value.costs.reduce((prev: number[][], value: any) => {
-			let arr = value instanceof Array ? value.map(
-				value => typeof value === 'number' ? Math.max( 0, value) : null
+		this.costs = value.costs instanceof Array ?
+			value.costs.reduce(
+				( prev: Cost[] , value:any ) =>
+					value ? prev.concat(value instanceof Cost ? value : new Cost(value)) : prev,
+				[]
 			) : []
-			maxColumn = Math.max(maxColumn, arr.length)
-			prev.push(arr)
-			return prev
-		}, [] ) : []
-
-		if (this.costs.length <= 0)
-			this.costs = [[]]
-
-		this.costs = this.costs.map( value => value.concat(new Array(maxColumn - value.length)).map(value => value === undefined ? null : value) )
 	}
 
 	toObject(): {} {
@@ -35,7 +50,7 @@ export class Room {
 			title: this.title,
 			content: this.content,
 			image: this.image && this.image.toObject() || null,
-			costs: this.costs
+			costs: this.costs.reduce( (prev: {}[], value: Cost) => prev.concat(value.toObject()), [])
 		}
 	}
 
@@ -56,30 +71,6 @@ export class Hotel extends Model {
 
 	rooms: Room[]
 	images: File[]
-
-	// options: Option[]
-
-	// get enabledOptions(): Option[] {
-	// 	return this.options.filter( (value:Option) => value.enable )
-	// }
-
-	// get optionsCost(): number {
-	// 	return this.options.reduce( (prev: number, option: Option) =>
-	// 		option.enable ? prev + option.cost : prev,
-	// 		0
-	// 	)
-	// }
-
-	// get roomsCost():number {
-	// 	return this.rooms.reduce( (prev: number, room: Room) =>
-	// 		prev + room.fullCost,
-	// 		0
-	// 	)
-	// }
-
-	// get fullCost(): number {
-	// 	return this.roomsCost + this.optionsCost
-	// }
 
 	constructor(value: any = {}) {
 		super(value)
@@ -105,13 +96,6 @@ export class Hotel extends Model {
 					value ? prev.concat(value instanceof File ? value : new File(value)) : prev,
 				[]
 			) : []
-
-		// this.options = value.options instanceof Array ?
-		// 	value.options.reduce(
-		// 		( prev: Option[] , value:any ) =>
-		// 			value ? prev.concat(value instanceof Option ? value : new Option(value)) : prev,
-		// 		[]
-		// 	) : []
 	}
 
 	toObject(): {} {
@@ -122,11 +106,6 @@ export class Hotel extends Model {
 			content: this.content,
 			rooms: this.rooms.reduce( (prev: {}[], value: Room) => prev.concat(value.toObject()), []),
 			images: this.images.reduce( (prev: {}[], value: File) => prev.concat(value.toObject()), [])
-			// options: this.options.reduce( (prev: {}[], value: Option) => prev.concat(value.toObject()), [])
 		})
-	}
-
-	getCost(ages: number[] = []): number {
-		return 0
 	}
 }
