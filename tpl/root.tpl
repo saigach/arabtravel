@@ -142,22 +142,23 @@
                     	<div class="uk-width-1-2 lang-cur-dd">
                     	    <div class="dropdown dd-currency" data-uk-dropdown="{mode:'click'}">
                     	        <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    	            <span currency-field>USD</span>
+                    	            <span currency-field>{{=it.ml.USD}}</span>
                     	            <span class="caret"></span>
                     	        </button>
                     	        <ul class="uk-dropdown dropdown-menu" aria-labelledby="dLabel">
-                    	            <li><a currency-set="usd">USD</a></li>
-                    	            <li><a currency-set="jod">JOD</a></li>
+                    	            <li><a currency-set="usd">{{=it.ml.USD}}</a></li>
+                    	            <li><a currency-set="JOD">{{=it.ml.JOD}}</a></li>
+									<li><a currency-set="SAR">{{=it.ml.SAR}}</a></li>
                     	        </ul>
                     	    </div>
                     	    <div class="dropdown dd-lang" data-uk-dropdown="{mode:'click'}">
                     	        <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    	            {{=it.lang}}
+									{{=it.ml.curLang}}
                     	            <span class="caret"></span>
                     	        </button>
                     	        <ul class="uk-dropdown dropdown-menu" aria-labelledby="dLabel">
-                    	            <li><a href="/en">en</a></li>
-                    	            <li><a href="/ar">ar</a></li>
+                    	            <li><a href="/en">English</a></li>
+                    	            <li><a href="/ar">عربي</a></li>
                     	        </ul>
                     	    </div>
                     	</div>

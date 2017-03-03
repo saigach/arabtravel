@@ -56,6 +56,21 @@
 
                                 </div>
 
+                                <div class="form-group">
+									<label for="ad">Adults</label>
+                                	<input type="number" min="0" class="form-control" [(ngModel)]="adults" [ngModelOptions]="{standalone: true}">
+                                 </div>
+
+                                 <div class="form-group">
+                                    <label for="ki">Kids</label>
+                                    <input type="number" min="0" class="form-control" [(ngModel)]="kids" [ngModelOptions]="{standalone: true}" (change)="resetKidsAges()">
+                                </div>
+
+                                <div class="form-group" *ngFor="let kid of kidsAges; let i = index;">
+									<label for="">Kid {{ i + 1 }} age:</label>
+									<input type="number" min="0" class="form-control" [value]="kidsAges[i]" (change)="kidsAges[i] = $event.target.value">
+								</div>
+
                             </form>
 
                         </aside>

@@ -39,9 +39,7 @@
 
 })(jQuery);
 
-$(document).ready(function() {
-
-    //var s = skrollr.init();
+$(window).on('load', function() {
 
     $(".owl-carousel").owlCarousel({
       items:1,
@@ -49,8 +47,17 @@ $(document).ready(function() {
       loop: true,
       navText: ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>']
     });
+	
 
-    $('.sticky-widget').stickyAffix({offsetTop: 0});
+
+});
+
+$(document).ready(function() {
+
+    //var s = skrollr.init();
+
+	var slideshow = UIkit.slideshow($('#main-page-carousel')[0], {autoplay:true, kenburns: true, autoplayInterval: 5000, pauseOnHover: false });
+
 
     if($('#hww-graphics').length > 0) {
         (function() {

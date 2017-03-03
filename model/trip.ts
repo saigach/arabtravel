@@ -52,10 +52,13 @@ export class Trip extends Model {
 	pointA: Point
 	pointB: Point
 
+	departureTime: Date
+	returnTime: Date
+
 	prices: Price[] = []
 
 	get title(): string {
-		return (this.pointA && this.pointA.title['en'] || 'A') + ' ' + (this.type.letter) + ' ' + (this.pointB && this.pointB.title['en'] || 'B') + ' (' + this.description['en'] + ')'
+		return (this.pointA && this.pointA.title['en'] || 'A') + ' ' + (this.type.letter) + ' ' + (this.pointB && this.pointB.title['en'] || 'B')
 	}
 
 	constructor(value: any = {}) {
@@ -67,6 +70,9 @@ export class Trip extends Model {
 
 		this.pointA = value.pointA ? ( value.pointA instanceof Point ? value.pointA : new Point(value.pointA) ) : null
 		this.pointB = value.pointB ? ( value.pointB instanceof Point ? value.pointB : new Point(value.pointB) ) : null
+
+		this.departureTime = value.departureTime && new Date(value.departureTime) || newDate()
+		this.returnTime = value.returnTime && new Date(value.returnTime) || newDate()
 
 		this.prices = value.prices instanceof Array ?
 			value.prices.reduce(
@@ -93,6 +99,8 @@ export class Trip extends Model {
 			type: this.type.id,
 			pointA: this.pointA.toObject(),
 			pointB: this.pointB.toObject(),
+			departureTime: this.departureTime,
+			returnTime: this.returnTime,
 			prices: this.prices.reduce( (prev: {}[], value: Price) => prev.concat(value.toObject()), [])
 		})
 	}

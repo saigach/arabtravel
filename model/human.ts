@@ -3,6 +3,8 @@ import { newDate, Model, File, MLString } from './common'
 export class Nationality {
 	static List:Nationality[] = [
 		new Nationality({ id: 'jordanian', title: 'Jordanian', icon: null }),
+		new Nationality({ id: 'egyptian', title: 'Egyptian', icon: null }),
+		new Nationality({ id: 'saudi', title: 'Saudi', icon: null }),		
 		new Nationality({ id: 'afghan', title: 'Afghan', icon: null }),
 		new Nationality({ id: 'albanian', title: 'Albanian', icon: null }),
 		new Nationality({ id: 'algerian', title: 'Algerian', icon: null }),
@@ -57,7 +59,6 @@ export class Nationality {
 		new Nationality({ id: 'dutch', title: 'Dutch', icon: null }),
 		new Nationality({ id: 'east-timorese', title: 'East Timorese', icon: null }),
 		new Nationality({ id: 'ecuadorean', title: 'Ecuadorean', icon: null }),
-		new Nationality({ id: 'egyptian', title: 'Egyptian', icon: null }),
 		new Nationality({ id: 'emirian', title: 'Emirian', icon: null }),
 		new Nationality({ id: 'equatorial-guinean', title: 'Equatorial Guinean', icon: null }),
 		new Nationality({ id: 'eritrean', title: 'Eritrean', icon: null }),
@@ -154,7 +155,6 @@ export class Nationality {
 		new Nationality({ id: 'samoan', title: 'Samoan', icon: null }),
 		new Nationality({ id: 'san-marinese', title: 'San Marinese', icon: null }),
 		new Nationality({ id: 'sao-tomean', title: 'Sao Tomean', icon: null }),
-		new Nationality({ id: 'saudi', title: 'Saudi', icon: null }),
 		new Nationality({ id: 'scottish', title: 'Scottish', icon: null }),
 		new Nationality({ id: 'senegalese', title: 'Senegalese', icon: null }),
 		new Nationality({ id: 'serbian', title: 'Serbian', icon: null }),

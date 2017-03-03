@@ -4,7 +4,7 @@ import { Router } from '@angular/router'
 import { APIService } from '../../service/api.service'
 import { MLService } from '../../service/ml.service'
 
-import { str2Date, newDate, MLString } from '../../../model/common'
+import { str2Date, newDate, MLString, SearchData } from '../../../model/common'
 import { PackageOrder } from '../../../model/package-order'
 import { Package } from '../../../model/package'
 import { Point } from '../../../model/point'
@@ -67,61 +67,58 @@ export class PackageListComponent implements OnInit {
 	departureDateDatepicker: any = null
 	departureDate: Date = new Date()
 
-	// peopleCount: PeopleCount[] = AgeGroup.List.reduce(
-	// 	( prev:PeopleCount[], value:AgeGroup ) =>
-	// 		prev.concat({
-	// 			ageGroup: value,
-	// 			count: value.id === 'adults' ? 1 : 0
-	// 		}),
-	// 	[]
-	// )
-
 	ml: { [key:string]: MLString } = {}
+
+	kidsAges: number[] = []
+
+	adults: number = 1
+	kids: number = 0
+
+	resetKidsAges(): void {
+		this.kidsAges = Array.apply(null, {length: this.kids}).map( () => 0 )
+	}
 
 	constructor(private router: Router, private apiService: APIService, private mlService: MLService) {}
 
 	ngOnInit(): void {
 		this.mlService.get().then( ml => this.ml = ml)
 
-		// let searchData: SearchData = null
+		let searchData: SearchData = null
 
-		// try {
-		// 	searchData = JSON.parse(localStorage.getItem('searchData'))
-		// } catch(error) {
-		// 	searchData = null
-		// }
+		try {
+			searchData = JSON.parse(localStorage.getItem('searchData'))
+		} catch(error) {
+			searchData = null
+		}
 
 		localStorage.removeItem('searchData')
 
 		this.apiService.get<Package>(Package).then( (response: Package[]) => {
 			this.packages = response.filter( (value: Package) => !!value.hotel )
 
-			// if (searchData) {
-			// 	this.anyDate = !!searchData.anyDate
+			if (searchData) {
+				this.anyDate = !!searchData.anyDate
 
-			// 	let date = newDate(searchData.departureDate || null) || new Date()
-			// 	this.departureDate = date
+				let date = newDate(searchData.departureDate || null) || new Date()
+				this.departureDate = date
 
-			// 	let pointAuuid = searchData.pointA.trim().toLowerCase()
+				let pointAuuid = searchData.pointA.trim().toLowerCase()
 
-			// 	if (pointAuuid) {
-			// 		this.pointA = this.APoints.find( (value:Point) => value.id.uuid === pointAuuid )
+				if (pointAuuid) {
+					this.pointA = this.APoints.find( (value:Point) => value.id.uuid === pointAuuid )
 
-			// 		let pointBuuid = searchData.pointB.trim().toLowerCase()
+					let pointBuuid = searchData.pointB.trim().toLowerCase()
 
-			// 		if (pointBuuid)
-			// 			this.pointB = this.BPoints.find( (value:Point) => value.id.uuid === pointBuuid )
-			// 	}
+					if (pointBuuid)
+						this.pointB = this.BPoints.find( (value:Point) => value.id.uuid === pointBuuid )
+				}
 
-			// 	if (searchData.peopleCount instanceof Array)
-			// 		this.peopleCount.forEach( (peopleCount:PeopleCount) => {
-			// 			let pc = searchData.peopleCount.find(
-			// 				(value:{ ageGroup: string, count: number }) => value.ageGroup === peopleCount.ageGroup.id
-			// 			)
-			// 			if (pc)
-			// 				peopleCount.count = pc.count || peopleCount.count
-			// 		})
-			// }
+				this.adults = searchData.adults || 0
+
+				this.kidsAges = searchData.kids || []
+
+				this.kids = this.kidsAges.length
+			}
 		})
 
 		this.departureDateDatepicker = UIkit.datepicker(this.departureDateRef.nativeElement, {
@@ -135,21 +132,14 @@ export class PackageListComponent implements OnInit {
 	}
 
 	select(pack: Package): void {
-		// let order = new PackageOrder({
-		// 	package: pack,
-		// 	people: this.peopleCount.reduce(
-		// 		(prev: Human[], value:PeopleCount) => {
-		// 			for(let i = 0; i < value.count; i++)
-		// 				prev.push(new Human({ defaultAgeGroup: value.ageGroup }))
-		// 			return prev
-		// 		},
-		// 		[]
-		// 	),
-		// 	departureDate: this.departureDate,
-		// 	anyDate: this.anyDate
-		// })
+		let order = new PackageOrder({
+			package: pack,
+			peopleInRoom: [],
+			departureDate: this.departureDate,
+			anyDate: this.anyDate
+		})
 
-		// localStorage.setItem('currentPackageOrder', order.toString())
-		// window.location.href = `/${lang}/order-package`
+		localStorage.setItem('currentOrder', order.toString())
+		window.location.href = `/${lang}/order-package`
 	}
 }

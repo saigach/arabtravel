@@ -108,116 +108,12 @@
 			</div>
 
 			<div class="uk-width-1-1" *ngIf="item.type.id === 'trip'">
-				<div class="uk-width-1-1 uk-grid uk-margin-top">
-					<div class="uk-width-8-10">
-						<h3 class="tm-article-subtitle">Passengers</h3>
-					</div>
-					<div class="uk-width-2-10">
-						<a class="uk-align-right admin-cursor-pointer" (click)="addHuman(); $event.stopPropagation()">
-							<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
-							<u>Add passenger</u>
-						</a>
-					</div>
-				</div>
-				<div class="uk-width-1-1 uk-margin-top">
-					<div  *ngFor="let human of item.people; let i = index;" class="uk-panel uk-panel-box uk-width-1-1">
-						<div class="uk-panel-badge uk-badge uk-badge-danger admin-cursor-pointer" (click)="deleteHuman(human); $event.stopPropagation()"><i class="uk-icon-trash"></i></div>
-						<h3 class="uk-panel-title">Passenger #{{ i + 1 }}</h3>
-						<order-human [(human)]="item.people[i]"></order-human>
-					</div>
-				</div>
 				<order-trip [(order)]="item"></order-trip>
 			</div>
 
 			<div class="uk-width-1-1" *ngIf="item.type.id === 'package'">
 				<order-package [(order)]="item"></order-package>
 			</div>
-
-
-
-			<!-- <div class="uk-width-1-1 uk-margin-top">
-				<h3 class="tm-article-subtitle">Calculation</h3>
-			</div>
-			<div class="uk-width-1-1 uk-margin-top">
-				<table class="uk-table uk-table-hover uk-table-condensed">
-					<thead>
-						<tr>
-							<th>#</th>
-							<th>Type</th>
-							<th>Content</th>
-							<th>Cost, JD</th>
-							<th>Sum, JD</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr *ngFor="let shift of item.sortedShifts">
-							<td></td>
-							<td>Shift</td>
-							<td>
-								<span>{{ shift.date | date: 'dd.MM.yyyy'}}</span>
-								<span *ngIf="shift.trip && shift.trip.pointA">,&emsp;{{ shift.trip.pointA.title | ml:'en' }}</span>
-								<span *ngIf="shift.trip && shift.trip.pointB">&ensp;&rarr;&ensp;{{ shift.trip.pointB.title | ml:'en' }}</span>
-							</td>
-							<td>
-								<div *ngFor="let peopleCount of item.getPeopleCounts(shift.date)">
-									<span>{{ peopleCount.ageGroup.title | ml:'en' }}</span>
-									<span class="uk-margin-small-left">{{ peopleCount.count }}&nbsp;x&nbsp;{{ (shift.price && shift.price.getCost(peopleCount.ageGroup) || 0) | number:'1.2-2' }}</span>
-								</div>
-								<div *ngIf="shift.vehicle">
-									<span>{{ shift.vehicle.title | ml:'en' }}</span>
-									<span class="uk-margin-small-left">1&nbsp;x&nbsp;{{ (shift.price && shift.price.getVehicleCost(shift.vehicle)) | number:'1.2-2' }}</span>
-								</div>
-							</td>
-							<td>{{ item.getShiftCost(shift) | number:'1.2-2' }}</td>
-						</tr>
-						<tr *ngIf="item.hotel">
-							<td></td>
-							<td>Hotel</td>
-							<td>
-								<span>{{ item.hotel.title | ml:'en' }}</span>
-								<span *ngIf="item.from">,&emsp;from: {{ item.from | date: 'dd.MM.yyyy' }}</span>
-								<span *ngIf="item.to">&nbsp;to: {{ item.to | date: 'dd.MM.yyyy' }}</span>
-								<span *ngIf="item.room">,&emsp;{{ item.room.title | ml:'en' }}</span>
-							</td>
-							<td>
-								<div *ngIf="item.room">
-									<div>
-										<span>Room</span>
-										<span class="uk-margin-small-left">{{ item.duration }}&nbsp;x&nbsp;{{ item.room.cost | number:'1.2-2' }}</span>
-									</div>
-									<div *ngFor="let option of item.room.enabledOptions">
-										<span>{{ option.title }}</span>
-										<span class="uk-margin-small-left">{{ item.duration }}&nbsp;x&nbsp;{{ option.cost | number:'1.2-2' }}</span>
-									</div>
-								</div>
-								<div *ngFor="let option of item.hotel.enabledOptions">
-									<span>{{ option.title | ml:'en' }}</span>
-									<span class="uk-margin-small-left">1&nbsp;x&nbsp;{{ option.cost | number:'1.2-2' }}</span>
-								</div>
-							</td>
-							<td>{{ item.hotelCost | number:'1.2-2' }}</td>
-						</tr>
-					</tbody>
-					<tfoot>
-						<tr>
-							<td colspan="4" class="uk-text-right"><b>Full sum, JD:</b></td>
-							<td><b>{{ item.fullCost | number:'1.2-2' }}</b></td>
-						</tr>
-						<tr>
-							<td colspan="4" class="uk-text-right"><b>Processing fee, JD:</b></td>
-							<td><b>{{ item.processingFee | number:'1.2-2' }}</b></td>
-						</tr>
-						<tr>
-							<td colspan="4" class="uk-text-right"><b>Total cost, JD:</b></td>
-							<td><b>{{ item.totalCost | number:'1.2-2' }}</b></td>
-						</tr>
-						<tr>
-							<td colspan="4" class="uk-text-right"><b>Total cost, $:</b></td>
-							<td><b>{{ (item.totalCost * item.exchangeRate) | number:'1.2-2' }}</b></td>
-						</tr>
-					</tfoot>
-				</table>
-			</div> -->
 
 			<div class="uk-width-1-1 uk-margin-top">
 				<button type="submit" class="uk-button uk-button-success uk-align-right" (click)="submit()"><i class="uk-icon-floppy-o"></i>&emsp;Submit</button>

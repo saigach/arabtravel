@@ -36,6 +36,7 @@ import { VehicleListComponent } from './component/vehicle/vehicle-list.component
 
 import { HotelListComponent } from './component/hotel/hotel-list.component'
 import { HotelItemComponent } from './component/hotel/hotel-item.component'
+import { HotelPriceComponent } from './component/hotel/hotel-price.component'
 
 import { TripListComponent } from './component/trip/trip-list.component'
 import { TripItemComponent } from './component/trip/trip-item.component'
@@ -83,6 +84,7 @@ import { StaticItemComponent } from './component/static/static-item.component'
 
 		HotelListComponent,
 		HotelItemComponent,
+		HotelPriceComponent,
 
 		TripListComponent,
 		TripItemComponent,

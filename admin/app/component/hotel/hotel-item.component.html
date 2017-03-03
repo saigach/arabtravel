@@ -41,7 +41,7 @@
 				</div>
 			</div>
 			<div class="uk-width-1-1 uk-margin-top">
-				<div  *ngFor="let room of item.rooms;" class="uk-panel uk-panel-box uk-width-1-1">
+				<div  *ngFor="let room of item.rooms; let i = index" class="uk-panel uk-panel-box uk-width-1-1">
 					<div class="uk-panel-badge uk-badge uk-badge-danger admin-cursor-pointer" (click)="deleteRoom(room); $event.stopPropagation()"><i class="uk-icon-trash"></i></div>
 					<h3 class="uk-panel-title">Room &laquo;{{ room.title | ml:'en' }}&raquo;</h3>
 					<div class="uk-grid">
@@ -58,39 +58,7 @@
 								<input type="file" accept="image/*" (change)="setRoomImage($event.target, room)">
 							</div>
 						</div>
-						<div class="uk-width-1-1 uk-margin-top">
-							<h4 class="tm-article-subtitle">Room price</h4>
-							<div class="uk-width-1-1 uk-overflow-container">
-								<table class="uk-table uk-table-condensed">
-									<thead>
-										<tr>
-											<th *ngFor="let th of room.costs[0]; let i = index;">
-												<span *ngIf="i === 0">Age</span>
-												<span *ngIf="i > 0">{{i}}</span>
-											</th>
-											<th><i class="uk-icon-plus admin-cursor-pointer" (click)="addColumn(room); $event.stopPropagation()"></i></th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr *ngFor="let tr of room.costs; let i = index;">
-											<td *ngFor="let td of room.costs[i]; let j = index">
-												<input class="uk-width-1-1" type="number" min="0" [value]="room.costs[i][j]" (change)="room.costs[i][j] = $event.target.value">
-											</td>
-											<td *ngIf="i > 0"><i class="uk-icon-minus admin-cursor-pointer" (click)="deleteRow(room, i); $event.stopPropagation()"></i></td>
-										</tr>
-										<tr>
-											<td *ngFor="let td of room.costs[0]; let i = index;">
-												<i *ngIf="i === 0" class="uk-icon-plus admin-cursor-pointer" (click)="addRow(room); $event.stopPropagation()"></i>
-												<i *ngIf="i > 0" class="uk-icon-minus admin-cursor-pointer" (click)="deleteColumn(room, i); $event.stopPropagation()"></i>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-						<div class="uk-width-1-1 uk-margin-top">
-				<p>DEBUG: {{ room.costs | json }}</p>
-			</div>
+						<hotel-price [(room)]="item.rooms[i]"></hotel-price>
 						<div class="uk-width-1-1 uk-margin-top">
 							<h4 class="tm-article-subtitle">Room description</h4>
 							<div class="uk-width-1-1">

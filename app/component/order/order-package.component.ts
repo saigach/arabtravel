@@ -61,7 +61,7 @@ export class OrderPackageComponent implements OnInit {
 		let currentOrderObj: {} = null
 
 		try {
-			currentOrderObj = JSON.parse(localStorage.getItem('currentPackageOrder'))
+			currentOrderObj = JSON.parse(localStorage.getItem('currentOrder'))
 		} catch(error) {
 			currentOrderObj = null
 		}
@@ -70,19 +70,7 @@ export class OrderPackageComponent implements OnInit {
 			window.location.href = '/' + lang
 		else {
 			this.item = new PackageOrder(currentOrderObj)
-			// this.peopleCount.forEach( (value: PeopleCount) =>{
-			// 	let pc:PeopleCount = this.item.peopleCount.find( (pc: PeopleCount ) => pc.ageGroup === value.ageGroup )
-			// 	if (pc)
-			// 		value.count = pc.count
-			// })
-
 			this.item.price = this.item.package.getPrice(this.item.anyDate ? undefined : this.item.departureDate)
-			// this.item.room = this.item.package.hotel.rooms.reduce(
-			// 	(prev:Room, value:Room) => prev === null || value.cost <= prev.cost ? value : prev,
-			// 	null
-			// )
-
-			console.dir(this.item)
 		}
 	}
 
@@ -130,7 +118,7 @@ export class OrderPackageComponent implements OnInit {
 			this.item = new PackageOrder(value)
 			UIkit.notify('Order sucess', {status  : 'success' })
 			this.submitted = true
-			localStorage.removeItem('currentPackageOrder')
+			localStorage.removeItem('currentOrder')
 			this.submitting = false
 		}).catch( error => {
 			if (error.code && error.code === 401) {

@@ -447,5 +447,50 @@
 	"valid": {
 		"en": "date",
 		"ar": "التاريخ"
+	},
+	
+	"leave_info": {
+		"en": "Leave your info and we will contact you as soon as possible",
+		"ar": "ترك المعلومات الخاصة بك، ونحن سوف نتصل بك في أقرب وقت ممكن"
+	},
+	
+	"adults": {
+		"en": "Adults",
+		"ar": "عدد البالغين"
+	},
+	
+	"kids": {
+		"en": "Kids",
+		"ar": "عدد الاطفال"
+	},
+	
+	"kidsAge": {
+		"en": "Kids age",
+		"ar": "عمر الطفل"
+	},
+	
+	"adult": {
+		"en": "Adult",
+		"ar": "بالغ"
+	},
+	
+	"USD": {
+		"en": "USD",
+		"ar": "دولار أمريكي"
+	},
+	
+	"JOD": {
+		"en": "JOD",
+		"ar": "دينار أردني"
+	},
+	
+	"SAR": {
+		"en": "SAR",
+		"ar": "ريال سعودي"
+	},
+	
+	"curLang": {
+		"en": "English",
+		"ar": "عربي"
 	}
 }
