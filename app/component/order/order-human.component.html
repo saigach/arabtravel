@@ -1,7 +1,7 @@
 <div class="passenger-info_body">
 
-    <div class="row">
-        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="uk-grid uk-flex">
+        <div class="uk-width-medium-1-3 uk-width-small-1-2">
             <div class="form-group">
                 <label for="exampleInputEmail1">
                     {{ ml.name | ml }}
@@ -9,7 +9,7 @@
                 <input type="text" class="form-control" [(ngModel)]="item.title">
             </div>
         </div>
-        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+        <div class="uk-width-medium-1-3 uk-width-small-1-2">
             <div class="form-group">
                 <label for="exampleInputEmail1">
                     {{ ml.nationality | ml }}
@@ -19,7 +19,7 @@
                 </select>
             </div>
         </div>
-        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+        <div class="uk-width-medium-1-3 uk-width-small-1-2">
             <div class="form-group">
                 <label for="rf">{{ ml.dateOfBirth | ml }}</label>
                 <div class='input-group date'>
@@ -27,7 +27,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+        <div class="uk-width-medium-1-3 uk-width-small-1-2">
             <div class="form-group">
                 <label for="exampleInputEmail1">
                     {{ ml.passportNumber | ml }}
@@ -35,7 +35,7 @@
                 <input type="text" class="form-control" [(ngModel)]="item.passport">
             </div>
         </div>
-        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+        <div class="uk-width-medium-1-3 uk-width-small-1-2">
             <div class="form-group">
                 <label for="exampleInputEmail1">
                     {{ ml.phone | ml }}
@@ -43,7 +43,7 @@
                 <input type="text" class="form-control" [(ngModel)]="item.phone">
             </div>
         </div>
-        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+        <div class="uk-width-medium-1-3 uk-width-small-1-2">
             <div class="form-group">
                 <label for="exampleInputEmail1">
                     {{ ml.email | ml }}

@@ -11,6 +11,12 @@
 				</div>
 			</div>
 			<div class="uk-width-1-6 uk-margin-top">
+				<label class="uk-form-label uk-width-1-1">Exchange, SAR per JD</label>
+				<div class="uk-form-controls">
+					<input class="uk-width-1-1" type="number" [(ngModel)]="item.exchangeRateSAR" (change)="update('exchangeRateSAR')">
+				</div>
+			</div>
+			<div class="uk-width-1-6 uk-margin-top">
 				<label class="uk-form-label uk-width-1-1">Processing fee, JD</label>
 				<div class="uk-form-controls">
 					<input class="uk-width-1-1" type="number" [(ngModel)]="item.processingFee" (change)="update('processingFee')">

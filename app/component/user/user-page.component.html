@@ -8,19 +8,19 @@
         <div class="row">
             <div class="col-md-4">
                 <label for="">
-                    {{ ml.name | ml }}
+                    Name
                 </label>
                 <input type="text" class="form-control" [(ngModel)]="user.title">
             </div>
             <div class="col-md-4">
                 <label for="">
-                    {{ ml.name | ml }}
+                    Email
                 </label>
                 <input type="email" class="form-control" [(ngModel)]="user.email">
             </div>
             <div class="col-md-4">
                 <label for="">
-                    {{ ml.phone | ml }}
+                    Phone
                 </label>
                 <input type="text" class="form-control" [(ngModel)]="user.phone">
             </div>
@@ -28,18 +28,18 @@
 
         <hr>
 
-        <h2>{{ ml.myOrders | ml }}</h2>
+        <h2>My orders</h2>
 
 
         <div class="user-orders-container">
 
             <div class="user-order_header user-order_top">
-                <div class="user-order_number">{{ ml.order | ml }}</div>
-                <div class="user-order_date">{{ ml.date | ml }}</div>
-                <div class="user-order_shift">{{ ml.route | ml }}
+                <div class="user-order_number">Order</div>
+                <div class="user-order_date">Date</div>
+                <div class="user-order_shift">Route
                 </div>
-                <div class="user-order_cost">{{ ml.price | ml }}</div>
-                <div class="user-order_status">{{ ml.status | ml }}</div>
+                <div class="user-order_cost">Price</div>
+                <div class="user-order_status">Status</div>
                 <div class="user-order_action">
 
                 </div>
@@ -61,11 +61,11 @@
                     <div class="user-order_status"></div>
                     <div class="user-order_action">
                         <a href="" class="btn btn-danger btn-ghost ticket-cancel" data-toggle="modal" data-target="#ticket_cancel_modal">
-                            <i class="glyphicon glyphicon-remove"></i> {{ ml.cancel | ml }}
+                            <i class="glyphicon glyphicon-remove"></i> Cancel
                         </a>
                     </div>
                     <div class="user-order_toggle">
-                        <button class="btn btn-primary btn-ghost" [attr.data-uk-toggle]="'{target:\'#order' + i + '\', animation:\'uk-animation-slide-top\'}'">{{ ml.view | ml }}</button>
+                        <button class="btn btn-primary btn-ghost" [attr.data-uk-toggle]="'{target:\'#order' + i + '\', animation:\'uk-animation-slide-top\'}'">View</button>
                     </div>
                 </div>
                 <div class="user-order_content uk-hidden" id="order{{i}}">
@@ -73,11 +73,11 @@
                     <table class="user-order_table">
                         <thead>
                             <tr>
-                                <th>{{ ml.ticketID | ml }}Ticket ID</th>
-                                <th>{{ ml.passengerName | ml }}</th>
-                                <th>{{ ml.passengerInfo | ml }}</th>
-                                <th>{{ ml.price | ml }}</th>
-                                <th>{{ ml.print | ml }}</th>
+                                <th>Ticket ID</th>
+                                <th>Passenger name</th>
+                                <th>Passenger info</th>
+                                <th>Price</th>
+                                <th>Print</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -90,15 +90,15 @@
                                 </td>
                                 <td>
                                     <div class="person-detail">
-                                        <div class="detail-line"><span class="lbl">{{ ml.nationality | ml }}:</span> <span class="val">Russian</span></div>
-                                        <div class="detail-line"><span class="lbl">{{ ml.dateOfBirth | ml }}:</span> <span class="val">Russian</span></div>
-                                        <div class="detail-line"><span class="lbl">{{ ml.passportNumber | ml }}:</span> <span class="val">858678646</span></div>
-                                        <div class="detail-line"><span class="lbl">{{ ml.phone | ml }}:</span> <span class="val">+7 (904) 878-98-12</span></div>
-                                        <div class="detail-line"><span class="lbl">{{ ml.email | ml }}:</span> <span class="val"><a href="mailto:vassily.pupkin@gmail.com">vassily.pupkin@gmail.com</a></span></div>
+                                        <div class="detail-line"><span class="lbl">Nationality:</span> <span class="val">Russian</span></div>
+                                        <div class="detail-line"><span class="lbl">Date of Birth:</span> <span class="val">Russian</span></div>
+                                        <div class="detail-line"><span class="lbl">Passport #:</span> <span class="val">858678646</span></div>
+                                        <div class="detail-line"><span class="lbl">Phone:</span> <span class="val">+7 (904) 878-98-12</span></div>
+                                        <div class="detail-line"><span class="lbl">Email:</span> <span class="val"><a href="mailto:vassily.pupkin@gmail.com">vassily.pupkin@gmail.com</a></span></div>
                                     </div>
                                 </td>
                                 <td><span class="ticket-price">$30</span></td>
-                                <td><a href="">{{ ml.printTicket | ml }}</a></td>
+                                <td><a href="">Print ticket</a></td>
                             </tr>
 
                         </tbody>

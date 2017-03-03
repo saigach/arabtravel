@@ -5,7 +5,7 @@
             <div class="form-group">
                 <input name="contactName" required type="text" class="form-control" id="contactName" [(ngModel)]="name">
                 <label for="contactName">
-                    {{ ml.name | ml }}
+                    Name
                 </label>
             </div>
         </div>
@@ -13,7 +13,7 @@
             <div class="form-group">
                 <input name="contactEmail" required type="email" class="form-control" id="contactEmail" [(ngModel)]="email">
                 <label for="contactEmail">
-                    {{ ml.email | ml }}
+                    Email
                 </label>
             </div>
         </div>
@@ -23,7 +23,7 @@
             <div class="form-group">
                 <textarea name="contactMessage" class="form-control" id="contactMessage" cols="30" rows="3" [(ngModel)]="message"></textarea>
                 <label for="contactMessage">
-                    {{ ml.message | ml }}
+                    Message
                 </label>
             </div>
         </div>

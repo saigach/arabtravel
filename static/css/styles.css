@@ -8324,7 +8324,7 @@ html[dir='rtl'] .styled-checkbox input[type=checkbox] + label:before {
   border-radius: 50%;
 }
 html[dir='rtl'] .styled-radio input[type=radio] + label {
-    padding: 0 6px 0 0;
+    padding: 0 30px 0 0;
 }
 html[dir='rtl'] .styled-radio input[type=radio] + label:before {
     left: auto;
@@ -8345,6 +8345,9 @@ html[dir='rtl'] .styled-radio input[type=radio]:checked + label:after {
 }
 .styled-radio.radio-sort input[type=radio] + label:after {
     display: none;
+}
+html[dir='rtl'] .styled-radio.radio-sort input[type=radio] + label {
+	padding: 0 6px 0 0;
 }
 .styled-radio.radio-sort input[type=radio] + label {
     padding: 0 5px;
