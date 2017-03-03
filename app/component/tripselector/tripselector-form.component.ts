@@ -220,7 +220,8 @@ export class TripSelectorFormComponent implements OnInit {
 					pointB: this.pointB && this.pointB.id.uuid || null,
 					departureDate: this.departureDate,
 					anyDate: this.anyDate,
-					peopleCount: { adults: this.adults, kids: this.kids > 0 ? this.kids : 0 }
+					adults: this.adults,
+					kids: this.kidsAges
 				}
 
 				localStorage.setItem('searchData', JSON.stringify(searchData))
