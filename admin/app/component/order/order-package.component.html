@@ -76,10 +76,37 @@
 				<h4 class="tm-article-subtitle">Room price</h4>
 				<hotel-price [(room)]="peopleInRoom.room"></hotel-price>
 			</div>
+<<<<<<< HEAD
 			<div class="uk-width-1-1 uk-margin-top">
 				<h4 class="tm-article-subtitle">Peoples</h4>
 
 			</div>
+=======
+			<div class="uk-width-1-1 uk-grid uk-margin-top">
+				<div class="uk-width-8-10">
+					<h4 class="tm-article-subtitle">People</h4>
+				</div>
+				<div class="uk-width-2-10">
+					<a class="uk-align-right admin-cursor-pointer" (click)="addHuman(peopleInRoom); $event.stopPropagation()">
+						<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
+						<u>Add human</u>
+					</a>
+				</div>
+			</div>
+			<div class="uk-width-1-1">
+				<ul class="uk-list uk-list-space">
+					<li *ngFor="let human of peopleInRoom.people; let i=index" class="uk-form uk-form-stacked">
+						<label>Passenger {{ i + 1}} age:</label>
+						<input class="uk-form-width-small uk-margin-left" type="number" min="0">
+						<i class="uk-icon-trash uk-margin-left admin-cursor-pointer" (click)="deleteHuman(peopleInRoom, human); $event.stopPropagation()"></i>
+					</li>
+				</ul>
+			</div>
+
+
+
+
+>>>>>>> e026e06e6f820e7416e8cc766a41ed85b5da6f94
 		</div>
 	</div>
 </div>
