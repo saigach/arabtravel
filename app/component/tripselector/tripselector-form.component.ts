@@ -113,8 +113,8 @@ export class TripSelectorFormComponent implements OnInit {
 			case OrderType.getOrderType('package'):
 				return this.packages.reduce(
 					(prev: Point[], value: Package ) =>
-						!!prev.find( (prevValue: Point) => prevValue.id.equal(value.pointA.id) ) ?
-							prev : prev.concat(value.pointA),
+						!prev.find( (prevValue: Point) => prevValue.id.equal(value.pointA.id) ) ?
+							prev.concat(value.pointA) : prev,
 					[]
 				)
 
@@ -136,7 +136,9 @@ export class TripSelectorFormComponent implements OnInit {
 			case OrderType.getOrderType('package'):
 				return this.packages.reduce(
 					(prev: Point[], value: Package ) =>
-						value.pointA && value.pointA.id.equal(this.pointA.id) ? prev.concat(value.pointB) : prev,
+						value.pointA && value.pointA.id.equal(this.pointA.id) &&
+						!prev.find( (prevValue: Point) => prevValue.id.equal(value.pointB.id) ) ?
+							prev.concat(value.pointB) : prev,
 					[]
 				)
 
@@ -174,13 +176,13 @@ export class TripSelectorFormComponent implements OnInit {
 
 	anyDate: boolean = false
 
-	kidsAges: number[] = []
+	kidsAges: { value: number }[] = []
 
 	adults: number = 1
 	kids: number = 0
 
 	resetKidsAges(): void {
-		this.kidsAges = Array.apply(null, {length: this.kids}).map( () => 0 )
+		this.kidsAges = Array.apply(null, {length: this.kids}).map( () => ({ value: 0 }) )
 	}
 
 	submitted: boolean = false
@@ -202,7 +204,7 @@ export class TripSelectorFormComponent implements OnInit {
 				let tripOrder = new TripOrder({
 					trip: this.trip,
 					people: Array.apply(null, {length: this.adults}).map( () => new Human())
-							.concat( this.kidsAges.map( value => new Human({ age: value })) ),
+							.concat( this.kidsAges.map( value => new Human({ age: value.value })) ),
 					departureDate: this.departureDate,
 					returnDate: this.returnDate,
 					price: this.trip.getPrice(this.departureDate),
@@ -221,7 +223,7 @@ export class TripSelectorFormComponent implements OnInit {
 					departureDate: this.departureDate,
 					anyDate: this.anyDate,
 					adults: this.adults,
-					kids: this.kidsAges
+					kidsAges: this.kidsAges
 				}
 
 				localStorage.setItem('searchData', JSON.stringify(searchData))

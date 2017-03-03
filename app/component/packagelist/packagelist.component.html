@@ -68,7 +68,7 @@
 
                                 <div class="form-group" *ngFor="let kid of kidsAges; let i = index;">
 									<label for="">Kid {{ i + 1 }} age:</label>
-									<input type="number" min="0" class="form-control" [value]="kidsAges[i]" (change)="kidsAges[i] = $event.target.value">
+									<input type="number" min="0" class="form-control" [(ngModel)]="kid.value" [ngModelOptions]="{standalone: true}">
 								</div>
 
                             </form>
@@ -117,7 +117,7 @@
 
                                 <div class="row">
 
-                                    <div class="col-md-3 tourist-package-item_image" [style.background-image]="'url(' + item.image.link + ')' ">
+                                    <div class="col-md-3 tourist-package-item_image" [style.background-image]="'url(' + (item.image && item.image.link || '') + ')' ">
 
                                     </div>
 

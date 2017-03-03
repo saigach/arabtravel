@@ -55,6 +55,8 @@ export class Trip extends Model {
 	departureTime: Date
 	returnTime: Date
 
+	content: MLString
+
 	prices: Price[] = []
 
 	get title(): string {
@@ -73,6 +75,8 @@ export class Trip extends Model {
 
 		this.departureTime = value.departureTime && new Date(value.departureTime) || newDate()
 		this.returnTime = value.returnTime && new Date(value.returnTime) || newDate()
+
+		this.content = new MLString(value.content)
 
 		this.prices = value.prices instanceof Array ?
 			value.prices.reduce(
@@ -101,6 +105,7 @@ export class Trip extends Model {
 			pointB: this.pointB.toObject(),
 			departureTime: this.departureTime,
 			returnTime: this.returnTime,
+			content: this.content,
 			prices: this.prices.reduce( (prev: {}[], value: Price) => prev.concat(value.toObject()), [])
 		})
 	}

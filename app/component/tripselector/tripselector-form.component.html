@@ -66,7 +66,7 @@
 								<div class="uk-grid uk-flex">
 									<div class="uk-width-1-6 form-group" *ngFor="let kid of kidsAges; let i = index;">
 										<label for="rf">Kid {{ i + 1 }} age:</label>
-										<input type="number" min="0" class="form-control" [value]="kidsAges[i]" (change)="kidsAges[i] = $event.target.value">
+										<input type="number" min="0" class="form-control" [(ngModel)]="kid.value" [ngModelOptions]="{standalone: true}">
 									</div>
 								</div>
                              </div>

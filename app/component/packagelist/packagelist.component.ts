@@ -69,13 +69,13 @@ export class PackageListComponent implements OnInit {
 
 	ml: { [key:string]: MLString } = {}
 
-	kidsAges: number[] = []
+	kidsAges: { value: number }[] = []
 
 	adults: number = 1
 	kids: number = 0
 
 	resetKidsAges(): void {
-		this.kidsAges = Array.apply(null, {length: this.kids}).map( () => 0 )
+		this.kidsAges = Array.apply(null, {length: this.kids}).map( () => ({ value: 0}) )
 	}
 
 	constructor(private router: Router, private apiService: APIService, private mlService: MLService) {}
@@ -115,7 +115,7 @@ export class PackageListComponent implements OnInit {
 
 				this.adults = searchData.adults || 0
 
-				this.kidsAges = searchData.kids || []
+				this.kidsAges = searchData.kidsAges || []
 
 				this.kids = this.kidsAges.length
 			}
@@ -132,21 +132,14 @@ export class PackageListComponent implements OnInit {
 	}
 
 	select(pack: Package): void {
-		// let order = new PackageOrder({
-		// 	package: pack,
-		// 	people: this.peopleCount.reduce(
-		// 		(prev: Human[], value:PeopleCount) => {
-		// 			for(let i = 0; i < value.count; i++)
-		// 				prev.push(new Human({ defaultAgeGroup: value.ageGroup }))
-		// 			return prev
-		// 		},
-		// 		[]
-		// 	),
-		// 	departureDate: this.departureDate,
-		// 	anyDate: this.anyDate
-		// })
+		let order = new PackageOrder({
+			package: pack,
+			peopleInRoom: [],
+			departureDate: this.departureDate,
+			anyDate: this.anyDate
+		})
 
-		// localStorage.setItem('currentPackageOrder', order.toString())
-		// window.location.href = `/${lang}/order-package`
+		localStorage.setItem('currentOrder', order.toString())
+		window.location.href = `/${lang}/order-package`
 	}
 }

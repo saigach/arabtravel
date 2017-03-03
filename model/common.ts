@@ -197,5 +197,5 @@ export type SearchData = {
 	departureDate: Date,
 	anyDate: boolean,
 	adults: number,
-	kids: number[]
+	kidsAges: { value: number }[]
 }

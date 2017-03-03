@@ -154,26 +154,27 @@
         <tr style="height:20px;">
 
             <td class="s8" dir="ltr" style="background-color: #ffffff;text-align: left;font-weight: bold;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">
-			{{=it.order.trip.pointA.title | ml }} -> {{=it.order.trip.pointB.title | ml }}
+			{{=it.order.trip.pointA.title }} -> {{=it.order.trip.pointB.title }}
 			</td>
             <td></td>
             <td></td>
             <td class="s8" dir="ltr" style="background-color: #ffffff;text-align: left;font-weight: bold;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">Rules and notes</td>
             <td></td>
-            <td class="s10" style="border-right: 1px SOLID #bdbdbd;background-color: #ffffff;text-align: left;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">{{=it.order.description}}</td>
+            <td class="s10" style="border-right: 1px SOLID #bdbdbd;background-color: #ffffff;text-align: left;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">{{=it.trip.description}}</td>
         </tr>
         <tr style="height:20px;">
 
             <td class="s8" dir="ltr" style="background-color: #ffffff;text-align: left;font-weight: bold;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">Departure:</td>
             <td class="s17" style="background-color: #ffffff;text-align: right;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">{{=it.order.departureDate}}</td>
-            <td class="s9" style="background-color: #ffffff;text-align: left;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">{{=it.order.trip.pointA.title | ml }}</td>
+            <td class="s9" style="background-color: #ffffff;text-align: left;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">{{=it.order.trip.pointA.title}}</td>
             <td class="s18" dir="ltr" colspan="3" rowspan="5" style="border-bottom: 1px SOLID #bdbdbd;border-right: 1px SOLID #bdbdbd;background-color: #ffffff;text-align: left;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: top;white-space: normal;overflow: hidden;word-wrap: break-word;direction: ltr;padding: 2px 3px 2px 3px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</td>
+            <td class="s18" dir="ltr" colspan="3" rowspan="5" style="border-bottom: 1px SOLID #bdbdbd;border-right: 1px SOLID #bdbdbd;background-color: #ffffff;text-align: left;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: top;white-space: normal;overflow: hidden;word-wrap: break-word;direction: ltr;padding: 2px 3px 2px 3px;">{{=it.trip.description}}</td>
         </tr>
         <tr style="height:20px;">
 
             <td class="s8" dir="ltr" style="background-color: #ffffff;text-align: left;font-weight: bold;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">Arrival:</td>
             <td class="s17" dir="ltr" style="background-color: #ffffff;text-align: right;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">{{=it.order.departureDate}}</td>
-            <td class="s9" dir="ltr" style="background-color: #ffffff;text-align: left;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">{{=it.order.trip.pointB.title | ml }}</td>
+            <td class="s9" dir="ltr" style="background-color: #ffffff;text-align: left;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">{{=it.order.trip.pointB.title}}</td>
         </tr>
         <tr style="height:20px;">
 
@@ -184,7 +185,7 @@
         <tr style="height:20px;">
 
             <td class="s8" dir="ltr" style="background-color: #ffffff;text-align: left;font-weight: bold;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">Booking status</td>
-            <td class="s9" dir="ltr" style="background-color: #ffffff;text-align: left;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">{{=it.order.OrderStatus}}</td>
+            <td class="s9" dir="ltr" style="background-color: #ffffff;text-align: left;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">{{=it.order.status}}</td>
             <td></td>
         </tr>
         <tr style="height:20px;">
@@ -208,7 +209,7 @@
         <tr style="height:20px;">
 
             <td class="s8" dir="ltr" style="background-color: #ffffff;text-align: left;font-weight: bold;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">
-			{{=it.order.trip.pointB.title | ml }} -> {{=it.order.trip.pointA.title | ml }}
+			{{=it.order.trip.pointB.title}} -> {{=it.order.trip.pointA.title}}
 			</td>
             <td></td>
             <td></td>
@@ -220,14 +221,14 @@
 
             <td class="s8" dir="ltr" style="background-color: #ffffff;text-align: left;font-weight: bold;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">Departure:</td>
             <td class="s17" dir="ltr" style="background-color: #ffffff;text-align: right;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">{{=it.order.returnDate}}</td>
-            <td class="s9" dir="ltr" style="background-color: #ffffff;text-align: left;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">{{=it.order.trip.pointB.title | ml }}</td>
+            <td class="s9" dir="ltr" style="background-color: #ffffff;text-align: left;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">{{=it.order.trip.pointB.title}}</td>
             <td class="s18" dir="ltr" colspan="3" rowspan="5" style="border-bottom: 1px SOLID #bdbdbd;border-right: 1px SOLID #bdbdbd;background-color: #ffffff;text-align: left;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: top;white-space: normal;overflow: hidden;word-wrap: break-word;direction: ltr;padding: 2px 3px 2px 3px;">{{=it.order.description}}</td>
         </tr>
         <tr style="height:20px;">
 
             <td class="s8" dir="ltr" style="background-color: #ffffff;text-align: left;font-weight: bold;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">Arrival:</td>
             <td class="s17" dir="ltr" style="background-color: #ffffff;text-align: right;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">{{=it.order.returnDate}}</td>
-            <td class="s9" dir="ltr" style="background-color: #ffffff;text-align: left;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">{{=it.order.trip.pointA.title | ml }}</td>
+            <td class="s9" dir="ltr" style="background-color: #ffffff;text-align: left;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">{{=it.order.trip.pointA.title}}</td>
         </tr>
         <tr style="height:20px;">
 
@@ -238,7 +239,7 @@
         <tr style="height:20px;">
 
             <td class="s8" dir="ltr" style="background-color: #ffffff;text-align: left;font-weight: bold;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">Booking status</td>
-            <td class="s9" dir="ltr" style="background-color: #ffffff;text-align: left;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">{{=it.order.OrderStatus}}</td>
+            <td class="s9" dir="ltr" style="background-color: #ffffff;text-align: left;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">{{=it.order.status}}</td>
             <td></td>
         </tr>
         <tr style="height:20px;">

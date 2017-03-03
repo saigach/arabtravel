@@ -7,9 +7,6 @@
 				</div>
 
 			</div>
-<script>
-/*var slideshow = UIkit.slideshow($('#order-package-carousel')[0], {autoplay:true, kenburns: true, autoplayInterval: 5000, pauseOnHover: false, height: '200px' });*/
-</script>
 
 		<div class="" role="content">
             <div class="container" [class.hidden]="submitted">
@@ -111,37 +108,6 @@
                                     <h2>Upgrade your package</h2>
 
 									<div *ngFor="let option of item.package.hotel.options">
-                                    <div class="option-bar tourist-package_hotel-option" [class.selected]="option.enable" (click)="option.enable = !option.enable">
-
-                                        <div class="row option-bar_content">
-
-                                            <div class="col-md-10">
-
-                                                <div class="option-bar_description">
-                                                    <h5 class="option-bar_title">{{ option.title | ml }}</h5>
-
-                                                </div>
-
-                                            </div>
-
-                                            <div class="col-md-2 option-bar_pricing">
-
-                                            	  <div class="option-bar-item_price">
-                                                    <div class="price">{{ option.cost | currency:exchangeRate | number:'1.2-2' }} <span class="currency">{{currency}}</span></div>
-                                                    <div class="lbl">per tour</div>
-                                                </div>
-
-
-                                                <a href="" class="btn btn-info btn-ghost btn-option-choose">Chose this</a>
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                    </div>
-
-                                    <div *ngFor="let option of item.room.options">
                                     <div class="option-bar tourist-package_hotel-option" [class.selected]="option.enable" (click)="option.enable = !option.enable">
 
                                         <div class="row option-bar_content">

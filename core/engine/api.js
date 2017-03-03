@@ -257,16 +257,16 @@ module.exports = class APIEngine {
 
 						let order = Object.assign({}, rows[0].data || {}, rows[0], { data: null })
 
-						this.mail.sendMail(
-							user.email,
-							requestData.ml.emailOrderConfirmTitle,
-							this.template['email-order-confirm']({
-								lang: requestData.request.language,
-								ml: requestData.ml,
-								user: user,
-								order: order
-							})
-						)
+						// this.mail.sendMail(
+						// 	user.email,
+						// 	requestData.ml.emailOrderConfirmTitle,
+						// 	this.template['email-order-confirm']({
+						// 		lang: requestData.request.language,
+						// 		ml: requestData.ml,
+						// 		user: user,
+						// 		order: order
+						// 	})
+						// )
 
 						return {
 							code: 200,
