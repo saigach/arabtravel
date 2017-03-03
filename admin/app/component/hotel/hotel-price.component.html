@@ -1,0 +1,30 @@
+<div class="uk-width-1-1 uk-margin-top uk-grid">
+	<div class="uk-width-8-10">
+		<h4 class="tm-article-subtitle">Room price</h4>
+	</div>
+	<div class="uk-width-2-10">
+		<a class="uk-align-right admin-cursor-pointer" (click)="addRow(); $event.stopPropagation()">
+			<i class="uk-icon uk-icon-plus-circle uk-margin-small-right"></i>
+			<u>Add row</u>
+		</a>
+	</div>
+</div>
+<div class="uk-width-1-1">
+	<ul class="uk-list uk-list-space">
+		<li *ngFor="let row of item.costs" class="uk-form uk-form-stacked">
+			<label>Cost, JD:</label>
+			<input class="uk-form-width-small uk-margin-left" type="number" min="0" [(ngModel)]="row.cost">
+			<label class="uk-margin-left">Ages:</label>
+			<span *ngFor="let age of row.ages" class="uk-margin-small-left">
+				<input class="uk-form-width-small" type="number" min="0" [(ngModel)]="age.value">
+			</span>
+			<i class="uk-icon-minus uk-margin-left admin-cursor-pointer" (click)="deleteColumn(row); $event.stopPropagation()"></i>
+			<i class="uk-icon-plus uk-margin-left admin-cursor-pointer" (click)="addColumn(row); $event.stopPropagation()"></i>
+			<i class="uk-icon-trash uk-margin-large-left admin-cursor-pointer" (click)="deleteRow(row); $event.stopPropagation()"></i>
+		</li>
+	</ul>
+</div>
+
+<!-- <div class="uk-width-1-1 uk-margin-top">
+		<p>DEBUG: {{ item | json }}</p>
+	</div> -->
