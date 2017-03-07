@@ -313,7 +313,7 @@ module.exports = class APIEngine {
 					FROM
 						config
 					WHERE
-						key IN ('exchangeRate', 'processingFee', 'egyptianMarkUp')
+						key IN ('exchangeRate', 'exchangeRateSAR', 'exchangeRateEGP', 'processingFee', 'egyptianMarkUp')
 				`).then(rows => ({
 					code: 200,
 					data: rows.reduce( (prev, row) => Object.assign(prev, { [row.key]: row.value } ), {} )

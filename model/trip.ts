@@ -60,7 +60,7 @@ export class Trip extends Model {
 	prices: Price[] = []
 
 	get title(): string {
-		return (this.pointA && this.pointA.title['en'] || 'A') + ' ' + (this.type.letter) + ' ' + (this.pointB && this.pointB.title['en'] || 'B')
+		return (this.pointA && this.pointA.title['en'] || 'A') + ' ' + (this.type.letter) + ' ' + (this.pointB && this.pointB.title['en'] || 'B') + ' (' + this.description['en'] + ')'
 	}
 
 	constructor(value: any = {}) {

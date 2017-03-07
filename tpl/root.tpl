@@ -149,6 +149,7 @@
                     	            <li><a currency-set="usd">{{=it.ml.USD}}</a></li>
                     	            <li><a currency-set="JOD">{{=it.ml.JOD}}</a></li>
 									<li><a currency-set="SAR">{{=it.ml.SAR}}</a></li>
+									<li><a currency-set="EGP">{{=it.ml.EGP}}</a></li>
                     	        </ul>
                     	    </div>
                     	    <div class="dropdown dd-lang" data-uk-dropdown="{mode:'click'}">

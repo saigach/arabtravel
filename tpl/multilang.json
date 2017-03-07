@@ -145,7 +145,7 @@
 	},
 
 	"submitPayment": {
-		"en": "Submit Payment",
+		"en": "Reserve now",
 		"ar": "أحجز الأن"
 	},
 
@@ -488,9 +488,31 @@
 		"en": "SAR",
 		"ar": "ريال سعودي"
 	},
+
+	"EGP": {
+		"en": "EGP",
+		"ar": "جنيه مصري"
+	},
 	
 	"curLang": {
 		"en": "English",
 		"ar": "عربي"
+	},
+	
+	"year": {
+		"en": "yr",
+		"ar": "سنة"
+	},
+	
+	"years": {
+		"en": "yrs",
+		"ar": "سنوات"
+	},
+	
+	"enterKidsAge": {
+		"en": "Please fill this field by the kids age as it is written on the travel document:",
+		"ar": "أعمار الأطفال عند تسجيل المغادرة"
 	}
+
+
 }

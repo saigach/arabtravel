@@ -1,7 +1,7 @@
 <div class="main-content" role="content">
     <div class="container" id="order-details-container" [class.hidden]=" submitted ">
 
-		<div class="main-search-form_form">
+		<div class="main-search-form_form inner-search-form">
 
             <div class="trip-select-header uk-grid uk-flex">
                 <div class="uk-width-medium-1-3">
@@ -73,7 +73,6 @@
             <div class="uk-width-medium-7-10">
 
                 <h1>{{ ml.ticketReservation | ml }}</h1>
-                <p><a href="/" class="btn btn-primary btn-ghost btn-left">{{ ml.newSearch | ml }}</a></p>
 
 				<p *ngIf="item.trip">{{ item.trip.content | ml }}</p>
 
@@ -128,13 +127,13 @@
                                         <span class="styled-radio styled-radio-w">
         									<input name="card-type" class="radio" type="radio" id="card-type_visa">
         									<label for="card-type_visa">
-        									    <img src="/img/visa.svg" width="40" alt="">
+        									    <img src="/img/visa-48.png" width="40" alt="">
         									</label>
         								</span>
                                         &nbsp; / &nbsp;
                                         <span class="styled-radio styled-radio-w">
         									<input name="card-type" class="radio" type="radio" id="card-type_mc">
-        									<label for="card-type_mc"><img src="/img/mastercard.svg" width="40" alt=""></label>
+        									<label for="card-type_mc"><img src="/img/mastercard-48.png" width="40" alt=""></label>
         								</span>
                                     </div>
                                 </div>
@@ -166,7 +165,7 @@
                                         </label>
                                     </div>
 
-                                    <div class="uk-width-5-10 valid-thru">
+                                    <div class="uk-width-4-10 valid-thru">
                                         <div class="valid-thru_month">
                                             <select required id="valid-thru_month" data-control="selectpicker" class="selectpicker form-control fit-width" [(ngModel)]="item.card.validMonth">
                                                 <option *ngFor="let month of months" [ngValue]="month">{{month}}</option>
@@ -179,7 +178,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="uk-width-2-10">
+                                    <div class="uk-width-3-10 uk-text-right">
                                         <label for="cvv" class="cvv-label">
                                             {{ ml.cvv | ml }}
                                         </label>
@@ -226,7 +225,8 @@
 							<div class="order-trip_detail" *ngFor="let age of item.ages">
 								<div class="lbl">
 									<span *ngIf="age >= 200">{{ ml.adult | ml }}</span>
-									<span *ngIf="age < 200">{{ age }}&nbsp;yo</span>
+									<span *ngIf="(age < 3)">{{ age }}&nbsp;{{ ml.year | ml }}</span>
+									<span *ngIf="(age >=3) && (age < 200)">{{ age }}&nbsp;{{ ml.years | ml }}</span>
 								</div>
 								<div class="val">{{ (item.price && item.price.getCost(age) || 0) | currency:exchangeRate | number:'1.2-2' }} {{currency}}</div>
 							</div>

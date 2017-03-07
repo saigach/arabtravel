@@ -6,6 +6,7 @@ import { APIService } from '../../service/api.service'
 const defaultConfig = {
 	exchangeRate: 1,
 	exchangeRateSAR: 1,
+	exchangeRateEGP: 1,
 	processingFee: 10,
 	sessionDuration: 300000,
 	egyptianMarkUp: 0

@@ -16,7 +16,7 @@ export class PaymentType {
 			id: 'bank',
 			title: new MLString({
 				en: 'Bank transfer',
-				ar: 'التحويل المصرفي'
+				ar: 'التحويل البنكي'
 			}),
 			icon: null
 		}),
@@ -24,7 +24,7 @@ export class PaymentType {
 			id: 'wu',
 			title: new MLString({
 				en: 'Western Union',
-				ar: 'الاتحاد الغربي'
+				ar: 'حوالة ويسترن يونيون'
 			}),
 			icon: null
 		})
@@ -234,6 +234,8 @@ export class Order extends Model {
 
 	processingFee: number
 	exchangeRate: number
+	exchangeRateSAR: number
+	exchangeRateEGP: number
 	egyptianMarkUp: number
 
 	constructor(value: any = {}) {

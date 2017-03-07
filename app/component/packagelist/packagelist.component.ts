@@ -98,7 +98,6 @@ export class PackageListComponent implements OnInit {
 
 			if (searchData) {
 				this.anyDate = !!searchData.anyDate
-<<<<<<< HEAD
 
 				let date = newDate(searchData.departureDate || null) || new Date()
 				this.departureDate = date
@@ -118,27 +117,6 @@ export class PackageListComponent implements OnInit {
 
 				this.kidsAges = searchData.kidsAges || []
 
-=======
-
-				let date = newDate(searchData.departureDate || null) || new Date()
-				this.departureDate = date
-
-				let pointAuuid = searchData.pointA.trim().toLowerCase()
-
-				if (pointAuuid) {
-					this.pointA = this.APoints.find( (value:Point) => value.id.uuid === pointAuuid )
-
-					let pointBuuid = searchData.pointB.trim().toLowerCase()
-
-					if (pointBuuid)
-						this.pointB = this.BPoints.find( (value:Point) => value.id.uuid === pointBuuid )
-				}
-
-				this.adults = searchData.adults || 0
-
-				this.kidsAges = searchData.kids || []
-
->>>>>>> e026e06e6f820e7416e8cc766a41ed85b5da6f94
 				this.kids = this.kidsAges.length
 			}
 		})
