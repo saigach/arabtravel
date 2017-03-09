@@ -9230,3 +9230,16 @@ html[dir="rtl"] .ico_boat:before {
 #order-package-carousel {
 	height: 500px !important;
 }
+
+.approx-label-small {
+	font-size: 11px;
+}
+.chargeNote {
+	font-size: 16px;
+}
+.nationality-select {
+	text-transform: capitalize;
+}
+.main-search-form-inner {
+	padding: 10px 30px;
+}

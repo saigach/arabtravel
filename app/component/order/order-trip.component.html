@@ -4,40 +4,39 @@
 		<div class="main-search-form_form inner-search-form">
 
             <div class="trip-select-header uk-grid uk-flex">
-                <div class="uk-width-medium-1-3">
+                <div class="uk-width-medium-1-5">
                     <div class="styled-radio">
                         <input class="radio" type="radio" name="tripselector-form_check" id="tripselector-form_check-oneway" [checked]="checkType('oneway')" (click)="setType('oneway')">
                         <label for="tripselector-form_check-oneway">{{ ml.tripTypeOneway | ml }}</label>
                     </div>
                 </div>
-                <div class="uk-width-medium-1-3">
+                <div class="uk-width-medium-1-5">
                     <div class="styled-radio">
                         <input class="radio" type="radio" name="tripselector-form_check" id="tripselector-form_check-roundtrip" [checked]="checkType('twoway')" (click)="setType('twoway')">
                         <label for="tripselector-form_check-roundtrip">{{ ml.tripTypeRound | ml }}</label>
                     </div>
                 </div>
             </div>
-            <form class="tripselector-form main-search-form_form_form">
+            <form class="tripselector-form main-search-form_form_form main-search-form-inner">
 
                 <div class="uk-grid uk-flex">
 
-                    <div class="uk-width-medium-1-3">
+                    <div class="uk-width-medium-1-5">
                         <label for="routefrom">{{ ml.routeFrom | ml }}</label>
                         <select name="routefrom" [(ngModel)]="pointA" id="routefrom" class="form-control fit-width">
 							<option *ngFor="let point of APoints" [ngValue]="point">{{ point.title | ml }}</option>
                         </select>
                     </div>
 
-                    <div class="uk-width-medium-1-3">
+                    <div class="uk-width-medium-1-5">
                         <label for="routeto">{{ ml.routeTo | ml }}</label>
                         <select name="routeto" [(ngModel)]="pointB" id="routeto" class="form-control fit-width" [disabled]="!pointA">
 							<option *ngFor="let point of BPoints" [ngValue]="point">{{ point.title | ml }}</option>
                         </select>
                     </div>
-                </div>
-                <div class="uk-grid uk-flex uk-margin-top-remove">
+                
 
-                    <div class="uk-width-medium-1-3 form-group">
+                    <div class="uk-width-medium-1-5 form-group">
                         <label for="rf">{{ ml.dateOfDeparture | ml }}</label>
                         <div class='input-group date'>
 							<input #departureDateNode name="departureDate" class="form-control" type="text"  [value]="item.departureDate | date: 'dd.MM.yyyy'">
@@ -45,14 +44,14 @@
 
                     </div>
 
-                    <div class="uk-width-medium-1-3 form-group" [class.hide]="!checkType('twoway')">
+                    <div class="uk-width-medium-1-5 form-group" [class.hide]="!checkType('twoway')">
                         <label for="rf">{{ ml.dateOfReturn | ml }}</label>
                         <div class='input-group date'>
                            <input #returnDateNode name="returnDate" class="form-control" type="text" [value]="item.returnDate | date: 'dd.MM.yyyy'">
                         </div>
                     </div>
 
-                    <div class="uk-width-medium-1-3">
+                    <div class="uk-width-medium-1-5">
                         <label>{{ ml.vehicle | ml }}</label>
                         <select name="vehicle" [(ngModel)]="item.vehicle" class="form-control fit-width" [disabled]="!pointA || !pointB">
                         	<option [ngValue]="null">{{ ml.none | ml }}</option>
@@ -60,11 +59,8 @@
                         </select>
                     </div>
 
-                </div>
+					</div>
 
-                <div class="text-center submit-btn-container">
-                    <input type="submit" class="btn btn-danger" (click)="submit()" value="{{ ml.checkAvailability | ml }}" [disabled]="!valid">
-                </div>
             </form>
 
         </div>
@@ -74,7 +70,7 @@
 
                 <h1>{{ ml.ticketReservation | ml }}</h1>
 
-				<p *ngIf="item.trip">{{ item.trip.content | ml }}</p>
+				<div *ngIf="item.trip" [innerHTML]="item.trip.content | ml"></div>
 
                 <!-- <p> DEBUG: {{ item | json }}</p> -->
 
@@ -257,9 +253,12 @@
                             <div class="val">{{ item.totalCost | currency:exchangeRate | number:'1.2-2' }} <span class="currency">{{currency}}</span></div>
                         </div>
                         <div class="order-details_total" *ngIf="currency !== 'JOD'">
-                            <div class="lbl">({{ ml.approx | ml }}:</div>
+                            <div class="lbl approx-label-small">{{ ml.approx | ml }}</div>
                             <div class="val">{{ item.totalCost | number:'1.2-2' }} JOD</div>
                         </div>
+						<div class="order-details_total">
+							<div class="chargeNote">{{ ml.chargeNote | ml }}</div>
+						</div>
                     </footer>
                 </aside>
 

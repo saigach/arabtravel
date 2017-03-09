@@ -187,7 +187,7 @@
                         <ul class="uk-dropdown dropdown-menu">
                         	{{~it.static :value:index}}
 								 <li>
-                                	<a href="/{{=value.url}}">{{=value.title}}</a>
+                                	<a href="http://arabtravel.jo{{=value.url}}">{{=value.title}}</a>
                             	</li>
 							{{~}}
                         </ul>

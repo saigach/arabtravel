@@ -14,7 +14,7 @@
                 <label for="exampleInputEmail1">
                     {{ ml.nationality | ml }}
                 </label>
-                <select [(ngModel)]="item.nationality" data-control="selectpicker" class="selectpicker form-control fit-width">
+                <select [(ngModel)]="item.nationality" data-control="selectpicker" class="selectpicker form-control fit-width nationality-select">
                     <option *ngFor="let n of nationality" [ngValue]="n">{{ n.title | ml }}</option>
                 </select>
             </div>
