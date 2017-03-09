@@ -61,15 +61,18 @@ export class OrderTripComponent implements OnInit {
 	get currency():string {
 		return this._currency === 'usd' ? '$' : this._currency
 	}
-
+	
 	set currency(value: string) {
 		this._currency = value ? value : 'usd'
-	}
-
+	}	
+	
 	get exchangeRate(): number {
-		if (this._currency === 'jod')
+		if (this._currency === 'JOD')
 			return 1
-
+		if (this._currency === 'SAR')
+			return this.item && this.item.exchangeRateSAR || 0
+		if (this._currency === 'EGP')
+			return this.item && this.item.exchangeRateEGP || 0
 		return this.item && this.item.exchangeRate || 0
 	}
 
@@ -169,10 +172,14 @@ export class OrderTripComponent implements OnInit {
 		this.apiService.config().then((response: {
 			processingFee: number,
 			exchangeRate: number,
+			exchangeRateSAR: number,
+			exchangeRateEGP: number,
 			egyptianMarkUp: number
 		}) => {
 			this.item.processingFee = response.processingFee
 			this.item.exchangeRate = response.exchangeRate
+			this.item.exchangeRateSAR = response.exchangeRateSAR
+			this.item.exchangeRateEGP = response.exchangeRateEGP
 			this.item.egyptianMarkUp = response.egyptianMarkUp
 		})
 

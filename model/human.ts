@@ -2,6 +2,9 @@ import { newDate, Model, File, MLString } from './common'
 
 export class Nationality {
 	static List:Nationality[] = [
+		new Nationality({ id: "jordan", title: new MLString({en: "jordan", ar: "الأردن"}), icon: null }),
+		new Nationality({ id: "egypt", title: new MLString({en: "egypt", ar: "مصر"}), icon: null }),
+		new Nationality({ id: "saudi arabia", title: new MLString({en: "saudi arabia", ar: "المملكة العربية السعودية"}), icon: null }), 		
 		new Nationality({ id: "afghanistan", title: new MLString({en: "afghanistan", ar: "أفغانستان"}), icon: null }),
 		new Nationality({ id: "albania", title: new MLString({en: "albania", ar: "ألبانيا"}), icon: null }),
 		new Nationality({ id: "algeria", title: new MLString({en: "algeria", ar: "الجزائر"}), icon: null }),
@@ -60,7 +63,7 @@ export class Nationality {
 		new Nationality({ id: "dominican republic", title: new MLString({en: "dominican republic", ar: "الجمهورية الدومينيكية"}), icon: null }),
 		new Nationality({ id: "east timor timor-leste", title: new MLString({en: "east timor timor-leste", ar: "تيمور الشرقية"}), icon: null }),
 		new Nationality({ id: "ecuador", title: new MLString({en: "ecuador", ar: "إكوادور"}), icon: null }),
-		new Nationality({ id: "egypt", title: new MLString({en: "egypt", ar: "مصر"}), icon: null }),
+
 		new Nationality({ id: "el salvador", title: new MLString({en: "el salvador", ar: "إلسلفادور"}), icon: null }),
 		new Nationality({ id: "equatorial guinea", title: new MLString({en: "equatorial guinea", ar: "غينيا الاستوائي"}), icon: null }),
 		new Nationality({ id: "eritrea", title: new MLString({en: "eritrea", ar: "إريتريا"}), icon: null }),
@@ -102,7 +105,7 @@ export class Nationality {
 		new Nationality({ id: "italy", title: new MLString({en: "italy", ar: "إيطاليا"}), icon: null }),
 		new Nationality({ id: "jamaica", title: new MLString({en: "jamaica", ar: "جمايكا"}), icon: null }),
 		new Nationality({ id: "japan", title: new MLString({en: "japan", ar: "اليابان"}), icon: null }),
-		new Nationality({ id: "jordan", title: new MLString({en: "jordan", ar: "الأردن"}), icon: null }),
+
 		new Nationality({ id: "kazakhstan", title: new MLString({en: "kazakhstan", ar: "كازاخستان"}), icon: null }),
 		new Nationality({ id: "kenya", title: new MLString({en: "kenya", ar: "كينيا"}), icon: null }),
 		new Nationality({ id: "kiribati", title: new MLString({en: "kiribati", ar: "كيريباتي"}), icon: null }),
@@ -177,7 +180,7 @@ export class Nationality {
 		new Nationality({ id: "samoa", title: new MLString({en: "samoa", ar: "ساموا"}), icon: null }),
 		new Nationality({ id: "san marino", title: new MLString({en: "san marino", ar: "سان مارينو"}), icon: null }),
 		new Nationality({ id: "sao tome and principe", title: new MLString({en: "sao tome and principe", ar: "ساو تومي وبرينسيبي"}), icon: null }),
-		new Nationality({ id: "saudi arabia", title: new MLString({en: "saudi arabia", ar: "المملكة العربية السعودية"}), icon: null }),
+
 		new Nationality({ id: "senegal", title: new MLString({en: "senegal", ar: "السنغال"}), icon: null }),
 		new Nationality({ id: "serbia", title: new MLString({en: "serbia", ar: "جمهورية صربيا"}), icon: null }),
 		new Nationality({ id: "seychelles", title: new MLString({en: "seychelles", ar: "سيشيل"}), icon: null }),

@@ -76,11 +76,4 @@ export class OrderPackageComponent implements OnInit {
 	deleteRoom(peolpeInRoom: PeolpeInRoom): void {
 		this.item.peopleInRoom = this.item.peopleInRoom.filter(value => value !== peolpeInRoom)
 	}
-<<<<<<< HEAD
-=======
-
-	addHuman(peopleInRoom: PeolpeInRoom): void {
-		peopleInRoom.people.push(new Human())
-	}
->>>>>>> e026e06e6f820e7416e8cc766a41ed85b5da6f94
 }

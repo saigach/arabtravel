@@ -145,7 +145,7 @@
 	},
 
 	"submitPayment": {
-		"en": "Submit Payment",
+		"en": "Reserve now",
 		"ar": "أحجز الأن"
 	},
 
@@ -285,8 +285,8 @@
 	},
 	
 	"approx": {
-		"en": "approx.",
-		"ar": "تقريبا"
+		"en": "Approx. price rate",
+		"ar": "السعر حسب سعر الصرف التقريبي"
 	},
 	
 	"youHaveChosen": {
@@ -488,9 +488,41 @@
 		"en": "SAR",
 		"ar": "ريال سعودي"
 	},
+
+	"EGP": {
+		"en": "EGP",
+		"ar": "جنيه مصري"
+	},
 	
 	"curLang": {
 		"en": "English",
 		"ar": "عربي"
+	},
+	
+	"year": {
+		"en": "yr",
+		"ar": "سنة"
+	},
+	
+	"years": {
+		"en": "yrs",
+		"ar": "سنوات"
+	},
+	
+	"enterKidsAge": {
+		"en": "Please fill this field by the kids age as it is written on the travel document:",
+		"ar": "أعمار الأطفال عند تسجيل المغادرة"
+	},
+
+	"currencyExchange": {
+		"en": "choose your currency",
+		"ar": "اختر عملتك"
+	},
+	
+	"chargeNote": {
+		"en": "Your trip will be charged in JOD",
+		"ar": "سيتم احتساب سعر التذكرة بدينار الاردني"
 	}
+	
+
 }

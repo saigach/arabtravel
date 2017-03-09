@@ -3083,7 +3083,7 @@ label {
   max-width: 100%;
   margin-bottom: 5px;
   font-weight: bold;
-  
+
   font-size: 16px;
 }
 
@@ -7546,7 +7546,7 @@ html[dir='rtl'] .subtitle2 {
   width: 100%;
 }
 
-.main-search-form .trip-select-header {
+.trip-select-header {
 	padding: 20px 30px 0 30px;
 }
 
@@ -7564,7 +7564,9 @@ html[dir='rtl'] .subtitle2 {
   background-color: transparent;
   color: #fff;
 }
-
+.inner-search-form {
+    margin-bottom: 50px;
+}
 .nav > li > a:hover {
   background-color: transparent;
 }
@@ -7749,7 +7751,7 @@ html[dir='rtl'] .subtitle2 {
 
 .main-content {
   padding-bottom: 40px;
-  padding-top: 100px;
+  padding-top: 60px;
 }
 
 .main-footer {
@@ -8432,7 +8434,7 @@ html[dir='rtl'] .styled-radio.radio-sort input[type=radio] + label {
 }
 .widget.tour-details {
   border-color: #00b7f4;
-  
+
   margin-top: -88px;
 }
 .widget.tour-details .widget_header {
@@ -9227,4 +9229,17 @@ html[dir="rtl"] .ico_boat:before {
 
 #order-package-carousel {
 	height: 500px !important;
+}
+
+.approx-label-small {
+	font-size: 11px;
+}
+.chargeNote {
+	font-size: 16px;
+}
+.nationality-select {
+	text-transform: capitalize;
+}
+.main-search-form-inner {
+	padding: 10px 30px;
 }
