@@ -1,13 +1,17 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core'
+import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core'
 import { Router } from '@angular/router'
 
 import { APIService } from '../../service/api.service'
 import { MLService } from '../../service/ml.service'
 
-import { MLString } from '../../../model/common'
+import { MLString, str2Date } from '../../../model/common'
 import { PaymentType } from '../../../model/order'
 import { TripOrder } from '../../../model/trip-order'
 import { Human } from '../../../model/human'
+import { Trip, TripType } from '../../../model/trip'
+import { Point } from '../../../model/point'
+import { Vehicle } from '../../../model/vehicle'
+import { Cost } from '../../../model/price'
 
 const lang = document.querySelector('html').getAttribute('lang') || 'en'
 
@@ -18,11 +22,30 @@ const lang = document.querySelector('html').getAttribute('lang') || 'en'
 })
 export class OrderTripComponent implements OnInit {
 
+	tripType: TripType = TripType.List[0]
+
+	checkType(tripTypeId: 'oneway' | 'twoway'): boolean {
+		return this.tripType === TripType.getTripType(tripTypeId)
+	}
+
+	setType(tripTypeId: 'oneway' | 'twoway'): void {
+		this.tripType = TripType.getTripType(tripTypeId)
+		this.pointA = null
+		this.item.trip = null
+	}
+
+	trips: Trip[] = []
+
+	@ViewChild('departureDateNode') departureDateRef: ElementRef
+	departureDateDatepicker: any = null
+
+	@ViewChild('returnDateNode') returnDateRef: ElementRef
+	returnDateDatepicker: any = null
+
 	months: number[] = [1,2,3,4,5,6,7,8,9,10]
 	years: number[] = []
 
 	paymentTypes: PaymentType[] = PaymentType.List
-	// ageGroups: AgeGroup[] = AgeGroup.List
 
 	item: TripOrder = new TripOrder()
 
@@ -68,8 +91,74 @@ export class OrderTripComponent implements OnInit {
 
 		if (!currentOrderObj)
 			window.location.href = '/' + lang
-		else
+		else {
 			this.item =  new TripOrder(currentOrderObj)
+			this.tripType = this.item.trip.type
+		}
+	}
+
+
+	private _pointA: Point = null
+
+	get pointA(): Point {
+		return this._pointA
+	}
+
+	set pointA(value: Point) {
+		this._pointA = value
+		this.pointB = null
+	}
+
+	private _pointB: Point = null
+
+	get pointB(): Point {
+		return this._pointB
+	}
+
+	set pointB(value: Point) {
+		this._pointB = value
+		this.item.vehicle = null
+
+		if (this.pointA && this.pointB)
+			this.item.trip = this.trips.find( (value: Trip) =>
+				value.type === this.tripType &&
+				value.pointA.id.equal(this.pointA.id) &&
+				value.pointB.id.equal(this.pointB.id)
+			) || null
+	}
+
+	get APoints(): Point[] {
+		return this.trips.reduce(
+			(prev: Point[], value: Trip ) =>
+				value.type === this.tripType &&
+				!prev.find( (prevValue: Point) => prevValue.id.equal(value.pointA.id) ) ?
+					prev.concat(value.pointA) : prev,
+			this.item.trip ? [this.item.trip.pointA] : []
+		)
+	}
+
+	get BPoints(): Point[] {
+		if (!this.pointA)
+			return []
+
+		return this.trips.reduce(
+			(prev: Point[], value: Trip ) =>
+				value.type === this.tripType && value.pointA &&
+				value.pointA.id.equal(this.pointA.id) ? prev.concat(value.pointB) : prev,
+			this.item.trip ? [this.item.trip.pointB] : []
+		)
+	}
+
+	get vehicleList(): Vehicle[] {
+		if (!this.item.trip)
+			return []
+
+		let price = this.item.trip.getPrice(this.item.departureDate || null)
+
+		return price.costs.reduce( (prev: Vehicle[], value: Cost) =>
+			value.key instanceof Vehicle ? prev.concat(value.key) : prev,
+			[]
+		)
 	}
 
 	ngOnInit(): void {
@@ -87,6 +176,15 @@ export class OrderTripComponent implements OnInit {
 			this.item.egyptianMarkUp = response.egyptianMarkUp
 		})
 
+		this.apiService.get<Trip>(Trip).then( (response: Trip[]) => {
+			this.trips = response
+
+			if (this.item.trip) {
+				this._pointA = this.item.trip.pointA
+				this._pointB = this.item.trip.pointB
+			}
+		})
+
 		UIkit.sticky('#order-details', {boundary: '#sticky-boundary'});
 
 		Array.prototype.forEach.call(
@@ -95,6 +193,24 @@ export class OrderTripComponent implements OnInit {
 				event.preventDefault()
 				this.currency = currencySetNode.getAttribute('currency-set') || null
 			})
+		)
+
+		this.departureDateDatepicker = UIkit.datepicker(this.departureDateRef.nativeElement, {
+			weekstart: 1,
+			format:'DD.MM.YYYY'
+		})
+
+		this.returnDateDatepicker = UIkit.datepicker(this.returnDateRef.nativeElement, {
+			weekstart: 1,
+			format:'DD.MM.YYYY'
+		})
+
+		this.departureDateDatepicker.on('hide.uk.datepicker', event =>
+			this.item.departureDate = str2Date(event.target.value)
+		)
+
+		this.returnDateDatepicker.on('hide.uk.datepicker', event =>
+			this.item.returnDate = str2Date(event.target.value)
 		)
 	}
 

@@ -12,7 +12,7 @@
 			<label class="uk-form-label uk-width-1-1">Nationality</label>
 			<div class="uk-form-controls">
 				<select name="type" [(ngModel)]="item.nationality">
-					<option *ngFor="let nationalityItem of nationalityList" [ngValue]="nationalityItem">{{ nationalityItem.title }}</option>
+					<option *ngFor="let nationalityItem of nationalityList" [ngValue]="nationalityItem">{{ nationalityItem.title | ml:'en' }}</option>
 				</select>
 			</div>
 		</div>

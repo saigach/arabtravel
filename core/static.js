@@ -3,6 +3,8 @@
  * Copyright(c) 2016 Wisdman <wisdman@ajaw.it>
  */
 
+const MLTransform = require('./mltransform.js')
+
 module.exports = class StaticEngine {
 	constructor(DB, templat) {
 		this.DB = DB
@@ -17,9 +19,10 @@ module.exports = class StaticEngine {
 				code: 404,
 				data: {
 					url: url,
-					title: 'Страница не найдена',
+					title: 'Not found',
 					main: this.template['404']({
-						title: 'Страница не найдена',
+						lang: requestData.request.language,
+						title: 'Not found',
 						ml: requestData.ml
 					})
 				}
@@ -33,10 +36,10 @@ module.exports = class StaticEngine {
 			WHERE
 				model = 'static'
 				AND
-				data->>'url' = '$url'
+				data->>'url' = '${url}'
 			LIMIT 1
 		`).then(rows => {
-			let item = rows.length && rows[0] || null
+			let item = rows.length && Object.assign({}, rows[0].data || {}, rows[0], { data: null }) || null
 
 			if (!item) {
 
@@ -45,9 +48,10 @@ module.exports = class StaticEngine {
 						code: 404,
 						data: {
 							url: url,
-							title: 'Страница не найдена',
+							title: 'Not found',
 							main: this.template['404']({
-								title: 'Страница не найдена',
+								lang: requestData.request.language,
+								title: 'Not found',
 								ml: requestData.ml
 							})
 						}
@@ -58,6 +62,7 @@ module.exports = class StaticEngine {
 					data: {
 						url: url,
 						main: this.template[url]({
+							lang: requestData.request.language,
 							ml: requestData.ml
 						})
 					}
@@ -65,7 +70,10 @@ module.exports = class StaticEngine {
 
 			}
 
+			item = MLTransform(item, requestData.request.language)
+
 			item.ml = requestData.ml
+			item.lang = requestData.request.language
 
 			return {
 				code: 200,
