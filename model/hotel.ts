@@ -1,4 +1,4 @@
-import { newDate, Model, File, MLString } from './common'
+import { newDate, Model, File, MLString, getAllUniqueCombinations } from './common'
 import { User } from './user'
 
 export class Cost {
@@ -54,8 +54,31 @@ export class Room {
 		}
 	}
 
-	getCost(ages: number[] = []): number {
-		return 0
+	getMinumalCost(ages: number[] = []): number {
+
+		const checkAges = (ages: number[], room: number[]) => {
+			if (ages.length > room.length)
+				return false
+
+			let a = ages.slice().sort( (a, b) => b-a )
+			let r = room.slice().sort( (a, b) => b-a )
+
+			for (let i = 0; i < a.length; i++)
+				if (a[i] < r[i])
+					return false
+
+			return true
+		}
+
+		return this.costs.reduce( (prev: number, line: Cost) => {
+			if (!checkAges(ages, line.ages.slice().map( value => value.value )))
+				return prev
+
+			if (prev === null)
+				return line.cost
+
+			return Math.min(prev, line.cost)
+		}, null)
 	}
 }
 
@@ -96,6 +119,37 @@ export class Hotel extends Model {
 					value ? prev.concat(value instanceof File ? value : new File(value)) : prev,
 				[]
 			) : []
+	}
+
+	getRoom(ages: number[] = []): { room: Room, cost: number } {
+		return this.rooms.reduce( (prev: { room: Room, cost: number } , room: Room) => {
+			let cost = room.getMinumalCost(ages)
+
+			if (cost === null)
+				return prev
+
+			if (prev === null || prev.cost > cost)
+				return { room: room, cost: cost }
+
+			return prev
+		}, null)
+	}
+
+	getVariants(ages: number[] = []): { room: Room, cost: number }[][] {
+		return getAllUniqueCombinations(ages)
+				.map( value => value.map( value => this.getRoom(value) ))
+				.filter( value => value.reduce( (prev, value) => value === null ? false : prev, true )  )
+	}
+
+	getMinumalCost(ages: number[] = []): number {
+		return this.getVariants(ages).reduce( (prev: number, variant: { room: Room, cost: number }[]) => {
+			let sum = variant.reduce( (prev: number, value: { room: Room, cost: number }) => prev + value.cost, 0)
+
+			if (prev === null)
+				return sum
+
+			return Math.min(prev, sum)
+		}, null)
 	}
 
 	toObject(): {} {

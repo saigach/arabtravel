@@ -38,7 +38,8 @@ export class PackageListComponent implements OnInit {
 	get APoints(): Point[] {
 		return this.packages.reduce(
 			(prev: Point[], value: Package ) =>
-				prev.concat(value.pointA),
+				!prev.find( (prevValue: Point) => prevValue.id.equal(value.pointA.id) ) ?
+					prev.concat(value.pointA) : prev,
 			[]
 		)
 	}
@@ -49,7 +50,9 @@ export class PackageListComponent implements OnInit {
 
 		return this.packages.reduce(
 			(prev: Point[], value: Package ) =>
-				value.pointA === this.pointA ? prev.concat(value.pointB) : prev,
+				value.pointA && value.pointA.id.equal(this.pointA.id) &&
+				!prev.find( (prevValue: Point) => prevValue.id.equal(value.pointB.id) ) ?
+					prev.concat(value.pointB) : prev,
 			[]
 		)
 	}
@@ -76,6 +79,18 @@ export class PackageListComponent implements OnInit {
 
 	resetKidsAges(): void {
 		this.kidsAges = Array.apply(null, {length: this.kids}).map( () => ({ value: 0}) )
+	}
+
+	get ageList(): number[] {
+		let result = []
+
+		for (let i = 0; i < this.adults; i++)
+			result.push(999)
+
+		for (let i = 0; i < this.kidsAges.length; i++)
+			result.push(this.kidsAges[i].value)
+
+		return result
 	}
 
 	constructor(private router: Router, private apiService: APIService, private mlService: MLService) {}

@@ -199,3 +199,170 @@ export type SearchData = {
 	adults: number,
 	kidsAges: { value: number }[]
 }
+
+export const genCombinationsNorep = (lengthOfAlphabet: number, lengthOfFigures: number): number[][] => {
+	let n: number = lengthOfAlphabet
+	let k: number = lengthOfFigures
+
+	if (k === 0)
+		return []
+
+	if (k > n)
+		k = n
+
+	let vector: number[] = []
+
+	for(let j = 0; j < k; j++)
+		vector.push(j)
+
+	let result: number[][] = []
+	let gen_result = true
+
+	while(gen_result) {
+
+		let comb = []
+		for(let x = 0; x < k; x++)
+			comb.push(vector[x])
+		result.push(comb)
+
+		gen_result = (() => {
+			let j //index
+
+			//easy case, increase rightmost element
+			if(vector[k - 1] < n - 1) {
+				vector[k - 1]++
+				return true
+			}
+
+			//find rightmost element to increase
+			for(j = k - 2; j >= 0; j--)
+				if(vector[j] < n - k + j)
+					break
+
+			//terminate if vector[0] == n - k
+			if(j < 0)
+				return false
+
+			//increase
+			vector[j]++
+
+			//set right-hand elements
+			while(j < k - 1) {
+				vector[j + 1] = vector[j] + 1
+				j++
+			}
+
+			return true;
+		})()
+	}
+
+	return result
+}
+
+export const getCombinations = (arr: any[] = [], k: number = 1): { combination: any[], remainder: any[] }[] => {
+
+	let combinationList: number[][] = genCombinationsNorep(arr.length, k)
+
+	let result: { combination: any[], remainder: any[] }[] = []
+
+	for (let l of combinationList) {
+
+		let line = {
+			combination: [],
+			remainder: []
+		}
+
+		for(let i = 0; i < arr.length; i++)
+			if (l.indexOf(i) >= 0)
+				line.combination.push(arr[i])
+			else
+				line.remainder.push(arr[i])
+
+		result.push(line)
+	}
+
+	return result
+}
+
+export const getAllCombinations = (arr: any[] = []): any[][][] => {
+
+	let combinationList = []
+
+	for (let k = arr.length; k > 0; k--)
+		combinationList = combinationList.concat(getCombinations(arr, k))
+
+	let result = []
+
+	for (let line of combinationList) {
+		let resultLine = []
+		resultLine.push(line.combination)
+
+		if (line.remainder.length <= 0)
+			result.push(resultLine)
+		else if (line.remainder.length === 1) {
+			resultLine.push(line.remainder)
+			result.push(resultLine)
+		} else {
+			let subCombinationList = getAllCombinations(line.remainder)
+
+			for (let subLine of subCombinationList)
+				result.push(resultLine.slice(0).concat(subLine))
+		}
+
+	}
+
+	return result
+
+}
+
+export const arrayComp = (a: any, b: any): boolean => {
+	if (a instanceof Array && b instanceof Array && a.length === b.length)
+		return a.reduce( (prev, valueA) => {
+			return prev && b.find( valueB => {
+				if (valueA instanceof Array && valueB instanceof Array)
+					return arrayComp(valueA, valueB)
+				else
+					return valueA === valueB
+			}) !== undefined
+		}, true)
+
+	return false
+}
+
+export const getAllUniqueCombinations = (arr: any[] = []): any[][][] => {
+
+	let vector: number[] = []
+
+	for(let j = 0; j < arr.length; j++)
+		vector.push(j)
+
+	let combinationList = getAllCombinations(vector).reduce( (prev, value) => {
+		if ( prev.find( prevValue => arrayComp(prevValue,value) ) === undefined )
+			prev.push(value)
+
+		return prev
+	}, [])
+
+	let result: any[][][] = []
+
+	for (let line of combinationList) {
+
+		let newLine = []
+
+		for (let comb of line ) {
+
+			let newComb = []
+
+			for ( let i of comb )
+				newComb.push(arr[i])
+
+			newLine.push(newComb)
+
+		}
+
+		result.push(newLine)
+	}
+
+	return result
+
+}

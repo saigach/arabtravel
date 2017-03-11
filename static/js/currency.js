@@ -1,30 +1,30 @@
 (function(){
 
-	const currencyList = ['usd', 'jod']
-
 	window.addEventListener('DOMContentLoaded', () => {
 
-		let currencyNodeList = []
+		let currencyFieldNodeList = []
 
 		Array.prototype.forEach.call(
 			document.querySelectorAll('[currency-field]'),
-			currencyNode => currencyNodeList.push(currencyNode)
+			currencyNode => currencyFieldNodeList.push(currencyNode)
 		)
 
-		let setCurrency = (currency = currencyList[0]) => {
-			if (currencyList.indexOf(currency) < 0)
+		let setCurrency = (currency = 'USD') => {
+			localStorage.setItem('currency', currency)
+			let currencyName = document.querySelector(`[currency-set="${currency}"]`)
+			currencyName = currencyName && currencyName.innerHTML || ''
+
+			if (!currencyName)
 				return
 
-			localStorage.setItem('currency', currency)
-
-			currencyNodeList.forEach( currencyNode => currencyNode.innerHTML = currency)
+			currencyFieldNodeList.forEach( currencyNode => currencyNode.innerHTML = currencyName)
 		}
 
 		Array.prototype.forEach.call(
 			document.querySelectorAll('[currency-set]'),
 			currencySetNode => currencySetNode.addEventListener('click', event =>{
 				event.preventDefault()
-				setCurrency(currencySetNode.getAttribute('currency-set'))
+				setCurrency(currencySetNode.getAttribute('currency-set') || undefined)
 			})
 		)
 

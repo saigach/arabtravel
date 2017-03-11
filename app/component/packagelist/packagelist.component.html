@@ -125,10 +125,9 @@
                                         <div class="tourist-package-item_description">
                                             <div class="h3 tourist-package-item_title"><a (click)="select(item); $event.stopPropagation()">{{ item.title | ml }}</a></div>
 
-                                            <!-- <div class="tourist-package-item_date-line">
-                                                <span class="tourist-package-item_date">21 Aug 2016 > 28 Aug 2016 (7 nights)</span>
-                                                <a href="">other dates for this tour</a>
-                                            </div> -->
+                                            <div class="tourist-package-item_date-line">
+                                                <span class="tourist-package-item_date"> {{ item.minimalDuration }} nights</span>
+                                            </div>
 
                                             <div class="tourist-package-item_includes">
                                                 <p class="lbl">{{ ml.tourIncludes | ml }}</p>
@@ -146,7 +145,7 @@
 
                                         <div class="tourist-package-item_price">
                                             <div class="lbl">{{ ml.from | ml }}</div>
-                                            <div class="price">{{ item.basePrice | number:'1.2-2' }}</div>
+                                            <div class="price">{{ item.getMinimalCost(departureDate, ageList) | number:'1.2-2' }}</div>
                                             <div class="lbl">{{ ml.perPerson | ml }}</div>
                                         </div>
 

@@ -56,16 +56,16 @@ export class OrderTripComponent implements OnInit {
 
 	ml: { [key:string]: MLString } = {}
 
-	_currency: string = 'usd'
+	_currency: string = 'USD'
 
 	get currency():string {
-		return this._currency === 'usd' ? '$' : this._currency
+		return (this.ml && this._currency in this.ml) ? this.ml[this._currency][lang] : this._currency
 	}
-	
+
 	set currency(value: string) {
-		this._currency = value ? value : 'usd'
-	}	
-	
+		this._currency = value ? value : 'USD'
+	}
+
 	get exchangeRate(): number {
 		if (this._currency === 'JOD')
 			return 1

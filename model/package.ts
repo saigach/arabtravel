@@ -62,21 +62,24 @@ export class Package extends Model {
 		) || null
 	}
 
-	// getCost(date: Date = new Date(), ages: number[] = []): number {
-	// 	let sum = 0
+	get minimalDuration(): number {
+		return Math.min(...this.durations) || 1
+	}
 
-	// 	if (this.hotel)
-	// 		sum += this.hotel.getCost(ages)
+	getMinimalCost(date: Date = new Date(), ages: number[] = []): number {
 
-	// 	let price = this.getPrice(date)
-	// 	if (price && price.costs.length > 0)
-	// 		sum += ages.reduce( (prev: number, age: number) => {
-	// 			let cost = price.costs.find( (value:Cost) => value.key === age )
-	// 			return cost ? prev + cost.cost : prev
-	// 		}, 0)
+		let sum = 0
 
-	// 	return sum
-	// }
+		if (this.hotel)
+			sum += this.hotel.getMinumalCost(ages) * this.minimalDuration
+
+		let price = this.getPrice(date)
+		if (price && price.costs.length > 0)
+			sum +=ages.reduce( (prev: number, age: number) => prev + price.getCost(age), 0 )
+
+		return sum
+
+	}
 
 	toObject(): {} {
 		return Object.assign(super.toObject(), {
