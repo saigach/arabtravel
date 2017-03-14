@@ -63,7 +63,10 @@ export class Package extends Model {
 	}
 
 	get minimalDuration(): number {
-		return Math.min(...this.durations) || 1
+		if (this.durations.length <= 0)
+			return 1
+
+		return Math.min(...this.durations)
 	}
 
 	getMinimalCost(date: Date = new Date(), ages: number[] = []): number {
@@ -75,7 +78,7 @@ export class Package extends Model {
 
 		let price = this.getPrice(date)
 		if (price && price.costs.length > 0)
-			sum +=ages.reduce( (prev: number, age: number) => prev + price.getCost(age), 0 )
+			sum += ages.reduce( (prev: number, age: number) => prev + price.getCost(age), 0 )
 
 		return sum
 
