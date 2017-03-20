@@ -112,6 +112,7 @@
 	<script src="/js/main.js"></script>
 
 	<script src="/js/auth.js"></script>
+	<script src="/js/signup.js"></script>
 	<script src="/js/currency.js"></script>
 
 	<!-- SystemJS -->
@@ -133,34 +134,39 @@
                     <div class="uk-flex uk-grid">
                     	<div class="uk-width-1-2">
                     	    <a id="currentAccountLink" href="{{=it.userEmail && (it.lang + '/user') || '#login-form-modal'}}" class="btn btn-default btn-ghost btn-ui btn-account" {{? !it.userEmail }} data-uk-modal {{?}}>
-                    	        <i class="demo-icon ico_user"></i><span id="currentAccount">{{=it.userEmail || it.ml.signUp}}</span>
+                    	        <i class="demo-icon ico_user"></i><span id="currentAccount">{{=it.userEmail || it.ml.signIn}}</span>
                     	    </a>&nbsp;
-                    							<a id="logoutLink" href="/auth/logout" class="btn btn-default btn-ghost btn-ui btn-account">
+							{{? !it.userEmail }}
+                    		<a id="currentAccountLink" href="{{=it.userEmail && (it.lang + '/user') || '#signup-form-modal'}}" class="btn btn-default btn-ghost btn-ui btn-account" {{? !it.userEmail }} data-uk-modal {{?}}>
+                    	        <i class="demo-icon ico_user"></i><span id="currentAccount">{{=it.ml.signUp }}</span>
+                    	    </a>&nbsp;
+							{{?}}
+							{{? it.userEmail }}<a id="logoutLink" href="/auth/logout" class="btn btn-default btn-ghost btn-ui btn-account">
                     	        <i class="glyphicon glyphicon-log-out"></i><span>{{=it.ml.logout}}</span>
-                    	    </a>
+                    	    </a>{{?}}
                     	</div>
                     	<div class="uk-width-1-2 lang-cur-dd">
-                    	    <div class="dropdown dd-currency" data-uk-dropdown="{mode:'click'}">
+                    	    <div class="dropdown dd-currency uk-margin-right uk-margin-left" data-uk-dropdown="{mode:'click'}">
                     	        <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     	            <span currency-field>{{=it.ml.USD}}</span>
                     	            <span class="caret"></span>
                     	        </button>
                     	        <ul class="uk-dropdown dropdown-menu" aria-labelledby="dLabel">
-                    	            <li><a currency-set="usd">{{=it.ml.USD}}</a></li>
-                    	            <li><a currency-set="JOD">{{=it.ml.JOD}}</a></li>
-									<li><a currency-set="SAR">{{=it.ml.SAR}}</a></li>
-									<li><a currency-set="EGP">{{=it.ml.EGP}}</a></li>
+                    	            <li class="uk-dropdown-close"><a currency-set="USD">{{=it.ml.USD}}</a></li>
+                    	            <li class="uk-dropdown-close"><a currency-set="JOD">{{=it.ml.JOD}}</a></li>
+									<li class="uk-dropdown-close"><a currency-set="SAR">{{=it.ml.SAR}}</a></li>
+									<li class="uk-dropdown-close"><a currency-set="EGP">{{=it.ml.EGP}}</a></li>
                     	        </ul>
                     	    </div>
                     	    <div class="dropdown dd-lang" data-uk-dropdown="{mode:'click'}">
-                    	        <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									{{=it.ml.curLang}}
-                    	            <span class="caret"></span>
-                    	        </button>
-                    	        <ul class="uk-dropdown dropdown-menu" aria-labelledby="dLabel">
-                    	            <li><a href="/en">English</a></li>
-                    	            <li><a href="/ar">عربي</a></li>
-                    	        </ul>
+
+								{{? it.lang === 'ar'}}
+									<a href="/en" id="dLabel">English</a>
+									{{?? it.lang === 'en'}}
+									<a href="/ar" id="dLabel">عربي</a>
+									{{??}}
+								{{?}}
+
                     	    </div>
                     	</div>
                     </div>
@@ -187,7 +193,7 @@
                         <ul class="uk-dropdown dropdown-menu">
                         	{{~it.static :value:index}}
 								 <li>
-                                	<a href="http://arabtravel.jo{{=value.url}}">{{=value.title}}</a>
+                                	<a href="http://arabtravel.jo/{{=value.url}}">{{=value.title}}</a>
                             	</li>
 							{{~}}
                         </ul>
@@ -238,21 +244,17 @@
                 <div class="col-md-3">
                     <div class="row">
                         <div class="col-md-6">
-                            <p class="footer-title">Passenger Info</p>
+                            <p class="footer-title">{{=it.ml.passengerInfo}}</p>
                             <ul class="footer-menu">
-                                <li>
-                                    <a href="#">Fleet Time Table</a>
-                                </li>
-                                <li>
-                                    <a href="#">Travel Guides for Passengers</a>
-                                </li>
-                                <li>
-                                    <a href="#">Travel Guides for Vehicles</a>
-                                </li>
+                                {{~it.static :value:index}}
+								 <li>
+                                	<a href="http://arabtravel.jo/{{=value.url}}">{{=value.title}}</a>
+                            	</li>
+								{{~}}
                             </ul>
                         </div>
                         <div class="col-md-6">
-                            <p class="footer-title">Contact us</p>
+                            <p class="footer-title">{{=it.ml.contactUs}}</p>
                             <ul class="footer-menu">
                                 <li>
                                     <a href="#">Jordan</a>
@@ -288,31 +290,75 @@
         <div class="uk-modal-dialog">
 
             <a class="uk-modal-close uk-close"></a>
-            <div class="uk-modal-header"><span class="h3">Sign Up Form</span></div>
+            <div class="uk-modal-header"><span class="h3">{{=it.ml.signInForm}}</span></div>
 
             <form role="form" class="login-form">
-                <div class="row">
-                    <div class="col-md-6">
+                <div class="uk-flex uk-grid">
+                    <div class="uk-width-1-2">
                         <div class="form-group">
                             <label for="loginForm_login">
-                                Login
+                                {{=it.ml.login}}
                             </label>
                             <input type="email" class="form-control" name="email" required>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="uk-width-1-2">
                         <div class="form-group">
                             <label for="loginForm_password">
-                                Password
+                                {{=it.ml.password}}
                             </label>
                             <input type="password" class="form-control" name="password" required>
                         </div>
                     </div>
                 </div>
 
-                <div class="text-center">
+                <div class="text-center uk-margin-top">
                     <button type="submit" class="btn btn-primary">
-                        Sign Up
+                        {{=it.ml.signIn}}
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- This is the modal -->
+    <div id="signup-form-modal" class="uk-modal">
+        <div class="uk-modal-dialog">
+
+            <a class="uk-modal-close uk-close"></a>
+            <div class="uk-modal-header"><span class="h3">{{=it.ml.signUpWithAT}}</span></div>
+
+			{{=it.ml.EMCh}}
+			<ul class="simple-list">
+				<li>{{=it.ml.EMCh2}}</li>
+				<li>{{=it.ml.EMCh3}}</li>
+				<li>{{=it.ml.EMCh4}}</li>
+			</ul>
+
+            <form role="form" class="login-form" id="signUpForm">
+                <div class="uk-flex uk-grid">
+					<div class="uk-width-1-2">
+                        <div class="form-group">
+                            <label for="loginForm_login">
+                                {{=it.ml.name}}
+                            </label>
+                            <input type="text" class="form-control" name="title" required>
+                        </div>
+                    </div>
+                    <div class="uk-width-1-2">
+                        <div class="form-group">
+                            <label for="loginForm_login">
+                                {{=it.ml.email}}
+                            </label>
+                            <input type="email" class="form-control" name="email" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center uk-margin-top">
+                    <button type="submit" class="btn btn-primary">
+                        {{=it.ml.signUp}}
                     </button>
                 </div>
             </form>

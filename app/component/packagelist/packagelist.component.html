@@ -6,9 +6,9 @@
                       <li><a href="#">Tourist Packages</a></li>
                     </ol>
 
-                   <div class="row">
+                   <div class="uk-grid uk-flex">
 
-                    <div class="col-md-3">
+                    <div class="uk-width-medium-1-4">
 
                         <aside class="widget sticky-widget tourist-package-form-inner">
 
@@ -70,6 +70,14 @@
 									<label for="">Kid {{ i + 1 }} age:</label>
 									<input type="number" min="0" class="form-control" [(ngModel)]="kid.value" [ngModelOptions]="{standalone: true}">
 								</div>
+								
+								<div class="form-group">
+                                    <h4>Star rating</h4>
+									<span class="styled-checkbox" *ngFor="let r of ratingsList">
+										<input type="checkbox" name="rating" value="{{r}}" [(ngModel)]="rating[r]" id="r{{r}}" [ngModelOptions]="{standalone: true}"> <label for="r{{r}}">{{ r }}</label>
+									</span>
+
+                                </div>
 
                             </form>
 
@@ -77,7 +85,7 @@
 
                     </div>
 
-                    <div class="col-md-9">
+                    <div class="uk-width-medium-3-4">
 
                         <h1>{{ ml.allTripsFrom | ml }} <span *ngIf="pointA">{{ pointA.title | ml }}</span><span *ngIf="pointB"> to {{ pointB.title | ml }}</span></h1>
 
@@ -125,11 +133,6 @@
                                         <div class="tourist-package-item_description">
                                             <div class="h3 tourist-package-item_title"><a (click)="select(item); $event.stopPropagation()">{{ item.title | ml }}</a></div>
 
-                                            <!-- <div class="tourist-package-item_date-line">
-                                                <span class="tourist-package-item_date">21 Aug 2016 > 28 Aug 2016 (7 nights)</span>
-                                                <a href="">other dates for this tour</a>
-                                            </div> -->
-
                                             <div class="tourist-package-item_includes">
                                                 <p class="lbl">{{ ml.tourIncludes | ml }}</p>
 
@@ -139,6 +142,18 @@
                                                     <!-- <li><i class="ico ico_tour"></i> Cairo Day Tour</li> -->
                                                 </ul>
                                             </div>
+											
+											<div class="tourist-package-item_date-line">
+                                                <!--span class="tourist-package-item_date"> {{ item.minimalDuration }} nights</span-->
+												<span class="tourist-package-item_duration" *ngFor="let duration of item.durations">
+													<div class="styled-radio">
+														<input class="radio" id="package-duration{{ duration }}" name="package-duration" type="radio" ngModel="[(duration)]" value="{{ duration }}">
+														<label for="package-duration{{ duration }}" *ngIf="duration == 1">{{ duration }} {{ ml.night1 | ml }} - {{ duration + 1 }} {{ ml.day2 | ml }}</label>
+														<label for="package-duration{{ duration }}" *ngIf="duration == 2">{{ duration }} {{ ml.night2 | ml }} - {{ duration + 1 }} {{ ml.day3 | ml }}</label>
+														<label for="package-duration{{ duration }}" *ngIf="duration >= 3">{{ duration }} {{ ml.night3 | ml }} - {{ duration + 1 }} {{ ml.day3 | ml }}</label>
+													</div>
+												</span>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -146,7 +161,7 @@
 
                                         <div class="tourist-package-item_price">
                                             <div class="lbl">{{ ml.from | ml }}</div>
-                                            <div class="price">{{ item.basePrice | number:'1.2-2' }}</div>
+                                            <div class="price">{{ item.getMinimalCost(departureDate, ageList) | number:'1.2-2' }}</div>
                                             <div class="lbl">{{ ml.perPerson | ml }}</div>
                                         </div>
 

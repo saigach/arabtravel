@@ -409,6 +409,96 @@ module.exports = class APIEngine {
 						data: order
 					}
 				})
+			case 'singup':
+				if (requestData.user && requestData.user.id)
+					return Promise.resolve({
+						code: 409,
+						data: { error: 'Already authorized'}
+					})
+
+				if (method !== 'POST')
+					return Promise.resolve({
+						code: 400,
+						data: { error: 'Method is not allowed'}
+					})
+
+				let userData = requestData.request.body || {}
+
+				let email = userData.email && userData.email.trim() || null
+
+				if (!email)
+					return Promise.resolve({
+						code: 400,
+						data: { error: 'Human email is empty'}
+					})
+
+				if (!/^[a-z0-9_\.%+-]+@[a-z0-9_\.-]+?[a-z0-9]$/.test(email))
+					return Promise.resolve({
+						code: 400,
+						data: { error: 'Email is not valid'}
+					})
+
+				email = escapeStr(email)
+
+				return this.DB.query(`
+					SELECT
+						users.email
+					FROM
+						users
+					WHERE
+						email = ${email}
+					LIMIT 1
+				`).then(users => {
+
+					if (users.length > 0)
+						return {
+							code: 401,
+							data: 'Unauthorized'
+						}
+
+					let title = userData.title && userData.title.trim() || null
+
+					if (!title)
+						return {
+							code: 400,
+							data: { error: 'Human title is empty'}
+						}
+
+					title = escapeStr(title)
+
+					let phone = escapeStr(userData.phone && userData.phone.trim() || '')
+					let password = Math.random().toString(36).slice(-8)
+
+					return this.DB.query(`
+						INSERT INTO users (
+							email,    title,    phone,    password
+						) VALUES (
+							${email}, ${title}, ${phone}, encode(digest(${escapeStr(password)}, 'sha512'), 'hex')
+						) RETURNING
+							title,
+							email,
+							id
+					`).then( users => {
+
+						let user = users[0]
+
+						this.mail.sendMail(
+							user.email,
+							requestData.ml.emailNewUserTitle,
+							this.template['email-new-user']({
+								lang: requestData.request.language,
+								ml: requestData.ml,
+								user: Object.assign({}, user, { password })
+							})
+						)
+
+						return {
+							code: 200,
+							data: user
+						}
+					})
+				})
+
 			default:
 				return Promise.resolve({
 					code: 400,

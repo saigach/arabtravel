@@ -8,6 +8,8 @@ import { MLString } from '../../../model/common'
 import { Order } from '../../../model/order'
 import { User } from '../../../model/user'
 
+const lang = document.querySelector('html').getAttribute('lang') || 'en'
+
 @Component({
 	moduleId: module.id,
 	selector: 'user-page',
@@ -23,7 +25,7 @@ export class UserPageComponent implements OnInit {
 	_currency: string = 'usd'
 
 	get currency():string {
-		return this._currency === 'usd' ? '$' : this._currency
+		return (this.ml && this._currency in this.ml) ? this.ml[this._currency][lang] : this._currency
 	}
 
 	set currency(value: string) {

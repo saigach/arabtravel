@@ -30,7 +30,7 @@ export class OrderPackageComponent implements OnInit {
 	_currency: string = 'usd'
 
 	get currency():string {
-		return this._currency === 'usd' ? '$' : this._currency
+		return (this.ml && this._currency in this.ml) ? this.ml[this._currency][lang] : this._currency
 	}
 
 	set currency(value: string) {

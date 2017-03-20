@@ -29,6 +29,38 @@
 				<h3 class="tm-article-subtitle">Hotel page content</h3>
 				<mleditor [(value)]="item.content"></mleditor>
 			</div>
+				
+			<div class="uk-width-1-1 uk-margin-top">
+				<h3 class="tm-article-subtitle">City</h3>
+				<mlinput [(value)]="item.city"></mlinput>
+			</div>
+			
+			<div class="uk-width-1-1 uk-margin-top">
+				<h3 class="tm-article-subtitle">Location</h3>
+				<mlinput [(value)]="item.location"></mlinput>
+			</div>
+			
+			<div class="uk-width-1-1 uk-margin-top">
+				<h3 class="tm-article-subtitle">Distance from beach</h3>
+				<div class="uk-row">
+					<div class="uk-width-1-3 uk-margin-top" *ngFor="let b of beachDistanceList">
+						<label><input type="radio" name="bd" value="{{ b.id }}" [checked]=" (b.id == item.beach) ? 'true' : 'false' " [(ngModel)]="item.beach"> {{b.title | ml:'en' }}</label>
+					</div>
+				</div>
+				
+			</div>
+			
+			<div class="uk-width-1-1 uk-margin-top">
+				<h3 class="tm-article-subtitle">Rating</h3>
+				<span class="uk-margin-right">
+					<label><input type="radio" name="rating" value="0" [(ngModel)]="item.rating"> (not applicable)</label>
+				</span>
+				<span class="uk-margin-right" *ngFor="let r of ratingsList">
+					<label><input type="radio" name="rating" value="{{r}}" [(ngModel)]="item.rating" [checked]="(r == item.rating) ? 'true' : 'false' "> {{ r }}</label>
+				</span>
+				
+			</div>
+			
 			<div class="uk-width-1-1 uk-grid uk-margin-top">
 				<div class="uk-width-8-10">
 					<h3 class="tm-article-subtitle">Rooms</h3>
@@ -58,6 +90,18 @@
 								<input type="file" accept="image/*" (change)="setRoomImage($event.target, room)">
 							</div>
 						</div>
+						
+						
+						<div class="uk-width-1-1 uk-margin-top">
+							<h3 class="tm-article-subtitle">Type of breakfast</h3>
+							<div class="uk-row">
+								<span class="uk-margin-right" *ngFor="let ai of allInclusiveList">
+									<label><input type="radio" name="ai" value="{{ai.id}}" [(ngModel)]="room.allInclusive" [checked]=" (ai.id == room.allInclusive) ? 'true' : 'false' "> {{ai.title | ml:'en' }}
+									</label>
+								</span>
+							</div>
+						</div>
+						
 						<hotel-price [(room)]="item.rooms[i]"></hotel-price>
 						<div class="uk-width-1-1 uk-margin-top">
 							<h4 class="tm-article-subtitle">Room description</h4>

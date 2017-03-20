@@ -4043,7 +4043,8 @@ tbody.collapse.in {
   z-index: 1000;
   display: none;
   float: left;
-  min-width: 160px;
+  min-width: 100px;
+  width: auto !important;
   padding: 5px 0;
   margin: 2px 0 0;
   list-style: none;
@@ -7751,7 +7752,7 @@ html[dir='rtl'] .subtitle2 {
 
 .main-content {
   padding-bottom: 40px;
-  padding-top: 60px;
+  padding-top: 80px;
 }
 
 .main-footer {
@@ -8510,13 +8511,13 @@ html[dir='rtl'] .styled-radio.radio-sort input[type=radio] + label {
 .order-details .order-trip_detail .lbl {
   display: table-cell;
   border-bottom: 1px solid #0bddda;
-  width: 70%;
+  width: 60%;
 }
 .order-details .order-trip_detail .val {
   display: table-cell;
   border-bottom: 1px solid #0bddda;
   font-weight: bold;
-  width: 30%;
+  width: 40%;
 }
 .order-details .order-trip_detail:last-child .lbl, .order-details .order-trip_detail:last-child .val {
   border-bottom: 0;
@@ -8533,11 +8534,11 @@ html[dir='rtl'] .styled-radio.radio-sort input[type=radio] + label {
 }
 .order-details .order-details_summary .lbl {
   display: table-cell;
-  width: 70%;
+  width: 60%;
 }
 .order-details .order-details_summary .val {
   display: table-cell;
-  width: 30%;
+  width: 40%;
 }
 .order-details .order-details_total {
   display: table;
@@ -8551,6 +8552,7 @@ html[dir='rtl'] .styled-radio.radio-sort input[type=radio] + label {
 .order-details .order-details_total .val {
   display: table-cell;
   width: 40%;
+  white-space: nowrap;
 }
 
 .tour-details .widget_section-header {
@@ -8746,7 +8748,7 @@ html[dir='rtl'] .passenger-info_delete {
 .tourist-package-item_image {
   background-size: cover;
   background-position: 50% 50%;
-  border-radius: 4px 0 0 4px;
+  border-radius: 4px;
 }
 
 .tourist-package-item_includes {
@@ -9242,4 +9244,45 @@ html[dir="rtl"] .ico_boat:before {
 }
 .main-search-form-inner {
 	padding: 10px 30px;
+}
+#card-number {
+	width: 230px;
+	font-size: 22px;
+}
+span.currency {
+	font-size: 12px;
+}
+.simple-list {
+	list-style: none;
+	padding: 0;
+	margin: 10px;
+}
+.simple-list li {
+	position: relative;
+	padding-left: 15px;
+}
+.simple-list li:before {
+	content: '';
+	width: 5px;
+	height: 5px;
+	background: #00b7f4;
+	position: absolute;
+	left: 0;
+	top: 50%;
+	margin-top: -2px;
+}
+html[dir="rtl"] .simple-list li {
+	position: relative;
+	padding-right: 15px;
+	padding-left: 0;
+}
+html[dir="rtl"] .simple-list li:before {
+	left: auto;
+	right: 0;
+}
+
+span.tourist-package-item_duration {
+	display: inline-block;
+	margin-left: 10px;
+	margin-right: 10px;
 }

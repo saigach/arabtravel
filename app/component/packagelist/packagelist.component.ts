@@ -9,7 +9,7 @@ import { PackageOrder } from '../../../model/package-order'
 import { Package } from '../../../model/package'
 import { Point } from '../../../model/point'
 import { Human } from '../../../model/human'
-import { Room } from '../../../model/hotel'
+import { Room, Hotel } from '../../../model/hotel'
 
 const lang = document.querySelector('html').getAttribute('lang') || 'en'
 
@@ -23,6 +23,10 @@ export class PackageListComponent implements OnInit {
 	packages: Package[] = []
 
 	private _pointA: Point = null
+	
+	ratingsList: Array<number> = [1, 2, 3, 4, 5];
+	
+	rating: { value: number }[] = []
 
 	get pointA(): Point {
 		return this._pointA
@@ -38,7 +42,8 @@ export class PackageListComponent implements OnInit {
 	get APoints(): Point[] {
 		return this.packages.reduce(
 			(prev: Point[], value: Package ) =>
-				prev.concat(value.pointA),
+				!prev.find( (prevValue: Point) => prevValue.id.equal(value.pointA.id) ) ?
+					prev.concat(value.pointA) : prev,
 			[]
 		)
 	}
@@ -49,7 +54,9 @@ export class PackageListComponent implements OnInit {
 
 		return this.packages.reduce(
 			(prev: Point[], value: Package ) =>
-				value.pointA === this.pointA ? prev.concat(value.pointB) : prev,
+				value.pointA && value.pointA.id.equal(this.pointA.id) &&
+				!prev.find( (prevValue: Point) => prevValue.id.equal(value.pointB.id) ) ?
+					prev.concat(value.pointB) : prev,
 			[]
 		)
 	}
@@ -76,6 +83,18 @@ export class PackageListComponent implements OnInit {
 
 	resetKidsAges(): void {
 		this.kidsAges = Array.apply(null, {length: this.kids}).map( () => ({ value: 0}) )
+	}
+
+	get ageList(): number[] {
+		let result = []
+
+		for (let i = 0; i < this.adults; i++)
+			result.push(999)
+
+		for (let i = 0; i < this.kidsAges.length; i++)
+			result.push(this.kidsAges[i].value)
+
+		return result
 	}
 
 	constructor(private router: Router, private apiService: APIService, private mlService: MLService) {}

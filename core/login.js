@@ -36,7 +36,7 @@ const worker = http.createServer( (request, response) => {
 						return session.set({ code: 400, data: 'Wrong password value' })
 					let password = String(session.request.body.password).replace(/\\/g, "\\\\").replace(/'/g, "\\'")
 
-					return DB.query(`SELECT email, id FROM users WHERE enable AND email='${email}' AND password = encode(digest('${password}', 'sha512'), 'hex')`).then(rows => {
+					return DB.query(`SELECT email, id FROM users WHERE enable AND roles @> '{admin}' AND email='${email}' AND password = encode(digest('${password}', 'sha512'), 'hex')`).then(rows => {
 
 						if (rows.length !== 1)
 							return session.set({ code: 403, session: null, data: 'Email or password incorrect' })
