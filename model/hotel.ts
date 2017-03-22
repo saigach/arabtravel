@@ -64,31 +64,29 @@ export class Room {
 
 	getMinumalCost(ages: number[] = []): number {
 
-		return 0
+		const checkAges = (ages: number[], room: number[]) => {
+			if (ages.length > room.length)
+				return false
 
-		// const checkAges = (ages: number[], room: number[]) => {
-		// 	if (ages.length > room.length)
-		// 		return false
+			let a = ages.slice().sort( (a, b) => b-a )
+			let r = room.slice().sort( (a, b) => b-a )
 
-		// 	let a = ages.slice().sort( (a, b) => b-a )
-		// 	let r = room.slice().sort( (a, b) => b-a )
+			for (let i = 0; i < a.length; i++)
+				if (a[i] < r[i])
+					return false
 
-		// 	for (let i = 0; i < a.length; i++)
-		// 		if (a[i] < r[i])
-		// 			return false
+			return true
+		}
 
-		// 	return true
-		// }
+		return this.costs.reduce( (prev: number, line: Cost) => {
+			if (!checkAges(ages, line.ages.slice().map( value => value.value )))
+				return prev
 
-		// return this.costs.reduce( (prev: number, line: Cost) => {
-		// 	if (!checkAges(ages, line.ages.slice().map( value => value.value )))
-		// 		return prev
+			if (prev === null)
+				return line.cost
 
-		// 	if (prev === null)
-		// 		return line.cost
-
-		// 	return Math.min(prev, line.cost)
-		// }, null)
+			return Math.min(prev, line.cost)
+		}, null)
 	}
 }
 

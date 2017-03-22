@@ -78,7 +78,7 @@ export class Package extends Model {
 
 		let price = this.getPrice(date)
 		if (price && price.costs.length > 0)
-			sum +=ages.reduce( (prev: number, age: number) => prev + price.getCost(age), 0 )
+			sum += ages.reduce( (prev: number, age: number) => prev + price.getCost(age), 0 )
 
 		return sum
 
