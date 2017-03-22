@@ -9,7 +9,7 @@ import { PackageOrder } from '../../../model/package-order'
 import { Package } from '../../../model/package'
 import { Point } from '../../../model/point'
 import { Human } from '../../../model/human'
-import { Room } from '../../../model/hotel'
+import { Room, Hotel } from '../../../model/hotel'
 
 const lang = document.querySelector('html').getAttribute('lang') || 'en'
 
@@ -23,6 +23,10 @@ export class PackageListComponent implements OnInit {
 	packages: Package[] = []
 
 	private _pointA: Point = null
+	
+	ratingsList: Array<number> = [1, 2, 3, 4, 5];
+	
+	rating: { value: number }[] = []
 
 	get pointA(): Point {
 		return this._pointA

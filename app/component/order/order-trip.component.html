@@ -4,13 +4,13 @@
 		<div class="main-search-form_form inner-search-form">
 
             <div class="trip-select-header uk-grid uk-flex">
-                <div class="uk-width-medium-1-5">
+                <div class="uk-width-medium-1-4">
                     <div class="styled-radio">
                         <input class="radio" type="radio" name="tripselector-form_check" id="tripselector-form_check-oneway" [checked]="checkType('oneway')" (click)="setType('oneway')">
                         <label for="tripselector-form_check-oneway">{{ ml.tripTypeOneway | ml }}</label>
                     </div>
                 </div>
-                <div class="uk-width-medium-1-5">
+                <div class="uk-width-medium-1-4">
                     <div class="styled-radio">
                         <input class="radio" type="radio" name="tripselector-form_check" id="tripselector-form_check-roundtrip" [checked]="checkType('twoway')" (click)="setType('twoway')">
                         <label for="tripselector-form_check-roundtrip">{{ ml.tripTypeRound | ml }}</label>
@@ -140,7 +140,7 @@
                                         </label>
                                     </div>
                                     <div class="uk-width-7-10">
-                                        <input required type="text" class="form-control" id="card-number" [(ngModel)]="item.card.number">
+                                        <input required type="text" class="form-control" id="card-number" [(ngModel)]="item.card.number" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="form-group uk-flex uk-grid uk-grid-small">
@@ -150,7 +150,7 @@
                                         </label>
                                     </div>
                                     <div class="uk-width-7-10">
-                                        <input required type="text" class="form-control" id="cardholder-name" [(ngModel)]="item.card.cardholder">
+                                        <input required type="text" maxlength="26" class="form-control" id="cardholder-name" [(ngModel)]="item.card.cardholder">
                                     </div>
                                 </div>
                                 <div class="uk-flex uk-grid uk-grid-small">
@@ -178,7 +178,7 @@
                                         <label for="cvv" class="cvv-label">
                                             {{ ml.cvv | ml }}
                                         </label>
-                                        <input type="text" max="3" size="3" required class="form-control" id="cvv" [(ngModel)]="item.card.cvv">
+                                        <input type="text" max="3" size="3" required class="form-control" id="cvv" [(ngModel)]="item.card.cvv" autocomplete="off">
                                     </div>
 
                                 </div>
@@ -220,15 +220,15 @@
 						<div *ngIf="item.price" class="order-trip_details">
 							<div class="order-trip_detail" *ngFor="let age of item.ages">
 								<div class="lbl">
-									<span *ngIf="age >= 200">{{ ml.adult | ml }}</span>
+									<span *ngIf="age >= 8">{{ ml.adult | ml }}</span>
 									<span *ngIf="(age < 3)">{{ age }}&nbsp;{{ ml.year | ml }}</span>
-									<span *ngIf="(age >=3) && (age < 200)">{{ age }}&nbsp;{{ ml.years | ml }}</span>
+									<span *ngIf="(age >=3) && (age < 8)">{{ age }}&nbsp;{{ ml.years | ml }}</span>
 								</div>
-								<div class="val">{{ (item.price && item.price.getCost(age) || 0) | currency:exchangeRate | number:'1.2-2' }} {{currency}}</div>
+								<div class="val">{{ (item.price && item.price.getCost(age) || 0) | currency:exchangeRate | number:'1.2-2' }} <span class="currency">{{currency}}</span></div>
 							</div>
 							<div class="order-trip_detail" *ngIf="item.vehicle">
 								<div class="lbl">{{ item.vehicle.title | ml }}</div>
-								<div class="val">{{ (item.price && item.price.getCost(item.vehicle)) | currency:exchangeRate | number:'1.2-2' }} {{currency}}</div>
+								<div class="val">{{ (item.price && item.price.getCost(item.vehicle)) | currency:exchangeRate | number:'1.2-2' }} <span class="currency">{{currency}}</span></div>
 							</div>
                         </div>
 					</div>
@@ -254,7 +254,7 @@
                         </div>
                         <div class="order-details_total" *ngIf="currency !== 'JOD'">
                             <div class="lbl approx-label-small">{{ ml.approx | ml }}</div>
-                            <div class="val">{{ item.totalCost | number:'1.2-2' }} JOD</div>
+                            <div class="val">{{ item.totalCost | number:'1.2-2' }} <span class="currency">{{ ml.JOD | ml }}</span></div>
                         </div>
 						<div class="order-details_total">
 							<div class="chargeNote">{{ ml.chargeNote | ml }}</div>

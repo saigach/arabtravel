@@ -6,9 +6,14 @@
 
 	"signUp": {
 		"en": "Sign up",
-		"ar": "أشترك"
+		"ar": "أبدا الاشتراك الان"
 	},
-
+	
+	"signIn": {
+		"en": "Sign in",
+		"ar": "تسجيل الدخول"
+	},
+	
 	"ferryBookingAgency": {
 		"en": "Ferry booking agency",
 		"ar": "موقع حجز القوارب والعبارات مباشره بدون وسيط"
@@ -326,7 +331,7 @@
 	
 	"email": {
 		"en": "Email",
-		"ar": "الايميل"
+		"ar": "عنوان البريد الإلكتروني"
 	},
 	
 	"message": {
@@ -471,7 +476,7 @@
 	
 	"adult": {
 		"en": "Adult",
-		"ar": "بالغ"
+		"ar": "شخص بالغ"
 	},
 	
 	"USD": {
@@ -522,7 +527,100 @@
 	"chargeNote": {
 		"en": "Your trip will be charged in JOD",
 		"ar": "سيتم احتساب سعر التذكرة بدينار الاردني"
-	}
-	
+	},
 
+	"cfName": {
+		"en": "Name",
+		"ar": "الاسم"
+	},
+
+	"cfEmail": {
+		"en": "Email",
+		"ar": "الايميل"
+	},
+
+	"cfMessage": {
+		"en": "Message",
+		"ar": "الرساله"
+	},
+
+	"cfSend": {
+		"en": "Send",
+		"ar": "أرسل"
+	},
+
+	"askUsQuestion": {
+		"en": "Ask us a question",
+		"ar": "تواصل معنا "
+	},
+	
+	"signUpWithAT": {
+		"en": "Sign up with ArabTravel",
+		"ar": "اشترك مع ArabTravel.jo"
+	},
+	
+	"EMCh": {
+		"en": "Easily make changes to your bookings:",
+		"ar": "أدخل التغييرات على حجوزاتك بسهولة"
+	},
+	
+	"EMCh2": {
+		"en": "Change bookings",
+		"ar": "تغيير الحجز"
+	},
+	
+	"EMCh3": {
+		"en": "Personalise your deals",
+		"ar": "خصص عروضك بنفسك"
+	},
+	
+	"EMCh4": {
+		"en": "Book faster",
+		"ar": "احجز أسرع"
+	},
+	
+	"signInForm": {
+		"en": "Sign In Form",
+		"ar": "تسجيل الدخول"
+	},
+	
+	"login": {
+		"en": "User Email",
+		"ar": "عنوان البريد الإلكتروني"
+	},
+	
+	"password": {
+		"en": "Password",
+		"ar": "كلمة مرور ArabTravel.jo"
+	},
+	
+	"night1": {
+		"en": "night",
+		"ar": "ليلة واحدة"
+	},
+	
+	"night2": {
+		"en": "nights",
+		"ar": "ليلتان"
+	},
+	
+	"night3": {
+		"en": "nights",
+		"ar": "ليالي"
+	},
+	
+	"day1": {
+		"en": "day",
+		"ar": "يوم واحد"
+	},
+	
+	"day2": {
+		"en": "days",
+		"ar": "يومين"
+	},
+	
+	"day3": {
+		"en": "days",
+		"ar": "ايام"
+	}
 }
