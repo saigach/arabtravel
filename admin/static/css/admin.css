@@ -56,3 +56,7 @@
 	padding-left: 1em;
 	padding-right: 1em;
 }
+
+input.uk-form-width-mini {
+	width: 50px;
+}
