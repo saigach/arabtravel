@@ -2,23 +2,31 @@ import { newDate, Model, File, MLString, getAllUniqueCombinations } from './comm
 import { User } from './user'
 
 export class Cost {
-	ages: { value: number }[]
+	ages: {
+		min: number,
+		max: number
+	}[]
 	cost: number
 
 	constructor(value: any = {}) {
 		this.ages = value.ages instanceof Array ?
-						value.ages.map( value => ({ value: Math.max( 0, Number.parseFloat(value || 0) || 0)  }) ) :
-						[]
+			value.ages.map( value => ({
+				min: Math.max( 0, Number.parseFloat(value && value.min || 0) || 0) || 0,
+				max: Math.max( 0, Number.parseFloat(value && value.max || 0) || 0) || 0
+			})).map( value => ({
+				min: Math.min(value.min, value.max),
+				max: Math.max(value.min, value.max)
+			})) : []
 
 		if (this.ages.length <= 0)
-			this.ages = [{value: 0}]
+			this.ages = [{min: 0, max: 999}]
 
 		this.cost = Math.max(0, Number.parseFloat(value.cost || 0) || 0)
 	}
 
 	toObject(): {} {
 		return {
-			ages: this.ages.map( value => value.value ),
+			ages: this.ages,
 			cost: this.cost
 		}
 	}
@@ -56,29 +64,31 @@ export class Room {
 
 	getMinumalCost(ages: number[] = []): number {
 
-		const checkAges = (ages: number[], room: number[]) => {
-			if (ages.length > room.length)
-				return false
+		return 0
 
-			let a = ages.slice().sort( (a, b) => b-a )
-			let r = room.slice().sort( (a, b) => b-a )
+		// const checkAges = (ages: number[], room: number[]) => {
+		// 	if (ages.length > room.length)
+		// 		return false
 
-			for (let i = 0; i < a.length; i++)
-				if (a[i] < r[i])
-					return false
+		// 	let a = ages.slice().sort( (a, b) => b-a )
+		// 	let r = room.slice().sort( (a, b) => b-a )
 
-			return true
-		}
+		// 	for (let i = 0; i < a.length; i++)
+		// 		if (a[i] < r[i])
+		// 			return false
 
-		return this.costs.reduce( (prev: number, line: Cost) => {
-			if (!checkAges(ages, line.ages.slice().map( value => value.value )))
-				return prev
+		// 	return true
+		// }
 
-			if (prev === null)
-				return line.cost
+		// return this.costs.reduce( (prev: number, line: Cost) => {
+		// 	if (!checkAges(ages, line.ages.slice().map( value => value.value )))
+		// 		return prev
 
-			return Math.min(prev, line.cost)
-		}, null)
+		// 	if (prev === null)
+		// 		return line.cost
+
+		// 	return Math.min(prev, line.cost)
+		// }, null)
 	}
 }
 

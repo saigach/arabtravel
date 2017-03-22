@@ -16,7 +16,8 @@
 			<input class="uk-form-width-small uk-margin-left" type="number" min="0" [(ngModel)]="row.cost">
 			<label class="uk-margin-left">Ages:</label>
 			<span *ngFor="let age of row.ages" class="uk-margin-small-left">
-				<input class="uk-form-width-small" type="number" min="0" [(ngModel)]="age.value">
+				<input class="uk-form-width-small" type="number" min="0" [(ngModel)]="age.min">
+				<input class="uk-form-width-small" type="number" min="0" [(ngModel)]="age.max">
 			</span>
 			<i class="uk-icon-minus uk-margin-left admin-cursor-pointer" (click)="deleteColumn(row); $event.stopPropagation()"></i>
 			<i class="uk-icon-plus uk-margin-left admin-cursor-pointer" (click)="addColumn(row); $event.stopPropagation()"></i>

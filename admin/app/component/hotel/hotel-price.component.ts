@@ -27,13 +27,13 @@ export class HotelPriceComponent implements OnInit {
 	}
 
 	addColumn(row: Cost): void {
-		row.ages.push({ value: 0 })
+		row.ages.push({ min: 0, max: 999 })
 		this.roomChange.emit(this.room)
 	}
 
 	deleteColumn(row: Cost): void {
 		if (row.ages.length <= 1)
-			row.ages = [{ value: 0 }]
+			row.ages = [{ min: 0, max: 999 }]
 		else
 			row.ages.pop()
 		this.roomChange.emit(this.room)
