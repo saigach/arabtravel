@@ -293,7 +293,7 @@
             <div class="uk-modal-header"><span class="h3">{{=it.ml.signInForm}}</span></div>
 
             <form role="form" class="login-form">
-                <div class="uk-flex uk-grid">
+                <div class="uk-flex uk-grid uk-margin-bottom">
                     <div class="uk-width-1-2">
                         <div class="form-group">
                             <label for="loginForm_login">
@@ -311,7 +311,9 @@
                         </div>
                     </div>
                 </div>
-
+		
+				<p><button class="uk-button" data-uk-modal="{target:'#forgot-pw-modal', modal: false}">{{=it.ml.forgotPassword}}</button></p>
+				
                 <div class="text-center uk-margin-top">
                     <button type="submit" class="btn btn-primary">
                         {{=it.ml.signIn}}
@@ -322,6 +324,35 @@
         </div>
     </div>
 
+	    <!-- This is the modal -->
+    <div id="forgot-pw-modal" class="uk-modal">
+        <div class="uk-modal-dialog">
+
+            <a class="uk-modal-close uk-close"></a>
+            <div class="uk-modal-header"><span class="h3">{{=it.ml.forgotPassword}}</span></div>
+			<p>{{=it.ml.pwRecoverText}}</p>
+            <form role="form" class="login-form">
+                <div class="uk-flex uk-grid">
+					<div class="uk-width-1-2">
+                        <div class="form-group">
+                            <label for="loginForm_login">
+                                {{=it.ml.login}}
+                            </label>
+                            <input type="email" class="form-control" name="email" required>
+                        </div>
+                    </div>
+                </div>
+				
+                <div class="text-center uk-margin-top">
+                    <button type="submit" class="btn btn-primary">
+                        {{=it.ml.recover}}
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+	
     <!-- This is the modal -->
     <div id="signup-form-modal" class="uk-modal">
         <div class="uk-modal-dialog">
@@ -355,57 +386,10 @@
                         </div>
                     </div>
                 </div>
-				<p><a href="#forgot-pw-modal">{{=it.ml.forgotPassword}}</a></p>
-				
-				<div class="uk-hidden">{{=it.ml.pwRecoverText}}</div>
 				
                 <div class="text-center uk-margin-top">
                     <button type="submit" class="btn btn-primary">
                         {{=it.ml.signIn}}
-                    </button>
-                </div>
-            </form>
-
-        </div>
-    </div>
-	
-    <!-- This is the modal -->
-    <div id="signup-form-modal" class="uk-modal">
-        <div class="uk-modal-dialog">
-
-            <a class="uk-modal-close uk-close"></a>
-            <div class="uk-modal-header"><span class="h3">{{=it.ml.signUpWithAT}}</span></div>
-
-			{{=it.ml.EMCh}}
-			<ul class="simple-list">
-				<li>{{=it.ml.EMCh2}}</li>
-				<li>{{=it.ml.EMCh3}}</li>
-				<li>{{=it.ml.EMCh4}}</li>
-			</ul>
-
-            <form role="form" class="login-form" id="signUpForm">
-                <div class="row">
-					<div class="col-md-6">
-                        <div class="form-group">
-                            <label for="loginForm_login">
-                                {{=it.ml.name}}
-                            </label>
-                            <input type="text" class="form-control" name="title" required>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="loginForm_login">
-                                {{=it.ml.email}}
-                            </label>
-                            <input type="email" class="form-control" name="email" required>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary">
-                        {{=it.ml.signUp}}
                     </button>
                 </div>
             </form>

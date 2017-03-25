@@ -625,13 +625,17 @@
 	},
 	
 	"forgotPassword": {
-		"en": "Forgot password?",
-		"ar": "Forgot password?"
+		"en": "Forgot password",
+		"ar": "Forgot password"
 	},
 	
 	"pwRecoverText": {
 		"en": "New password will be sent on your email",
 		"ar": "New password will be sent on your email"
-	}
+	},
 	
+	"recover": {
+		"en": "Recover",
+		"ar": "Recover"
+	}
 }
