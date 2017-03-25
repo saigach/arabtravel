@@ -355,7 +355,10 @@
                         </div>
                     </div>
                 </div>
-
+				<p><a href="#forgot-pw-modal">{{=it.ml.forgotPassword}}</a></p>
+				
+				<div class="uk-hidden">{{=it.ml.pwRecoverText}}</div>
+				
                 <div class="text-center uk-margin-top">
                     <button type="submit" class="btn btn-primary">
                         {{=it.ml.signIn}}
@@ -365,7 +368,7 @@
 
         </div>
     </div>
-
+	
     <!-- This is the modal -->
     <div id="signup-form-modal" class="uk-modal">
         <div class="uk-modal-dialog">

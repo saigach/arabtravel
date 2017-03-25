@@ -622,5 +622,16 @@
 	"day3": {
 		"en": "days",
 		"ar": "ايام"
+	},
+	
+	"forgotPassword": {
+		"en": "Forgot password?",
+		"ar": "Forgot password?"
+	},
+	
+	"pwRecoverText": {
+		"en": "New password will be sent on your email",
+		"ar": "New password will be sent on your email"
 	}
+	
 }
