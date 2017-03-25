@@ -554,7 +554,7 @@ module.exports = class APIEngine {
 
 					this.mail.sendMail(
 						user.email,
-						requestData.ml.emailNewUserTitle,
+						requestData.ml.emailNewPassword,
 						this.template['email-new-password']({
 							lang: requestData.request.language,
 							ml: requestData.ml,

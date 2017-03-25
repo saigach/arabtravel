@@ -60,32 +60,5 @@
 			}))
 
 		})
-
-		let resetPassordBtn = loginFormModal.querySelector('resetPasswordBtn')
-
-		resetPassordBtn.addEventListener('click', event => {
-			event.preventDefault()
-
-			let xhr = new XMLHttpRequest
-			xhr.open('POST','/ar/api/resetpassword', true)
-
-			xhr.addEventListener('error', error => {
-				console.error(error)
-				UIkit.notify('Internal service error', {status  : 'danger'})
-
-			})
-
-			xhr.addEventListener('load', () => {
-				if( 200 !== xhr.status)
-					return UIkit.notify('Incorrect email', {status  : 'warning' })
-
-				UIkit.modal('#login-form-modal').hide()
-			})
-
-			xhr.send(JSON.stringify({
-				email: loginForm.elements.email.value,
-				password: loginForm.elements.password.value
-			}))
-		})
 	})
 })()
