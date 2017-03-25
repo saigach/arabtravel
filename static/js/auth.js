@@ -13,7 +13,7 @@
 		loginForm.addEventListener('submit', event => {
 			event.preventDefault()
 
-			var xhr = new XMLHttpRequest
+			let xhr = new XMLHttpRequest
 			xhr.open('POST','/auth/login', true)
 
 			xhr.addEventListener('error', error => {

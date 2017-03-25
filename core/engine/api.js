@@ -498,7 +498,75 @@ module.exports = class APIEngine {
 						}
 					})
 				})
+			case 'resetpassword':
+				if (requestData.user && requestData.user.id)
+					return Promise.resolve({
+						code: 409,
+						data: { error: 'Already authorized'}
+					})
 
+				if (method !== 'POST')
+					return Promise.resolve({
+						code: 400,
+						data: { error: 'Method is not allowed'}
+					})
+
+				let userData1 = requestData.request.body || {}
+
+				let email1 = userData1.email && userData1.email.trim() || null
+
+				if (!email1)
+					return Promise.resolve({
+						code: 400,
+						data: { error: 'Human email is empty'}
+					})
+
+				if (!/^[a-z0-9_\.%+-]+@[a-z0-9_\.-]+?[a-z0-9]$/.test(email1))
+					return Promise.resolve({
+						code: 400,
+						data: { error: 'Email is not valid'}
+					})
+
+				email1 = escapeStr(email1)
+
+				let newPassword = Math.random().toString(36).slice(-8)
+
+				return this.DB.query(`
+					UPDATE
+						users
+					SET
+						password = encode(digest(${escapeStr(newPassword)}, 'sha512'), 'hex')
+					WHERE
+						email = ${email1}
+					RETURNING
+						title,
+						email,
+						id
+				`).then(users => {
+
+					if (users.length !== 1)
+						return {
+							code: 404,
+							data: 'User not found'
+						}
+
+					let user = users[0]
+
+					this.mail.sendMail(
+						user.email,
+						requestData.ml.emailNewPassword,
+						this.template['email-new-password']({
+							lang: requestData.request.language,
+							ml: requestData.ml,
+							user: Object.assign({}, user, { password: newPassword })
+						})
+					)
+
+					return {
+						code: 200,
+						data: user
+					}
+				})
 			default:
 				return Promise.resolve({
 					code: 400,
