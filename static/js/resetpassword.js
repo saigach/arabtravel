@@ -1,11 +1,11 @@
 (function(){
 	window.addEventListener('DOMContentLoaded', () => {
-		let passwordFormModal = document.getElementById('password-form-modal')
+		let passwordFormModal = document.getElementById('forgot-pw-modal')
 
 		if (!passwordFormModal)
 			return
 
-		let passwordForm = lpasswordFormModal.querySelector('form')
+		let passwordForm = passwordFormModal.querySelector('form')
 
 		if (!passwordForm)
 			return
@@ -26,7 +26,8 @@
 				if( 200 !== xhr.status)
 					return UIkit.notify('Incorrect email', {status  : 'warning' })
 
-				UIkit.modal('#password-form-modal').hide()
+				UIkit.modal('#forgot-pw-modal').hide()
+				UIkit.notify('Check email', { status  : 'success' })
 			})
 
 			xhr.send(JSON.stringify({ email: passwordForm.elements.email.value }))

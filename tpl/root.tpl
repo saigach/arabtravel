@@ -114,6 +114,7 @@
 	<script src="/js/auth.js"></script>
 	<script src="/js/signup.js"></script>
 	<script src="/js/currency.js"></script>
+	<script src="/js/resetpassword.js"></script>
 
 	<!-- SystemJS -->
 	<script src="/systemjs.config.js" type="text/javascript"></script>
@@ -311,9 +312,9 @@
                         </div>
                     </div>
                 </div>
-		
+
 				<p><button class="uk-button" data-uk-modal="{target:'#forgot-pw-modal', modal: false}">{{=it.ml.forgotPassword}}</button></p>
-				
+
                 <div class="text-center uk-margin-top">
                     <button type="submit" class="btn btn-primary">
                         {{=it.ml.signIn}}
@@ -342,7 +343,7 @@
                         </div>
                     </div>
                 </div>
-				
+
                 <div class="text-center uk-margin-top">
                     <button type="submit" class="btn btn-primary">
                         {{=it.ml.recover}}
@@ -352,7 +353,7 @@
 
         </div>
     </div>
-	
+
     <!-- This is the modal -->
     <div id="signup-form-modal" class="uk-modal">
         <div class="uk-modal-dialog">
@@ -386,7 +387,7 @@
                         </div>
                     </div>
                 </div>
-				
+
                 <div class="text-center uk-margin-top">
                     <button type="submit" class="btn btn-primary">
                         {{=it.ml.signIn}}
