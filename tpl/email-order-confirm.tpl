@@ -47,7 +47,7 @@
         }
         .ritz .waffle a { color: inherit; }.ritz .waffle .s12{border-bottom:1px SOLID #bdbdbd;background-color:#ffffff;text-align:left;font-weight:bold;color:#000000;font-family:'Arial';font-size:10pt;vertical-align:bottom;white-space:nowrap;direction:ltr;padding:2px 3px 2px 3px;}.ritz .waffle .s0{background-color:#00b7f4;text-align:left;color:#ebeff0;font-family:'Arial';font-size:10pt;vertical-align:middle;white-space:nowrap;direction:ltr;padding:2px 3px 2px 3px;}.ritz .waffle .s3{border-right:1px SOLID #bdbdbd;background-color:#00b7f4;text-align:left;color:#ebeff0;font-family:'Arial';font-size:10pt;vertical-align:bottom;white-space:nowrap;direction:ltr;padding:2px 3px 2px 3px;}.ritz .waffle .s5{background-color:#68d1f4;text-align:left;color:#ebeff0;font-family:'Arial';font-size:10pt;vertical-align:bottom;white-space:nowrap;direction:ltr;padding:2px 3px 2px 3px;}.ritz .waffle .s15{background-color:#f0f0f0;text-align:left;color:#000000;font-family:'Arial';font-size:10pt;vertical-align:bottom;white-space:nowrap;direction:ltr;padding:2px 3px 2px 3px;}.ritz .waffle .s18{border-bottom:1px SOLID #bdbdbd;border-right:1px SOLID #bdbdbd;background-color:#ffffff;text-align:left;color:#000000;font-family:'Arial';font-size:10pt;vertical-align:top;white-space:normal;overflow:hidden;word-wrap:break-word;direction:ltr;padding:2px 3px 2px 3px;}.ritz .waffle .s2{background-color:#00b7f4;text-align:right;color:#ebeff0;font-family:'Arial';font-size:12pt;vertical-align:bottom;white-space:nowrap;direction:ltr;padding:2px 3px 2px 3px;}.ritz .waffle .s9{background-color:#ffffff;text-align:left;color:#000000;font-family:'Arial';font-size:10pt;vertical-align:bottom;white-space:nowrap;direction:ltr;padding:2px 3px 2px 3px;}.ritz .waffle .s6{background-color:#68d1f4;text-align:left;font-weight:bold;color:#ebeff0;font-family:'Arial';font-size:12pt;vertical-align:bottom;white-space:nowrap;direction:ltr;padding:2px 3px 2px 3px;}.ritz .waffle .s7{background-color:#68d1f4;text-align:left;color:#ebeff0;font-family:'Arial';font-size:12pt;vertical-align:bottom;white-space:nowrap;direction:ltr;padding:2px 3px 2px 3px;}.ritz .waffle .s4{background-color:#00b7f4;text-align:left;color:#ebeff0;font-family:'Arial';font-size:12pt;vertical-align:bottom;white-space:nowrap;direction:ltr;padding:2px 3px 2px 3px;}.ritz .waffle .s8{background-color:#ffffff;text-align:left;font-weight:bold;color:#000000;font-family:'Arial';font-size:10pt;vertical-align:bottom;white-space:nowrap;direction:ltr;padding:2px 3px 2px 3px;}.ritz .waffle .s17{background-color:#ffffff;text-align:right;color:#000000;font-family:'Arial';font-size:10pt;vertical-align:bottom;white-space:nowrap;direction:ltr;padding:2px 3px 2px 3px;}.ritz .waffle .s1{background-color:#00b7f4;text-align:left;font-weight:bold;color:#ebeff0;font-family:'Arial';font-size:12pt;vertical-align:bottom;white-space:nowrap;direction:ltr;padding:2px 3px 2px 3px;}.ritz .waffle .s14{background-color:#f0f0f0;text-align:right;font-weight:bold;color:#000000;font-family:'Arial';font-size:14pt;vertical-align:bottom;white-space:nowrap;direction:ltr;padding:2px 3px 2px 3px;}.ritz .waffle .s11{border-bottom:1px SOLID #bdbdbd;background-color:#ffffff;text-align:left;color:#000000;font-family:'Arial';font-size:10pt;vertical-align:bottom;white-space:nowrap;direction:ltr;padding:2px 3px 2px 3px;}.ritz .waffle .s16{border-right:1px SOLID #bdbdbd;background-color:#f0f0f0;text-align:left;color:#000000;font-family:'Arial';font-size:10pt;vertical-align:bottom;white-space:nowrap;direction:ltr;padding:2px 3px 2px 3px;}.ritz .waffle .s10{border-right:1px SOLID #bdbdbd;background-color:#ffffff;text-align:left;color:#000000;font-family:'Arial';font-size:10pt;vertical-align:bottom;white-space:nowrap;direction:ltr;padding:2px 3px 2px 3px;}.ritz .waffle .s13{border-bottom:1px SOLID #bdbdbd;border-right:1px SOLID #bdbdbd;background-color:#ffffff;text-align:left;color:#000000;font-family:'Arial';font-size:10pt;vertical-align:bottom;white-space:nowrap;direction:ltr;padding:2px 3px 2px 3px;}</style>
 
-<div id="sheets-viewport" style="overflow: auto;"><div class="ritz grid-container" dir="ltr" style="overflow: visible;background: white;">		
+<div id="sheets-viewport" style="overflow: auto;"><div class="ritz grid-container" dir="ltr" style="overflow: visible;background: white;">
 <table class="waffle" cellspacing="0" cellpadding="0">
     <thead>
         <tr>
@@ -139,8 +139,8 @@
             <td class="s11" dir="ltr" style="border-bottom: 1px SOLID #bdbdbd;background-color: #ffffff;text-align: left;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">ask@arabtravel.jo</td>
             <td class="s13" style="border-bottom: 1px SOLID #bdbdbd;border-right: 1px SOLID #bdbdbd;background-color: #ffffff;text-align: left;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;"></td>
         </tr>
-		
-		
+
+
 
         <tr style="height:20px;">
 
@@ -160,7 +160,7 @@
             <td></td>
             <td class="s8" dir="ltr" style="background-color: #ffffff;text-align: left;font-weight: bold;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">Rules and notes</td>
             <td></td>
-            <td class="s10" style="border-right: 1px SOLID #bdbdbd;background-color: #ffffff;text-align: left;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">{{=it.trip.description}}</td>
+            <td class="s10" style="border-right: 1px SOLID #bdbdbd;background-color: #ffffff;text-align: left;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">{{=it.order.trip.description}}</td>
         </tr>
         <tr style="height:20px;">
 
@@ -168,7 +168,7 @@
             <td class="s17" style="background-color: #ffffff;text-align: right;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">{{=it.order.departureDate}}</td>
             <td class="s9" style="background-color: #ffffff;text-align: left;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">{{=it.order.trip.pointA.title}}</td>
             <td class="s18" dir="ltr" colspan="3" rowspan="5" style="border-bottom: 1px SOLID #bdbdbd;border-right: 1px SOLID #bdbdbd;background-color: #ffffff;text-align: left;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: top;white-space: normal;overflow: hidden;word-wrap: break-word;direction: ltr;padding: 2px 3px 2px 3px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</td>
-            <td class="s18" dir="ltr" colspan="3" rowspan="5" style="border-bottom: 1px SOLID #bdbdbd;border-right: 1px SOLID #bdbdbd;background-color: #ffffff;text-align: left;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: top;white-space: normal;overflow: hidden;word-wrap: break-word;direction: ltr;padding: 2px 3px 2px 3px;">{{=it.trip.description}}</td>
+            <td class="s18" dir="ltr" colspan="3" rowspan="5" style="border-bottom: 1px SOLID #bdbdbd;border-right: 1px SOLID #bdbdbd;background-color: #ffffff;text-align: left;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: top;white-space: normal;overflow: hidden;word-wrap: break-word;direction: ltr;padding: 2px 3px 2px 3px;">{{=it.order.trip.description}}</td>
         </tr>
         <tr style="height:20px;">
 
@@ -194,9 +194,9 @@
             <td class="s11" dir="ltr" style="border-bottom: 1px SOLID #bdbdbd;background-color: #ffffff;text-align: left;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">100 kg</td>
             <td class="s11" style="border-bottom: 1px SOLID #bdbdbd;background-color: #ffffff;text-align: left;color: #000000;font-family: 'Arial';font-size: 10pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;"></td>
         </tr>
-		
-		{{? it.order.trip.type == 'twoway' }}		
-		
+
+		{{? it.order.trip.type == 'twoway' }}
+
         <tr style="height:20px;">
 
             <td class="s14" dir="ltr" style="background-color: #f0f0f0;text-align: right;font-weight: bold;color: #000000;font-family: 'Arial';font-size: 14pt;vertical-align: bottom;white-space: nowrap;direction: ltr;padding: 2px 3px 2px 3px;">{{=it.order.returnDate}}</td>
