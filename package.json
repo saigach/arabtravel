@@ -9,7 +9,8 @@
     "postinstall": "typings install",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
-    "typings": "typings"
+    "typings": "typings",
+    "start": "concurrently \"WORKER_ENGINE=login WORKER_PORT=8104 node ./core/master.js\" \"WORKER_ENGINE=file WORKER_PORT=8105 node ./core/master.js\" \"WORKER_ENGINE=backend WORKER_PORT=8102 node ./core/master.js\" \"WORKER_ENGINE=auth WORKER_PORT=8103 node ./core/master.js\" \"WORKER_ENGINE=api WORKER_PORT=8101 node ./core/master.js\""
   },
   "dependencies": {
     "@angular/common": "~2.4.0",
@@ -25,6 +26,7 @@
     "bootstrap-datetimepicker": "*",
     "bootstrap-select": "*",
     "bootstrap-touchspin": "*",
+    "concurrently": "^3.4.0",
     "core-js": "^2.4.1",
     "dot": "*",
     "font-awesome": "*",
