@@ -27,7 +27,7 @@ module.exports = class StaticEngine {
 					})
 				}
 			})
-
+console.log(requestData.request)
 		return this.DB.query(`
 			SELECT
 				*

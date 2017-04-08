@@ -1,4 +1,5 @@
 <div class="main-content" role="content">
+
     <div class="container" id="order-details-container" [class.hidden]=" submitted ">
 
 		<div class="main-search-form_form inner-search-form">
@@ -97,6 +98,31 @@
 
 
                     <hr>
+
+                    <div>
+                        <div class="uk-width-medium-1-3 uk-width-small-1-2">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">
+                                    number
+                                </label>
+                                <input class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="uk-width-medium-1-3 uk-width-small-1-2">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">
+                                    owner
+                                </label>
+                                <input class="form-control" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">
+                                    country
+                                </label>
+                                <input class="form-control" type="text">
+                            </div>
+                        </div>
+                    </div>
 
                     <section class="payment-details">
 
@@ -271,7 +297,8 @@
 
         <div class="container">
             <h1>{{ ml.orderConfirmHeader | ml }}</h1>
-            {{ ml.orderConfirm | ml }} <strong>{{item.hrid}}</strong>
+            <p>{{ ml.orderConfirm1 | ml }}</p>
+			<p class="orderNum">{{ ml.orderConfirm2 | ml }} <strong>{{item.hrid}}</strong></p>
         </div>
 
     </div>

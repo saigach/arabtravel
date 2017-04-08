@@ -4,3 +4,4 @@
 		<div>{{=it.content}}</div>
 	</div>
 </div>
+<app></app>

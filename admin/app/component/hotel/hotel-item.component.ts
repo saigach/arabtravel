@@ -7,7 +7,7 @@ import { FileService } from '../../service/file.service'
 
 import { File, MLString } from '../../../../model/common'
 // import { Hotel, Room, BeachDistance, AllInclusive } from '../../../../model/hotel'
-import { Hotel, Room } from '../../../../model/hotel'
+import { Hotel, Room, allInclusiveList } from '../../../../model/hotel'
 
 @Component({
 	moduleId: module.id,
@@ -19,7 +19,7 @@ export class HotelItemComponent implements OnInit {
 	item: Hotel = new Hotel()
 
 	// beachDistanceList = BeachDistance.List
-	// allInclusiveList = AllInclusive.List
+	allInclusiveList = allInclusiveList.List
 	ratingsList: Array<number> = [1, 2, 3, 4, 5];
 
 	submitted: boolean = false

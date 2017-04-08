@@ -73,12 +73,20 @@ export class Package extends Model {
 
 		let sum = 0
 
-		if (this.hotel)
-			sum += this.hotel.getMinumalCost(ages) * this.minimalDuration
+		if (this.hotel){
+			let hotelCost = this.hotel.getMinumalCost(ages)
+			// console.log(this.title, 'hotelCost:', hotelCost, 'ages:', ages, 'duration:', this.minimalDuration)
+			sum += hotelCost * this.minimalDuration
+		}
 
 		let price = this.getPrice(date)
-		if (price && price.costs.length > 0)
-			sum += ages.reduce( (prev: number, age: number) => prev + price.getCost(age), 0 )
+		if (price && price.costs.length > 0){
+			let roadCost = ages.reduce( (prev: number, age: number) => prev + price.getCost(age), 0 );
+			// console.log(this.title, 'roadCost:', roadCost, 'ages:', ages)
+			sum += roadCost
+		}
+
+		// console.log(this.title, 'sum:', sum)
 
 		return sum
 

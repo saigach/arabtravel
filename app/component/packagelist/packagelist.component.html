@@ -1,10 +1,10 @@
         <div class="main-content" role="content">
             <div class="container">
 
-                     <ol class="breadcrumb">
+                     <!--ol class="breadcrumb">
                       <li><a href="#">Home</a></li>
                       <li><a href="#">Tourist Packages</a></li>
-                    </ol>
+                    </ol-->
 
                    <div class="uk-grid uk-flex">
 
@@ -107,7 +107,7 @@
                             </div>
 
                             <div class="sort-line_sort">
-                                <span class="lbl">{{ ml.dateOfDeparture | ml }}</span>&nbsp;
+                                <span class="lbl">{{ ml.rewScore | ml }}</span>&nbsp;
                                 <span class="styled-radio radio-sort sort_down">
                                     <input type="radio" id="date_down" name="package-sort" value="">
                                     <label for="date_down"><i class="fa fa-chevron-down" aria-hidden="true"></i></label>
@@ -121,7 +121,7 @@
 
                         <div class="tourist-packages-list">
 
-                            <article class="tourist-package-item" *ngFor="let item of packageList">
+                            <article class="tourist-package-item" *ngFor="let item of packageList; let id = index;">
 
                                 <div class="row">
 
@@ -132,10 +132,6 @@
                                     <div class="col-md-7">
                                         <div class="tourist-package-item_description">
                                             <div class="h3 tourist-package-item_title"><a (click)="select(item); $event.stopPropagation()">{{ item.title | ml }}</a></div>
-
-                                            <div class="tourist-package-item_date-line">
-                                                <span class="tourist-package-item_date"> {{ item.minimalDuration }} nights</span>
-                                            </div>
 
                                             <div class="tourist-package-item_includes">
                                                 <p class="lbl">{{ ml.tourIncludes | ml }}</p>
@@ -151,10 +147,10 @@
                                                 <!--span class="tourist-package-item_date"> {{ item.minimalDuration }} nights</span-->
 												<span class="tourist-package-item_duration" *ngFor="let duration of item.durations">
 													<div class="styled-radio">
-														<input class="radio" id="package-duration{{ duration }}" name="package-duration" type="radio" ngModel="[(duration)]" value="{{ duration }}">
-														<label for="package-duration{{ duration }}" *ngIf="duration == 1">{{ duration }} {{ ml.night1 | ml }} - {{ duration + 1 }} {{ ml.day2 | ml }}</label>
-														<label for="package-duration{{ duration }}" *ngIf="duration == 2">{{ duration }} {{ ml.night2 | ml }} - {{ duration + 1 }} {{ ml.day3 | ml }}</label>
-														<label for="package-duration{{ duration }}" *ngIf="duration >= 3">{{ duration }} {{ ml.night3 | ml }} - {{ duration + 1 }} {{ ml.day3 | ml }}</label>
+														<input class="radio" id="package-duration{{ duration }}{{ id }}" name="package-duration" type="radio" ngModel="[(duration)]" value="{{ duration }}">
+														<label for="package-duration{{ duration }}{{ id }}" *ngIf="duration == 1">{{ duration }} {{ ml.night1 | ml }} - {{ duration + 1 }} {{ ml.day2 | ml }}</label>
+														<label for="package-duration{{ duration }}{{ id }}" *ngIf="duration == 2">{{ duration }} {{ ml.night2 | ml }} - {{ duration + 1 }} {{ ml.day3 | ml }}</label>
+														<label for="package-duration{{ duration }}{{ id }}" *ngIf="duration >= 3">{{ duration }} {{ ml.night3 | ml }} - {{ duration + 1 }} {{ ml.day3 | ml }}</label>
 													</div>
 												</span>
                                             </div>

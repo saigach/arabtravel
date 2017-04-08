@@ -8,12 +8,12 @@
 		"en": "Sign up",
 		"ar": "أبدا الاشتراك الان"
 	},
-
+	
 	"signIn": {
 		"en": "Sign in",
 		"ar": "تسجيل الدخول"
 	},
-
+	
 	"ferryBookingAgency": {
 		"en": "Ferry booking agency",
 		"ar": "موقع حجز القوارب والعبارات مباشره بدون وسيط"
@@ -159,11 +159,21 @@
 		"ar": "© Arab Travel, 2017 AR"
 	},
 
-	"orderConfirm": {
+	"orderConfirm1": {
 		"en": "Your order have been successfully created. Please, wait until our manager confirms it. You will recieve a ticket that you can print.",
-		"ar": "Your order have been successfully created. Please, wait until our manager confirms it. You will recieve a ticket that you can print."
+		"ar": "تم أستلام طلب الحجز بنجاح , سيتم تأكيد الحجز من ادارة الموقع , وأرسال التذكرة عبر البريد الاكتروني ويرجى طباعتها وأستخدمها في الموعد المحدد , وفي حالة وجود أي أستفسار يمكنكم الاتصال بنا."
+	},
+	
+	"orderConfirm2": {
+		"en": "Your order number is ",
+		"ar": "رقم الحجز"
 	},
 
+	"orderConfirmHeader": {
+		"en": "Your order is confirmed",
+		"ar": "تم تأكيد الحجز بنجاح"
+	},
+	
 	"emailOrderConfirmTitle": {
 		"en": "Order confirm",
 		"ar": "تأكيد الحجز"
@@ -173,7 +183,7 @@
 		"en": "New user created",
 		"ar": "تم تسجيل مستخدم جديد"
 	},
-
+	
 	"whyToBookOnline": {
 		"en": "Why to Book Online",
 		"ar": "لماذا تحجز هنا"
@@ -268,147 +278,147 @@
 		"en": "Enjoy your vacation and we will take care of everything else. Our pre-built Tourist Packages include tickets, hotel and tours. And even something more.",
 		"ar": "نحن هنا نضمن لكم أجمل الاوقات والرحلات السياحيه"
 	},
-
+	
 	"orderDetails": {
 		"en": "Order details",
 		"ar": "تفاصيل الحجز"
 	},
-
+	
 	"ticketsPrice": {
 		"en": "Tickets price",
 		"ar": "مجموع أسعار التذاكر"
 	},
-
+	
 	"processingFee": {
 		"en": "Processing fee",
 		"ar": "بدل الخدمه"
 	},
-
+	
 	"total": {
 		"en": "Total",
 		"ar": "المجموع"
 	},
-
+	
 	"approx": {
 		"en": "Approx. price rate",
 		"ar": "السعر حسب سعر الصرف التقريبي"
 	},
-
+	
 	"youHaveChosen": {
 		"en": "You have chosen",
 		"ar": "تم الاختيار"
 	},
-
+	
 	"nextSteps": {
 		"en": "We will contact you as soon as possible and inform you on next steps.",
 		"ar": "سيتم الاتصال بكم قريبا لأبلاغكم على الخطوات التاليه"
 	},
-
+	
 	"name": {
 		"en": "Name",
 		"ar": "الاسم"
 	},
-
+	
 	"nationality": {
 		"en": "Nationality",
 		"ar": "الجنسيه"
 	},
-
+	
 	"dateOfBirth": {
 		"en": "Date of birth",
 		"ar": "تاريخ الميلاد"
 	},
-
+	
 	"passportNumber": {
 		"en": "Passport number",
 		"ar": "رقم الجواز"
 	},
-
+	
 	"phone": {
 		"en": "Phone",
 		"ar": "رقم الهاتف/الموبايل"
 	},
-
+	
 	"email": {
 		"en": "Email",
 		"ar": "عنوان البريد الإلكتروني"
 	},
-
+	
 	"message": {
 		"en": "Message",
 		"ar": "الرساله"
 	},
-
+	
 	"myOrders": {
 		"en": "My orders",
 		"ar": "حجوزاتي"
 	},
-
+	
 	"order": {
 		"en": "Order",
 		"ar": "الحجز"
 	},
-
+	
 	"date": {
 		"en": "Date",
 		"ar": "التاريخ"
 	},
-
+	
 	"route": {
 		"en": "Route",
 		"ar": "الطريق"
 	},
-
+	
 	"price": {
 		"en": "Price",
 		"ar": "السعر"
 	},
-
+	
 	"status": {
 		"en": "Status",
 		"ar": "الحاله"
 	},
-
+	
 	"cancel": {
 		"en": "Cancel",
 		"ar": "الغاء"
 	},
-
+	
 	"view": {
 		"en": "View",
 		"ar": "عرض"
 	},
-
+	
 	"ticketID": {
 		"en": "Ticket ID",
 		"ar": "رقم الحجز"
 	},
-
+	
 	"passengerName": {
 		"en": "Passenger name",
 		"ar": "أسم المسافر"
 	},
-
+	
 	"passengerInfo": {
 		"en": "passengerInfo",
 		"ar": "معلومات المسافر"
 	},
-
+	
 	"print": {
 		"en": "Print",
 		"ar": "الطباعه"
 	},
-
+	
 	"printTicket": {
 		"en": "Print ticket",
 		"ar": "طباعه التذكره"
 	},
-
+	
 	"allTripsFrom": {
 		"en": "All trips from",
 		"ar": "جميع العروض المتاحه من"
 	},
-
+	
 	"sortBy": {
 		"en": "Sort by",
 		"ar": "الفرز بستخدام"
@@ -418,7 +428,7 @@
 		"en": "Tour includes",
 		"ar": "الرحله تشمل"
 	},
-
+	
 	"ferryFrom": {
 		"en": "Ferry from",
 		"ar": "القارب من "
@@ -427,68 +437,68 @@
 	"hotel": {
 		"en": "Hotel",
 		"ar": "الفندق"
-	},
-
+	},	
+	
 	"from": {
 		"en": "per person",
 		"ar": "للشخص الواحد"
 	},
-
+	
 	"andBack": {
 		"en": "and back",
 		"ar": "والعوده"
 	},
-
+	
 	"tickets2way": {
 		"en": "Tickets 2 way",
 		"ar": "تذكره الذهاب والعوده"
 	},
-
+	
 	"bookNow": {
 		"en": "Book Now",
 		"ar": "أحجز الأن"
 	},
-
+	
 	"valid": {
 		"en": "date",
 		"ar": "التاريخ"
 	},
-
+	
 	"leave_info": {
 		"en": "Leave your info and we will contact you as soon as possible",
 		"ar": "ترك المعلومات الخاصة بك، ونحن سوف نتصل بك في أقرب وقت ممكن"
 	},
-
+	
 	"adults": {
 		"en": "Adults",
 		"ar": "عدد البالغين"
 	},
-
+	
 	"kids": {
 		"en": "Kids",
 		"ar": "عدد الاطفال"
 	},
-
+	
 	"kidsAge": {
 		"en": "Kids age",
 		"ar": "عمر الطفل"
 	},
-
+	
 	"adult": {
 		"en": "Adult",
 		"ar": "شخص بالغ"
 	},
-
+	
 	"USD": {
 		"en": "USD",
 		"ar": "دولار أمريكي"
 	},
-
+	
 	"JOD": {
 		"en": "JOD",
 		"ar": "دينار أردني"
 	},
-
+	
 	"SAR": {
 		"en": "SAR",
 		"ar": "ريال سعودي"
@@ -498,22 +508,22 @@
 		"en": "EGP",
 		"ar": "جنيه مصري"
 	},
-
+	
 	"curLang": {
 		"en": "English",
 		"ar": "عربي"
 	},
-
+	
 	"year": {
 		"en": "yr",
 		"ar": "سنة"
 	},
-
+	
 	"years": {
 		"en": "yrs",
 		"ar": "سنوات"
 	},
-
+	
 	"enterKidsAge": {
 		"en": "Please fill this field by the kids age as it is written on the travel document:",
 		"ar": "أعمار الأطفال عند تسجيل المغادرة"
@@ -523,7 +533,7 @@
 		"en": "choose your currency",
 		"ar": "اختر عملتك"
 	},
-
+	
 	"chargeNote": {
 		"en": "Your trip will be charged in JOD",
 		"ar": "سيتم احتساب سعر التذكرة بدينار الاردني"
@@ -553,95 +563,94 @@
 		"en": "Ask us a question",
 		"ar": "تواصل معنا "
 	},
-
+	
 	"signUpWithAT": {
 		"en": "Sign up with ArabTravel",
 		"ar": "اشترك مع ArabTravel.jo"
 	},
-
+	
 	"EMCh": {
 		"en": "Easily make changes to your bookings:",
 		"ar": "أدخل التغييرات على حجوزاتك بسهولة"
 	},
-
+	
 	"EMCh2": {
 		"en": "Change bookings",
 		"ar": "تغيير الحجز"
 	},
-
+	
 	"EMCh3": {
 		"en": "Personalise your deals",
 		"ar": "خصص عروضك بنفسك"
 	},
-
+	
 	"EMCh4": {
 		"en": "Book faster",
 		"ar": "احجز أسرع"
 	},
-
+	
 	"signInForm": {
 		"en": "Sign In Form",
 		"ar": "تسجيل الدخول"
 	},
-
+	
 	"login": {
 		"en": "User Email",
 		"ar": "عنوان البريد الإلكتروني"
 	},
-
+	
 	"password": {
 		"en": "Password",
 		"ar": "كلمة مرور ArabTravel.jo"
 	},
-
+	
 	"night1": {
 		"en": "night",
 		"ar": "ليلة واحدة"
 	},
-
+	
 	"night2": {
 		"en": "nights",
 		"ar": "ليلتان"
 	},
-
+	
 	"night3": {
 		"en": "nights",
 		"ar": "ليالي"
 	},
-
+	
 	"day1": {
 		"en": "day",
 		"ar": "يوم واحد"
 	},
-
+	
 	"day2": {
 		"en": "days",
 		"ar": "يومين"
 	},
-
+	
 	"day3": {
 		"en": "days",
 		"ar": "ايام"
 	},
-
+	
 	"forgotPassword": {
 		"en": "Forgot password",
-		"ar": "Forgot password"
+		"ar": "نسيت كلمة مرور ؟"
 	},
-
+	
 	"pwRecoverText": {
 		"en": "New password will be sent on your email",
-		"ar": "New password will be sent on your email"
+		"ar": "الرقم السري الجديد سيتم أرساله الى بريدك الاكتروني"
 	},
-
+	
 	"recover": {
 		"en": "Recover",
-		"ar": "Recover"
+		"ar": "أستعد الرقم السري الان"
 	},
-
-	"emailNewPassword": {
-		"en": "New password",
-		"ar": "تم تسجيل مستخدم جديد"
+	
+	"rewScore": {
+		"en": "Review Score",
+		"ar": "نقاط التقييم"
 	}
 }
-

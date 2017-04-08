@@ -32,19 +32,40 @@ export class Cost {
 	}
 }
 
+export class allInclusiveList {
+	static List:allInclusiveList[] = [
+		new allInclusiveList({ id: "ai", title: new MLString({en: "All Inclusive", ar: "All Inclusive"}) }),
+		new allInclusiveList({ id: "bb", title: new MLString({en: "Bed and Breakfast", ar: "Bed and Breakfast"}) }),
+		new allInclusiveList({ id: "hb", title: new MLString({en: "Half Board", ar: "Half Board"}) }),
+	]
+
+	static getallInclusive(id: string = ''): allInclusiveList {
+		return allInclusiveList.List.find( (value:allInclusiveList) => value.id === id) || allInclusiveList.List[0]
+	}
+
+	id: string
+	title: MLString
+
+	constructor(value: any = {}) {
+		this.id = String(value.id || '')
+		this.title = new MLString(value.title)
+	}
+}
+
 export class Room {
 
 	title: MLString
 	content: MLString
 	image: File
-
+	allInclusive: allInclusiveList
 	costs: Cost[]
 
 	constructor(value: any = {}) {
 		this.title = new MLString(value.title)
 		this.content = new MLString(value.content),
 		this.image = value.image ? ( value.image instanceof File ? value.image : new File(value.image) ) : null
-
+		this.allInclusive = allInclusiveList.getallInclusive(value.allInclusive || null)
+		
 		this.costs = value.costs instanceof Array ?
 			value.costs.reduce(
 				( prev: Cost[] , value:any ) =>
@@ -64,31 +85,40 @@ export class Room {
 
 	getMinumalCost(ages: number[] = []): number {
 
-		return 0
+		const checkAges = (ages: number[], room: { min: number, max: number }[]) => {
+			if (ages.length > room.length)
+				return false
 
-		// const checkAges = (ages: number[], room: number[]) => {
-		// 	if (ages.length > room.length)
-		// 		return false
+			let a = ages.slice().sort( (a, b) => b-a )
 
-		// 	let a = ages.slice().sort( (a, b) => b-a )
-		// 	let r = room.slice().sort( (a, b) => b-a )
+			let r = room.slice().sort( (a, b) => {
+				if (a.min < b.min) return -1;
+				if (a.min > b.min) return 1;
+				if (a.max < b.max) return -1;
+				if (a.max > b.max) return 1;
+				return 0;
+			})
 
-		// 	for (let i = 0; i < a.length; i++)
-		// 		if (a[i] < r[i])
-		// 			return false
+			for (let i = 0; i < a.length; i++)
+				if (a[i] <= r[i].min && a[i] >= r[i].max)
+					return false
 
-		// 	return true
-		// }
+			return true
+		}
 
-		// return this.costs.reduce( (prev: number, line: Cost) => {
-		// 	if (!checkAges(ages, line.ages.slice().map( value => value.value )))
-		// 		return prev
+		let result = this.costs.reduce( (prev: number, line: Cost) => {
+			if (!checkAges(ages, line.ages))
+				return prev
 
-		// 	if (prev === null)
-		// 		return line.cost
+			if (prev === null)
+				return line.cost
 
-		// 	return Math.min(prev, line.cost)
-		// }, null)
+			return Math.min(prev, line.cost)
+		}, null)
+
+		// console.log('Room:', this, 'MinumalCost', result)
+
+		return result
 	}
 }
 
@@ -132,7 +162,7 @@ export class Hotel extends Model {
 	}
 
 	getRoom(ages: number[] = []): { room: Room, cost: number } {
-		return this.rooms.reduce( (prev: { room: Room, cost: number } , room: Room) => {
+		let result = this.rooms.reduce( (prev: { room: Room, cost: number } , room: Room) => {
 			let cost = room.getMinumalCost(ages)
 
 			if (cost === null)
@@ -143,6 +173,8 @@ export class Hotel extends Model {
 
 			return prev
 		}, null)
+		// console.log('Get room:', ages, this.title, 'resulr', result)
+		return result
 	}
 
 	getVariants(ages: number[] = []): { room: Room, cost: number }[][] {

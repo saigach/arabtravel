@@ -9262,18 +9262,21 @@ span.currency {
 	padding-left: 15px;
 }
 .simple-list li:before {
-	content: '';
-	width: 5px;
+	/*width: 5px;
 	height: 5px;
-	background: #00b7f4;
+	background: #00b7f4;*/
 	position: absolute;
 	left: 0;
 	top: 50%;
-	margin-top: -2px;
+	margin-top: -10px;
+	font-family: FontAwesome;
+	content: "\f00c";
+	color: #00b7f4;
+	font-size: 16px;
 }
 html[dir="rtl"] .simple-list li {
 	position: relative;
-	padding-right: 15px;
+	padding-right: 22px;
 	padding-left: 0;
 }
 html[dir="rtl"] .simple-list li:before {
@@ -9285,4 +9288,8 @@ span.tourist-package-item_duration {
 	display: inline-block;
 	margin-left: 10px;
 	margin-right: 10px;
+}
+
+.orderNum {
+	font-size: 1.4em;
 }
