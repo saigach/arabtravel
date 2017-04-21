@@ -6,6 +6,7 @@ import { MLService } from '../../service/ml.service'
 
 import { str2Date, MLString, SearchData } from '../../../model/common'
 import { Trip, TripType } from '../../../model/trip'
+import { BusTrip, BusTripType } from '../../../model/bustrip'
 import { Package } from '../../../model/package'
 import { OrderType } from '../../../model/order'
 import { TripOrder } from '../../../model/trip-order'
@@ -27,17 +28,24 @@ export class TripSelectorFormComponent implements OnInit {
 	ml: { [key:string]: MLString } = {}
 
 	orderType: OrderType = OrderType.List[0]
-	tripType: TripType = TripType.List[0]
+	tripType: any
+	ferryTripType: TripType = TripType.List[0]
+	busTripType: BusTripType = BusTripType.List[0]
 
-	checkType(typeId: 'trip' | 'package', tripTypeId: string = null ): boolean {
+	checkType(typeId: 'trip' | 'package' | 'bus', tripTypeId: string = null ): boolean {
 		return this.orderType === OrderType.getOrderType(typeId) &&
-				(tripTypeId === null || this.tripType === TripType.getTripType(tripTypeId))
+				(tripTypeId === null || 
+				((typeId === 'trip') && (this.tripType === TripType.getTripType(tripTypeId))) || 
+				((typeId === 'bus') && (this.tripType === BusTripType.getTripType(tripTypeId))))
 	}
 
-	setType(type: 'trip' | 'package', tripTypeId: string = null): void {
+	setType(type: 'trip' | 'package' | 'bus', tripTypeId: string = null): void {
 		this.orderType = OrderType.getOrderType(type)
 		if (tripTypeId)
-			this.tripType = TripType.getTripType(tripTypeId)
+			if (type === 'trip')
+				this.tripType = TripType.getTripType(tripTypeId)
+			else if (type === 'bus')
+				this.tripType = BusTripType.getTripType(tripTypeId)
 	}
 
 	packages: Package[] = []

@@ -19,8 +19,20 @@
                                 <label for="tripselector-form_check-roundtrip">{{ ml.tripTypeRound | ml }}</label>
                             </div>
                         </div>
+						<div class="uk-width-medium-1-3">
+                            <div class="styled-radio">
+                                <input class="radio" type="radio" name="tripselector-form_check" id="tripselector-form_check-bus-oneway" [checked]="checkType('bus', 'oneway')" (click)="setType('bus', 'oneway')">
+                                <label for="tripselector-form_check-bus-oneway">Bus - oneway</label>
+                            </div>
+                        </div>
                         <div class="uk-width-medium-1-3">
                             <div class="styled-radio">
+                                <input class="radio" type="radio" name="tripselector-form_check" id="tripselector-form_check-bus-roundtrip" [checked]="checkType('bus', 'twoway')" (click)="setType('bus', 'twoway')">
+                                <label for="tripselector-form_check-bus-roundtrip">Bus - twoway</label>
+                            </div>
+                        </div>
+                        <div class="uk-width-medium-1-3">
+                            <div class="styled-radio">{{checkType('package')}}
                                 <input class="radio" type="radio" name="tripselector-form_check" id="tripselector-form_check-touristpackage" [checked]="checkType('package')" (click)="setType('package')">
                                 <label for="tripselector-form_check-touristpackage">{{ ml.tripTypePackage | ml }}</label>
                             </div>
